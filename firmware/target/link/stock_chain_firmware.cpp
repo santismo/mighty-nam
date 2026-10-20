@@ -14,6 +14,10 @@
 #ifdef MPP_IRQ_TIMING
 extern "C" uint32_t mpp_irq_page(unsigned,uint32_t*);
 #endif
+#ifdef MPP_EFFECT_PROFILER
+extern "C" uint32_t mpp_profile_page(unsigned,uint32_t*);
+extern "C" void mpp_profile_control(unsigned);
+#endif
 extern "C" {
 struct LinkStatus {
  uint32_t magic,schema,ready,callbacks,faults,model_crc,generation,runs;
@@ -22,7 +26,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_PRESET_BANK)
+#if defined(MPP_EFFECT_PROFILER)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','1'};
+#elif defined(MPP_PRESET_BANK)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','0'};
 #elif defined(MPP_OUTPUT_BUFFER)
@@ -52,6 +59,13 @@ extern "C" __attribute__((naked)) void mpp_fast_dispatch(){
   "ldr r1, [r1]\n"
   "rsb r0, r6, #100\n"
   "ldrb r0, [r1, r0]\n"
+#ifdef MPP_EFFECT_PROFILER
+  "ldr r2, =mpp_profile_selected\n"
+  "ldr r2, [r2]\n"
+  "adds r3, r0, #1\n"
+  "cmp r2, r3\n"
+  "beq 9f\n"
+#endif
   "cmp r0, #9\n"
   "bhi 3f\n"
   "cmp r0, #0\n"
@@ -104,6 +118,22 @@ extern "C" __attribute__((naked)) void mpp_fast_dispatch(){
   "mov r0, r9\n"
   "adds r4, #28\n"
   "ldr pc, =0x1230d\n"
+#ifdef MPP_EFFECT_PROFILER
+  // Stage in r0. Forward the original callback and all four audio pointers.
+  // Original SP is eight-byte aligned; retain LR and the routing's live regs.
+  "9: sub sp, #16\n"
+  "str r8, [sp]\n"
+  "str r5, [sp, #4]\n"
+  "str lr, [sp, #8]\n"
+  "mov r1, r12\n"
+  "mov r2, r9\n"
+  "mov r3, r7\n"
+  "bl mpp_profile_dispatch\n"
+  "ldr lr, [sp, #8]\n"
+  "add sp, #16\n"
+  "adds r4, #28\n"
+  "ldr pc, =0x1230f\n"
+#endif
  );
 }
 #else
@@ -281,6 +311,12 @@ extern "C" BANK_TEXT void mpp_probe_version(const uint8_t* p,unsigned n,unsigned
 extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned channel){
  if(n<9||n>329||channel>1||p[0]!=0xf0||p[1]!=0x43||p[2]!=0x58||
     p[3]!=0x70||p[4]!=4||p[5]!=2||p[6]!='N'||p[n]!=0xf7)return;
+#ifdef MPP_EFFECT_PROFILER
+ if(p[7]=='T'&&n==9){
+  if(!(rd(0xe000ed04)&511))mpp_profile_control(p[8]);
+  return;
+ }
+#endif
 #ifdef MPP_PRESET_BANK
  if(p[7]=='S'&&p[8]==1){mpp_bank_query(p,n,channel);return;}
 #endif
@@ -308,6 +344,9 @@ extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned c
   unsigned error=page>=12;
 #ifdef MPP_IRQ_TIMING
   if(page>=12)error=mpp_irq_page(page,&value);
+#endif
+#ifdef MPP_EFFECT_PROFILER
+  if(page>=26)error=mpp_profile_page(page,&value);
 #endif
 #ifdef MPP_LISTENING
   if(page==23){value=mpp_listen_page();error=0;}

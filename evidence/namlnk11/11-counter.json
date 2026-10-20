@@ -1,0 +1,11 @@
+{
+  "status": "PASS_NAMLNK11_PROFILER_COUNTER_ABI",
+  "elf_sha256": "9c5c326efbe35fd74ab24cbfa55256220c7755c7271179eb14377a2bc085cfd0",
+  "counter_cases": 138,
+  "callees_and_stack_preserved": true,
+  "no_counter_writes": true,
+  "wrap_reset_disabled_saturation_checked": true,
+  "snapshot_preemption_retry_and_busy_checked": true,
+  "device_access": false,
+  "audio_access": false
+}

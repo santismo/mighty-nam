@@ -1,0 +1,30 @@
+{
+  "status": "PASS_NAMLNK11_STAGE_REJECTIONS",
+  "cases": [
+    {
+      "case": "wrong-elf",
+      "rejected": true,
+      "image_created": false
+    },
+    {
+      "case": "missing-stage",
+      "rejected": true,
+      "image_created": false
+    },
+    {
+      "case": "missing-restart",
+      "rejected": true,
+      "image_created": false
+    },
+    {
+      "case": "no-controller",
+      "rejected": true,
+      "image_created": false
+    },
+    {
+      "case": "wrong-storage",
+      "rejected": true,
+      "image_created": false
+    }
+  ]
+}

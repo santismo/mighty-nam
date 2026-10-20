@@ -2,6 +2,7 @@
 // Topology and weight order follow NAM/wavenet/a2_fast.cpp (MIT, Steve Atkinson
 // and contributors). See A2-PROVENANCE.json and upstream license in this folder.
 #include "a2_lite.hpp"
+#include <stdint.h>
 namespace mpp {
 namespace {
 constexpr unsigned kernels[23]={6,6,6,6,6,6,6,6,6,6,6,6,6,6,15,15,6,6,6,6,6,6,6};
@@ -40,6 +41,17 @@ void A2Lite::reset(){
  for(auto &v:pos_)v=0;head_pos_=0;
 }
 #ifdef MPP_PRIME_STATE
+#ifdef MPP_CACHE_LINE_PRIME
+// Cortex-M7 cache lines are 32 bytes. Touch only addresses within the supplied
+// float range, including its partial first/last lines. No cache-control writes.
+static __attribute__((noinline)) void prime_lines(const volatile float* p,unsigned n){
+ if(!n)return;
+ (void)*p;
+ const uintptr_t end=(uintptr_t)(p+n);
+ for(uintptr_t a=((uintptr_t)p+32u)&~uintptr_t(31);a<end;a+=32)
+  (void)*(const volatile float*)a;
+}
+#endif
 // Read the upcoming eight-frame working set without advancing DSP state.
 // During bypass these reads stay inside the same timed audio callback; after
 // model upload they run while the engine is stopped, before it is published.
@@ -53,6 +65,18 @@ __attribute__((minsize,noinline)) void A2Lite::prime_working_set() const {
  for(unsigned layer=0;layer<23;++layer){
   const unsigned k=kernels[layer],d=dilations[layer],length=(k-1)*d+1;
   unsigned p=pos_[layer];
+#ifdef MPP_CACHE_LINE_PRIME
+  // For each tap, the next eight frames visit eight adjacent ring columns.
+  // Split a wrapped range; for short rings the complete ring suffices.
+  unsigned col=p+1==length?0:p+1;
+  for(unsigned tap=0;tap<k;++tap){
+   const unsigned count=length<8?length:8;
+   const unsigned first=length-col<count?length-col:count;
+   prime_lines(history+hi+3*col,3*first);
+   prime_lines(history+hi,3*(count-first));
+   col+=d;if(col>=length)col-=length;
+  }
+#else
   for(unsigned frame=0;frame<8;++frame){
    unsigned col=p+1==length?0:p+1;
    for(unsigned tap=0;tap<k;++tap){
@@ -61,11 +85,21 @@ __attribute__((minsize,noinline)) void A2Lite::prime_working_set() const {
    }
    p=p+1==length?0:p+1;
   }
+#endif
+#ifdef MPP_CACHE_LINE_PRIME
+  prime_lines(weights+wi,9*k+18);
+#else
   for(unsigned i=0;i<9*k+18;++i)(void)weights[wi+i];
+#endif
   wi+=9*k+18;hi+=3*length;
  }
+#ifdef MPP_CACHE_LINE_PRIME
+ prime_lines(weights+wi,50);
+ prime_lines(head,48);
+#else
  for(unsigned i=0;i<50;++i)(void)weights[wi+i];
  for(unsigned i=0;i<48;++i)(void)head[i];
+#endif
 }
 #endif
 void A2Lite::process(const float* input,float* output,unsigned frames){

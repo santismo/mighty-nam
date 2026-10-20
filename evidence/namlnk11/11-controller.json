@@ -1,0 +1,16 @@
+{
+  "status": "PASS_NAMLNK11_MAC_CONTROLLER_OFFLINE",
+  "elf_sha256": "9c5c326efbe35fd74ab24cbfa55256220c7755c7271179eb14377a2bc085cfd0",
+  "app_version": "0.3.3+6",
+  "app_tests": 53,
+  "optional_skips": 1,
+  "tests_note": "52 full-suite passes plus new NAMLNK11 workflow in nine-test onboard rerun",
+  "native_wire_checks": 1565,
+  "analysis_clean": true,
+  "release_build_verified": true,
+  "installed": false,
+  "app_framework_sha256": "5094b69f19d80838177c3d4f53f914b5e71935c9dc155a1b636ffe90033b9ef0",
+  "native_plugin_sha256": "70088bed05bdb9be2d0968d5e719559f43780900ae1fd624b8934c2dd27b89fb",
+  "device_access": false,
+  "audio_access": false
+}

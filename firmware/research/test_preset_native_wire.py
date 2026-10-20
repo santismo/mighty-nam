@@ -12,5 +12,5 @@ for wire in json.loads(Path(prefix+'.swift-wire.json').read_text()):
  replies.append(list(messages[0][0]))
 assert m.words()[5]==zlib.crc32(model) and m.words()[9]==1 and m.page(23)==(0,2)
 Path(prefix+'.arm-wire.json').write_text(json.dumps(replies))
-report=dict(status='PASS_NAMLNK10_NATIVE_PRESET_WIRE',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),operations=3,Dart_requests_Swift_encoded=True,actual_stock_receive_ring=True,model_and_effects_recalled=True,muted=True,device_access=False,audio_access=False)
+report=dict(status='PASS_'+v.plan['identity']+'_NATIVE_PRESET_WIRE',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),operations=3,Dart_requests_Swift_encoded=True,actual_stock_receive_ring=True,model_and_effects_recalled=True,muted=True,device_access=False,audio_access=False)
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(report['status'])

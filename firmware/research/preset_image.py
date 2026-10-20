@@ -21,6 +21,10 @@ def build(stock,elf):
  out=bytearray(stock);regions=[];patches=[];spans=[]
  with elf.open('rb') as f:
   e=ELFFile(f);syms=list(e.get_section_by_name('.symtab').iter_symbols());symbols={s.name:s['st_value'] for s in syms}
+  symbol=e.get_section_by_name('.symtab').get_symbol_by_name('mpp_probe_identity')[0]
+  section=e.get_section(symbol['st_shndx']);off=symbol['st_value']-section['sh_addr']
+  identity=section.data()[off:off+8].decode('ascii')
+  require(identity in ('NAMLNK10','NAMLNK11'),'Unexpected preset firmware identity')
   require(not [s.name for s in syms if s.name and s['st_shndx']=='SHN_UNDEF'],'Unresolved symbols')
   for s in e.iter_sections():
    if not s['sh_flags']&2 or not s['sh_size']:continue
@@ -49,7 +53,7 @@ def build(stock,elf):
  patch(0x57c0,bytes.fromhex('80b5')+stock[0x57c2:0x57c8],jump('mpp_bank_service'),'Replace retired AMP background service with deferred preset recall')
  # 0xb38a is halfword-aligned. Pad to the next word before the literal jump.
  patch(0xb38a,stock[0xb38a:0xb394],bytes.fromhex('00bf')+jump('mpp_stock_preset_select'),'Stock PRESET/program-change recall and early-boot compatibility')
- patch(0xac8a,bytes.fromhex('38b58cb014462d216846'),bytes.fromhex('00bf')+jump('mpp_probe_version'),'NAMLNK10 identity')
+ patch(0xac8a,bytes.fromhex('38b58cb014462d216846'),bytes.fromhex('00bf')+jump('mpp_probe_version'),identity+' identity')
  patch(0x1f397,struct.pack('<I',0xa1d3),struct.pack('<I',symbols['mpp_probe_query']),'Bounded model/preset protocol')
  patch(0x12302,bytes.fromhex('2b464246394648461c34'),bytes.fromhex('00bf')+jump('mpp_fast_dispatch'),'Existing fast bypass')
  target=symbols['mpp_track_dwt_reset'];delta=(target&~1)-(0xbe48+4)
@@ -60,7 +64,7 @@ def build(stock,elf):
  patch(0x205a8,struct.pack('<I',0x11d95),struct.pack('<I',symbols['mpp_link_irq']),'Existing IRQ wrapper')
  require(out[:0x400]==stock[:0x400] and len(out)==len(stock),'Vector/extent changed')
  require(all(any(a<=i<b for a,b in spans) for i,(x,y) in enumerate(zip(stock,out)) if x!=y),'Change outside allowlist')
- plan=dict(identity='NAMLNK10',mode='IN_MEMORY_OFFLINE_ONLY',elf_regions=regions,patches=patches,
+ plan=dict(identity=identity,mode='IN_MEMORY_OFFLINE_ONLY',elf_regions=regions,patches=patches,
   stock_sha256=STOCK_SHA,elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),candidate_sha256=hashlib.sha256(out).hexdigest(),
   retired_audio_audit=retired,preset_ownership=dict(owners=owners,base=hex(BANK),end=hex(BANK_END),copies=2,slots=7,record_bytes=8192),
   copied_code=dict(source=hex(SOURCE),destination='0x20308000',bytes=next(r['bytes'] for r in regions if r['name']=='.banktext')),

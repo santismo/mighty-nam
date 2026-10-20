@@ -18,6 +18,7 @@ p.add_argument('--listening',action='store_true',help='NAMLNK07 offline listenin
 p.add_argument('--early-output',action='store_true',help='NAMLNK08 prior-block output before NAM processing; requires listening')
 p.add_argument('--output-buffer',action='store_true',help='NAMLNK09 selectable 8/16/32-sample output staging; processing remains eight frames')
 p.add_argument('--preset-bank',action='store_true',help='NAMLNK10 seven persistent preset banks; offline experimental build')
+p.add_argument('--performance',action='store_true',help='NAMLNK11 opt-in per-effect profiler and cache-line preparation; requires preset bank')
 a=p.parse_args()
 if a.fused and not a.stock_chain:p.error('--fused requires --stock-chain')
 if a.m7_conv and (not a.stock_chain or a.fused):p.error('--m7-conv requires --stock-chain without --fused')
@@ -28,6 +29,7 @@ if a.irq_timing and not a.prime_state:p.error('--irq-timing requires --prime-sta
 if a.listening and not a.irq_timing:p.error('--listening requires --irq-timing')
 if a.early_output and not a.listening:p.error('--early-output requires --listening')
 if a.preset_bank and not a.output_buffer:p.error('--preset-bank requires --output-buffer')
+if a.performance and not a.preset_bank:p.error('--performance requires --preset-bank')
 if a.output_buffer and not a.early_output:p.error('--output-buffer requires --early-output')
 root=Path(__file__).resolve().parents[1];out=a.build_dir.resolve();out.mkdir(parents=True,exist_ok=True)
 flags=['--target=arm-none-eabi','-mcpu=cortex-m7','-mthumb','-mfpu=vfpv3-d16','-mfloat-abi=hard',
@@ -58,6 +60,9 @@ if a.output_buffer:flags+=['-DMPP_OUTPUT_BUFFER']
 if a.preset_bank:
  flags+=['-DMPP_PRESET_BANK']
  sources+=['target/link/preset_bank.cpp','target/link/preset_runtime.cpp']
+if a.performance:
+ flags+=['-DMPP_EFFECT_PROFILER','-DMPP_CACHE_LINE_PRIME']
+ sources+=['target/link/effect_profiler.cpp']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -104,5 +109,10 @@ if a.preset_bank:
    audio_output='Empty bank boots muted; saved presets with play flag resume after startup/settling/fade. Upload/save mutes.',
    runtime_changes='Buffer changes mute; Save to plug persists the buffer with each preset',
    firmware_updates_preserve_bank=False)
+if a.performance:
+ report.update(identity='NAMLNK11',working_set_preparation='32-byte cache-line coverage; same call sites',
+  effect_profiler='Disabled at boot; select one stage using bounded NT command; raw DWT cycles only',
+  stock_bypass_tail_policy='Unchanged; gate/delay/reverb residuals remain active after use',
+  physical_performance_gain_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

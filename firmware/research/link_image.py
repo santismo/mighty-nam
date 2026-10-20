@@ -10,10 +10,13 @@ def elf_identity(elf):
   section=e.get_section(symbol['st_shndx'])
   offset=symbol['st_value']-section['sh_addr']
   identity=section.data()[offset:offset+8].decode('ascii')
- require(identity in ('NAMLNK01','NAMLNK02','NAMLNK03','NAMLNK04','NAMLNK05','NAMLNK06','NAMLNK07','NAMLNK08','NAMLNK09'),'Unknown ELF identity')
+ require(identity in ('NAMLNK01','NAMLNK02','NAMLNK03','NAMLNK04','NAMLNK05','NAMLNK06','NAMLNK07','NAMLNK08','NAMLNK09','NAMLNK10','NAMLNK11'),'Unknown ELF identity')
  return identity
 
 def build(stock,elf,identity='NAMLNK01'):
+ if identity in ('NAMLNK10','NAMLNK11'):
+  from preset_image import build as preset_build
+  return preset_build(stock,elf)
  require(identity in ('NAMLNK01','NAMLNK02','NAMLNK03','NAMLNK04','NAMLNK05','NAMLNK06','NAMLNK07','NAMLNK08','NAMLNK09'),'Unknown experiment identity')
  candidate,symbols,plan=build_candidate(stock,elf,profile='a2-listening' if identity in ('NAMLNK07','NAMLNK08','NAMLNK09') else 'a2-reclaimed')
  out=bytearray(candidate)

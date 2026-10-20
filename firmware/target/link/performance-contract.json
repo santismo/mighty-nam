@@ -1,0 +1,42 @@
+{
+  "identity": "NAMLNK11",
+  "base": "Physically tested NAMLNK10 with unchanged model format, stock effect policy, output scheduling and seven-preset storage",
+  "state": "Offline-tested hardware trial; physical timing and recovery not verified",
+  "preparation": {
+    "cache_line_bytes": 32,
+    "method": "Read an in-range address for each line containing the next eight frames' weights, history and head; split wrapped ring spans",
+    "call_sites": "Unchanged: every bypass/settling callback, after receiver scans and before bank resume",
+    "model_state_writes": false,
+    "active_NAM_math_changed": false,
+    "measured_offline": "At least 83.59% fewer model reads and 67.36% fewer executed instruction events in the tested preparation cases",
+    "not_claimed": "Same percentage reduction in active NAM or whole-chain cycles, cache hits on hardware, or guitar-to-headphone latency"
+  },
+  "profiler": {
+    "default": "Disabled at boot and restart",
+    "mode": "One selected stage each audio block; all other stages use the existing dispatcher",
+    "stage_ids": ["unused wah", "compressor", "drive", "NAM", "EQ", "gate", "modulation", "delay", "reverb", "cabinet", "unused sample rate"],
+    "command": "F0 43 58 70 04 02 4E 54 value F7; value 0..10 selects a stage, 127 disables, 126 disables and clears statistics; other values ignored",
+    "command_context": "Foreground only; interrupt-context requests ignored; no acknowledgement, verify through NP status snapshot",
+    "page_26": "Latch a coherent snapshot with at most three attempts; magic 0x46585031",
+    "page_27": "Selected stage plus one, or zero when disabled",
+    "page_28": "Configuration generation, unsigned wrap permitted",
+    "pages_29_through_116": "Eleven rows of eight words, in stage-id order",
+    "row_fields": ["total observed", "accepted", "rejected", "last cycles", "maximum cycles", "bypassed observations", "suspended observations", "sticky flags"],
+    "counter": "Read-only raw DWT CYCCNT; no clock changes or resets",
+    "flags": {"1": "Disabled counter or changed CTRL", "2": "Known counter-reset epoch changed", "4": "Zero or half-range-ambiguous span", "8": "Total sample count saturated"},
+    "counters": "Observation counters saturate; maximum is cumulative since explicit clear/restart, not automatically cleared on stage selection",
+    "errors": {"1": "Unsupported page", "2": "Snapshot publication interrupted three times", "3": "No valid latched snapshot"},
+    "snapshot": "Frozen until another page-26 request; one diagnostic reader; no IRQ masking or audio pause",
+    "scope": "Selected bypass decision, dry copy or effect callback. Excludes routing fades, wrapper entry/exit and telemetry bookkeeping. Measurement itself adds overhead.",
+    "limits": "No CPU percentage, calibrated microseconds, interrupt deadline or underrun guarantee. Only the selected stage is sampled; exercise switches separately. Diagnose while output is muted."
+  },
+  "unchanged": {
+    "sample_rate_hz": 48000,
+    "processing_frames": 8,
+    "output_buffer_options": [8, 16, 32],
+    "delay_reverb_gate": "Used blocks continue their original residual/tail behavior while bypassed; not force-suspended",
+    "output": "Existing prior-block output order, protection, pad, settling, fade and explicit listening controls",
+    "presets": "Seven dual-copy slots; installing an image clears the bank, so capture/preset backup and restore are required"
+  },
+  "next": "Compare actual stage and whole-IRQ measurements on the same presets. Only then change active NAM/effect processing or tail-suspension policy."
+}

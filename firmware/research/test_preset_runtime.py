@@ -13,11 +13,11 @@ from a2_storage import model_slot
 from preset_image import build,BANK,BANK_END,FLASH
 
 class PresetMachine(ListeningMachine):
- def __init__(self,flash=None,fill=0):
+ def __init__(self,flash=None,fill=0,path=None,oracle=None,boundary_oracle=None):
   self.saved_flash=flash;self.flash_operations=[];self.fail_write=False
   self.broadcasts=[]
   self.mclass_ops={};self.primask=0
-  super().__init__(fill=fill)
+  super().__init__(path=path,oracle=oracle,boundary_oracle=boundary_oracle,fill=fill)
   # ChainMachine already installs erase/program hooks after removing its
   # expensive global instruction observer. Add only the missing read hook.
   self.u.hook_add(UC_HOOK_CODE,self.code,begin=0xc080,end=0xc080)
@@ -164,7 +164,7 @@ def main():
  m.u.mem_write(m.preset+20,b'\x25');fx=bytes(m.u.mem_read(m.preset,128))
  body=struct.pack('<4I',m.words()[5],zlib.crc32(fx),1,8)+bytes(32)+b'Failed save'.ljust(64,b'\0')
  assert m.bank_request(2,0,body)[7]==3 and bytes(m.u.mem_read(BANK,BANK_END-BANK))==before
- report=dict(status='PASS_NAMLNK10_ARM_PRESET_RUNTIME',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),
+ report=dict(status='PASS_'+bundle[2]['identity']+'_ARM_PRESET_RUNTIME',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),
   seven_slots=True,model_count=2,exact_model_and_effect_recall=True,stock_selection_hook=True,stock_button_branch=True,button_skips_empty=True,cold_patterns=rows,warm_restarts=3,accuracy=accuracy,
   duplicate_saves_do_not_write=True,failed_driver_write_preserves_saved_data=True,flash_operations=len(m.flash_operations),
   flash_bounds=[hex(BANK),hex(BANK_END)],device_access=False,audio_access=False,

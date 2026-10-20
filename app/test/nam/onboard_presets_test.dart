@@ -207,65 +207,68 @@ void main() {
     expect(home.onboard.dirty[slot], false, reason: home.status);
   }
 
-  testWidgets(
-      'save two colored captures, button recall, cold reconnect and app restart',
-      (t) async {
-    final a = capture('Fender', 1), b = capture('Marshall', 2);
-    usb.catalog.addAll([a, b]);
-    usb.seed([a, b]);
-    dynamic home = await start(t);
-    for (var i = 0; i < 7; i++) {
-      expect(find.byKey(ValueKey('preset-color-$i')), findsOneWidget);
-    }
-    await save(t, home, 0, a, 'Clean Fender');
-    final firstFx = List<int>.from(usb.preset);
-    await work(t, home, () async {
-      await home.selectOnboard(3);
-      await home.selectCapture(b);
-      home.rig.blocks.first.enabled = !home.rig.blocks.first.enabled;
-      home.rig.name = 'Crunch Marshall';
-      await home.saveOnboard();
+  for (final identity in ['NAMLNK10', 'NAMLNK11']) {
+    testWidgets(
+        '$identity: save colored captures, button recall, reconnect and app restart',
+        (t) async {
+      usb.identity = identity;
+      final a = capture('Fender', 1), b = capture('Marshall', 2);
+      usb.catalog.addAll([a, b]);
+      usb.seed([a, b]);
+      dynamic home = await start(t);
+      for (var i = 0; i < 7; i++) {
+        expect(find.byKey(ValueKey('preset-color-$i')), findsOneWidget);
+      }
+      await save(t, home, 0, a, 'Clean Fender');
+      final firstFx = List<int>.from(usb.preset);
+      await work(t, home, () async {
+        await home.selectOnboard(3);
+        await home.selectCapture(b);
+        home.rig.blocks.first.enabled = !home.rig.blocks.first.enabled;
+        home.rig.name = 'Crunch Marshall';
+        await home.saveOnboard();
+      });
+      expect(home.onboard.dirty[3], false, reason: home.status);
+      expect(usb.models[0]!.sha256Hex, a.sha256Hex);
+      expect(usb.models[3]!.sha256Hex, b.sha256Hex);
+      expect(usb.saves, 2);
+      expect(usb.listening, false);
+      final uploads = usb.transfers;
+      await usb.button(0);
+      await t.pump(const Duration(seconds: 3));
+      await t.pumpAndSettle();
+      expect(home.onboard.selected, 0);
+      expect(home.rig.modelSha256, a.sha256Hex);
+      expect(usb.preset, firstFx);
+      expect(usb.transfers, uploads,
+          reason: 'Reading an onboard recall must not upload over it');
+      await work(t, home, () async {
+        await home.selectOnboard(3);
+      });
+      expect(home.rig.modelSha256, b.sha256Hex);
+      expect(usb.recalls, 1);
+      usb.connected = false;
+      await t.pump(const Duration(seconds: 3));
+      await t.pumpAndSettle();
+      await usb.button(0);
+      usb.connected = true;
+      await t.pump(const Duration(seconds: 3));
+      await t.pumpAndSettle();
+      expect(home.rig.modelSha256, a.sha256Hex);
+      expect(usb.transfers, uploads);
+      await t.pumpWidget(const SizedBox.shrink());
+      await t.pump();
+      await t.pumpWidget(const NamLabApp());
+      await t.pumpAndSettle();
+      home = t.state(find.byType(NamHome));
+      expect(home.onboard.slots[3].name, 'Crunch Marshall');
+      expect(home.onboard.slots[0].modelSha256, a.sha256Hex);
+      expect(home.captures.favorites.length, 2);
+      await t.pumpWidget(const SizedBox.shrink());
+      await t.pump();
+      debugDefaultTargetPlatformOverride = null;
     });
-    expect(home.onboard.dirty[3], false, reason: home.status);
-    expect(usb.models[0]!.sha256Hex, a.sha256Hex);
-    expect(usb.models[3]!.sha256Hex, b.sha256Hex);
-    expect(usb.saves, 2);
-    expect(usb.listening, false);
-    final uploads = usb.transfers;
-    await usb.button(0);
-    await t.pump(const Duration(seconds: 3));
-    await t.pumpAndSettle();
-    expect(home.onboard.selected, 0);
-    expect(home.rig.modelSha256, a.sha256Hex);
-    expect(usb.preset, firstFx);
-    expect(usb.transfers, uploads,
-        reason: 'Reading an onboard recall must not upload over it');
-    await work(t, home, () async {
-      await home.selectOnboard(3);
-    });
-    expect(home.rig.modelSha256, b.sha256Hex);
-    expect(usb.recalls, 1);
-    usb.connected = false;
-    await t.pump(const Duration(seconds: 3));
-    await t.pumpAndSettle();
-    await usb.button(0);
-    usb.connected = true;
-    await t.pump(const Duration(seconds: 3));
-    await t.pumpAndSettle();
-    expect(home.rig.modelSha256, a.sha256Hex);
-    expect(usb.transfers, uploads);
-    await t.pumpWidget(const SizedBox.shrink());
-    await t.pump();
-    await t.pumpWidget(const NamLabApp());
-    await t.pumpAndSettle();
-    home = t.state(find.byType(NamHome));
-    expect(home.onboard.slots[3].name, 'Crunch Marshall');
-    expect(home.onboard.slots[0].modelSha256, a.sha256Hex);
-    expect(home.captures.favorites.length, 2);
-    await t.pumpWidget(const SizedBox.shrink());
-    await t.pump();
-    debugDefaultTargetPlatformOverride = null;
-  });
+  }
 
   testWidgets(
       'listen and mute a saved onboard capture missing from the Mac library',

@@ -1,0 +1,15 @@
+{
+  "status": "PASS_NAMLNK11_PREPARED_DELIVERY",
+  "firmware_sha256": "6908b1cb489c8d4d1d249629c39fce191fb95fda9a3a6d019b4691cff4d6aea0",
+  "elf_sha256": "9c5c326efbe35fd74ab24cbfa55256220c7755c7271179eb14377a2bc085cfd0",
+  "app_version": "0.3.3+6",
+  "installed_app_unchanged": "0.3.2",
+  "zip_sha256": "2e78a8e282fc97d85a488aaeadc72a1f173c027253ffa3c7f89d8e73023c1a32",
+  "reports_match_final_ELF": true,
+  "new_firmware_installed": false,
+  "hardware_speedup_measured": false,
+  "current_preset_backup_complete": false,
+  "device_discovery": "No single plug found; no further device commands",
+  "audio_playback": false,
+  "mac_or_teams_audio_changes": false
+}

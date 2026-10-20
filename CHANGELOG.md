@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.3.3 / NAMLNK11 — prepared performance trial
+
+- Add NAMLNK11 controller compatibility while retaining earlier versions.
+- Reduce duplicate reads during NAM bypass/settling preparation, covering the same cache lines without changing model state or active processing math.
+- Add a default-off, single-stage profiler with bounded USB commands, coherent snapshots and counter validity checks.
+- Preserve the existing output path, 48 kHz rate, buffer options, seven presets and stock delay/reverb/gate tail policy.
+- Offline checks pass; physical timing and latency gains remain unmeasured. The trial is not installed. Installation clears the onboard bank and requires a fresh verified preset/capture backup.
+- Repository remains private; Pages remains disabled. No new hosted release asset is published.
+
+## 0.3.2 — onboard listening
+
+- Enable Listen for a verified saved onboard capture even when its model is absent from the Mac library; retain model identity and fault checks. Installed locally and confirmed working by the user.
+
+## 0.3.1 — CoreMIDI packet storage
+
+- Preserve replies longer than the fixed 256-byte Swift tuple by reading CoreMIDI's original packet allocation. Seven NAMLNK10 presets were physically saved and verified after restart and button cycling.
+
 ## 0.3.0-preview.1 — public project preview
 
 - Publish Mac controller 0.3, firmware source/research, protocols, retained upstream licenses, and offline validation evidence.

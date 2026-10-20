@@ -58,7 +58,8 @@ import Foundation
         check(NamLinkWire.supportsModels("NAMLNK08"))
         check(NamLinkWire.supportsModels("NAMLNK09"))
         check(NamLinkWire.supportsModels("NAMLNK10"))
-        check(!NamLinkWire.supportsModels("NAMLNK11"))
+        check(NamLinkWire.supportsModels("NAMLNK11"))
+        check(!NamLinkWire.supportsModels("NAMLNK12"))
         check(!NamLinkWire.supportsStockChain("NAMLNK01"))
         check(NamLinkWire.supportsStockChain("NAMLNK03"))
         check(NamLinkWire.supportsModels("NAMLNK04"))
@@ -79,7 +80,8 @@ import Foundation
             check(bypass.allowed(on:"NAMLNK08"))
             check(bypass.allowed(on:"NAMLNK09"))
             check(bypass.allowed(on:"NAMLNK10"))
-            check(!bypass.allowed(on:"NAMLNK11"))
+            check(bypass.allowed(on:"NAMLNK11"))
+            check(!bypass.allowed(on:"NAMLNK12"))
             check(!bypass.allowed(on:"NAMA2I01"))
             var before=preset;before[3]=21
             let messages=bypass.messages(before:before)!
@@ -95,11 +97,11 @@ import Foundation
             var bad=frame;bad[index]=128
             check(NamStockWire.preset(bad) == nil)
         }
-        for identity in ["NAMLNK01","NAMLNK06","NAMLNK11","PLUGPRO"] {
+        for identity in ["NAMLNK01","NAMLNK06","NAMLNK12","PLUGPRO"] {
             check(NamListening.arm(identity:identity,enabled:true) == nil)
             check(NamListening.arm(identity:identity,enabled:false) == nil)
         }
-        for identity in ["NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10"] { for enabled in [true,false] {
+        for identity in ["NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11"] { for enabled in [true,false] {
             let command=NamListening.arm(identity:identity,enabled:enabled)!
             check(command.count == 20 && command[8] == (enabled ? 1 : 0))
             check(command[18] == 23)
@@ -114,7 +116,7 @@ import Foundation
             let word = (UInt32(48000)<<16) | (1<<8) | UInt32(samples)
             check((NamOutputBuffer.decode(word) != nil) == allowed)
         }
-        for identity in ["NAMLNK08","NAMLNK11","PLUGPRO",""] {
+        for identity in ["NAMLNK08","NAMLNK12","PLUGPRO",""] {
             check(NamOutputBuffer.command(identity:identity,samples:8) == nil)
         }
         for word: UInt32 in [0,8,0xffffffff,(44100<<16)|(1<<8)|8,(48000<<16)|(2<<8)|8] {
@@ -122,6 +124,7 @@ import Foundation
         }
         check(NamOutputBuffer.command(identity:"NAMLNK09",samples:16) == [0xf0,0x43,0x58,0x70,4,2,0x4e,0x42,16,0xf7,0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,24,0xf7])
         check(NamOutputBuffer.command(identity:"NAMLNK10",samples:8) != nil)
+        check(NamOutputBuffer.command(identity:"NAMLNK11",samples:8) != nil)
         func put(_ a: inout [UInt8],_ at:Int,_ value:UInt32) {
             for i in 0..<4 { a[at+i]=UInt8((value >> (i*8)) & 255) }
         }
