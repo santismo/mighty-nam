@@ -1,0 +1,19 @@
+{
+  "schema": "nam-plug-output-buffer-1",
+  "firmware": "NAMLNK09",
+  "sample_rate_hz": 48000,
+  "processing_block_samples": 8,
+  "output_staging_samples": [8, 16, 32],
+  "default_and_minimum_samples": 8,
+  "scope": "Eight samples retain the NAMLNK08 pipeline. Sixteen and 32 add one or three stereo PCM blocks after protection and level/fade processing. This does not alter DMA, codec clocks or DSP scheduling; it does not improve CPU capacity. No latency reduction below NAMLNK08 is claimed.",
+  "set_sysex": "F0 43 58 70 04 02 4E 42 <samples> F7",
+  "status_query": "F0 43 58 70 04 02 4E 50 18 F7",
+  "status_page_decimal": 24,
+  "status_word": "(48000 << 16) | (1 << 8) | samples",
+  "validation": "Exact identity09; samples 8, 16 or 32 only. Malformed and interrupt-context setters are ignored. Controller reads back page24 and muted page23 before reporting success.",
+  "change_behavior": "Disarms output, invalidates queued PCM, restarts settling/fade. Explicit Listen required.",
+  "lifecycle": "Volatile. Model transfer preserves the chosen size and mutes. Startup/warm reinitialization restores eight samples, clears model and mutes. Faults discard queued output.",
+  "unsupported": "No adjustable sample rate. No four-sample mode. Hardware round-trip latency has not been measured.",
+  "tests": "research/test_output_buffer.py plus complete listening, effects, restart, timing-hook, headroom, output-order, codec and controller suites",
+  "hardware_verified": false
+}

@@ -1,0 +1,295 @@
+{
+  "status": "PASS_BOUNDED_STOCK_OVERLAY_REFERENCE_SCAN",
+  "stock_sha256": "a8a064a5b0e308b9cf193ebdf23d352ddff092d88db71531729ca1864a86d990",
+  "overlay_variants": 40,
+  "references_into_reclaimed_code_or_reserved_state": [],
+  "overlays": [
+    {
+      "runtime_destination": "0x39000",
+      "saved_source_address": "0x300d2000",
+      "payload_offset": "0x92000",
+      "bytes": 4096,
+      "sha256": "9ef8f9b7b391f9989d2711ab6bcce0755c7e7889f113246ec4174b07da3304c5"
+    },
+    {
+      "runtime_destination": "0x39000",
+      "saved_source_address": "0x300e2000",
+      "payload_offset": "0xa2000",
+      "bytes": 4096,
+      "sha256": "c1ea4af3dc963732ca7b8b14245ec52e6b248e60d807f97160b3c3acd68ec8c9"
+    },
+    {
+      "runtime_destination": "0x39000",
+      "saved_source_address": "0x300f8000",
+      "payload_offset": "0xb8000",
+      "bytes": 4096,
+      "sha256": "a068a7e88b227eb440119a3c31e918088b00d6fbc0e25035dde37103d701b409"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x300ee000",
+      "payload_offset": "0xae000",
+      "bytes": 4096,
+      "sha256": "b57c4d441942075ca713eed3763aa5fb66a0f83713ef918265133dcb29001aaa"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x300f6000",
+      "payload_offset": "0xb6000",
+      "bytes": 4096,
+      "sha256": "e7bf2fdd59e1003010fc0d8d7a6ab11af0ce479d91037b2385a4cefe906b0e71"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x300fa000",
+      "payload_offset": "0xba000",
+      "bytes": 4096,
+      "sha256": "fbd2951a44edc0b56f7f6abe01ccfb5dc556219e849cf1cde1a420bc96fdfdd0"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x300fe000",
+      "payload_offset": "0xbe000",
+      "bytes": 4096,
+      "sha256": "58e6072ae425977f583d1d89ab9a2d1e62ca8fba795a4eae6ffa9933c2d0e904"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30102000",
+      "payload_offset": "0xc2000",
+      "bytes": 4096,
+      "sha256": "bdcd65c19df76a117ee19af1033c60fd40f7cedcf5c8d3a83ed4ab6ceb38364a"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30104000",
+      "payload_offset": "0xc4000",
+      "bytes": 4096,
+      "sha256": "9182451b820b2c9f0eca56d4ee60533a87ff55c0d7932e9502644e18fb20602f"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30108000",
+      "payload_offset": "0xc8000",
+      "bytes": 4096,
+      "sha256": "2a6f292562338391745cae123ec908c69468e27dd074fd6bd73c30228edeb6f0"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x3010a000",
+      "payload_offset": "0xca000",
+      "bytes": 4096,
+      "sha256": "8bb9e4d7c0d14a7f00b5249f90b6f4c938603992ec293931876aa2e09a9d0922"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30110000",
+      "payload_offset": "0xd0000",
+      "bytes": 4096,
+      "sha256": "c18eb7a001e18d50a4999e418430b0810ba5ebdf6dd869a9fde96be8e54399c3"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30116000",
+      "payload_offset": "0xd6000",
+      "bytes": 4096,
+      "sha256": "e4331d2336c9c6404b1dfe0cb9071c5022bd4313871519162583665ea0edd44f"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30118000",
+      "payload_offset": "0xd8000",
+      "bytes": 4096,
+      "sha256": "c18eb7a001e18d50a4999e418430b0810ba5ebdf6dd869a9fde96be8e54399c3"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30120000",
+      "payload_offset": "0xe0000",
+      "bytes": 4096,
+      "sha256": "e75d67ba0b779e618785f685c8307ff8fae00719c4c99642efa62cd903fb43b9"
+    },
+    {
+      "runtime_destination": "0x3a000",
+      "saved_source_address": "0x30128000",
+      "payload_offset": "0xe8000",
+      "bytes": 4096,
+      "sha256": "6492bb17fc958c50f64beac1824d01bcec278ee896b9cd16d576f7e06f1aacf5"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300d8000",
+      "payload_offset": "0x98000",
+      "bytes": 4096,
+      "sha256": "5a98ced531d375f22ecc38f0976821be2d33569f730d8a005852030241c4441b"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300da000",
+      "payload_offset": "0x9a000",
+      "bytes": 4096,
+      "sha256": "a52bf699afc53b2d61b769ad75475e7d7ce28433779b9e11d0880c89da41b712"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300e4000",
+      "payload_offset": "0xa4000",
+      "bytes": 4096,
+      "sha256": "666076b9c0a8bf6f64a02d33d767061eaa82771cc56c446c0f24c0a1fe9e5325"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300e6000",
+      "payload_offset": "0xa6000",
+      "bytes": 4096,
+      "sha256": "9f2238c7f699f695c68d8bf975ed62cff68c6063e9cf894500fb329889635940"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300ea000",
+      "payload_offset": "0xaa000",
+      "bytes": 4096,
+      "sha256": "6282f6201e08408fabf7e83607087ba64427dce98b4fee0643cb3d75d8b88a96"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300ec000",
+      "payload_offset": "0xac000",
+      "bytes": 4096,
+      "sha256": "6a7bccf15af4147a083220faf6ad3c24072632db8722799e5b6909e8a6697ed6"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300f0000",
+      "payload_offset": "0xb0000",
+      "bytes": 4096,
+      "sha256": "9811984f458bb67b4bcbb830ff9e898bbaec7cf518637eacc79111faefaa9d40"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x300f4000",
+      "payload_offset": "0xb4000",
+      "bytes": 4096,
+      "sha256": "4fba807e5b3526ecf2bf6c1305c69f0623b6af549ce7d4ff2167a8ff632b03b2"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x3010c000",
+      "payload_offset": "0xcc000",
+      "bytes": 4096,
+      "sha256": "b38ce57ceb8a671bad90e3665f198a383cf577e9a4a6a24c618cb5e6ca5b3e5e"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x3010e000",
+      "payload_offset": "0xce000",
+      "bytes": 4096,
+      "sha256": "014953a8a7fab82bc07f76578571dcc4e1a883268e880c27e8dc1633af672c14"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x30114000",
+      "payload_offset": "0xd4000",
+      "bytes": 4096,
+      "sha256": "87ea679e88437c148513d81123bd91b54874f181fe207e886ecc4c4d69fb8f1f"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x3011a000",
+      "payload_offset": "0xda000",
+      "bytes": 4096,
+      "sha256": "dd05fa1095c93d4cc2abb42ab4d9664210de8afe2dfa7038e6565b2530080497"
+    },
+    {
+      "runtime_destination": "0x3b000",
+      "saved_source_address": "0x3011e000",
+      "payload_offset": "0xde000",
+      "bytes": 4096,
+      "sha256": "a34ef2cb016466cd4bbba3c6c086879947ad0e7b97198b7320099a1696ed0b10"
+    },
+    {
+      "runtime_destination": "0x3c000",
+      "saved_source_address": "0x300d0000",
+      "payload_offset": "0x90000",
+      "bytes": 4096,
+      "sha256": "5c65da36b996a11af908bfcf2b7cea5775dc6b83cbc3b0cef57850ce6d6250b2"
+    },
+    {
+      "runtime_destination": "0x3c000",
+      "saved_source_address": "0x300de000",
+      "payload_offset": "0x9e000",
+      "bytes": 4096,
+      "sha256": "c79c46667bc36286c3a1e16a728757754dc1b0dbd01c50ba0eeb6d7e711082a1"
+    },
+    {
+      "runtime_destination": "0x3c000",
+      "saved_source_address": "0x300e0000",
+      "payload_offset": "0xa0000",
+      "bytes": 4096,
+      "sha256": "5954a815b4f3cd5f52481d226a0349444eeb1ab9a44a98439f61fe7733e3e42d"
+    },
+    {
+      "runtime_destination": "0x3c000",
+      "saved_source_address": "0x300f2000",
+      "payload_offset": "0xb2000",
+      "bytes": 4096,
+      "sha256": "bbe85e2a6b3c30a0e1c4439a89f3ec1a84b7668b1a17fe1f2de19e579c96e612"
+    },
+    {
+      "runtime_destination": "0x3c000",
+      "saved_source_address": "0x30100000",
+      "payload_offset": "0xc0000",
+      "bytes": 4096,
+      "sha256": "bdd7513ef7c53de2dfb47a8ec0dd2e0cad71a1d4fe7e231a9a5923d1683950fa"
+    },
+    {
+      "runtime_destination": "0x3d000",
+      "saved_source_address": "0x300d6000",
+      "payload_offset": "0x96000",
+      "bytes": 4096,
+      "sha256": "48a59373f7472b269a7d31c3d791b13a00b6152e7a5a4ce9489e8387d557bc47"
+    },
+    {
+      "runtime_destination": "0x3d000",
+      "saved_source_address": "0x300dc000",
+      "payload_offset": "0x9c000",
+      "bytes": 4096,
+      "sha256": "3d76c2545b6462d8e0fd9763faa7fdb66a6c93c14eae313fc2f995df33b41a1d"
+    },
+    {
+      "runtime_destination": "0x3d000",
+      "saved_source_address": "0x300fc000",
+      "payload_offset": "0xbc000",
+      "bytes": 4096,
+      "sha256": "f9db63198ba53d80d20758a38b984103a435429d3c7c88e4e36e8acc46d8e19b"
+    },
+    {
+      "runtime_destination": "0x3d000",
+      "saved_source_address": "0x3011c000",
+      "payload_offset": "0xdc000",
+      "bytes": 4096,
+      "sha256": "476b39355fa1e5ebb387c1280bc7a2511488ce6dc44c539b667677ee38fa84bc"
+    },
+    {
+      "runtime_destination": "0x3d000",
+      "saved_source_address": "0x30122000",
+      "payload_offset": "0xe2000",
+      "bytes": 4096,
+      "sha256": "67e7c27dbdfeeb9b58167f96c2bd703b40bc5cdaff320081723b1b4b3dc00ec2"
+    },
+    {
+      "runtime_destination": "0x3d000",
+      "saved_source_address": "0x30126000",
+      "payload_offset": "0xe6000",
+      "bytes": 4096,
+      "sha256": "476b39355fa1e5ebb387c1280bc7a2511488ce6dc44c539b667677ee38fa84bc"
+    }
+  ],
+  "limits": [
+    "Only forty overlays exercised by the saved reload test",
+    "Linear disassembly and aligned-word scanning do not establish a complete call/data graph",
+    "Computed addresses, compressed pointers and indirect calls are not excluded",
+    "Overlay DSP functions were not run by this audit"
+  ],
+  "device_or_audio_access": false
+}

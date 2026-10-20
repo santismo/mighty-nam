@@ -1,0 +1,19 @@
+{
+  "schema": "nam-plug-release-1",
+  "target": "NUX-MP3",
+  "firmware": {
+    "identity": "NAMLNK05",
+    "sha256": "1194f78caa42fcb64c27490c940289cecd180e78e6e1f4dc01d79e3b718cb656",
+    "bytes": 14439215
+  },
+  "restore": {
+    "sha256": "95c704b6026cb26aceaae179039e994c261a93610b0c578f50634b39f4393dd6",
+    "bytes": 14439215
+  },
+  "loader": {
+    "vid": 38183,
+    "pid": 49495,
+    "identifier": "20220615"
+  },
+  "mode": "experimental-silent-stock-chain-timing-trial"
+}

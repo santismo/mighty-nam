@@ -1,0 +1,29 @@
+{
+  "status": "HELPER_LINKED_IN_OFFLINE_ENTRY_FACTORY_LOADER_CONTRACT_INCOMPLETE",
+  "stock_reset_evidence": "../../artifacts/stock-handoff-audit.json",
+  "observed": [
+    "Vectors at payload offset zero; initial MSP 0x20036000 in both public versions",
+    "Reset sets VTOR=0 and loads MSP from address zero",
+    "SystemInit enables FPU and I/D caches, disables modeled watchdog/SysTick enable bits, clears GPR28 CACHE_USB",
+    "SystemInit does not alter modeled CPU clock root or FlexRAM GPR17",
+    "Stock enables interrupts before its C runtime; our helper deliberately keeps them masked"
+  ],
+  "implemented_helper": {
+    "source": "handoff.cpp",
+    "requirements": "Privileged Thread mode, CONTROL=0, PRIMASK=1, valid stack and initialized C storage, verified owned vector table. This is not an assembly reset entry.",
+    "actions": "Snapshot VTOR/cache/MPU/TCM/FlexRAM GPR17/CPU-root state; disable SysTick, clear SysTick/PendSV and NVIC pending/enables, set owned VTOR/FPU access with barriers. Leave IRQs masked.",
+    "preserves": "Caches, MPU, FlexRAM mapping, CPU frequency. Does not execute ROM or write flash.",
+    "arm_adapter": "direct_mmio.cpp is now linked with the diagnostic assembly entry; reset executes only core setup and register snapshots in an ARM emulator. It is not a physically validated application image."
+  },
+  "physical_image_blockers": [
+    "NUX loader copy extent, accepted image format and erase boundary remain unproven",
+    "Candidate linker/assembly entry exists, but actual stack/data/code ownership, loader copy extent and inherited cache/MPU policy remain unverified",
+    "Owned bounded watchdog routine now exists offline; inherited state and physical command deadlines still need validation. CPU rate inspection exists, but reference, clock setup and safe operating point remain unresolved.",
+    "Need whole-image cache/MPU and fault/interrupt-vector handling; helper does not establish live USB/DMA quiescence"
+  ],
+  "backend_configuration": "600MHz, 0x202c0000 and poll budget2048 in host fixtures are explicit simulation assumptions, not measurements of the plug. Physical configuration must be derived/validated separately.",
+  "physical_loadable_image_created": false,
+  "latest_entry_contract": "../diagnostic/contract.json",
+  "latest_startup_control_contract": "startup-control-contract.json",
+  "stock_watchdog_correction": "The earlier inert-MMIO audit only observed requested clears. WDE cannot actually clear once set. See artifacts/stock-watchdog-handoff.json; stock SystemInit relies on inherited state or later servicing."
+}

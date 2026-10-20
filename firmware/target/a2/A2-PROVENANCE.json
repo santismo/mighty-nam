@@ -1,0 +1,77 @@
+{
+  "core_repository": "https://github.com/sdatkinson/NeuralAmpModelerCore",
+  "core_tag": "v0.5.2",
+  "core_commit": "ab72c078cd141be60d963d357bd501d56cc9606b",
+  "core_license": "MIT; UPSTREAM-LICENSE copied verbatim",
+  "reference": "Unmodified generic Eigen WaveNet; subclass exposes protected buffer-size setup for zero-history comparisons. No NAM_ENABLE_A2_FAST. No automatic prewarm.",
+  "algorithm_basis": [
+    "NAM/wavenet/a2_fast.cpp",
+    "NAM/wavenet/a2_fast.h",
+    "NAM/wavenet/model.cpp"
+  ],
+  "a2_shape": {
+    "channels": 3,
+    "layers": 23,
+    "weights": 1871,
+    "history_floats": 19062,
+    "head_taps": 16,
+    "sample_rate": 48000
+  },
+  "capture_sources": [
+    {
+      "file": "marshall.nam",
+      "repository": "https://github.com/balazsbencs/daisy-nam-pedal",
+      "commit": "3fc2f8f941d5c3a7b9ab50958ac081304a814717",
+      "sha256": "947efe2b20a4e1987380ed799bf0411d6298910da8e0c34d205a5830e784c010",
+      "extracted_sha256": "951383563d6c00f4742565facedee3294293cbd49173d1895ebeb1ce9bb0175a",
+      "extraction": "Unchanged C3 Lite model from SlimmableContainer, outer sample_rate copied inward",
+      "json_head_scale": 0.005655724950082893,
+      "runtime_head_scale_weight": 0.00565572502091527
+    },
+    {
+      "file": "be100.nam",
+      "repository": "https://github.com/balazsbencs/daisy-nam-pedal",
+      "commit": "3fc2f8f941d5c3a7b9ab50958ac081304a814717",
+      "sha256": "dc20f337e89f153a4645a2a2b6970ceb3611a733b170e6c49e1deb3f7802d7a1",
+      "extracted_sha256": "3378932f8e91482aaa8712b29ac6144360187d4ffd438a170e782cd21c189e47",
+      "extraction": "Unchanged C3 Lite model from SlimmableContainer, outer sample_rate copied inward",
+      "json_head_scale": 0.009955754974308666,
+      "runtime_head_scale_weight": 0.009955754751780201
+    }
+  ],
+  "redistribution": "Capture files/weights are not bundled; their redistribution license was not established. Locally tested public copies only.",
+  "compact_engine_sha256": "f185f144a117b3646f5ce19e4aed1b26e2753aaafcf00a0835f77cfcff8de4a6",
+  "core_source_hashes": {
+    "NAM/wavenet/a2_fast.cpp": "96c95825113c9405bf773d4ed40cd9b386a814726a203f8b5e22430393aca334",
+    "NAM/wavenet/a2_fast.h": "245bff6274f1ccdac454e5d19a9ed8b6fb46f8553f9b392c721a15e57b132261",
+    "NAM/wavenet/model.cpp": "a734c04490211b344f9b213eca7f7c14844eb82dbb786815e76ffed840ebc5ac",
+    "NAM/dsp.cpp": "6647e743c4552880b392651e390202327e94d019a410ef84890ba19e0b011466"
+  },
+  "reclaimed_profile": {
+    "build": "tools/build_a2_reclaimed.py",
+    "source_hashes": {
+      "target/a2/stock_adapter.cpp": "0ee75e1f49956346196b89923e5350747c78a629f19e59fa701c0048bee06467",
+      "target/a2/reclaimed_v1.ld": "b03d30ed966197df323c688908e3fb153663d627b5b58304dd4dbd74a6e3fc30",
+      "research/a2_storage.py": "b51564e27731c892c9a7496b8c0a4d372a3b77bef86e467c7fbedbaaeceaba48",
+      "research/a2_reclaimed_image.py": "81d0f21ce8fb94b1d1090f8092842f7274d72f7816afcf6b71dacba53787dbb0",
+      "target/a2/a2_lite.cpp": "f185f144a117b3646f5ce19e4aed1b26e2753aaafcf00a0835f77cfcff8de4a6",
+      "target/a2/a2_lite.hpp": "dbf5be0edb324f2832a4eefc10e0b024b7153201726c65cd456b2d51bb2284a0",
+      "research/profile_a2_chain.py": "0461ccb24f22cbe138a11f5ff6f3692108e536fbe186a125099ae92e410556c6"
+    },
+    "scope": "Exact V1.5.6 in-memory offline candidate; one CRC-checked model slot, no device writer"
+  },
+  "optimization": {
+    "algorithm": "Load-time weight packing, explicit C3 dot products, incremental history addressing; unchanged accumulation order and on-flash record format",
+    "baseline_elf_sha256": "af6a4568875977de7a3fe5d366b3098eea0d10dcde389423f655e6f8f350131f",
+    "current_elf_sha256": "4bfb01ab3032e151299a11b58a611a3ef180022428858a3727f2a0ec52d216c3",
+    "baseline_sources": {
+      "research/baselines/a2-scalar/a2_lite.hpp": "dbf5be0edb324f2832a4eefc10e0b024b7153201726c65cd456b2d51bb2284a0",
+      "research/baselines/a2-scalar/a2_lite.cpp": "69cbd949c2056e3f9118d059b1cb48fb7a397ebc7e52505bc6f29e29a9ed9671",
+      "research/baselines/a2-scalar/reclaimed_v1.ld": "b03d30ed966197df323c688908e3fb153663d627b5b58304dd4dbd74a6e3fc30",
+      "research/baselines/a2-scalar/a2-reclaimed-build.json": "a1a82e8aab2f61b91cbda57bcf877d1384e5d5ae6763caad0e244f808d04e9de",
+      "research/baselines/a2-scalar/stock_adapter.cpp": "0ee75e1f49956346196b89923e5350747c78a629f19e59fa701c0048bee06467"
+    },
+    "verification": "artifacts/a2-performance-summary.json",
+    "no_fast_math": true
+  }
+}

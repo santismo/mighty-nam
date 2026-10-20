@@ -1,0 +1,39 @@
+{
+  "engine": "official",
+  "assume_48000": true,
+  "seconds": 3,
+  "stages": [
+    {
+      "type": "gain",
+      "a": 0.8
+    },
+    {
+      "type": "drive",
+      "a": 2,
+      "b": 0.15
+    },
+    {
+      "type": "nam"
+    },
+    {
+      "type": "chorus",
+      "a": 0.8,
+      "b": 0.15
+    },
+    {
+      "type": "delay",
+      "a": 250,
+      "b": 0.3,
+      "c": 0.15
+    },
+    {
+      "type": "reverb",
+      "a": 0.65,
+      "b": 0.15
+    },
+    {
+      "type": "gain",
+      "a": 0.5
+    }
+  ]
+}

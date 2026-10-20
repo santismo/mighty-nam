@@ -1,0 +1,109 @@
+{
+  "status": "ACTUAL_STOCK_DSP_CHAIN_TESTED_OFFLINE_NOT_DEVICE_LOADABLE",
+  "preferred_first_target": "Stock V1.5.6 application with amp-stage replacement; retain stock startup/clock/codec/SAI/DMA",
+  "scope": "Saved-file analysis and in-memory application patch experiments only; no device/USB/audio access",
+  "stock_payload_sha256": "a8a064a5b0e308b9cf193ebdf23d352ddff092d88db71531729ca1864a86d990",
+  "amp_stage_evidence": {
+    "source_descriptor": "0x20000550",
+    "source_function_pointer": "0x20000554 = 0x5579",
+    "stock_amp_entry": "0x5578",
+    "stage_id": 3,
+    "preset_type_byte": 3,
+    "disabled_mask": "0x40",
+    "chain_rebuild": "0x121d4",
+    "chain_dispatch": "0x122d0",
+    "active_entries": "0x200005c8 + 28*slot",
+    "abi": "r0 left input, r1 right input, r2 left output, r3 right output; 8 float samples per plane",
+    "identification": "Stock reads preset byte 3 and amp type table; independently corroborated by Mightier Amp MP-3 Head_iAMP=3",
+    "gain_note": "Stock wrapper applies 0.2 before its own amp model. NAM input calibration must be established separately."
+  },
+  "ram_patch_persistence": "Earlier RAM substitution was transient. New in-memory application entry patches persist through tested CRT/main restarts without changing stock descriptor.",
+  "candidate_code_gap": {
+    "v1_start": "0x23569",
+    "v1_end_exclusive": "0x40000",
+    "v1_zero_bytes": 117399,
+    "physical_execution_proven": false,
+    "v3_zero_bytes": 107893,
+    "loader_copy_extent": null,
+    "status": "SUPERSEDED_BY_RECLAIMED_AMP_CODE_PROFILE"
+  },
+  "candidate_state_reuse": {
+    "stock_amp_arena": "0x202e4000",
+    "status": "105_STOCK_RELOAD_CASES_PASS_BOUNDED_OFFLINE_TESTS",
+    "background_writers": [
+      "0x5308 model data copy",
+      "0x5340 state initialization",
+      "0x53e0 background amp update"
+    ],
+    "next_step": "Remaining interrupts, USB, real preset storage, longer DSP runs and physical measurements",
+    "retired_entry": "0x57c0 returns immediately; init 0x5778 redirected to NAM",
+    "nam_state_start": "0x202e4020"
+  },
+  "vm_code_and_readonly_bytes": 4296,
+  "vm_bss_bytes": 4948,
+  "physical_code_address": null,
+  "physical_state_address": null,
+  "bootloader_gates": {
+    "copy_or_mapping_extent_proven": false,
+    "modified_payload_validation_known": false,
+    "erase_and_write_boundaries_proven": false,
+    "recovery_before_application_proven": false,
+    "copy_extent_note": "Reclaimed profile fits inside original occupied low image; exact physical loader acceptance/mapping still unverified."
+  },
+  "remaining_hybrid_integration": [
+    "Persistent hook passes simulated startup; physical loader and reboot behavior remain unknown",
+    "Extend bounded code/RAM proof to full DSP, interrupts, preset storage and hardware behavior",
+    "Stock bypass/reset tested offline; model switching smoothing and gain calibration remain",
+    "V3/installed-build-specific port; offsets here are V1 only",
+    "Target execution budget with representative models",
+    "Device-side loader validation and sealed USB recovery evidence"
+  ],
+  "firmware_file_created": false,
+  "full_flash_backup_obtained": false,
+  "stock_package_restore": "Conditional on intact reachable loader; not full-flash backup",
+  "latest_report": "STOCK-CHAIN-PROGRESS.html",
+  "candidate_reboot_tests": "PASS_OFFLINE_ONLY",
+  "candidate_evidence": "artifacts/reclaimed-reboot-tests.json",
+  "candidate_linked_profile": {
+    "code_start": "0x1a0a8",
+    "code_readonly_bytes": 4488,
+    "state_start": "0x202e4020",
+    "state_bytes": 4952,
+    "physical_placement_proven": false,
+    "model": "H3 correctness fixture",
+    "reset_tests": "3 fresh + 3 retained-memory",
+    "requires_loading_original_padding": false,
+    "elf_regions": [
+      {
+        "name": ".text",
+        "start": "0x1a0a8",
+        "end_exclusive": "0x1b220",
+        "bytes": 4472
+      },
+      {
+        "name": ".ARM.exidx",
+        "start": "0x1b220",
+        "end_exclusive": "0x1b230",
+        "bytes": 16
+      },
+      {
+        "name": ".bss",
+        "start": "0x202e4020",
+        "end_exclusive": "0x202e5378",
+        "bytes": 4952
+      }
+    ]
+  },
+  "reclaimed_code_tests": "PASS_OFFLINE_ONLY",
+  "stock_background_evidence": "artifacts/reclaimed-background-tests.json",
+  "stock_audio_chain_evidence": "artifacts/stock-audio-chain-tests.json",
+  "stock_outer_audio_evidence": "artifacts/stock-outer-audio-tests.json",
+  "stock_dsp_followup": {
+    "callbacks": "all 11 real stock stages",
+    "model_selections": 40,
+    "shared_initializer": "0x10b08",
+    "non_amp_initializer": "0xe98c",
+    "NAM_model": "H3 correctness fixture",
+    "hardware_validation": false
+  }
+}

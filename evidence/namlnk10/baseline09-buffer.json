@@ -1,0 +1,44 @@
+{
+  "status": "PASS_NAMLNK09_OUTPUT_BUFFER",
+  "elf_sha256": "05342d67b9147fdf31fd133ad0ed1fad018d407c45e198cc329957e34e6a1a97",
+  "cases": [
+    {
+      "samples": 8,
+      "exact_PCM_blocks": 140,
+      "additional_blocks": 0
+    },
+    {
+      "samples": 16,
+      "exact_PCM_blocks": 140,
+      "additional_blocks": 1
+    },
+    {
+      "samples": 32,
+      "exact_PCM_blocks": 140,
+      "additional_blocks": 3
+    },
+    {
+      "samples": 16,
+      "exact_PCM_blocks": 140,
+      "additional_blocks": 1
+    },
+    {
+      "samples": 8,
+      "exact_PCM_blocks": 140,
+      "additional_blocks": 0
+    }
+  ],
+  "renderer_samples": 5600,
+  "negative_commands": 133,
+  "model_identity_unchanged": true,
+  "model_transfer_preserves_buffer_and_mutes": true,
+  "restart_restores_eight_and_mutes": true,
+  "fault_discards_queued_audio": true,
+  "sample_rate_hz": 48000,
+  "processing_frames": 8,
+  "lowest_matches_NAMLNK08": true,
+  "physical_device_access": false,
+  "host_audio_access": false,
+  "physical_deadline_proven": false,
+  "seconds": 30.27175963902846
+}

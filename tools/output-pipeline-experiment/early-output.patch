@@ -1,0 +1,24 @@
+--- installed07/stock_chain_firmware.cpp
++++ offline-experiment/stock_chain_firmware.cpp
+@@ -193,6 +193,11 @@
+  ((void(*)(void))0x11663)();
+ #ifdef MPP_LISTENING
+  mpp_listen_prepare();
++ // Offline experiment: match stock callback's one-block output pipeline.
++ // Publish the previous protected block before this block's NAM work; stock
++ // packs at 0x14c2e and only then runs its chain at 0x14d5c. Physical DMA
++ // handoff timing and audible benefit remain unverified.
++ mpp_listen_render(mpp_link_output,chain_right,tx);
+ #endif
+  float x[8];for(unsigned i=0;i<8;++i)x[i]=(float)rx[i*4+3]*0x1p-31f;
+  // Use the unmodified stock mono-input/master-volume wrapper and dispatcher.
+@@ -212,9 +217,6 @@
+ #endif
+  uint32_t bits;__builtin_memcpy(&bits,mpp_link_output+7,4);
+  mpp_link.last_output_bits=bits;++mpp_link.runs;
+-#ifdef MPP_LISTENING
+- if(mpp_link.running)mpp_listen_render(mpp_link_output,chain_right,tx);
+-#endif
+  ((float(*)(void))0x11671)();
+  const uint32_t ticks=rd(0x2000e490);
+  if(ticks>mpp_link.timer_max)mpp_link.timer_max=ticks;

@@ -1,0 +1,126 @@
+import FlutterMacOS
+import AppKit
+import Security
+public final class NamDevicePlugin: NSObject, FlutterPlugin {
+    private let midi = NamMidi()
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let instance = NamDevicePlugin()
+        registrar.addMethodCallDelegate(instance, channel: FlutterMethodChannel(name:"nam_plug/device",binaryMessenger:registrar.messenger))
+    }
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        do {
+            switch call.method {
+            case "loadToneSession", "saveToneSession":
+                guard let args=call.arguments as? [String:Any], let client=args["clientId"] as? String,
+                      client.hasPrefix("t3k_pub_"), client.utf8.count<=256 else {
+                    result(FlutterError(code:"session",message:"Invalid public client",details:nil));return
+                }
+                let query:[String:Any]=[kSecClass as String:kSecClassGenericPassword,
+                    kSecAttrService as String:"org.namplug.controller.tone3000",
+                    kSecAttrAccount as String:client]
+                if call.method == "loadToneSession" {
+                    var lookup=query;lookup[kSecReturnData as String]=true;lookup[kSecMatchLimit as String]=kSecMatchLimitOne
+                    var data:CFTypeRef?;let status=SecItemCopyMatching(lookup as CFDictionary,&data)
+                    if status == errSecItemNotFound {result(nil);return}
+                    guard status == errSecSuccess,let bytes=data as? Data,bytes.count<=16384 else {
+                        result(FlutterError(code:"session",message:"Could not read saved sign-in",details:nil));return
+                    }
+                    result(String(data:bytes,encoding:.utf8));return
+                }
+                guard let text=args["value"] as? String else {
+                    let status=SecItemDelete(query as CFDictionary)
+                    if status == errSecSuccess || status == errSecItemNotFound {result(nil)} else {
+                        result(FlutterError(code:"session",message:"Could not remove saved sign-in",details:nil))
+                    };return
+                }
+                guard let bytes=text.data(using:.utf8),bytes.count<=16384 else {
+                    result(FlutterError(code:"session",message:"Sign-in data too large",details:nil));return
+                }
+                var status=SecItemUpdate(query as CFDictionary,[kSecValueData as String:bytes] as CFDictionary)
+                if status == errSecItemNotFound {
+                    var item=query;item[kSecValueData as String]=bytes
+                    item[kSecAttrAccessible as String]=kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+                    status=SecItemAdd(item as CFDictionary,nil)
+                }
+                if status == errSecSuccess {result(nil)} else {
+                    result(FlutterError(code:"session",message:"Could not securely save sign-in",details:nil))
+                }
+            case "loadLibrary": result(UserDefaults.standard.string(forKey:"nam-plug-library-v2"))
+            case "saveLibrary":
+                guard let value=call.arguments as? String,value.utf8.count<=2097152 else { result(FlutterError(code:"size",message:"Preset library is too large",details:nil)); return }
+                UserDefaults.standard.set(value,forKey:"nam-plug-library-v2");result(nil)
+            case "devices": result(try midi.devices())
+            case "inspect":
+                guard let args=call.arguments as? [String:Any], let id=args["source"] as? Int else { result(FlutterError(code:"arguments",message:"Select a device",details:nil)); return }
+                midi.inspect(id) { value in
+                    switch value { case .success(let data): result(data)
+                    case .failure(let error): result(FlutterError(code:"connection",message:String(describing:error),details:nil)) }
+                }
+            case "readStockControls", "applyStockControls", "setCabinetBypassed":
+                guard let args=call.arguments as? [String:Any],let id=args["source"] as? Int else {
+                    result(FlutterError(code:"arguments",message:"Select a plug",details:nil));return
+                }
+                var plan: NamStockWire.Plan?
+                if call.method == "setCabinetBypassed" {
+                    guard let bypassed=args["bypassed"] as? Bool else {
+                        result(FlutterError(code:"arguments",message:"Choose a cabinet bypass state",details:nil));return
+                    }
+                    plan=NamStockWire.Plan(cabinetBypassed:bypassed)
+                }
+                if call.method == "applyStockControls" {
+                    guard args["namEnabled"] == nil || args["namEnabled"] is Bool else {
+                        result(FlutterError(code:"arguments",message:"Invalid NAM bypass control",details:nil));return
+                    }
+                    guard let controls=args["controls"] as? [[Int]],let order=args["order"] as? [Int],
+                          let checked=NamStockWire.Plan(controls:controls,order:order,namEnabled:args["namEnabled"] as? Bool) else {
+                        result(FlutterError(code:"arguments",message:"These controls are not supported by this firmware",details:nil));return
+                    }
+                    plan=checked
+                }
+                midi.stock(id,plan:plan) { value in
+                    switch value { case .success(let data): result(data)
+                    case .failure(let error): result(FlutterError(code:"connection",message:String(describing:error),details:nil)) }
+                }
+            case "setOutputBuffer":
+                guard let args=call.arguments as? [String:Any],let id=args["source"] as? Int,
+                      let samples=args["samples"] as? Int else {
+                    result(FlutterError(code:"arguments",message:"Select a plug and output buffer",details:nil));return
+                }
+                midi.outputBuffer(id,samples:samples) { value in
+                    switch value { case .success(let data): result(data)
+                    case .failure(let error): result(FlutterError(code:"connection",message:String(describing:error),details:nil)) }
+                }
+            case "setListening":
+                guard let args=call.arguments as? [String:Any],let id=args["source"] as? Int,
+                      let enabled=args["enabled"] as? Bool else {
+                    result(FlutterError(code:"arguments",message:"Select a plug and listening state",details:nil));return
+                }
+                midi.listen(id,enabled:enabled) { value in
+                    switch value { case .success(let data): result(data)
+                    case .failure(let error): result(FlutterError(code:"connection",message:String(describing:error),details:nil)) }
+                }
+            case "exchangeModelFrame", "exchangePresetFrame":
+                guard let args=call.arguments as? [String:Any],let id=args["source"] as? Int,
+                      let frame=args["frame"] as? FlutterStandardTypedData else {
+                    result(FlutterError(code:"arguments",message:"Select a device and model frame",details:nil));return
+                }
+                let exchange = call.method == "exchangePresetFrame" ? midi.preset : midi.exchange
+                exchange(id, Array(frame.data)) { value in
+                    switch value {
+                    case .success(let data):
+                        guard let raw=data["frame"] as? [UInt8] else {
+                            result(FlutterError(code:"protocol",message:"Missing model reply",details:nil));return
+                        }
+                        result(FlutterStandardTypedData(bytes:Data(raw)))
+                    case .failure(let error):
+                        result(FlutterError(code:"connection",message:String(describing:error),details:nil))
+                    }
+                }
+            case "disconnect": midi.disconnect(); result(nil)
+            case "bluetooth":
+                result(FlutterError(code:"bluetooth",message:"Pair Bluetooth MIDI in Audio MIDI Setup, then refresh. USB is ready directly.",details:nil))
+            default: result(FlutterMethodNotImplemented)
+            }
+        } catch { result(FlutterError(code:"connection",message:String(describing:error),details:nil)) }
+    }
+}

@@ -1,0 +1,35 @@
+{
+  "status": "REGISTER_BACKEND_IMPLEMENTED_OFFLINE_PHYSICAL_INTEGRATION_PENDING",
+  "entry": {
+    "prototype": "Synthetic ELF vector table, MSP setup, interrupt masking, VTOR/FPU enable, data copy, BSS and DMA clearing, then owned application boot",
+    "cache_contract": "Original VM entry still rejects enabled caches. New stage-0 C helper preserves enabled/dirty caches and snapshots MPU/TCM state; it is not yet a loader-compatible reset entry.",
+    "unresolved": [
+      "Factory loader handoff and copy extent",
+      "Physical vector/linker map",
+      "CPU clocks and FlexRAM bank ownership",
+      "NVIC exception wiring and priorities"
+    ]
+  },
+  "port_requirements": {
+    "HoldOutputs": "Implemented stock low GPIO7 controls plus codec reset; analog meaning/pops unverified. All diagnostic TX remains zero.",
+    "StopAudio": "Implemented SAI/DMAMUX/request shutdown, IRQ masking and bounded DMA ACTIVE checks. Failure prevents buffer writes/rebind.",
+    "PrepareMemory": "Implemented OCRAM range/alignment and ROM-workspace exclusion, cache-line maintenance, ARM pointer mapping check. Ownership/MPU mapping unverified.",
+    "PreparePins": "Implemented verified stock SAI1 and codec control pin subset; excludes FlexSPI pins. Board electrical behavior unverified.",
+    "AudioLdo_AnalogWrite_AnalogModify": "Implemented bounded AI register transactions and recovered LDO sequence; tested against a semantic model, not silicon.",
+    "Write32": "Restricted to reviewed clock/SAI registers with GPR0 field preservation.",
+    "DelayUnits": "Resolved as microseconds; DWT-based bounded waits require explicitly validated CPU frequency. Counter is not reset by delays.",
+    "CodecReset_and_I2cBus": "Implemented open-drain GPIO direction changes, PSR sampling, ACK/NACK/stretch timeouts and STOP-error propagation.",
+    "InstallDma": "Implemented width-correct descriptors and RX0/TX16 normal request routing; rejects other active/requested DMA ownership.",
+    "PublishTx_AcquireRx": "Implemented line-aligned cache maintenance and barriers. Inherited MPU/cache and physical bus ownership still unverified.",
+    "StartAudio": "Implemented silent SAI/DMA enable sequence. IRQ remains masked; diagnostic polling only. Not physically tested.",
+    "ticks": "DWT CYCCNT reads with no reset. Host steps are synthetic, not processor throughput evidence."
+  },
+  "event_contract": "Diagnostic poller independently snapshots RX/TX NEXT pointers, detects torn snapshots/alternation faults and acknowledges RX INT. Cannot count lost full-ring wraps or prove buffer ownership throughout processing. Physical IRQ/release deadline validation remains required.",
+  "diagnostic_policy": "A2 output is kept in RAM for comparisons; all modeled TX slots remain zero. No unmute operation is exposed.",
+  "recovery": "No ROM call, flash write, USB upload or fuse modification is implemented. Software ROM entry is a research lead requiring validated handoff and initially executable code.",
+  "physical_execution_tested": false,
+  "latest_report": "../../STARTUP-CONTROL-PROGRESS.html",
+  "implemented_backend": "../hardware/rt1176_backend.cpp",
+  "offline_entry_diagnostic": "../diagnostic/contract.json",
+  "startup_control_contract": "../hardware/startup-control-contract.json"
+}

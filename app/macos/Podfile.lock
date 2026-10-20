@@ -1,0 +1,46 @@
+PODS:
+  - file_selector_macos (0.0.1):
+    - FlutterMacOS
+  - flutter_web_auth_2 (3.0.0):
+    - FlutterMacOS
+  - FlutterMacOS (1.0.0)
+  - nam_device (0.2.0):
+    - FlutterMacOS
+  - url_launcher_macos (0.0.1):
+    - FlutterMacOS
+  - window_to_front (0.0.4):
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
+  - flutter_web_auth_2 (from `Flutter/ephemeral/.symlinks/plugins/flutter_web_auth_2/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - nam_device (from `Flutter/ephemeral/.symlinks/plugins/nam_device/macos`)
+  - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
+  - window_to_front (from `Flutter/ephemeral/.symlinks/plugins/window_to_front/macos`)
+
+EXTERNAL SOURCES:
+  file_selector_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
+  flutter_web_auth_2:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_web_auth_2/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  nam_device:
+    :path: Flutter/ephemeral/.symlinks/plugins/nam_device/macos
+  url_launcher_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
+  window_to_front:
+    :path: Flutter/ephemeral/.symlinks/plugins/window_to_front/macos
+
+SPEC CHECKSUMS:
+  file_selector_macos: cc3858c981fe6889f364731200d6232dac1d812d
+  flutter_web_auth_2: 2e1dc2d2139973e4723c5286ce247dd590390d70
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  nam_device: 914a1463b085e24f2c5f0637a2b7a657c0475d7f
+  url_launcher_macos: c82c93949963e55b228a30115bd219499a6fe404
+  window_to_front: cab51effb75e4d4236ca4fcb50998880d4deb888
+
+PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
+
+COCOAPODS: 1.16.2

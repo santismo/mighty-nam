@@ -1,0 +1,27 @@
+{
+  "upstream_app": "https://github.com/tuntorius/mightier_amp",
+  "upstream_commit": "e05b6d06fadc6cfc301bbeefa4647cdda33e5210",
+  "license": "MIT; LICENSE.md retained",
+  "adaptation": [
+    "Mac native controller, horizontal draggable hybrid rig, selected-block controls and offline capture favorites",
+    "80 upstream MIT stock effect and cabinet definitions isolated into lib/nam/stock/vendor, with parameter formatting; no proprietary DSP copied",
+    "Factory amp UI replaced with TONE3000/NAM; OAuth PKCE, native Keychain, catalog and official picker fallback",
+    "Original native read-only CoreMIDI diagnostics plugin supports macOS and legacy iOS source"
+  ],
+  "tone3000_docs": "https://www.tone3000.com/api",
+  "tone3000_examples": "https://github.com/tone-3000/api",
+  "nux_effects": "https://github.com/opensensor/nux-effects",
+  "nux_effects_commit": "28b7c3ab05a9e980530950c7c784b062ebf96cd3",
+  "nux_effects_use": "Design reference and file-level comparison only; no source copied or hardware tools executed.",
+  "toolchain": "Flutter3.27.4 revision d8a9f9a52e5af486f80d932e838ee93861ffd863 / Dart3.6.2; selected for compatibility with original app",
+  "live_account_tested": false,
+  "physical_device_contacted": true,
+  "physical_iphone_tested": false,
+  "mac_native_tested": true,
+  "this_session_physical_devices_found": 0,
+  "tone3000_plugin_reference": {
+    "url": "https://github.com/tone-3000/tone3000-plugin",
+    "commit": "ab5e5ae4388753184687d67816815aa481f2cea9",
+    "source_copied": false
+  }
+}

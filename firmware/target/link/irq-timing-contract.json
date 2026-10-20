@@ -1,0 +1,77 @@
+{
+  "identity": "NAMLNK06",
+  "state": "Silent hardware-trial candidate; package only after exact-ELF staging checks. Not installed.",
+  "base": "NAMLNK05 non-fused A2 Lite, stock chain, bypass suspension and working-set preparation",
+  "output": "Always zero; no audio playback or host audio APIs",
+  "guard": "Existing wrapped-DSP 150-tick guard is unchanged",
+  "measurement": {
+    "counter": "Read-only DWT CYCCNT; raw 32-bit cycles, no conversion to microseconds",
+    "enclosed_entry": "Original stock audio IRQ body at 0x11d94",
+    "enclosed_work": [
+      "Stock DMA status helper, acknowledgements and buffer selection",
+      "Replacement audio callback including validation, housekeeping and output clearing",
+      "Input conversion, complete stock effect chain and NAM",
+      "Existing DSP timer/accounting and stock sample-counter update"
+    ],
+    "excluded": [
+      "Hardware interrupt release latency and exception entry/return",
+      "New wrapper prologue and bookkeeping before the first timestamp",
+      "New wrapper bookkeeping and epilogue after the second timestamp",
+      "Foreground effect loading, USB model validation and other thread work"
+    ],
+    "known_reset_hook": "The exact stock delay CYCCNT reset at 0xbe48 is preserved and increments a reset epoch",
+    "not_proven": [
+      "CPU frequency, independent clock calibration, complete hardware deadline or DMA underrun detection",
+      "Absence of other counter writers, clock changes or positive counter discontinuities",
+      "Runtime overhead, cache behavior or timing of the diagnostic build on physical hardware"
+    ]
+  },
+  "patches": {
+    "0x205a8": "Replace only the stock audio IRQ trampoline target; original IRQ body and vector table remain intact",
+    "0xbe48": "Replace two instructions with BL; hook executes both original instructions and preserves live registers and flags"
+  },
+  "status_protocol": {
+    "transport": "Existing bounded NP read request and eight-byte 7-bit status response",
+    "pages_0_through_11": "Unchanged NAMLNK model/DSP status",
+    "page_12": "Latch one coherent snapshot; return magic 0x54494d31 on success",
+    "pages_13_through_22": [
+      "publication sequence",
+      "accepted raw spans",
+      "rejected spans",
+      "sticky rejection flags",
+      "last accepted cycles",
+      "maximum accepted cycles",
+      "last entry DWT CTRL",
+      "last exit DWT CTRL",
+      "last entry reset epoch",
+      "last exit reset epoch"
+    ],
+    "snapshot": "Three bounded seqlock attempts; frozen until another page-12 request. No IRQ masking or processing pause. Single diagnostic reader required.",
+    "errors": {
+      "1": "Unsupported page",
+      "2": "Three snapshot attempts interrupted; previous snapshot invalidated",
+      "3": "No valid latched snapshot"
+    },
+    "flags": {
+      "1": "Counter disabled at entry or CTRL changed during the span",
+      "2": "Known stock reset occurred during the span",
+      "4": "Zero or ambiguous span of at least half the counter range",
+      "8": "Accepted or rejected count saturated"
+    }
+  },
+  "initialization": "New BSS state is appended after the existing NAM model/receiver state and cleared by the stock runtime on cold and warm starts",
+  "mac_test_scope": "CPU simulation verifies code placement, IRQ/ABI behavior, synthetic-counter math, status snapshots, stock DSP switching and independent NAM reference accuracy. It cannot measure physical M7 real-time performance.",
+  "distribution": "Source archive excludes proprietary NUX binaries and firmware images. Local staged trial retains stock startup, drivers and effects; not fully open-source firmware.",
+  "headroom": {
+    "placement": "After the stock master-volume wrapper, inside the unchanged DSP timer guard",
+    "samples_per_channel": 8,
+    "ceiling": 0.875,
+    "scale_target": 0.8749998807907104,
+    "gain_rounding": "Float32 division, followed by one representable step toward zero, including subnormal gains",
+    "below_ceiling": "Bit-identical, no gain increase",
+    "above_ceiling": "One common attenuation for both channels, recomputed every block",
+    "nonfinite": "Clear both internal outputs and latch processing fault",
+    "output_hardware": "Still all-zero DMA buffers",
+    "limits": "Immediate block gain recovery; no release smoothing or listening assessment. Not a playable-output release."
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "schema": "nam-plug-preset-1",
+  "name": "All effects",
+  "sample_rate": 48000,
+  "model_sha256": null,
+  "blocks": [
+    {
+      "id": "gain",
+      "effect": 0,
+      "enabled": true,
+      "parameters": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "drive",
+      "effect": 1,
+      "enabled": true,
+      "parameters": [
+        3.0,
+        0.7,
+        0.0
+      ]
+    },
+    {
+      "id": "distortion",
+      "effect": 2,
+      "enabled": true,
+      "parameters": [
+        5.0,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "id": "nam",
+      "effect": 3,
+      "enabled": true,
+      "parameters": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "tremolo",
+      "effect": 4,
+      "enabled": true,
+      "parameters": [
+        3.0,
+        0.35,
+        0.0
+      ]
+    },
+    {
+      "id": "chorus",
+      "effect": 5,
+      "enabled": true,
+      "parameters": [
+        0.8,
+        0.25,
+        0.0
+      ]
+    },
+    {
+      "id": "pitch",
+      "effect": 6,
+      "enabled": true,
+      "parameters": [
+        7.0,
+        0.4,
+        0.0
+      ]
+    },
+    {
+      "id": "delay",
+      "effect": 7,
+      "enabled": true,
+      "parameters": [
+        320.0,
+        0.35,
+        0.2
+      ]
+    },
+    {
+      "id": "reverb",
+      "effect": 8,
+      "enabled": true,
+      "parameters": [
+        0.65,
+        0.2,
+        0.0
+      ]
+    }
+  ]
+}

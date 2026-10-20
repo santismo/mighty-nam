@@ -1,0 +1,63 @@
+NAM Plug onboard presets v1 — NAMLNK10 experimental
+
+Seven fixed positions, matching the Mighty Plug Pro/Mightier Amp Pro mapping:
+1 Green, 2 Orange, 3 Red, 4 Blue, 5 Cyan, 6 Pink, 7 Lilac.
+Each record contains one canonical A2 Lite capture (1871 float weights,
+48 kHz), a UTF-8 name, model CRC/SHA metadata, the complete 128-byte stock
+chain (including enabled flags and block order), output buffer and boot-play flag.
+
+Saving is explicit in the Mac app. Live edits do not write permanent storage.
+Two independent 8 KiB records are reserved per color inside retired AMP resource
+storage at 0x30384000..0x303a0000. Total bank size: 114,688 bytes.
+The new foreground code is copied from 0x303a0000 to 0x20308000, after retiring
+only the audited stock AMP initialization, processing and background paths.
+
+Record layout (little-endian; offsets in bytes)
+0 magic 0x3142504e; 4 schema1; 8 slot0..6; 12 generation >=1
+16 CRC32 of canonical 8192-byte model slot
+20 flags: bit0 standalone play after boot; all other bits zero
+24 output buffer 8/16/32; 28 reserved zero
+32 model SHA-256 (32 bytes); 64 name (64 bytes, NUL-terminated, max63 UTF-8 bytes)
+128 complete stock effect snapshot (128 bytes)
+256 model header and weights (7516 bytes); canonical model padding reconstructed FF
+8184 CRC32 of bytes0..8183; 8188 final commit marker 0x454e4f44
+Unused record bytes are FF. CRC and model/effect validation run before recall.
+
+Save erases only the older/unused record, writes all 32 pages, reads back every
+byte, programs the final four-byte commit, then reads and validates again.
+An unchanged save is a no-op. Reads select the newest valid generation and
+fall back to the older valid copy on corruption. An I/O error is not treated as
+an empty record. The generation counter cannot wrap. Erase/program failures
+return an error; valid old copies are not intentionally erased.
+
+Transport: bounded USB-MIDI SysEx prefix F0 43 58 70 04 02 4E 53 01,
+7-bit packed data, F7 terminator. Raw request magic0x3031504e, version1,
+operation1 metadata/read, 2 save current checked model+chain, 3 recall.
+Slot is0..6; nonzero32-bit nonce and CRC32 are mandatory. No raw address,
+arbitrary memory read/write, or raw erase operation is exposed.
+Requests:20 bytes for read/recall;132 for save. Replies:276raw/326wirebytes.
+The app checks identity NAMLNK10, nonce, slot, CRC, generation, model identity,
+effects, name, a separate metadata readback, and current mute state before it
+labels a save confirmed. The firmware reads back flash before responding.
+Status page25: schema1 in bits24..31, occupied mask in bits8..14, active slot in
+bits0..7 (255 means none).
+
+The existing stock PRESET selection hook queues a recall for foreground service;
+flash reads and model initialization do not run in the audio interrupt. Empty
+colors are skipped via the stock active-channel mask. Preset changes use the
+existing mute, settling and fade path. The fixed color LED follows stock channel
+selection. Last-selected color across power loss is not independently guaranteed.
+
+Power-off persistence is implemented and emulator-tested, not yet physically
+verified on NAMLNK10. First install starts with an empty bank and muted output.
+Saved play-enabled presets start without the Mac after startup and settling.
+The public stock flash wrappers and MPU setup have been executed with modeled
+peripherals. Actual chip writes/cache behavior, button/LED behavior, recovery and
+timing on this new image still require a physical trial.
+
+Firmware reinstall/update currently replaces this storage area; power-off
+persistence does not imply update preservation. Keep captures and presets in
+the Mac library. No guarantee is made against loss of both copies, wear-out,
+power failure affecting the entire flash chip, or damage outside the tested bank.
+The stock NUX image remains a restore option only while the factory updater is
+reachable; a full bootloader backup and universal USB recovery are not proven.

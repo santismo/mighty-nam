@@ -1,0 +1,19 @@
+{
+  "schema": "nam-plug-release-1",
+  "target": "NUX-MP3",
+  "firmware": {
+    "identity": "NAMLNK01",
+    "sha256": "5cba3503c96cec45b9f01dd4ac3a14617cd1fd76f33e6295a1e41e93ebdb2202",
+    "bytes": 14439215
+  },
+  "restore": {
+    "sha256": "95c704b6026cb26aceaae179039e994c261a93610b0c578f50634b39f4393dd6",
+    "bytes": 14439215
+  },
+  "loader": {
+    "vid": 38183,
+    "pid": 49495,
+    "identifier": "20220615"
+  },
+  "mode": "experimental-silent-RAM-model-link"
+}

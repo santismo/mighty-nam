@@ -1,0 +1,149 @@
+{
+  "status": "PASS_NAMLNK09_BOUNDED_LISTENING_CPU_TESTS",
+  "identity": "NAMLNK09",
+  "elf_sha256": "05342d67b9147fdf31fd133ad0ed1fad018d407c45e198cc329957e34e6a1a97",
+  "cases": [
+    {
+      "model": "marshall-lite.nam",
+      "case": "all-stock-effects",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.0009702867828309536,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "marshall-lite.nam",
+      "case": "heavy-settings",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.05910841003060341,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "marshall-lite.nam",
+      "case": "dry-bypass",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.10376764088869095,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "marshall-lite.nam",
+      "case": "change-asleep",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.10937497764825821,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "marshall-lite.nam",
+      "case": "resume-all",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.10937497764825821,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "marshall-lite.nam",
+      "case": "reordered",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.0569588840007782,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "case": "all-stock-effects",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.008754026144742966,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "case": "heavy-settings",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.08335606008768082,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "case": "dry-bypass",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.10937497764825821,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "case": "change-asleep",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.09687457233667374,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "case": "resume-all",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.10937497764825821,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "case": "reordered",
+      "blocks": 1500,
+      "silent_blocks": 1199,
+      "peak_Q31_normalized": 0.08681006729602814,
+      "peak_reference_error": 0.0,
+      "relative_RMS_error": 0.0,
+      "max_NAM_boundary_error": 0.0
+    }
+  ],
+  "seconds": 484.8796683889814,
+  "checks": [
+    "Default mute",
+    "Explicit arm",
+    "Both DMA halves; stock stereo lane mapping",
+    "200 ms muted effect settling",
+    "21.3 ms fade to -18.06 dB pad",
+    "Stock global volume path",
+    "Same-input NAM reference",
+    "Heavy dry resume and reordering",
+    "Model transfer disarms",
+    "Warm restart disarms and clears model",
+    "Timing and right-channel nonfinite faults clear DMA before release"
+  ],
+  "physical_device_access": false,
+  "host_audio_access": false,
+  "limits": [
+    "Synthetic timer: no performance proof",
+    "No physical output/volume or listening validation",
+    "Bounded combinations; not all models/effect settings",
+    "No flash container created"
+  ]
+}

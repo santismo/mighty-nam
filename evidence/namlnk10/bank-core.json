@@ -1,0 +1,15 @@
+{
+  "status": "PASS_NAMLNK10_PRESET_BANK_SANITIZERS",
+  "elf_sha256": "7b92cb19fd515067c65034e27cf8c7b4364e4a5100a05b8fde0f36946e7151c9",
+  "cases": 252,
+  "address_sanitizer": true,
+  "undefined_behavior_sanitizer": true,
+  "log_sha256": "fd829a85bec2c8fcf1b4a9767e1bc164956afff5fefce501fa1792042e8e0705",
+  "source_sha256": {
+    "outputs/mighty-plug-nam/target/link/preset_bank.cpp": "525acd13510f9c93691e229401f993837be27049bd775d06802298830455c648",
+    "outputs/mighty-plug-nam/target/link/preset_bank.hpp": "9a051caf7531ce85c866bbf9c21688387651e6ed56febbd6308d40516de6a7c1",
+    "outputs/mighty-plug-nam/tests/preset_bank_test.cpp": "ba917a5b29734c8bf1326d089265b56119c2d360b6328b1bc9319bf0b165777f"
+  },
+  "device_access": false,
+  "audio_access": false
+}

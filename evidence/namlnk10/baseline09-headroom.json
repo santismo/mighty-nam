@@ -1,0 +1,26 @@
+{
+  "status": "PASS_NAMLNK09_STEREO_OUTPUT_HEADROOM",
+  "identity": "NAMLNK09",
+  "elf_sha256": "05342d67b9147fdf31fd133ad0ed1fad018d407c45e198cc329957e34e6a1a97",
+  "cases": 4812,
+  "nonfinite_cases": 96,
+  "ceiling": 0.875,
+  "maximum_protected_peak": 0.875,
+  "maximum_reference_error": 1.1735740114067768e-38,
+  "unchanged_below_ceiling": true,
+  "both_channels_checked": true,
+  "model_state_unchanged": true,
+  "nonfinite_stops_and_clears_both_channels": true,
+  "DMA_always_zero": true,
+  "float_flush_modes_tested": [
+    false,
+    true
+  ],
+  "independent_reference": true,
+  "physical_device_access": false,
+  "audio_playback": false,
+  "limits": [
+    "Eight-sample common gain with immediate recovery, not a release-smoothed or listening-validated limiter.",
+    "Physical M7 timing and real FPU configuration still require the controlled hardware trial."
+  ]
+}

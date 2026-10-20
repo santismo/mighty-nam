@@ -1,0 +1,209 @@
+{
+  "schema": "nam-plug-effects-1",
+  "sample_rate": 48000,
+  "maximum_blocks": 12,
+  "routing": "ordered mono serial",
+  "effects": [
+    {
+      "id": 0,
+      "key": "gain",
+      "name": "Gain",
+      "category": "Utility",
+      "repeatable": true,
+      "parameters": [
+        {
+          "name": "Level",
+          "min": 0.0,
+          "max": 16.0,
+          "default": 1.0,
+          "unit": "×"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "key": "drive",
+      "name": "Overdrive",
+      "category": "Drive",
+      "repeatable": true,
+      "parameters": [
+        {
+          "name": "Drive",
+          "min": 1.0,
+          "max": 100.0,
+          "default": 3.0,
+          "unit": ""
+        },
+        {
+          "name": "Mix",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.7,
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "key": "distortion",
+      "name": "Distortion",
+      "category": "Drive",
+      "repeatable": true,
+      "parameters": [
+        {
+          "name": "Drive",
+          "min": 1.0,
+          "max": 100.0,
+          "default": 5.0,
+          "unit": ""
+        },
+        {
+          "name": "Mix",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.5,
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "key": "nam",
+      "name": "NAM A2 Lite",
+      "category": "Amp",
+      "repeatable": false,
+      "parameters": []
+    },
+    {
+      "id": 4,
+      "key": "tremolo",
+      "name": "Tremolo",
+      "category": "Modulation",
+      "repeatable": false,
+      "parameters": [
+        {
+          "name": "Rate",
+          "min": 0.1,
+          "max": 20.0,
+          "default": 3.0,
+          "unit": "Hz"
+        },
+        {
+          "name": "Depth",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.35,
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "key": "chorus",
+      "name": "Chorus",
+      "category": "Modulation",
+      "repeatable": false,
+      "parameters": [
+        {
+          "name": "Rate",
+          "min": 0.1,
+          "max": 20.0,
+          "default": 0.8,
+          "unit": "Hz"
+        },
+        {
+          "name": "Mix",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.25,
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "key": "pitch",
+      "name": "Pitch shift",
+      "category": "Pitch",
+      "repeatable": false,
+      "parameters": [
+        {
+          "name": "Shift",
+          "min": -12.0,
+          "max": 12.0,
+          "default": 7.0,
+          "unit": "st"
+        },
+        {
+          "name": "Mix",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.4,
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "key": "delay",
+      "name": "Delay",
+      "category": "Time",
+      "repeatable": false,
+      "parameters": [
+        {
+          "name": "Time",
+          "min": 1.0,
+          "max": 900.0,
+          "default": 320.0,
+          "unit": "ms"
+        },
+        {
+          "name": "Feedback",
+          "min": 0.0,
+          "max": 0.95,
+          "default": 0.35,
+          "unit": ""
+        },
+        {
+          "name": "Mix",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.2,
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "key": "reverb",
+      "name": "Reverb",
+      "category": "Space",
+      "repeatable": false,
+      "parameters": [
+        {
+          "name": "Decay",
+          "min": 0.0,
+          "max": 0.9,
+          "default": 0.65,
+          "unit": ""
+        },
+        {
+          "name": "Mix",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.2,
+          "unit": ""
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "ids": [
+      64,
+      127
+    ],
+    "maximum_registered": 4,
+    "loading": "compiled-in C++ callbacks; not arbitrary downloaded executable code"
+  },
+  "hardware_effects_validation": "pending; portable engine only"
+}

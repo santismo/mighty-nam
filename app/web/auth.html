@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>Returning to Mighty NAM</title>
+<p>Returning to Mighty NAM. You can close this window.</p>
+<script>
+if (window.opener) {
+  window.opener.postMessage({'flutter-web-auth-2': location.href}, location.origin);
+  history.replaceState(null, '', location.pathname);
+  window.close();
+}
+</script>

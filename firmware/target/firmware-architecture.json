@@ -1,0 +1,52 @@
+{
+  "status": "A2_HARDWARE_TRIAL_AND_OFFLINE_CONTROLLER_EFFECTS_ENGINE_PASS",
+  "user_clarification": "The final application may replace the proprietary NUX application entirely; retaining NUX effects is optional. Target an extensible firmware under our control that runs NAM on the plug.",
+  "application": "Our source plus appropriately licensed dependencies, with board drivers, NAM A2 Lite, model storage, an editable effects chain and a future phone control protocol.",
+  "factory_bootloader": "Factory loader retained in tested hybrid builds. Recovery of one non-starting probe to stock was demonstrated with PRESET + RESET; arbitrary damage and complete loader protection are not established.",
+  "stock_based_candidate_role": "Optional intermediate benchmark and reference for hardware behavior, not a required final architecture.",
+  "benefit": "Removes the long-term need to fit new features into retired stock AMP code and RAM. Available memory, CPU deadlines and loader layout still constrain a standalone application.",
+  "cost": "Requires completing startup, clocks, memory/cache, codec, audio transport and controls before independent operation. Does not itself provide an upload or recovery route.",
+  "existing_components": [
+    {
+      "path": "target/a2/a2_lite.cpp",
+      "state": "A2 Lite verified in the silent stock-driver NAMA2I01 guitar-input trial; independent firmware integration pending"
+    },
+    {
+      "path": "target/board",
+      "state": "Owned codec bus logic, DMA descriptor builder, Q31 adapter, startup-memory logic and compile-only reset entry; hardware backend incomplete"
+    },
+    {
+      "path": "src/engine.cpp",
+      "state": "Owned nine-effect engine plus bounded extension registry and NPC1 chain loader; app-exported full chain passes silent host restart/block-size tests"
+    }
+  ],
+  "implementation_sequence": [
+    "Preserve the proven silent I01 baseline and factory bootloader",
+    "Establish a larger executable and RAM layout for the owned engine and independent startup/drivers",
+    "Measure full-chain timing on the target with outputs muted",
+    "Bind preset/chain/model transactions to the device protocol and test interruption/restart behavior",
+    "Validate iPhone USB/Bluetooth operation and only enable audible output when requested"
+  ],
+  "parallel_research": "Independent loader protection and sealed RAM-only execution remain unresolved.",
+  "current_constraints": {
+    "experimental_flashing_authorized": true,
+    "enclosure_opening": false,
+    "playback": false,
+    "paid_services": false
+  },
+  "complete_standalone_image_exists": false,
+  "physical_execution_tested": true,
+  "latest_report": "../nam-plug/START-HERE.html",
+  "standalone_prototype": "standalone/port-contract.json",
+  "emulator_only_standalone_elf_exists": true,
+  "physical_board_port_implemented": false,
+  "next_work": [
+    "Move beyond the 5,092-byte retired amp slot; only 124 bytes remain in I01",
+    "Place the 246,944-byte host Chain state and 84,024-byte A2 state in verified target RAM",
+    "Bind NPC1 chain loading and model receiver to a measured firmware runtime",
+    "Finish standalone startup, driver ownership and loader handoff"
+  ],
+  "hardware_backend_evidence": "artifacts/hardware-summary.json",
+  "register_backend_implemented": true,
+  "physical_board_port_complete": false
+}

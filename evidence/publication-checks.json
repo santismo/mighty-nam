@@ -1,0 +1,45 @@
+{
+  "status": "PASS_PUBLIC_SOURCE_AND_INSTALLER_CHECKS",
+  "date": "2026-10-20",
+  "host_ctest_suites": 10,
+  "host_ctest_failed": 0,
+  "app_widget_tests_passed": 50,
+  "optional_fixture_interop_test_skipped": 1,
+  "shared_protocol_tests_passed": 34,
+  "preset_bank_sanitized_cases": 252,
+  "release_verifier_tests_passed": 1,
+  "firmware_rebuilt_from_public_tree": true,
+  "candidate_sha256": "02f161c703568c59b096239e7de818511c80ba74848f6ba04b87b99897faf172",
+  "firmware_candidate_published": false,
+  "physical_device_access": false,
+  "audio_access": false,
+  "site_pages_checked": 5,
+  "site_browser_checks": [
+    "desktop layout",
+    "390px mobile layout, no document overflow",
+    "block selection",
+    "bypass state",
+    "color selection",
+    "mobile navigation",
+    "guide navigation",
+    "no reported browser errors"
+  ],
+  "installer": {
+    "file": "NAM-Plug-0.3.0-macOS.dmg",
+    "sha256": "c5df440e79f3c225ca008db380c540a3726eb0090521fa8d89f12b9751e81b51",
+    "bytes": 19082707,
+    "app_version": "0.3.0",
+    "signing": "ad-hoc; not notarized",
+    "installs_firmware": false
+  },
+  "installer_contents": {
+    "status": "PASS_READONLY_INSTALLER_CONTENTS",
+    "app_version": "0.3.0",
+    "original_app_bytes_match": true,
+    "signature_valid": true,
+    "applications_shortcut": true,
+    "upstream_notice_included": true,
+    "firmware_installed": false,
+    "audio_access": false
+  }
+}

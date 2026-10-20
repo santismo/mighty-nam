@@ -1,0 +1,34 @@
+{
+  "schema": "nam-plug-release-1",
+  "target": "NUX-MP3",
+  "name": "Silent A2 guitar-input test",
+  "firmware": {
+    "identity": "NAMA2I01",
+    "sha256": "a146d768363c1430945367a3f34d6721d1c85edeb3781c12eb72bb8d9d7e1863",
+    "bytes": 14439215,
+    "file_name": "MP3-silent-A2-NAMA2I01-UNVERIFIED.bin",
+    "distributed_here": false
+  },
+  "restore": {
+    "sha256": "95c704b6026cb26aceaae179039e994c261a93610b0c578f50634b39f4393dd6",
+    "bytes": 14439215,
+    "file_name": "MP3_V1.5.6_Original(VT).bin",
+    "distributed_here": false
+  },
+  "loader": {
+    "vid": 38183,
+    "pid": 49495,
+    "identifier": "20220615",
+    "transport": "official NUX macOS updater"
+  },
+  "features": {
+    "nam_a2_lite": true,
+    "silent_trial_seconds": 30,
+    "status_read": true,
+    "live_chain_upload": false,
+    "model_upload": false,
+    "effects": false,
+    "playable_output": false
+  },
+  "provenance": "Local hardware-verified experimental build. Manifest hashes are not signatures. Do not infer arbitrary-damage recovery."
+}

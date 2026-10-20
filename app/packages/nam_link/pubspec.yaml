@@ -1,0 +1,12 @@
+name: nam_link
+description: Offline A2 Lite packaging and RAM transfer protocol for the Mighty Plug research app.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+dependencies:
+  crypto: ^3.0.6
+  http: ^1.2.2
+  collection: ^1.19.0
+dev_dependencies:
+  test: ^1.25.8

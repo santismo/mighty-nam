@@ -1,0 +1,23 @@
+{
+  "status": "REQUESTED_NOT_IMPLEMENTED_IN_NAMLNK07",
+  "requested_controls": ["input_gain", "bass", "middle", "treble", "mix", "output_level"],
+  "ui": "Controls below the selected NAM block, alongside capture selection and favorite",
+  "proposed_signal_path": {
+    "dry": "Signal entering the NAM block, before its input gain",
+    "wet": ["input_gain", "NAM A2 Lite", "bass_middle_treble_EQ"],
+    "blend": "dry * (1 - mix) + wet * mix",
+    "output": "output_level applied after the blend",
+    "bypass": "Bypass the entire NAM block, including its gains and EQ"
+  },
+  "defaults": {"input_gain_db": 0, "bass_db": 0, "middle_db": 0, "treble_db": 0, "mix": 1, "output_level_db": 0},
+  "requirements": [
+    "Separate tone shaping around the capture; do not imply reconstruction of the captured amplifier's physical controls",
+    "Keep the independently movable stock EQ block available",
+    "Smooth changes or use the established muted transition before resuming",
+    "Preserve output protection and explicit listening after model transfer",
+    "Save settings with the signal chain without changing the capture's identity or favorite status",
+    "Capability check and confirmed device readback before displaying controls as applied",
+    "Check memory placement, reference accuracy and physical timing with stock effects"
+  ],
+  "existing_firmware": "NAMLNK07 supports NAM bypass and model transfer, but has no protocol or DSP for these six controls"
+}

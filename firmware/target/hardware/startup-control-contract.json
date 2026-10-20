@@ -1,0 +1,73 @@
+{
+  "status": "OWNED_WATCHDOG_STARTUP_AND_READ_ONLY_CLOCK_AUDIT_OFFLINE",
+  "project_direction": "Continue independent custom firmware; no dependency on an official NUX NAM release.",
+  "artifact": "../../artifacts/startup-control-offline-only.elf",
+  "elf_sha256": "994e3629f043a267c336a15e918b9f218be2acc6dd78d1f6b0a6643f4253ab18",
+  "requirements": [
+    "Owned executable code and 8-byte aligned stack; no initialized C data required for watchdog routine",
+    "Privileged Thread mode, CONTROL=0, PRIMASK=1, FAULTMASK=0",
+    "Exclusive processor/peripheral ownership including M4 watchdog; physical ownership still unverified",
+    "Legacy watchdog WDE already clear; enabled legacy watchdog requires a future service policy",
+    "RTWDOG state settled with RCS=1 and ULK=0; enabled RTWDOG must allow UPDATE"
+  ],
+  "actions": [
+    "Stackless enabled/size checks for ITCM and DTCM before MSP or any RAM/MMIO write; reject insufficient declared capacity",
+    "Check every watchdog before peripheral writes",
+    "Disable and read back separate WMCR power-down counters",
+    "Use packed or adjacent split unlock commands, wait for ULK with finite polling, clear EN without clearing W1C flags",
+    "Wait for RCS and lock closure; verify configuration; stop before C runtime on any failure",
+    "Inspect M7 root/PLL twice after C initialization and reject unsupported/changing configurations"
+  ],
+  "return_codes": {
+    "0": "Success under modeled preconditions",
+    "1": "Unsupported core state",
+    "2": "WDOG1 enabled",
+    "3": "WDOG2 enabled",
+    "4": "WDOG3 UPDATE locked",
+    "5": "WDOG4 UPDATE locked",
+    "6": "Unsettled or already unlocked RTWDOG",
+    "7": "WDOG3 unlock timeout",
+    "8": "WDOG3 commit timeout",
+    "9": "WDOG3 readback mismatch",
+    "10": "WDOG4 unlock timeout",
+    "11": "WDOG4 commit timeout",
+    "12": "WDOG4 readback mismatch",
+    "13": "WDOG1 power-down counter readback failed",
+    "14": "WDOG2 power-down counter readback failed"
+  },
+  "clock_scope": "Only stable software-controlled ARM PLL on M7 mux 4 with caller-established 24MHz reference. Derives rate but does not measure frequency, choose a safe voltage/speed grade, or program clocks. Image passes reference=0, so it never assumes the board reference.",
+  "physical_limits": [
+    "Polling bounds are operation counts, not measured bus/watchdog time",
+    "31/255 bus-clock windows and minimum 2.5 watchdog clocks since loader reconfiguration remain unmeasured",
+    "Initial reset-only configuration window is deliberately unsupported without reset provenance",
+    "NMI/fault behavior and remaining timeout before entry are not established",
+    "On partial failure no rollback is attempted; remaining live watchdogs may reset physical hardware",
+    "Cache/MPU-enabled entry still rejected; RAM mapping, quiescence, electrical mute and USB recovery unproved"
+  ],
+  "hardware_loadable": false,
+  "usb_recovery_proven": false,
+  "device_access": false,
+  "playback": false,
+  "tcm_guard": {
+    "registers": [
+      "0xe000ef90",
+      "0xe000ef94"
+    ],
+    "size_bytes": "512 << SZ for accepted SZ 3..10",
+    "itcm_minimum": "Actual linked __image_load_end",
+    "dtcm_minimum": "__stack_top - 0x20000000 = 0x36000",
+    "entry_rejection_codes": {
+      "6": "ITCM disabled",
+      "7": "ITCM size unsupported or insufficient",
+      "8": "DTCM disabled",
+      "9": "DTCM size unsupported or insufficient"
+    },
+    "does_not_prove": [
+      "FlexRAM bank backing/ownership",
+      "ECC initialization",
+      "Loader code copy extent",
+      "Cache coherence or quiescence"
+    ],
+    "fixture_correction": "Prior DTCM fixture 0x39 declared only 64KiB despite a 216KiB stack-top offset. Updated accepted fixture is 0x49 (256KiB); old value is explicitly rejected."
+  }
+}

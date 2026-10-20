@@ -1,0 +1,2 @@
+firmware/third_party/** linguist-vendored -whitespace
+app/lib/nam/stock/vendor/** linguist-vendored -whitespace

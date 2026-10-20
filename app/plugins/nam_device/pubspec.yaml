@@ -1,0 +1,16 @@
+name: nam_device
+description: Native Mac and iPhone MIDI diagnostics for NAM Plug. No audio streams or flash writes.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+flutter:
+  plugin:
+    platforms:
+      ios:
+        pluginClass: NamDevicePlugin
+      macos:
+        pluginClass: NamDevicePlugin

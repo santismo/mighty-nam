@@ -1,0 +1,19 @@
+{
+  "NAM": {
+    "repository": "https://github.com/sdatkinson/NeuralAmpModelerCore",
+    "commit": "20a04fcf466dc4233730412b120e5bbad72402c3"
+  },
+  "Eigen": {
+    "repository": "https://gitlab.com/libeigen/eigen",
+    "commit": "87300c93cae6a8afd9a4f8aa8d9d5c5324cf02e1"
+  },
+  "json": "NAM-pinned header; license notice in json.hpp",
+  "models": "Unmodified upstream example fixtures; small examples are correctness fixtures, not verified amp captures",
+  "musl_math": {
+    "source_distribution": "ziglang 0.13.0",
+    "upstream": "https://git.musl-libc.org/cgit/musl/tree/src/math",
+    "local_sources": "third_party/musl-math",
+    "sha256_manifest": "artifacts/hybrid-build.json",
+    "notice": "COPYRIGHT retained; generated ARM ELF contains these math implementations"
+  }
+}

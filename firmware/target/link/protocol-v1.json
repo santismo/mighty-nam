@@ -1,0 +1,37 @@
+{
+  "name": "Mighty NAM RAM transfer",
+  "version": 1,
+  "framing": "private complete binary frames, no BLE/HID implementation",
+  "header_bytes": 24,
+  "byte_order": "little endian",
+  "fields": {
+    "0:4": "magic 0x314c504d (MPL1)",
+    "4": "version 1",
+    "5": "op: hello1 begin2 data3 commit4 abort5 status6; reply=op|0x80",
+    "6:8": "payload length <=256",
+    "8:12": "session nonzero for mutations",
+    "12:16": "byte offset in slot",
+    "16:20": "CRC32 IEEE of payload",
+    "20:24": "CRC32 IEEE of first20 header bytes"
+  },
+  "reply_payload": "six uint32: status, received bytes, committed-slot CRC32, slot size8192, max chunk256, capabilities3 (A2 Lite + RAM only)",
+  "status": {
+    "0": "OK",
+    "1": "bad command/envelope fields",
+    "2": "bad session/no staging",
+    "3": "range",
+    "4": "conflict/out of order",
+    "5": "invalid model",
+    "6": "incomplete"
+  },
+  "begin_payload": "uint32 slot-size8192 + uint32 whole-slot CRC32; same begin retransmission does not reset offset",
+  "commit": "Validate full transfer CRC, slot header, inner weight CRC, finite weights and FF padding; copy staging to active RAM. Idempotent for last committed session. Does not switch a running DSP.",
+  "activation": "Caller stops audio and serializes receiver/DSP access, then calls load_active(engine,true). No live-target scheduler or binding yet.",
+  "cancellation": "Abort staging only; committed bank remains. Reset clears both RAM banks; phone retransfer required.",
+  "limits": [
+    "CRC32 is corruption detection, not authentication. SHA256 is recorded by app as model identity, not a receiver-side cryptographic check.",
+    "No persistent storage, target addresses, erase, reboot, DFU, USB or BLE operations.",
+    "No claimed support for stock firmware. A custom authenticated/identified transport and MIDI packing/fragmentation are future work.",
+    "No linked hardware image or proven real-time target performance."
+  ]
+}

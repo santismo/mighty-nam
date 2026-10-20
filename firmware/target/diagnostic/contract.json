@@ -1,0 +1,36 @@
+{
+  "status": "OFFLINE_ENTRY_LINKED_PHYSICAL_ACCEPTANCE_UNPROVEN",
+  "elf": "../../artifacts/entry-diagnostic-offline-only.elf",
+  "elf_sha256": "e87dd4e85f8807c495ba094e61d4987e624051bb13ef2bb55a9d04e00a0eee6a",
+  "observed_stock_facts": {
+    "vector_base": "0x0",
+    "initial_msp": "0x20036000",
+    "source": "../../artifacts/stock-handoff-audit.json"
+  },
+  "candidate_assumptions": {
+    "code_budget": "0x00000000..0x0000ffff",
+    "data_budget": "0x20000000..0x2002ffff",
+    "stack_budget": "0x20030000..0x20035fff",
+    "dma_reservation": "0x202c0000..0x202c027f",
+    "physical_ram_ownership_verified": false,
+    "loader_copies_entire_load_extent": false,
+    "note": "Only vector base and stack top are observed in saved application code. The remaining ranges are a candidate, not a recovered factory loader contract."
+  },
+  "implemented": [
+    "Stackless entry checks for Thread mode, CONTROL=0, FAULTMASK=0, disabled I/D caches and MPU",
+    "Set MSP, VTOR and barriers, copy data, clear BSS, set stack guard",
+    "Link full hardware backend, A2 engine, RAM receiver and compiler support with no unresolved symbols and no dead stripping",
+    "Read core/clock/FlexRAM/watchdog state; disable core interrupt sources and leave PRIMASK masked",
+    "Park without starting audio, model processing or transfers; fault path avoids C calls and memory writes"
+  ],
+  "limits": [
+    "Cache/MPU-enabled entry deliberately rejected; actual loader state unknown",
+    "No watchdog shutdown, CPU clock setup, DMA/USB quiescence or electrical mute established",
+    "DMA memory is reserved but deliberately left untouched by this entry",
+    "Fault handler direct-branch tested; real exception stacking/NMI behavior not emulated",
+    "No USB status transport, updater container, flash operation, ROM entry or physical execution"
+  ],
+  "tests": "../../artifacts/entry-diagnostic-vm-tests.json",
+  "device_access": false,
+  "playback": false
+}

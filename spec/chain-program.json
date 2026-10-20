@@ -1,0 +1,29 @@
+{
+  "schema": "nam-plug-program-1",
+  "transport_binding": "not installed on NAMA2I01; offline C++ engine accepts this binary",
+  "format": "little-endian NPC1",
+  "header_bytes": 16,
+  "header": {
+    "0:4": "magic 0x3143504e",
+    "4:6": "version 1",
+    "6:8": "stage count 0..12",
+    "8:12": "sample rate 48000",
+    "12:16": "CRC32 IEEE of payload"
+  },
+  "stage_bytes": 16,
+  "stage": {
+    "0:2": "effect ID",
+    "2": "enabled 0 or 1",
+    "3": "reserved zero",
+    "4:8": "parameter a float32",
+    "8:12": "parameter b float32",
+    "12:16": "parameter c float32"
+  },
+  "runtime_rules": [
+    "Configure only while DSP is stopped and access serialized. Invalid program leaves previous chain intact.",
+    "Unused built-in parameters are zero; all parameters finite and within effect catalog limits.",
+    "Stateful effects have one instance per type. Gain, overdrive and distortion may repeat.",
+    "Serial routing only. Split/merge, stereo paths and arbitrary feedback graphs require a future graph scheduler.",
+    "CRC32 detects transport corruption, not authorship or authorization."
+  ]
+}

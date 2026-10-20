@@ -1,0 +1,10 @@
+{
+  "status": "A2_LITE_EXECUTION_AND_RESTART_VERIFIED_SPARSE_TIMING_RECORDED",
+  "identity": "NAMA2B01",
+  "physical_measurement_complete": true,
+  "measurement_scope": "512 spaced eight-frame synthetic batches per startup, two startups",
+  "continuous_real_time_proven": false,
+  "current_device_mode": "NORMAL_SILENT_BENCHMARK",
+  "evidence": "../../artifacts/a2-silent-benchmark-hardware-result.json",
+  "frozen_build_contract": "contract.json records build-time assumptions and is retained with its original hash."
+}

@@ -1,0 +1,206 @@
+{
+  "status": "PASS_SILENT_A2_GUITAR_INPUT_AND_NORMAL_RESTART",
+  "recorded_at": "2026-10-19T20:54:04.447540-04:00",
+  "identity": "NAMA2I01",
+  "candidate_sha256": "a146d768363c1430945367a3f34d6721d1c85edeb3781c12eb72bb8d9d7e1863",
+  "elf_sha256": "1e1c3780e0c4779eaebf97f221fc5fe03ea3ab42f1b193c3fb9fa5246ecc11c8",
+  "model_sha256": "951383563d6c00f4742565facedee3294293cbd49173d1895ebeb1ce9bb0175a",
+  "installed_package_bytes": 14439215,
+  "updater_reported_success": true,
+  "independent_flash_readback_performed": false,
+  "normal_boot_execution_verified": true,
+  "quiet_trial": {
+    "status": "PASS_BOUNDED_A2_INPUT_TRIAL",
+    "identity": "NAMA2I01",
+    "validated_at": "2026-10-19T20:51:22.925264-04:00",
+    "read_paths": [
+      "local-lab-records/a2-input-install/quiet-inspect-1.json",
+      "local-lab-records/a2-input-install/quiet-inspect-2.json"
+    ],
+    "batches": 180000,
+    "samples": 1440000,
+    "all_fault_counters_zero": true,
+    "frozen_measurements_match": true,
+    "callbacks_still_running": true,
+    "input_peak_Q31": [
+      483840,
+      492800,
+      1181184,
+      148736
+    ],
+    "input_peak_normalized": [
+      0.00022530555725097656,
+      0.0002294778823852539,
+      0.0005500316619873047,
+      6.92605972290039e-05
+    ],
+    "input_peak_dBFS": [
+      -72.94456192196647,
+      -72.78518332854097,
+      -65.19224620172986,
+      -83.19027535762473
+    ],
+    "selected_slot": 3,
+    "selected_near_full_scale_samples": 0,
+    "last_input_bits": "0x372e0000",
+    "last_output_bits": "0x3829f7b0",
+    "DWT_cycles": {
+      "min": 70304,
+      "max": 94878,
+      "sum": 13318921816
+    },
+    "GPT_ticks": {
+      "min": 72,
+      "max": 97,
+      "sum": 13568262
+    },
+    "conditional_body_microseconds_at_1MHz": {
+      "max": 97,
+      "mean": 75.37923333333333
+    },
+    "clock_frequency_independently_calibrated": false,
+    "complete_ISR_deadline_proven": false,
+    "physical_guitar_route_proven_by_this_single_trial": false,
+    "audio_playback": false,
+    "user_report": "Guitar connected, volume zero, RESET without PRESET then normal startup; waited 45 seconds without strumming.",
+    "condition": "quiet_reference_guitar_volume_zero",
+    "user_reported_normal_start": true
+  },
+  "strummed_trial": {
+    "status": "PASS_BOUNDED_A2_INPUT_TRIAL",
+    "identity": "NAMA2I01",
+    "validated_at": "2026-10-19T20:52:41.719730-04:00",
+    "read_paths": [
+      "local-lab-records/a2-input-install/strummed-inspect-1.json",
+      "local-lab-records/a2-input-install/strummed-inspect-2.json"
+    ],
+    "batches": 180000,
+    "samples": 1440000,
+    "all_fault_counters_zero": true,
+    "frozen_measurements_match": true,
+    "callbacks_still_running": true,
+    "input_peak_Q31": [
+      476160,
+      493824,
+      1231616,
+      205711616
+    ],
+    "input_peak_normalized": [
+      0.00022172927856445312,
+      0.00022995471954345703,
+      0.0005735158920288086,
+      0.09579193592071533
+    ],
+    "input_peak_dBFS": [
+      -73.08353912107302,
+      -72.76715345255366,
+      -64.82909086738006,
+      -20.373420994325468
+    ],
+    "selected_slot": 3,
+    "selected_near_full_scale_samples": 0,
+    "last_input_bits": "0xbc25f480",
+    "last_output_bits": "0xbb9d3d06",
+    "DWT_cycles": {
+      "min": 69949,
+      "max": 95721,
+      "sum": 13318577702
+    },
+    "GPT_ticks": {
+      "min": 71,
+      "max": 97,
+      "sum": 13567686
+    },
+    "conditional_body_microseconds_at_1MHz": {
+      "max": 97,
+      "mean": 75.37603333333334
+    },
+    "clock_frequency_independently_calibrated": false,
+    "complete_ISR_deadline_proven": false,
+    "physical_guitar_route_proven_by_this_single_trial": false,
+    "audio_playback": false,
+    "condition": "guitar_volume_up_strumming",
+    "user_report": "Restarted with POWER only, waited about 10 seconds and strummed repeatedly for 30 seconds; USB connected and headphones unplugged.",
+    "user_reported_normal_POWER_restart": true
+  },
+  "normal_POWER_restart": {
+    "user_reported": true,
+    "normal_USB_address_before": 14,
+    "normal_USB_address_after": 15,
+    "last_callbacks_before": 353845,
+    "first_callbacks_after": 294247,
+    "host_observed_power_off_interval": false,
+    "evidence": "User reported POWER off/on; new normal USB address, lower callback counter, newly accumulated timing and input measurements."
+  },
+  "guitar_input": {
+    "selected_slot_zero_based": 3,
+    "software_route_matches_original_stock": true,
+    "physical_guitar_response_observed": true,
+    "peak_change_dB_by_slot": [
+      -0.1389771991065487,
+      0.01802987598730965,
+      0.3631553343497984,
+      62.81685436329926
+    ],
+    "selected_peak_ratio": 1383.0654044750431,
+    "strummed_peak_normalized": 0.09579193592071533,
+    "near_full_scale_samples_in_either_trial": 0,
+    "analog_gain_calibrated": false,
+    "scope": "Strong slot-3 response under user-reported strumming, while other slots stay near quiet levels; model output scalar also changes. No synchronized input/output waveform was recorded."
+  },
+  "totals": {
+    "completed_batches": 360000,
+    "input_samples_processed": 2880000,
+    "nominal_active_seconds_at_48kHz": 60,
+    "full_readouts": 4,
+    "status_pages_read": 248,
+    "all_reported_fault_counters_zero": true
+  },
+  "timing": {
+    "callback_body_peak_ticks": 97,
+    "callback_body_mean_ticks": 75.37763333333334,
+    "conditional_body_peak_microseconds_at_1MHz": 97,
+    "conditional_body_mean_microseconds_at_1MHz": 75.37763333333334,
+    "nominal_period_microseconds_at_48kHz": 166.66666666666666,
+    "source_clock_cached_hz": 24000000,
+    "stock_GPT_prescaler": 23,
+    "clock_registers_stable_across_reads_and_restart": true,
+    "frequency_independently_calibrated": false,
+    "complete_interrupt_deadline_proven": false,
+    "scope": "Timer includes housekeeping, clearing output, live input conversion/metering, NAM and output checks. Excludes initial validation/prologue, interrupt entry/exit, final timer accounting and release latency. Half alternation cannot detect every missed release."
+  },
+  "readout_evidence": {
+    "quiet-inspect-1": {
+      "path": "local-lab-records/a2-input-install/quiet-inspect-1.json",
+      "sha256": "ba0ab820ddac60c151bc1525a2c463fe3dccbf1c566508a89bfec54b65c51862"
+    },
+    "quiet-inspect-2": {
+      "path": "local-lab-records/a2-input-install/quiet-inspect-2.json",
+      "sha256": "7ce335bb05be05c62628e8d92b5febec0191bc8de0bda0bb4dac207ac0a5645b"
+    },
+    "strummed-inspect-1": {
+      "path": "local-lab-records/a2-input-install/strummed-inspect-1.json",
+      "sha256": "15f52f9eb4f81ad7120551bdd92e596ac001ff7bdfc84e0a164cbb493f94bc0f"
+    },
+    "strummed-inspect-2": {
+      "path": "local-lab-records/a2-input-install/strummed-inspect-2.json",
+      "sha256": "f7ef5720c01008e867c5688f9cfa6a6410f11b6f7c0784ad6ecce60d1088ec2b"
+    }
+  },
+  "recovery": {
+    "previous_NAMA2C01_blue_reentry_observed": true,
+    "loader_identifier_before_this_install": "20220615",
+    "NAMA2I01_blue_reentry_tested": false,
+    "exact_public_stock_restore_file_verified": true,
+    "arbitrary_damage_recovery_proven": false
+  },
+  "current_behavior": "Model stops after 180000 active blocks on each boot. The zero-output callback and control service continue. A normal restart repeats the silent test.",
+  "audio_playback": false,
+  "mac_output_muted": true,
+  "enclosure_opened": false,
+  "paid_services_used": false,
+  "standalone_firmware": false,
+  "stock_effects_enabled": false,
+  "playable_output_enabled": false,
+  "next_development": "Calibrate guitar input and add one effect at a time to the silent chain, then measure on hardware before enabling listening."
+}

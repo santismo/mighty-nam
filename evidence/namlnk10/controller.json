@@ -1,0 +1,26 @@
+{
+  "status": "PASS_NAMLNK10_MAC_CONTROLLER_OFFLINE",
+  "elf_sha256": "7b92cb19fd515067c65034e27cf8c7b4364e4a5100a05b8fde0f36946e7151c9",
+  "version": "0.3.0+3",
+  "widget_tests": 50,
+  "shared_protocol_tests": 34,
+  "native_wire_checks": 1557,
+  "native_smoke_passed": true,
+  "analyzer_passed": true,
+  "analyzer_scope": "NAM app and tests, entry point, shared protocol, native Dart wrapper; unused legacy app tree excluded",
+  "release_build_passed": true,
+  "drafts_preserved": true,
+  "independent_save_readback_checked": true,
+  "preset_cross_language_operations": 3,
+  "physical_device_connected": false,
+  "host_audio_streams_opened": 0,
+  "teams_settings_changed": false,
+  "logs": {
+    "app-tests-final.log": "e0a44e843f3d005d59a84934debe01ebd7630703f8881a56507410c30f79f4e0",
+    "protocol-tests.log": "8113db7e6b066589ca1aa4e458f81dd9cb2a206f2411473f4fa0ebb5dafdfdeb",
+    "analyze-scoped.log": "a812cb31eae0dca69e1ec7a0cd714d95b63c145f3329da32988be620fa054672",
+    "release-build.log": "09c86e3f6f2b20eca033a110b38c30fd3ece38069b77d4af05316340dd5bec32",
+    "native-smoke.log": "bd76185fc69a012302ea2d5f1fe0cec0454939705d3ff97ef9d61cf75d0e8cdd",
+    "interop-verify.log": "095d90523cf58f2bdbdf790d0f6919fb3084134299404fbfabf791873ce33221"
+  }
+}

@@ -1,0 +1,150 @@
+// Adapted from Mightier Amp (MIT), copyright Dian Iliev. Data and formatting only.
+// ignore_for_file: non_constant_identifier_names, constant_identifier_names, file_names, annotate_overrides, hash_and_equals, prefer_final_fields, unnecessary_this
+import 'ValueFormatter.dart';
+
+abstract class SwitchFormatter extends ValueFormatter {
+  String get labelTitle;
+
+  @override
+  InputType get inputType => InputType.SwitchInput;
+
+  List<String> get labelValues;
+  List<int> get midiValues;
+
+  @override
+  double midi7BitToValue(int midi7bit) {
+    return midi7bit.toDouble();
+  }
+
+  @override
+  String toLabel(double value) {
+    // TODO: implement toLabel
+    throw UnimplementedError();
+  }
+
+  @override
+  int valueToMidi7Bit(double value) {
+    return value.round();
+  }
+}
+
+class BrightModeFormatter extends SwitchFormatter {
+  @override
+  String get labelTitle => "Bright:";
+
+  @override
+  List<String> get labelValues => ["Off", "On"];
+
+  @override
+  List<int> get midiValues => [0, 127];
+}
+
+class BrightModeFormatterMPPro extends SwitchFormatter {
+  @override
+  String get labelTitle => "Bright:";
+
+  @override
+  List<String> get labelValues => ["Off", "On"];
+
+  @override
+  List<int> get midiValues => [0, 1];
+}
+
+class BoostModeFormatter extends SwitchFormatter {
+  @override
+  String get labelTitle => "Boost:";
+
+  @override
+  List<String> get labelValues => ["Off", "On"];
+
+  @override
+  List<int> get midiValues => [0, 127];
+}
+
+class BoostModeFormatterMPPro extends SwitchFormatter {
+  @override
+  String get labelTitle => "Boost:";
+
+  @override
+  List<String> get labelValues => ["Off", "On"];
+
+  @override
+  List<int> get midiValues => [0, 1];
+}
+
+class VibeModeFormatter extends SwitchFormatter {
+  @override
+  String get labelTitle => "Mode:";
+
+  @override
+  List<String> get labelValues => ["Vibe", "Chorus"];
+
+  @override
+  List<int> get midiValues => [0, 127];
+}
+
+class VibeModeFormatterPro extends SwitchFormatter {
+  @override
+  String get labelTitle => "Mode:";
+
+  @override
+  List<String> get labelValues => ["Chorus", "Vibrato"];
+
+  @override
+  List<int> get midiValues => [0, 1];
+}
+
+class ContourModeFormatter extends SwitchFormatter {
+  @override
+  String get labelTitle => "Contour:";
+
+  @override
+  List<String> get labelValues => ["Vintage", "Off", "Modern"];
+
+  @override
+  List<int> get midiValues => [0, 64, 127];
+}
+
+class SCFModeFormatter extends SwitchFormatter {
+  @override
+  String get labelTitle => "Mode:";
+
+  @override
+  List<String> get labelValues => ["Chorus", "P.M.", "Flanger"];
+
+  @override
+  List<int> get midiValues => [0, 1, 2];
+}
+
+class TouchWahModeFormatter extends SwitchFormatter {
+  @override
+  String get labelTitle => "Type:";
+
+  @override
+  List<String> get labelValues => ["Cry", "VX", "Full", "Talk"];
+
+  @override
+  List<int> get midiValues => [0, 32, 64, 96];
+}
+
+class TouchWahModeFormatterLiteMk2 extends SwitchFormatter {
+  @override
+  String get labelTitle => "Type:";
+
+  @override
+  List<String> get labelValues => ["Cry", "VX", "Full", "Talk"];
+
+  @override
+  List<int> get midiValues => [0, 1, 2, 3];
+}
+
+class TouchWahDirectionFormatterPro extends SwitchFormatter {
+  @override
+  String get labelTitle => "Up/Down Switch:";
+
+  @override
+  List<String> get labelValues => ["Down", "Up"];
+
+  @override
+  List<int> get midiValues => [0, 1];
+}

@@ -1,0 +1,237 @@
+import Foundation
+
+// Fixed RAM-model protocol only. No stock writes, firmware update or audio API.
+public enum NamLinkWire {
+    static func supportsModels(_ identity: String) -> Bool {
+        identity == "NAMLNK01" || supportsStockChain(identity)
+    }
+    static func supportsStockChain(_ identity: String) -> Bool {
+        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10"].contains(identity)
+    }
+    static let prefix: [UInt8] = [0xf0,0x43,0x58,0x70,4,2,0x4e,0x4c,1]
+    static func crc(_ bytes: ArraySlice<UInt8>) -> UInt32 {
+        var c: UInt32 = 0xffffffff
+        for b in bytes {
+            c ^= UInt32(b)
+            for _ in 0..<8 { c = (c >> 1) ^ ((c & 1) == 0 ? 0 : 0xedb88320) }
+        }
+        return c ^ 0xffffffff
+    }
+    static func word(_ bytes: [UInt8], _ at: Int) -> UInt32 {
+        var value: UInt32 = 0
+        for i in 0..<4 { value |= UInt32(bytes[at+i]) << (8*i) }
+        return value
+    }
+    static func validPacket(_ raw: [UInt8]) -> Bool {
+        guard (24...280).contains(raw.count), word(raw,0) == 0x314c504d, raw[4] == 1,
+              Int(raw[6]) + 256*Int(raw[7]) == raw.count-24 else { return false }
+        return word(raw,20) == crc(raw[0..<20]) && word(raw,16) == crc(raw[24...])
+    }
+    public static func request(_ raw: [UInt8]) -> [UInt8]? {
+        guard validPacket(raw), (1...6).contains(raw[5]) else { return nil }
+        var wire = prefix
+        for start in stride(from: 0, to: raw.count, by: 7) {
+            let end = min(start+7,raw.count)
+            var mask: UInt8 = 0
+            for i in start..<end { mask |= (raw[i] >> 7) << (i-start) }
+            wire.append(mask)
+            wire.append(contentsOf: raw[start..<end].map { $0 & 127 })
+        }
+        wire.append(0xf7)
+        return wire
+    }
+    public static func reply(_ wire: [UInt8], to request: [UInt8]) -> [UInt8]? {
+        guard validPacket(request), wire.count == 65, Array(wire.prefix(9)) == prefix,
+              wire.last == 0xf7 else { return nil }
+        let packed = Array(wire[9..<64])
+        guard packed.allSatisfy({ $0 < 128 }), packed[48] < 64 else { return nil }
+        var raw: [UInt8] = []
+        for start in stride(from: 0, to: packed.count, by: 8) {
+            let end = min(start+8,packed.count)
+            for i in (start+1)..<end { raw.append(packed[i] | (((packed[start] >> (i-start-1)) & 1) << 7)) }
+        }
+        guard validPacket(raw), raw[5] == (request[5] | 128),
+              raw[8..<12] == request[8..<12], word(raw,12) == 0 else { return nil }
+        return raw
+    }
+}
+
+// A separate, explicit listening command. Older silent builds never receive it.
+public enum NamOutputBuffer {
+    static let choices = [8,16,32]
+    static func command(identity: String, samples: Int) -> [UInt8]? {
+        guard ["NAMLNK09","NAMLNK10"].contains(identity), choices.contains(samples) else { return nil }
+        return [0xf0,0x43,0x58,0x70,4,2,0x4e,0x42,UInt8(samples),0xf7] +
+            [0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,24,0xf7]
+    }
+    static func decode(_ word: UInt32) -> [String:Any]? {
+        let samples=Int(word & 255)
+        guard word >> 16 == 48000, (word >> 8) & 255 == 1, choices.contains(samples) else { return nil }
+        return ["samples":samples,"sampleRate":48000,"processingSamples":8,"choices":choices,
+                "scope":"output staging","minimumSamples":8]
+    }
+}
+
+public enum NamListening {
+    static func supports(_ identity: String) -> Bool {
+        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10"].contains(identity)
+    }
+    static func arm(identity: String, enabled: Bool) -> [UInt8]? {
+        guard supports(identity) else { return nil }
+        return [0xf0,0x43,0x58,0x70,4,2,0x4e,0x41,enabled ? 1 : 0,0xf7] +
+            [0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,23,0xf7]
+    }
+    static func decode(_ word: UInt32) -> [String:Any]? {
+        guard word & ~UInt32(7) == 0, word & 6 != 6,
+              word & 4 == 0 || word & 1 == 1 else { return nil }
+        return ["enabled":word & 1 != 0,"settling":word & 2 != 0,
+                "fadeComplete":word & 4 != 0,"levelPadDB":-18.0618]
+    }
+}
+
+// Frozen NAMLNK06 diagnostic snapshot. Values are raw counter cycles, never
+// elapsed microseconds or a claim that the hardware deadline has been met.
+public enum NamIrqTiming {
+    public static func decode(_ words: [UInt32]) -> [String:Any]? {
+        guard words.count == 11, words[0] == 0x54494d31 else { return nil }
+        let s = Array(words.dropFirst())
+        guard s[0] & 1 == 0, s[3] & ~UInt32(15) == 0 else { return nil }
+        if s[1] == 0 {
+            guard s[4] == 0, s[5] == 0 else { return nil }
+        } else {
+            guard s[4] > 0, s[4] <= s[5], s[5] < 0x80000000 else { return nil }
+        }
+        if s[3] == 0 {
+            guard s[2] == 0 else { return nil }
+            if s[1] > 0 {
+                guard s[6] & 1 == 1, s[6] == s[7], s[8] == s[9] else { return nil }
+            }
+        }
+        return ["sequence":Int64(s[0]), "accepted":Int64(s[1]), "rejected":Int64(s[2]),
+                "flags":Int64(s[3]), "lastCycles":Int64(s[4]), "maximumCycles":Int64(s[5]),
+                "entryControl":Int64(s[6]), "exitControl":Int64(s[7]),
+                "entryResetEpoch":Int64(s[8]), "exitResetEpoch":Int64(s[9]),
+                "usable":s[1] > 0 && s[2] == 0 && s[3] == 0,
+                "unit":"raw counter cycles", "hardwareDeadlineProven":false]
+    }
+}
+
+// Exact V1.5.6 volatile effect controls. No preset save, reset, routing, volume,
+// custom IR storage, amplifier type/parameters, or arbitrary SysEx escape hatch.
+// NAMLNK02 through 06 additionally permit NAM's bypass bit, preserving amp type.
+public enum NamStockWire {
+    static let read: [UInt8] = [0xf0,0x43,0x58,0x70,12,2,0xf7]
+    static let heads: [Int:Int] = [1:3,2:13,4:2,5:1,6:13,7:5,8:6,9:34]
+    static let groups: [(ClosedRange<Int>,Int)] = [
+        (13...16,15),(17...22,20),(31...42,36),(43...46,49),
+        (47...52,54),(53...60,61),(61...64,70),(65...70,75)]
+    static func presetIndex(_ cc: Int) -> Int? {
+        if heads[cc] != nil { return cc }
+        for (range,base) in groups where range.contains(cc) { return base+cc-range.lowerBound }
+        return nil
+    }
+    public struct Plan {
+        let midi: [UInt8]
+        let orderMessage: [UInt8]
+        let orderReply: [UInt8]
+        let expected: [Int:UInt8]
+        let namEnabled: Bool?
+        let cabinetBypassed: Bool?
+        public init(cabinetBypassed: Bool) {
+            midi = []; orderMessage = []; orderReply = []; expected = [:]
+            namEnabled = nil
+            self.cabinetBypassed = cabinetBypassed
+        }
+        public init?(controls: [[Int]], order: [Int], namEnabled: Bool? = nil) {
+            guard (8...64).contains(controls.count), order.count == 9,
+                  Set(order) == Set(1...9) else { return nil }
+            var values: [Int:UInt8] = [:]
+            var commands: [UInt8] = []
+            var seen = Set<Int>()
+            for pair in controls {
+                guard pair.count == 2 else { return nil }
+                let cc = pair[0], value = pair[1]
+                guard seen.insert(cc).inserted, let at = NamStockWire.presetIndex(cc),
+                      (0...127).contains(value) else { return nil }
+                if let maximum = heads[cc] {
+                    guard (1...maximum).contains(value & 63) else { return nil }
+                } else if value > 100 { return nil }
+                commands += [0xb0,UInt8(cc),UInt8(value)]
+                values[at] = UInt8(value)
+            }
+            guard Set(heads.keys).isSubset(of:seen) else { return nil }
+            for (index,value) in order.enumerated() { values[90+index] = UInt8(value) }
+            midi = commands
+            orderMessage = [0xf0,0x43,0x58,0x70,13,1,9]+order.map(UInt8.init)+[0xf7]
+            orderReply = [0xf0,0x43,0x58,0x70,13,2,9]+order.map(UInt8.init)+[0xf7]
+            expected = values
+            self.namEnabled = namEnabled
+            cabinetBypassed = nil
+        }
+        func messages(before preset: [UInt8]) -> [UInt8]? {
+            guard preset.count == 128 else { return nil }
+            if let bypassed = cabinetBypassed {
+                guard (1...34).contains(preset[9] & 63) else { return nil }
+                return [0xb0,9,(preset[9] & 63) | (bypassed ? 64 : 0)]
+            }
+            guard let enabled = namEnabled else { return midi }
+            return midi + [0xb0,3,(preset[3] & 63) | (enabled ? 0 : 64)]
+        }
+        func allowed(on identity: String) -> Bool {
+            NamLinkWire.supportsModels(identity) &&
+                ((namEnabled == nil && cabinetBypassed == nil) || NamLinkWire.supportsStockChain(identity))
+        }
+        func matches(_ preset: [UInt8], before: [UInt8]? = nil) -> Bool {
+            if let bypassed = cabinetBypassed {
+                guard preset.count == 128, let before = before, before.count == 128,
+                      messages(before: before) != nil else { return false }
+                return preset[9] == ((before[9] & 63) | (bypassed ? 64 : 0)) &&
+                    (0..<128).allSatisfy { $0 == 9 || preset[$0] == before[$0] }
+            }
+            return preset.count == 128 && expected.allSatisfy { preset[$0.key] == $0.value }
+                && (namEnabled == nil || ((preset[3] & 64) == 0) == namEnabled!)
+        }
+    }
+    static func preset(_ message: [UInt8]) -> [UInt8]? {
+        guard message.count == 136,
+              Array(message.prefix(6)) == [0xf0,0x43,0x58,0x70,12,2],
+              message[6] < 7, message.last == 0xf7,
+              message[7..<135].allSatisfy({ $0 < 128 }) else { return nil }
+        return Array(message[7..<135])
+    }
+}
+
+// Bounded preset operations only: metadata, save current checked model/chain,
+// and recall a color. Never exposes a raw flash address or an erase command.
+public enum NamPresetWire {
+    static let prefix: [UInt8] = [0xf0,0x43,0x58,0x70,4,2,0x4e,0x53,1]
+    static func valid(_ raw: [UInt8]) -> Bool {
+        guard raw.count >= 20, raw.count <= 276, NamLinkWire.word(raw,0) == 0x3031504e,
+              raw[4] == 1, raw[6] < 7, NamLinkWire.word(raw,8) != 0,
+              Int(raw[12])+256*Int(raw[13])+20 == raw.count else { return false }
+        return NamLinkWire.word(raw,raw.count-4) == NamLinkWire.crc(raw[0..<raw.count-4])
+    }
+    public static func request(_ raw: [UInt8]) -> [UInt8]? {
+        guard valid(raw), raw[7] == 0, raw[14] == 0, raw[15] == 0,
+              ((raw[5] == 1 || raw[5] == 3) && raw.count == 20) || (raw[5] == 2 && raw.count == 132) else { return nil }
+        var out=prefix
+        for start in stride(from:0,to:raw.count,by:7) {
+            let end=min(start+7,raw.count);var mask:UInt8=0
+            for i in start..<end { mask |= (raw[i] >> 7) << (i-start) }
+            out.append(mask);out.append(contentsOf:raw[start..<end].map { $0 & 127 })
+        }
+        out.append(247);return out
+    }
+    public static func reply(_ wire:[UInt8],to request:[UInt8]) -> [UInt8]? {
+        guard valid(request), wire.count == 326, Array(wire.prefix(9)) == prefix, wire.last == 247 else { return nil }
+        let packed=Array(wire[9..<325]);var raw:[UInt8]=[]
+        for start in stride(from:0,to:packed.count,by:8) {
+            let end=min(start+8,packed.count),count=end-start-1
+            guard count > 0, packed[start] < (1 << count), packed[start+1..<end].allSatisfy({$0<128}) else { return nil }
+            for i in start+1..<end {raw.append(packed[i] | (((packed[start] >> (i-start-1)) & 1) << 7))}
+        }
+        guard valid(raw),raw.count == 276,raw[5] == (request[5] | 128),raw[6] == request[6],
+              raw[8..<12] == request[8..<12],(raw[14]<7 || raw[14]==255),raw[15]<128 else {return nil}
+        return raw
+    }
+}

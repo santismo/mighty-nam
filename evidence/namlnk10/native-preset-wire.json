@@ -1,0 +1,11 @@
+{
+  "status": "PASS_NAMLNK10_NATIVE_PRESET_WIRE",
+  "elf_sha256": "7b92cb19fd515067c65034e27cf8c7b4364e4a5100a05b8fde0f36946e7151c9",
+  "operations": 3,
+  "Dart_requests_Swift_encoded": true,
+  "actual_stock_receive_ring": true,
+  "model_and_effects_recalled": true,
+  "muted": true,
+  "device_access": false,
+  "audio_access": false
+}

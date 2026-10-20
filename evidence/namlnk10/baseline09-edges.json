@@ -1,0 +1,225 @@
+{
+  "status": "PASS_NAMLNK09_RENDER_PROTOCOL_AND_EFFECT_EDGES",
+  "identity": "NAMLNK09",
+  "elf_sha256": "05342d67b9147fdf31fd133ad0ed1fad018d407c45e198cc329957e34e6a1a97",
+  "cases": [
+    "1056 stereo samples: exact 1024-sample ramp, saturation, lane mapping, buffer extent",
+    "Malformed/interrupt-context listening commands cannot arm; both transport selectors",
+    {
+      "case": "algorithm-switch-1",
+      "types": {
+        "1": 1,
+        "2": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "peak": 0.0375557467341423,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-2",
+      "types": {
+        "1": 2,
+        "2": 2,
+        "4": 2,
+        "5": 1,
+        "6": 2,
+        "7": 2,
+        "8": 2,
+        "9": 10
+      },
+      "peak": 0.10937497764825821,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-3",
+      "types": {
+        "1": 3,
+        "2": 3,
+        "4": 1,
+        "5": 1,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 19
+      },
+      "peak": 0.1093749850988388,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-4",
+      "types": {
+        "1": 1,
+        "2": 4,
+        "4": 2,
+        "5": 1,
+        "6": 4,
+        "7": 4,
+        "8": 4,
+        "9": 1
+      },
+      "peak": 0.029395993798971176,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-5",
+      "types": {
+        "1": 2,
+        "2": 5,
+        "4": 1,
+        "5": 1,
+        "6": 5,
+        "7": 5,
+        "8": 5,
+        "9": 10
+      },
+      "peak": 0.06340666860342026,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-6",
+      "types": {
+        "1": 3,
+        "2": 6,
+        "4": 2,
+        "5": 1,
+        "6": 6,
+        "7": 1,
+        "8": 6,
+        "9": 19
+      },
+      "peak": 0.1093749850988388,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-7",
+      "types": {
+        "1": 1,
+        "2": 7,
+        "4": 1,
+        "5": 1,
+        "6": 7,
+        "7": 2,
+        "8": 1,
+        "9": 1
+      },
+      "peak": 0.1093749850988388,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-8",
+      "types": {
+        "1": 2,
+        "2": 8,
+        "4": 2,
+        "5": 1,
+        "6": 8,
+        "7": 3,
+        "8": 2,
+        "9": 10
+      },
+      "peak": 0.1093749850988388,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-9",
+      "types": {
+        "1": 3,
+        "2": 9,
+        "4": 1,
+        "5": 1,
+        "6": 9,
+        "7": 4,
+        "8": 3,
+        "9": 19
+      },
+      "peak": 0.1093749850988388,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-10",
+      "types": {
+        "1": 1,
+        "2": 10,
+        "4": 2,
+        "5": 1,
+        "6": 10,
+        "7": 5,
+        "8": 4,
+        "9": 1
+      },
+      "peak": 0.10937497764825821,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-11",
+      "types": {
+        "1": 2,
+        "2": 11,
+        "4": 1,
+        "5": 1,
+        "6": 11,
+        "7": 1,
+        "8": 5,
+        "9": 10
+      },
+      "peak": 0.0818210020661354,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-12",
+      "types": {
+        "1": 3,
+        "2": 12,
+        "4": 2,
+        "5": 1,
+        "6": 12,
+        "7": 2,
+        "8": 6,
+        "9": 19
+      },
+      "peak": 0.1093749850988388,
+      "blocks": 1500
+    },
+    {
+      "case": "algorithm-switch-13",
+      "types": {
+        "1": 1,
+        "2": 13,
+        "4": 1,
+        "5": 1,
+        "6": 13,
+        "7": 3,
+        "8": 1,
+        "9": 1
+      },
+      "peak": 0.10937497764825821,
+      "blocks": 1500
+    },
+    {
+      "case": "four-second-zero-input-wet-tail",
+      "blocks": 24000,
+      "peak": 0.10937497764825821
+    },
+    "Timer fault from previously nonzero output clears the current DMA block and disarms",
+    "Three cold RAM patterns and three actual warm runtimes: model empty, both DMA halves silent, arm cleared"
+  ],
+  "algorithm_combinations": 13,
+  "wet_tail_samples": 192000,
+  "max_NAM_boundary_error": 0.0,
+  "cold_starts": 3,
+  "warm_restarts": 3,
+  "renderer_samples": 1056,
+  "seconds": 1775.8694740377832,
+  "device_access": false,
+  "host_audio_access": false,
+  "limits": [
+    "Synthetic counters; physical timing not proved",
+    "No listening/acoustic validation",
+    "Three cabinets, not every IR"
+  ]
+}
