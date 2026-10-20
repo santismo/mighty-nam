@@ -17,6 +17,7 @@ class BankFixture extends UsbFixture {
   final catalog = <LiteModel>[];
   int active = 255, saves = 0, reads = 0, recalls = 0;
   bool failSave = false, badReadback = false;
+  Future<void> Function()? beforeListen;
   BankFixture() {
     identity = 'NAMLNK10';
   }
@@ -46,6 +47,9 @@ class BankFixture extends UsbFixture {
 
   @override
   Future<dynamic> call(MethodCall c) async {
+    if (c.method == 'setListening' && (c.arguments as Map)['enabled'] == true) {
+      await beforeListen?.call();
+    }
     if (c.method != 'exchangePresetFrame') return super.call(c);
     final raw = (c.arguments as Map)['frame'] as Uint8List;
     final request = ByteData.sublistView(raw), op = raw[5], slot = raw[6];
@@ -258,6 +262,84 @@ void main() {
     expect(home.onboard.slots[3].name, 'Crunch Marshall');
     expect(home.onboard.slots[0].modelSha256, a.sha256Hex);
     expect(home.captures.favorites.length, 2);
+    await t.pumpWidget(const SizedBox.shrink());
+    await t.pump();
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets(
+      'listen and mute a saved onboard capture missing from the Mac library',
+      (t) async {
+    final a = capture('Fender on plug', .7);
+    usb.catalog.add(a);
+    await TransferClient(usb.receiver).upload(a);
+    final client = PresetClient((raw) async => await usb
+        .call(MethodCall('exchangePresetFrame', {'frame': raw})) as Uint8List);
+    await client.save(2, a, usb.preset, 'Red Fender Spring', 8);
+    usb.seed([]);
+    final home = await start(t);
+    expect(home.model, isNull);
+    expect(home.loadedAndHealthy, true);
+    expect(home.rig.modelSha256, a.sha256Hex);
+    expect(home.onboard.selected, 2);
+    expect(find.text('A2 Lite · 48 kHz · Stored on plug'), findsOneWidget);
+    expect(find.text('Loaded on plug'), findsOneWidget);
+    final uploads = usb.transfers, saves = usb.saves;
+    final listen = find.byKey(const ValueKey('plug-listening'));
+    await t.ensureVisible(listen);
+    expect(t.widget<FilledButton>(listen).onPressed, isNotNull);
+    await t.tap(listen);
+    await t.pumpAndSettle();
+    expect(usb.listening, true, reason: home.status);
+    expect(find.text('Mute plug'), findsOneWidget);
+    await t.tap(listen);
+    await t.pumpAndSettle();
+    expect(usb.listening, false);
+    expect(usb.transfers, uploads);
+    expect(usb.saves, saves);
+    expect(home.captures.captures, isEmpty);
+    expect(home.captures.favorites, isEmpty);
+
+    // A different unsent draft must not authorize the onboard capture.
+    home.rig.modelSha256 = capture('Different unsent draft', .8).sha256Hex;
+    await work(t, home, () async => home.persist());
+    expect(home.loadedAndHealthy, false);
+    expect(t.widget<FilledButton>(listen).onPressed, isNull);
+    await t.pumpWidget(const SizedBox.shrink());
+    await t.pump();
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets('onboard listening rechecks capture and faults before accepting',
+      (t) async {
+    final a = capture('Saved Fender', .7), b = capture('Changed capture', .8);
+    usb.catalog.add(a);
+    await TransferClient(usb.receiver).upload(a);
+    final client = PresetClient((raw) async => await usb
+        .call(MethodCall('exchangePresetFrame', {'frame': raw})) as Uint8List);
+    await client.save(2, a, usb.preset, 'Red Fender', 8);
+    usb.seed([]);
+    final home = await start(t);
+    final listen = find.byKey(const ValueKey('plug-listening'));
+    usb.beforeListen = () async => TransferClient(usb.receiver).upload(b);
+    await t.ensureVisible(listen);
+    await t.tap(listen);
+    await t.pumpAndSettle();
+    expect(usb.listenCommands, [true, false]);
+    expect(usb.listening, false);
+    expect(home.status, contains('capture changed'));
+
+    await TransferClient(usb.receiver).upload(a);
+    usb.beforeListen = () async {
+      usb.fault = true;
+    };
+    await work(t, home, home.refreshConnection);
+    expect(home.loadedAndHealthy, true);
+    await t.tap(listen);
+    await t.pumpAndSettle();
+    expect(usb.listenCommands, [true, false, true, false]);
+    expect(usb.listening, false);
+    expect(home.loadedAndHealthy, false);
     await t.pumpWidget(const SizedBox.shrink());
     await t.pump();
     debugDefaultTargetPlatformOverride = null;

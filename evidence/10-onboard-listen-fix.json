@@ -1,0 +1,39 @@
+{
+  "status": "PASS_ONBOARD_ONLY_LISTEN_REGRESSION",
+  "app_version": "0.3.2+5",
+  "cause": "Listen required local model weights even when verified onboard metadata and the running hardware capture matched.",
+  "fix": "Permit the selected active onboard capture by verified SHA/CRC metadata; preserve mismatched draft and fault guards; recheck returned identity/capture/running/fault status.",
+  "interface": "Show stored-on-plug capture name and Loaded on plug even without a local model copy.",
+  "tests": {
+    "app_passed": 52,
+    "optional_interop_skipped": 1,
+    "new_widget_tests": [
+      "click Listen and Mute with no local captures, without transfer/save or library mutation; reject a different unsent draft",
+      "remute when the capture changes or faults during enable"
+    ]
+  },
+  "analysis": "No issues found",
+  "firmware_changed": false,
+  "presets_rewritten": false,
+  "live_listen_enable_commands_sent": 0,
+  "audio_streams_opened": 0,
+  "mac_or_teams_settings_changed": false,
+  "checked_at": "2026-10-20T23:23:01.166291+00:00",
+  "user_feedback": "working now",
+  "physical_status_after_app_update": {
+    "identity": "NAMLNK10",
+    "active_slot": 2,
+    "model_crc32": 1854512385,
+    "faults": 0,
+    "output_enabled": true,
+    "fade_complete": true
+  },
+  "app_installed_and_opened": true,
+  "output_left_enabled_after_user_confirmation": true,
+  "source_reports": [
+    "10-listen-button-diagnosis.json",
+    "10-listen-button-after-app032.json",
+    "app-032-install.json",
+    "app-032-library-preserved.json"
+  ]
+}

@@ -133,13 +133,33 @@ class _NamHomeState extends State<NamHome> {
           .contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
+  PresetSnapshot? get selectedOnboardCapture {
+    if (!hasPresetBank) return null;
+    final bank = hardware!['presetBank'] as Map;
+    final active = bank['active'];
+    if (active is! int || active != onboard.selected) return null;
+    final saved = plugPresets[active];
+    if (saved == null ||
+        !saved.occupied ||
+        ((bank['mask'] as int) & (1 << active)) == 0 ||
+        saved.modelSha != rig.modelSha256) {
+      return null;
+    }
+    return saved;
+  }
+
+  // A recalled capture can live only on the plug. Match its verified bank
+  // metadata to the selected editor capture instead of requiring local weights.
+  int? get selectedCaptureChecksum =>
+      model?.checksum ?? selectedOnboardCapture?.modelCrc;
   bool get loadedAndHealthy {
     final words = hardware?['words'] as List?;
+    final checksum = selectedCaptureChecksum;
     return words?.length == 12 &&
         words![4] == 0 &&
         words[10] == 0 &&
-        model != null &&
-        words[5] == model!.checksum &&
+        checksum != null &&
+        words[5] == checksum &&
         words[9] == 1;
   }
 
@@ -639,17 +659,20 @@ class _NamHomeState extends State<NamHome> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                Text('${model?.metadata['name'] ?? 'Find your next tone'}',
+                Text(
+                    '${model?.metadata['name'] ?? selectedOnboardCapture?.name ?? 'Find your next tone'}',
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 6),
                 Text(
                     model == null
-                        ? 'Browse TONE3000 or choose one of your saved captures.'
+                        ? selectedOnboardCapture != null
+                            ? 'A2 Lite · 48 kHz · Stored on plug'
+                            : 'Browse TONE3000 or choose one of your saved captures.'
                         : '${creatorName(model!)} · A2 Lite · 48 kHz',
                     style:
                         const TextStyle(color: Colors.white60, fontSize: 12)),
-                if (model != null) ...[
+                if (model != null || selectedOnboardCapture != null) ...[
                   const SizedBox(height: 6),
                   Text(
                       loadedAndHealthy
@@ -1300,15 +1323,21 @@ class _NamHomeState extends State<NamHome> {
 
   Future<void> setListening(bool enabled) async {
     final source = selectedSource;
+    final expectedChecksum = selectedCaptureChecksum;
+    final expectedIdentity = hardware?['identity'];
     if (!hasListening || source == null || (enabled && !loadedAndHealthy)) {
       throw StateError('Load a model on the listening firmware first.');
     }
     final result = await device.setListening(source, enabled);
     final confirmed = result['words'] as List?;
     if (enabled &&
-        (confirmed?.length != 12 ||
-            confirmed![5] != model?.checksum ||
-            confirmed[4] != 0)) {
+        (result['identity'] != expectedIdentity ||
+            expectedChecksum == null ||
+            confirmed?.length != 12 ||
+            confirmed![5] != expectedChecksum ||
+            confirmed[4] != 0 ||
+            confirmed[10] != 0 ||
+            confirmed[9] != 1)) {
       final muted = await device.setListening(source, false);
       if (mounted) setState(() => hardware = muted);
       throw StateError(

@@ -19,7 +19,7 @@ By [santismo](https://github.com/santismo). Original project code is MIT license
 
 | Component | State |
 | --- | --- |
-| Mac controller 0.3.1 | Fixes large CoreMIDI preset replies; installed and connected to all seven slots on the development Mac. Universal build; Apple-silicon execution is not separately verified. |
+| Mac controller 0.3.2 | Handles large CoreMIDI replies and enables Listen for verified onboard captures even without a Mac-library copy. Universal build; Apple-silicon execution is not separately verified. |
 | NAMLNK08 | Live NAM guitar listening and selected delay/reverb combinations worked on the development unit. |
 | NAMLNK10 | Physically installed. Seven captures/effects presets saved, recalled, and checked after a user power cycle. Buffer settings 8/16/32 recalled correctly. |
 | Seven presets | All seven saved records matched after restart; the user confirmed seven-color button cycling. Tested combinations had zero processing faults. This does not establish flash endurance, every effect combination, or NAMLNK10 recovery. |
@@ -27,7 +27,7 @@ By [santismo](https://github.com/santismo). Original project code is MIT license
 
 This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
 
-The local 0.3.1 app fixes a preset-reply bug in the older 0.3.0 installer. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). TONE3000 integration terms review remains outstanding; private repository access does not resolve that review.
+The local 0.3.2 app fixes preset replies and onboard-only listening in the older 0.3.0 installer. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). TONE3000 integration terms review remains outstanding; private repository access does not resolve that review.
 
 ## Install the Mac app
 
