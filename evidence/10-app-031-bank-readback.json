@@ -1,0 +1,36 @@
+{
+  "status": "PASS_APP_031_READS_PHYSICAL_BANK",
+  "checked_at": "2026-10-20T23:14:34.943736+00:00",
+  "app_version": "0.3.1+4",
+  "selected": 2,
+  "generations": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "dirty": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "names": [
+    "Untitled chain",
+    "Orange - Marshall Cab",
+    "Red - Fender Spring",
+    "Blue - Fender Delay",
+    "Cyan - Fender Chorus",
+    "Pink - Marshall Delay",
+    "Lilac - Fender Ambient"
+  ],
+  "source": "App-persisted library after automatic native USB bank read; no native GUI screenshot available",
+  "prior_unsaved_green_draft_retained": true,
+  "no_library_or_keychain_overwrite_by_test_tools": true
+}

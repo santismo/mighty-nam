@@ -41,21 +41,31 @@ public final class NamMidi {
         guard MIDIClientCreateWithBlock("NAM Plug control" as CFString, &client, nil) == noErr else { throw Failure.message("MIDI is unavailable") }
         guard MIDIOutputPortCreate(client, "Status requests" as CFString, &output) == noErr else { throw Failure.message("MIDI output unavailable") }
         let status = MIDIInputPortCreateWithBlock(client, "Status replies" as CFString, &input) { [weak self] list, _ in
-            var chunks: [[UInt8]] = []
-            withUnsafePointer(to: list.pointee.packet) { first in
-                var packet = first
-                for _ in 0..<list.pointee.numPackets {
-                    let n = Int(packet.pointee.length)
-                    let data = UnsafeRawPointer(packet).advanced(by: MemoryLayout<MIDIPacket>.offset(of: \.data)!).assumingMemoryBound(to: UInt8.self)
-                    chunks.append(Array(UnsafeBufferPointer(start: data, count: n)))
-                    packet = UnsafePointer(MIDIPacketNext(packet))
-                }
-            }
+            let chunks = Self.packetChunks(list)
             DispatchQueue.main.async { [weak self] in
                 for chunk in chunks { self?.receive(chunk) }
             }
         }
         guard status == noErr else { throw Failure.message("MIDI input unavailable") }
+    }
+    // CoreMIDI packets have variable-length storage beyond the declared
+    // 256-byte tuple. Taking a pointer to list.pointee.packet copies that
+    // fixed-size Swift value and loses the tail of larger replies. Walk the
+    // original callback allocation, then own the bytes before dispatching.
+    static func packetChunks(_ list: UnsafePointer<MIDIPacketList>) -> [[UInt8]] {
+        var chunks: [[UInt8]] = []
+        var packet = UnsafeRawPointer(list)
+            .advanced(by: MemoryLayout<MIDIPacketList>.offset(of: \.packet)!)
+            .assumingMemoryBound(to: MIDIPacket.self)
+        for _ in 0..<list.pointee.numPackets {
+            let n = Int(packet.pointee.length)
+            let data = UnsafeRawPointer(packet)
+                .advanced(by: MemoryLayout<MIDIPacket>.offset(of: \.data)!)
+                .assumingMemoryBound(to: UInt8.self)
+            chunks.append(Array(UnsafeBufferPointer(start: data, count: n)))
+            packet = UnsafePointer(MIDIPacketNext(packet))
+        }
+        return chunks
     }
     public func devices() throws -> [[String:Any]] {
         try setup()

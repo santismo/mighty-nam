@@ -19,13 +19,15 @@ By [santismo](https://github.com/santismo). Original project code is MIT license
 
 | Component | State |
 | --- | --- |
-| Mac controller 0.3 | Built and tested on macOS; Intel and Apple silicon universal build. Apple-silicon execution is not yet separately verified. |
+| Mac controller 0.3.1 | Fixes large CoreMIDI preset replies; installed and connected to all seven slots on the development Mac. Universal build; Apple-silicon execution is not separately verified. |
 | NAMLNK08 | Live NAM guitar listening and selected delay/reverb combinations worked on the development unit. |
-| NAMLNK09 / NAMLNK10 | New buffer and onboard preset code passed offline tests. **Not yet physically installed or validated.** |
-| Seven presets | Implemented; power-off recall, flash behavior, and LED/button operation still need the NAMLNK10 hardware trial. |
+| NAMLNK10 | Physically installed. Seven captures/effects presets saved, recalled, and checked after a user power cycle. Buffer settings 8/16/32 recalled correctly. |
+| Seven presets | All seven saved records matched after restart; the user confirmed seven-color button cycling. Tested combinations had zero processing faults. This does not establish flash endurance, every effect combination, or NAMLNK10 recovery. |
 | Looper / phone control | Next goals, not shipping features. iPhone is the first phone target. |
 
 This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
+
+The local 0.3.1 app fixes a preset-reply bug in the older 0.3.0 installer. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). TONE3000 integration terms review remains outstanding; private repository access does not resolve that review.
 
 ## Install the Mac app
 

@@ -1,0 +1,9 @@
+{
+  "status": "PASS_REGRESSION_REPRODUCED_AND_FIXED",
+  "old_implementation_exit": -6,
+  "old_implementation_address_sanitizer": "stack-buffer-overflow",
+  "fixed_implementation_cases": 9,
+  "fixed_cases": "15,65,256,257,326,330 byte packets and mixed packet lists; copies retained after allocation release",
+  "hardware_evidence": "10-physical-first-two-fixed.json",
+  "audio_streams_opened": 0
+}
