@@ -24,16 +24,16 @@ def build(stock,elf):
   symbol=e.get_section_by_name('.symtab').get_symbol_by_name('mpp_probe_identity')[0]
   section=e.get_section(symbol['st_shndx']);off=symbol['st_value']-section['sh_addr']
   identity=section.data()[off:off+8].decode('ascii')
-  require(identity in ('NAMLNK10','NAMLNK11','NAMLNK12','NAMLNK13'),'Unexpected preset firmware identity')
+  require(identity in ('NAMLNK10','NAMLNK11','NAMLNK12','NAMLNK13','NAMLNK14'),'Unexpected preset firmware identity')
   require(not [s.name for s in syms if s.name and s['st_shndx']=='SHN_UNDEF'],'Unresolved symbols')
   for s in e.iter_sections():
    if not s['sh_flags']&2 or not s['sh_size']:continue
    start=s['sh_addr'];end=start+s['sh_size'];offset=start
    row=dict(name=s.name,start=hex(start),end_exclusive=hex(end),bytes=s['sh_size'])
-   if s['sh_type']=='SHT_NOBITS':require(0x202e4020<=start<end<=(0x20310000 if identity=='NAMLNK13' else 0x20308000),'BSS bounds')
+   if s['sh_type']=='SHT_NOBITS':require(0x202e4020<=start<end<=(0x20310000 if identity in ('NAMLNK13','NAMLNK14') else 0x20308000),'BSS bounds')
    else:
     if s.name=='.banktext':
-     require(start==(0x20310000 if identity=='NAMLNK13' else 0x20308000) and end<=0x20314000 and symbols['__bank_load']==SOURCE,'Copied code bounds')
+     require(start==(0x20310000 if identity in ('NAMLNK13','NAMLNK14') else 0x20308000) and end<=0x20314000 and symbols['__bank_load']==SOURCE,'Copied code bounds')
      offset=SOURCE-FLASH;row['load_address']=hex(SOURCE)
     else:require(0x1a0a4<=start<end<=0x1b488 or (s.name in ('.retired_audio','.ARM.exidx') and 0x14c04<=start<end<=0x14f08),'Low code bounds')
     out[offset:offset+s['sh_size']]=s.data();spans.append((offset,offset+s['sh_size']))
@@ -67,7 +67,7 @@ def build(stock,elf):
  plan=dict(identity=identity,mode='IN_MEMORY_OFFLINE_ONLY',elf_regions=regions,patches=patches,
   stock_sha256=STOCK_SHA,elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),candidate_sha256=hashlib.sha256(out).hexdigest(),
   retired_audio_audit=retired,preset_ownership=dict(owners=owners,base=hex(BANK),end=hex(BANK_END),copies=2,slots=7,record_bytes=8192),
-  copied_code=dict(source=hex(SOURCE),destination=hex(0x20310000 if identity=='NAMLNK13' else 0x20308000),bytes=next(r['bytes'] for r in regions if r['name']=='.banktext')),
+  copied_code=dict(source=hex(SOURCE),destination=hex(0x20310000 if identity in ('NAMLNK13','NAMLNK14') else 0x20308000),bytes=next(r['bytes'] for r in regions if r['name']=='.banktext')),
   changed_spans=spans,physical_storage_driver_verified=False,physical_button_verified=False,physical_RAM_code_execution_verified=False,
   original_vector_table_preserved=True,device_access=False,flash_container_created=False)
  return bytes(out),symbols,plan

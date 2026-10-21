@@ -6,6 +6,7 @@ import 'vendor/EFX.dart';
 import 'vendor/Cabinet.dart';
 import 'vendor/Modulation.dart';
 import 'vendor/EQ.dart';
+import 'cut_eq.dart';
 import 'vendor/Delay.dart';
 import 'vendor/Reverb.dart';
 export 'vendor/Processor.dart' show Processor, Parameter;
@@ -82,7 +83,7 @@ List<Processor> stockEffects(String slot) => switch (slot) {
           SCH1Pro(),
           MonoOctave()
         ],
-      'eq' => [EQSixBand(), EQTenBand()],
+      'eq' => [EQSixBand(), EQTenBand(), HighLowCut()],
       'delay' => [
           AnalogDelayV2(),
           DigitalDelay(),

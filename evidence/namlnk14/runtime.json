@@ -1,0 +1,46 @@
+{
+  "status": "PASS_NAMLNK14_ARM_PRESET_RUNTIME",
+  "elf_sha256": "8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d",
+  "seven_slots": true,
+  "model_count": 2,
+  "exact_model_and_effect_recall": true,
+  "stock_selection_hook": true,
+  "stock_button_branch": true,
+  "button_skips_empty": true,
+  "cold_patterns": [
+    0,
+    165,
+    255
+  ],
+  "warm_restarts": 3,
+  "accuracy": [
+    {
+      "model": "marshall-lite.nam",
+      "blocks": 1300,
+      "NAM_samples": 10400,
+      "peak": 0.00010524410754442215,
+      "max_error": 0.0
+    },
+    {
+      "model": "be100-lite.nam",
+      "blocks": 1300,
+      "NAM_samples": 10400,
+      "peak": 0.008092359639704227,
+      "max_error": 0.0
+    }
+  ],
+  "duplicate_saves_do_not_write": true,
+  "failed_driver_write_preserves_saved_data": true,
+  "flash_operations": 246,
+  "flash_bounds": [
+    "0x30384000",
+    "0x303a0000"
+  ],
+  "device_access": false,
+  "audio_access": false,
+  "limits": [
+    "Stock flash functions stubbed with bounded NOR semantics; physical drivers unverified",
+    "Copied-code cache/MPU behavior unverified on hardware",
+    "Hook exercised; no physical button/LED observation"
+  ]
+}

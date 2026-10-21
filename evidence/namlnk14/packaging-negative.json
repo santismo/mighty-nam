@@ -1,0 +1,6 @@
+{
+  "status": "PASS_REJECT_MISMATCHED_CONTROLLER_ELF",
+  "exit_code": 1,
+  "output_created": false,
+  "physical_device_access": false
+}

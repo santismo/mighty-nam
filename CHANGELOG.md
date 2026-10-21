@@ -1,5 +1,9 @@
 # Changelog
 
+## NAMLNK14 / Mac 0.3.6 / phone controller 0.5.0 — High / Low Cut
+
+Add stereo 12 dB/oct High / Low Cut as a movable EQ choice, with independently disabled filters and logarithmic cutoff controls. Retain stock EQ choices, two FX slots, presets and output buffering. The new choice requires verified NAMLNK14; older firmware remains supported. Mac chain-library migration preserves existing settings. Candidate is prepared for a separate physical trial, not installed. See [EQ trial notes](docs/high-low-cut-trial.md).
+
 ## NAMLNK13 / Mac 0.3.5 / phone controller 0.4.1 — experimental trial
 
 Two independent movable FX slots, each with Pitch, Auto Wah, Chorus, Flanger, Phaser, Tremolo and Vibrato. Both persist with the seven onboard presets. Bluetooth preset/tuner replies are pulled in short numbered pages. Controller 0.4.1 exposes live controls and a second Enabled / Bypassed toggle below the chain; Mac 0.3.5 adds USB compatibility. NAMLNK13 is installed on the development plug. Bounded muted USB tests passed; one fresh Green Fender A2 Lite preset was saved and recalled. Bluefy status and current FX reads are confirmed by the user log. Listening quality, calibrated timing, phone save/tuner, power-cycle persistence and recovery on this build remain unverified. See [trial notes](docs/dual-fx-trial.md).

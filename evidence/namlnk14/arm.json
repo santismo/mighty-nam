@@ -1,0 +1,20 @@
+{
+  "status": "PASS_NAMLNK14_ARM_FX_AND_PAGED_BLE",
+  "elf_sha256": "8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d",
+  "dispatch_entries": 700,
+  "seven_independent_fx_presets": true,
+  "cold_patterns": [
+    0,
+    165,
+    255
+  ],
+  "legacy_preset_defaults": true,
+  "duplicate_fx_saves_no_write": true,
+  "preset_fx_save_recall_restart": true,
+  "stock_order_unchanged": true,
+  "tuner_long_reply_reassembled": true,
+  "largest_paged_frame": 56,
+  "ram_guards": true,
+  "physical_device_access": false,
+  "audio_playback": false
+}

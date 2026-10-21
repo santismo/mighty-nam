@@ -1,6 +1,9 @@
 // Exact V1.5.6 stock-effects bridge with RAM A2. NAMLNK02..06 stay silent;
 // NAMLNK07 adds explicitly armed listening. No flash or reset commands.
 #include "model_receiver.hpp"
+#ifdef MPP_CUT_EQ
+#include "cut_eq.hpp"
+#endif
 #include "sysex_codec.hpp"
 #ifdef MPP_FX_BLOCKS
 #include "fx_blocks.hpp"
@@ -35,7 +38,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_FX_BLOCKS)
+#if defined(MPP_CUT_EQ)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','4'};
+#elif defined(MPP_FX_BLOCKS)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','3'};
 #elif defined(MPP_TUNER)
@@ -85,6 +91,12 @@ extern "C" __attribute__((naked)) void mpp_fast_dispatch(){
   "ldr r1, [r1]\n"
   "rsb r0, r6, #100\n"
   "ldrb r0, [r1, r0]\n"
+#ifdef MPP_CUT_EQ
+  "cmp r0, #4\n"
+  "bne 7f\n"
+  "ldr r12, =mpp_cut_eq_process\n"
+  "7:\n"
+#endif
 #ifdef MPP_EFFECT_PROFILER
   "ldr r2, =mpp_profile_selected\n"
   "ldr r2, [r2]\n"
@@ -220,6 +232,9 @@ extern "C" void mpp_stock_amp_init(){
  mpp_bank_init();
 #ifdef MPP_FX_BLOCKS
  mpp_fx_init();
+#ifdef MPP_CUT_EQ
+ mpp_cut_eq_init();
+#endif
 #endif
 #ifdef MPP_TUNER
  mpp_tuner_init();

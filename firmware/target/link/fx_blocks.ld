@@ -10,6 +10,8 @@ SECTIONS {
  .banktext : AT(0x303a0000) {
   __bank_start = .;
   *(.banktext*)
+  *cut_eq.o(.text* .rodata*)
+  *cut_eq_runtime.o(.text* .rodata*)
   *fx_blocks.o(.text* .rodata*)
   *fx_runtime.o(.text* .rodata*)
   *reply_transport.o(.text* .rodata*)

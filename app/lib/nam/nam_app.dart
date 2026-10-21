@@ -80,11 +80,12 @@ class _NamHomeState extends State<NamHome> {
   final plugPresets = <int, PresetSnapshot>{};
   int? observedPreset;
   bool get hasPresetBank =>
-      const ['NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13']
+      const ['NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13', 'NAMLNK14']
           .contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   PresetClient get presetClient => PresetClient(
-      (frame) => device.exchangePresetFrame(selectedSource!, frame));
+      (frame) => device.exchangePresetFrame(selectedSource!, frame),
+      identity: hardware?['identity'] as String?);
   Tone3000Client? api;
   Map<String, dynamic>? hardware;
   List<Map<String, dynamic>> devices = [];
@@ -119,7 +120,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK10',
         'NAMLNK11',
         'NAMLNK12',
-        'NAMLNK13'
+        'NAMLNK13',
+        'NAMLNK14'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -135,7 +137,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK10',
         'NAMLNK11',
         'NAMLNK12',
-        'NAMLNK13'
+        'NAMLNK13',
+        'NAMLNK14'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -146,7 +149,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK10',
         'NAMLNK11',
         'NAMLNK12',
-        'NAMLNK13'
+        'NAMLNK13',
+        'NAMLNK14'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -352,7 +356,8 @@ class _NamHomeState extends State<NamHome> {
     late HybridRig next;
     try {
       next = StockControlPlan.readRig(
-          rig, List<int>.from(snapshot['preset'] as List));
+          rig, List<int>.from(snapshot['preset'] as List),
+          identity: hardware?['identity'] as String?);
     } on FormatException {
       if (mounted) {
         setState(() => status =
@@ -410,12 +415,14 @@ class _NamHomeState extends State<NamHome> {
     try {
       final source = selectedSource;
       if (source == null ||
-          !const ['NAMLNK12', 'NAMLNK13'].contains(hardware?['identity'])) {
+          !const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14']
+              .contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
       }
       final muted = await device.setListening(source, false);
-      if (!const ['NAMLNK12', 'NAMLNK13'].contains(muted['identity']) ||
+      if (!const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14']
+              .contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
             'Could not confirm that the plug is muted.');
@@ -589,7 +596,8 @@ class _NamHomeState extends State<NamHome> {
       throw StateError('Connect supported NAM Plug firmware first.');
     }
     final chain = HybridRig.parse(rig.encode());
-    final plan = StockControlPlan.fromRig(chain);
+    final plan = StockControlPlan.fromRig(chain,
+        identity: hardware?['identity'] as String?);
     final before = await device.inspect(source);
     final beforeWords = (before['words'] as List?) ?? [];
     if (before['identity'] != hardware?['identity'] ||
@@ -820,7 +828,8 @@ class _NamHomeState extends State<NamHome> {
         plugPresets[i] = snapshot;
         onboard.generations[i] = snapshot.generation;
         if (!onboard.dirty[i]) {
-          onboard.slots[i] = snapshot.rig(onboard.slots[i]);
+          onboard.slots[i] = snapshot.rig(onboard.slots[i],
+              identity: hardware?['identity'] as String?);
         }
       }
     }
@@ -829,7 +838,8 @@ class _NamHomeState extends State<NamHome> {
       plugPresets[active] = snapshot;
       onboard.selected = active;
       if (!onboard.dirty[active]) {
-        onboard.slots[active] = snapshot.rig(onboard.slots[active]);
+        onboard.slots[active] = snapshot.rig(onboard.slots[active],
+            identity: hardware?['identity'] as String?);
       }
       if (!mounted) return;
       setState(() {
@@ -1088,6 +1098,7 @@ class _NamHomeState extends State<NamHome> {
         const SizedBox(height: 26),
         RigEditor(
             rig: rig,
+            firmwareIdentity: hardware?['identity'] as String?,
             modelName: model?.metadata['name']?.toString(),
             namControls: namControls,
             onChanged: edited),
@@ -1331,7 +1342,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK10',
             'NAMLNK11',
             'NAMLNK12',
-            'NAMLNK13'
+            'NAMLNK13',
+            'NAMLNK14'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1415,15 +1427,27 @@ class _NamHomeState extends State<NamHome> {
   Future<void> setOutputBuffer(int samples) async {
     final source = selectedSource;
     if (source == null ||
-        !const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13']
-            .contains(hardware?['identity']) ||
+        !const [
+          'NAMLNK09',
+          'NAMLNK10',
+          'NAMLNK11',
+          'NAMLNK12',
+          'NAMLNK13',
+          'NAMLNK14'
+        ].contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 to adjust output buffering.');
     }
     try {
       final result = await device.setOutputBuffer(source, samples);
-      if (!const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13']
-              .contains(result['identity']) ||
+      if (!const [
+            'NAMLNK09',
+            'NAMLNK10',
+            'NAMLNK11',
+            'NAMLNK12',
+            'NAMLNK13',
+            'NAMLNK14'
+          ].contains(result['identity']) ||
           (result['audioBuffer'] as Map?)?['samples'] != samples ||
           (result['listening'] as Map?)?['enabled'] != false) {
         throw StateError('The plug did not confirm its buffer and mute state.');
@@ -1457,7 +1481,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK10',
           'NAMLNK11',
           'NAMLNK12',
-          'NAMLNK13'
+          'NAMLNK13',
+          'NAMLNK14'
         ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;

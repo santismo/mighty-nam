@@ -28,6 +28,8 @@ class StockControlPlan {
     'delay': 5,
     'reverb': 6,
   };
+  static int maximumType(String slot, String? identity) =>
+      slot == 'eq' && identity == 'NAMLNK14' ? 4 : supportedTypes[slot]!;
   static const ranges = [
     [13, 16, 15],
     [17, 22, 20],
@@ -47,9 +49,11 @@ class StockControlPlan {
   }
 
   /// Import the live chain without discarding remembered inactive effect settings.
-  static HybridRig readRig(HybridRig previous, List<int> preset) {
-    StockControlPlan.fromSnapshot(
-        preset); // Validate the complete response before changing UI state.
+  static HybridRig readRig(HybridRig previous, List<int> preset,
+      {String? identity}) {
+    StockControlPlan.fromSnapshot(preset,
+        identity:
+            identity); // Validate the complete response before changing UI state.
     final next = HybridRig.parse(previous.encode());
     for (final block in next.blocks) {
       final id = stages[block.slot]!;
@@ -73,13 +77,13 @@ class StockControlPlan {
     return HybridRig.parse(next.encode());
   }
 
-  factory StockControlPlan.fromRig(HybridRig rig) {
+  factory StockControlPlan.fromRig(HybridRig rig, {String? identity}) {
     // Check stored values before translating into physical writes.
     final checked = HybridRig.parse(rig.encode());
     final controls = <List<int>>[];
     for (final block in checked.blocks.where((b) => b.slot != 'nam')) {
       final effect = block.effect!;
-      if (effect.nuxIndex > supportedTypes[block.slot]!) {
+      if (effect.nuxIndex > maximumType(block.slot, identity)) {
         throw FormatException('${effect.name} requires newer stock firmware. '
             'Choose another ${block.name.toLowerCase()} for this plug.');
       }
@@ -98,14 +102,14 @@ class StockControlPlan {
     return StockControlPlan._(
         controls, checked.blocks.map((b) => stages[b.slot]!).toList());
   }
-  factory StockControlPlan.fromSnapshot(List<int> preset) {
+  factory StockControlPlan.fromSnapshot(List<int> preset, {String? identity}) {
     if (preset.length != 128 || preset.any((v) => v < 0 || v > 127)) {
       throw const FormatException('Invalid stock control snapshot');
     }
     final controls = <List<int>>[];
     for (final slot in supportedTypes.keys) {
       final id = stages[slot]!, value = preset[stages[slot]!];
-      if ((value & 63) < 1 || (value & 63) > supportedTypes[slot]!) {
+      if ((value & 63) < 1 || (value & 63) > maximumType(slot, identity)) {
         throw const FormatException(
             'Snapshot contains unsupported effect types');
       }

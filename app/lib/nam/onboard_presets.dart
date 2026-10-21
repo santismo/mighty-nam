@@ -83,10 +83,10 @@ class PresetSnapshot {
   bool get occupied => (mask & (1 << slot)) != 0;
   PresetSnapshot(this.slot, this.active, this.mask, this.generation,
       this.modelCrc, this.buffer, this.modelSha, this.name, this.effects);
-  HybridRig rig(HybridRig previous) {
+  HybridRig rig(HybridRig previous, {String? identity}) {
     final result = effects == null
         ? HybridRig.initial()
-        : StockControlPlan.readRig(previous, effects!);
+        : StockControlPlan.readRig(previous, effects!, identity: identity);
     result.name = name;
     result.modelSha256 = modelSha;
     return result;
@@ -96,12 +96,13 @@ class PresetSnapshot {
 class PresetClient {
   final Future<Uint8List> Function(Uint8List) exchange;
   int nonce = DateTime.now().microsecondsSinceEpoch & 0x7fffffff;
-  PresetClient(this.exchange);
+  final String? identity;
+  PresetClient(this.exchange, {this.identity});
   Future<PresetSnapshot> read(int slot) => _request(1, slot, Uint8List(0));
   Future<PresetSnapshot> recall(int slot) => _request(3, slot, Uint8List(0));
   Future<PresetSnapshot> save(
       int slot, LiteModel model, List<int> effects, String name, int buffer) {
-    StockControlPlan.fromSnapshot(effects);
+    StockControlPlan.fromSnapshot(effects, identity: identity);
     final bytes = utf8.encode(name.trim());
     if (bytes.isEmpty ||
         bytes.length > 63 ||
@@ -188,7 +189,7 @@ class PresetClient {
     }
     final name = utf8.decode(nameBytes.sublist(0, end)),
         effects = header.sublist(128, 256);
-    StockControlPlan.fromSnapshot(effects);
+    StockControlPlan.fromSnapshot(effects, identity: identity);
     return PresetSnapshot(
         slot,
         reply[14],

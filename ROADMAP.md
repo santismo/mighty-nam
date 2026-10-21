@@ -2,7 +2,7 @@
 
 ## Next task — TONE3000 on the phone controller
 
-Bring TONE3000 sign-in, capture browsing and favorites, compatible A2 Lite selection, and verified model transfer to the GitHub Pages controller used in Bluefy. Selecting a capture should make it the active NAM model after a successful transfer; saving it into a colored onboard preset remains explicit. Investigate browser authentication and bounded Bluetooth transfer before promising direct-to-plug loading. Requested as the next task, ahead of the deferred Low Cut / High Cut EQ; not part of the current bypass-button change.
+Bring TONE3000 sign-in, capture browsing and favorites, compatible A2 Lite selection, and verified model transfer to the GitHub Pages controller used in Bluefy. Selecting a capture should make it the active NAM model after a successful transfer; saving it into a colored onboard preset remains explicit. Investigate browser authentication and bounded Bluetooth transfer before promising direct-to-plug loading. Requested as the next feature after the High / Low Cut EQ addition; not implemented in NAMLNK14.
 
 ## Further goals
 
@@ -35,6 +35,6 @@ First milestone: validate discovery, authentication, a bounded status/control ex
 
 Roadmap entries describe intent, not existing capability. Contributions should include test evidence and distinguish hardware observations from simulation.
 
-## Next requested effect — deferred
+## High / Low Cut EQ — prepared for NAMLNK14
 
-Add a simple Low Cut / High Cut EQ option with independent cutoff controls. Either filter can be disabled, or both can run together in the same EQ block. Requested after the NAMLNK13 installation; do not fold it into the current hardware trial.
+The user explicitly moved this ahead of TONE3000. The EQ addition passed offline release checks and is packaged for a physical trial; see [trial notes](docs/high-low-cut-trial.md). Physical installation and listening tests remain separate. TONE3000 on the phone controller remains the next requested feature after this addition.

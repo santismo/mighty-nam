@@ -61,7 +61,7 @@ import Foundation
         check(NamLinkWire.supportsModels("NAMLNK11"))
         check(NamLinkWire.supportsModels("NAMLNK12"))
         check(NamLinkWire.supportsModels("NAMLNK13"))
-        check(!NamLinkWire.supportsModels("NAMLNK14"))
+        check(!NamLinkWire.supportsModels("NAMLNK15"))
         check(!NamLinkWire.supportsStockChain("NAMLNK01"))
         check(NamLinkWire.supportsStockChain("NAMLNK03"))
         check(NamLinkWire.supportsModels("NAMLNK04"))
@@ -85,7 +85,7 @@ import Foundation
             check(bypass.allowed(on:"NAMLNK11"))
             check(bypass.allowed(on:"NAMLNK12"))
             check(bypass.allowed(on:"NAMLNK13"))
-            check(!bypass.allowed(on:"NAMLNK14"))
+            check(!bypass.allowed(on:"NAMLNK15"))
             check(!bypass.allowed(on:"NAMA2I01"))
             var before=preset;before[3]=21
             let messages=bypass.messages(before:before)!
@@ -101,7 +101,7 @@ import Foundation
             var bad=frame;bad[index]=128
             check(NamStockWire.preset(bad) == nil)
         }
-        for identity in ["NAMLNK01","NAMLNK06","NAMLNK14","PLUGPRO"] {
+        for identity in ["NAMLNK01","NAMLNK06","NAMLNK15","PLUGPRO"] {
             check(NamListening.arm(identity:identity,enabled:true) == nil)
             check(NamListening.arm(identity:identity,enabled:false) == nil)
         }
@@ -120,7 +120,7 @@ import Foundation
             let word = (UInt32(48000)<<16) | (1<<8) | UInt32(samples)
             check((NamOutputBuffer.decode(word) != nil) == allowed)
         }
-        for identity in ["NAMLNK08","NAMLNK14","PLUGPRO",""] {
+        for identity in ["NAMLNK08","NAMLNK15","PLUGPRO",""] {
             check(NamOutputBuffer.command(identity:identity,samples:8) == nil)
         }
         for word: UInt32 in [0,8,0xffffffff,(44100<<16)|(1<<8)|8,(48000<<16)|(2<<8)|8] {
@@ -187,6 +187,13 @@ import Foundation
             var rejected=timing;rejected[3]=1;rejected[4]=flag;rejected[8]=0
             check(NamIrqTiming.decode(rejected)?["usable"] as? Bool == false)
         }
+        check(NamLinkWire.supportsModels("NAMLNK14"))
+        check(NamOutputBuffer.command(identity:"NAMLNK14",samples:8) != nil)
+        var cuts=controls;cuts.removeAll{$0[0]==4};cuts.append([4,4])
+        let cut=NamStockWire.Plan(controls:cuts,order:order)!
+        check(cut.allowed(on:"NAMLNK14"))
+        check(!cut.allowed(on:"NAMLNK13"))
+        check(!cut.allowed(on:"NAMLNK12"))
         print("{\"status\":\"PASS\",\"checks\":\(checks),\"deviceAccess\":false,\"audioStreamOpened\":false}")
     }
 }

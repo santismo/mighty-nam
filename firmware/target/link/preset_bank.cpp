@@ -22,7 +22,13 @@ bool valid_model(const uint8_t* p){
  return true;
 }
 bool valid_effects(const uint8_t* p){
- const uint8_t ids[]={1,2,4,5,6,7,8,9},max[]={3,13,2,1,13,5,6,34};
+ const uint8_t ids[]={1,2,4,5,6,7,8,9},max[]={3,13,
+#ifdef MPP_CUT_EQ
+ 4,
+#else
+ 2,
+#endif
+ 1,13,5,6,34};
  for(unsigned i=0;i<128;++i)if(p[i]>127)return false;
  for(unsigned i=0;i<8;++i)if(!(p[ids[i]]&63)||(p[ids[i]]&63)>max[i])return false;
  if(!(p[3]&63))return false;

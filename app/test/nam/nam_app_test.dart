@@ -370,7 +370,7 @@ void main() {
   });
   test('all stock choices preserve defaults and choice-specific settings', () {
     final rig = HybridRig.initial();
-    expect(rig.blocks.fold<int>(0, (n, b) => n + b.choices.length), 80);
+    expect(rig.blocks.fold<int>(0, (n, b) => n + b.choices.length), 81);
     for (final b in rig.blocks) {
       expect(b.choices.map((e) => e.nuxIndex).toSet().length, b.choices.length);
       for (var n = 0; n < b.choices.length; n++) {

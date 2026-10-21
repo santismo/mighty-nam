@@ -21,7 +21,9 @@ p.add_argument('--preset-bank',action='store_true',help='NAMLNK10 seven persiste
 p.add_argument('--performance',action='store_true',help='NAMLNK11 opt-in per-effect profiler and cache-line preparation; requires preset bank')
 p.add_argument('--tuner',action='store_true',help='NAMLNK12 bounded dry-input captures for the Mac tuner; requires performance')
 p.add_argument('--fx-blocks',action='store_true',help='NAMLNK13 two independent FX blocks and bounded BLE replies; requires tuner')
+p.add_argument('--cut-eq',action='store_true',help='NAMLNK14 High/Low Cut EQ; requires --fx-blocks')
 a=p.parse_args()
+if a.cut_eq and not a.fx_blocks:p.error('--cut-eq requires --fx-blocks')
 if a.fx_blocks and not a.tuner:p.error('--fx-blocks requires --tuner')
 if a.fused and not a.stock_chain:p.error('--fused requires --stock-chain')
 if a.m7_conv and (not a.stock_chain or a.fused):p.error('--m7-conv requires --stock-chain without --fused')
@@ -73,10 +75,13 @@ if a.tuner:
 if a.fx_blocks:
  flags+=['-DMPP_FX_BLOCKS']
  sources+=['target/link/fx_blocks.cpp','target/link/fx_runtime.cpp','target/link/reply_transport.cpp']
+if a.cut_eq:
+ flags+=['-DMPP_CUT_EQ']
+ sources+=['target/link/cut_eq.cpp','target/link/cut_eq_runtime.cpp']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
- optimize='-O2' if ('a2_lite' in source or 'fx_blocks.cpp' in source) else '-Oz'
+ optimize='-O2' if ('a2_lite' in source or 'fx_blocks.cpp' in source or 'cut_eq.cpp' in source) else '-Oz'
  subprocess.run(['clang++',*flags,optimize,'-c',str(root/source),'-o',str(obj)],check=True)
  objects.append(str(obj))
 elf=out/'nam-link-offline.elf';ld=root/('target/link/presets.ld' if a.preset_bank else ('target/link/listening.ld' if a.listening else 'target/link/link_firmware.ld'))
@@ -129,5 +134,7 @@ if a.tuner:
  report.update(identity='NAMLNK12',tuner='Explicit, muted-only 2048-sample dry input capture at 12 kHz; no streaming audio device on Mac',tuner_default='off; each requested capture stops automatically',physical_tuner_verified=False)
 if a.fx_blocks:
  report.update(identity='NAMLNK13',custom_fx_slots=2,custom_fx_modes=['Pitch','Auto Wah','Chorus','Flanger','Phaser','Tremolo','Vibrato'],pitch_semitones=list(range(-12,13)),ble_reply_page_bytes=40,physical_fx_verified=False,copied_code_destination=hex(0x20310000))
+if a.cut_eq:
+ report.update(identity='NAMLNK14',cut_eq_type=4,cut_eq_slope_db_oct=12,cut_eq_low_hz=[20,1000],cut_eq_high_hz=[1000,20000],cut_eq_off_value=0,physical_cut_eq_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

@@ -28,6 +28,7 @@ const rigIcons = {
 
 class RigEditor extends StatefulWidget {
   final HybridRig rig;
+  final String? firmwareIdentity;
   final Widget namControls;
   final String? modelName;
   final VoidCallback onChanged;
@@ -36,7 +37,8 @@ class RigEditor extends StatefulWidget {
       required this.rig,
       required this.namControls,
       required this.onChanged,
-      this.modelName});
+      this.modelName,
+      this.firmwareIdentity});
   @override
   State<RigEditor> createState() => _RigEditorState();
 }
@@ -45,7 +47,9 @@ class _RigEditorState extends State<RigEditor> {
   String selected = 'nam';
   Future<void> chooseEffect(RigBlock block) async {
     final choice = await showDialog<int>(
-        context: context, builder: (_) => _EffectPicker(block: block));
+        context: context,
+        builder: (_) => _EffectPicker(
+            block: block, firmwareIdentity: widget.firmwareIdentity));
     if (mounted && choice != null) change(() => block.choice = choice);
   }
 
@@ -303,7 +307,8 @@ class _RigEditorState extends State<RigEditor> {
 
 class _EffectPicker extends StatefulWidget {
   final RigBlock block;
-  const _EffectPicker({required this.block});
+  final String? firmwareIdentity;
+  const _EffectPicker({required this.block, this.firmwareIdentity});
   @override
   State<_EffectPicker> createState() => _EffectPickerState();
 }
@@ -370,10 +375,10 @@ class _EffectPickerState extends State<_EffectPicker> {
                               itemCount: matches.length,
                               itemBuilder: (context, row) {
                                 final index = matches[row];
-                                final supported =
-                                    block.choices[index].nuxIndex <=
-                                        StockControlPlan
-                                            .supportedTypes[block.slot]!;
+                                final supported = block
+                                        .choices[index].nuxIndex <=
+                                    StockControlPlan.maximumType(
+                                        block.slot, widget.firmwareIdentity);
                                 return ListTile(
                                     key: ValueKey('effect-option-$index'),
                                     title: Text(block.choices[index].name,

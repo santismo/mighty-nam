@@ -1,0 +1,23 @@
+{
+  "status": "PASS_LIVE_PAGES_EXACT_ASSETS",
+  "version": "0.5.0",
+  "commit": "8ad12bb59fa06e14f89bac1a9ad3b01e059abb4d",
+  "sha256": {
+    "index.html": "8befa7435d3aa2b256decf5e855d785563d795a743bede26324ab17e73bd7030",
+    "style.css": "7a966e09cf708b98d6e1215fe52436b2cff9f0bc6593955bf446498105356891",
+    "src/app.js": "d56e982df8d568a7e3f73204816a5a1b27fd25683b16255208e7ab8415497012",
+    "src/ble-midi.js": "b7393d774719303c82c518db5d37dc4c66a1d28817c85429163462e9e905c3d6",
+    "src/catalog.js": "d06677611a35e29b08f76305d04bb25d9ffda2ffc986ce0b189c359e7daec2dc",
+    "src/commands.js": "8a4028a7a0f778b479f46d6f8e2366248d5d375ce76f2fa0606d7f5e5a6f53e0",
+    "src/controls.js": "a41b12a0de4110250d37c404455a4078e4f7f20def4c54942553340e30fd8c8f",
+    "src/device.js": "de66a447f0886a28f43b4fbc3cc859e1d72359488ad390cb4b3dc93bf2512ed4",
+    "src/editor.js": "0e4f277993bdc92ee7818837253f25ae2637fc5d80d7c47915a1de97f18abf3a",
+    "src/fx.js": "4d6d5e6814d94ff528f2185ebd19f01b0827793d6e9c46d7181dcb903df0c009",
+    "src/live.js": "ddfbadec4a96b952e2a014e69576cb7f09206d9d54a2ce7662505cb2dda5e8a6",
+    "src/protocol.js": "114c76ce96b493fdc446621857add162dba29a17171216e7d7fc25ace054344d",
+    "src/reply-pages.js": "d587d175382baea63a8fde706a8b62098429a3e0d17e9f403d88aa0e4163380f",
+    "src/tuner.js": "eb043d49d65868972358f949c266634b17c05ce71b2e985394fe3633772b3ddb"
+  },
+  "physical_device_access": false,
+  "audio_playback": false
+}

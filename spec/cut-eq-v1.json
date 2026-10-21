@@ -1,0 +1,36 @@
+{
+  "firmware": "NAMLNK14",
+  "effect_block": 4,
+  "effect_type": 4,
+  "bypass_mask": 64,
+  "parameters": [
+    {
+      "name": "Low Cut",
+      "cc": 31,
+      "preset_index": 36,
+      "value_0": "Off",
+      "value_1_hz": 20,
+      "value_100_hz": 1000
+    },
+    {
+      "name": "High Cut",
+      "cc": 32,
+      "preset_index": 37,
+      "value_0": "Off",
+      "value_1_hz": 1000,
+      "value_100_hz": 20000
+    }
+  ],
+  "mapping": "For v=1..100: minimum * (maximum/minimum)^((v-1)/99). Zero bypasses that filter.",
+  "design": "Cascaded stereo second-order TPT state-variable high-pass and low-pass, Butterworth Q=1/sqrt(2), 12 dB/oct each.",
+  "sample_rate_hz": 48000,
+  "block_frames": 8,
+  "defaults": [
+    0,
+    0
+  ],
+  "smoothing": "Per-filter 256-sample wet ramp and per-block coefficient smoothing. Exact dry pass-through after bypass settles.",
+  "persistence": "Existing 128-byte stock effect snapshot and record CRC, no new record format. FX A/B extension retained.",
+  "hardware_status": "Not installed or physically validated.",
+  "latency": "No extra block buffering. Frequency-dependent phase/group delay is inherent in the filters; no measured end-to-end latency claim."
+}

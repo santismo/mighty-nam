@@ -92,5 +92,5 @@ for offset in range(0,len(legacy),8192):
   legacy[offset+7808:offset+7844]=bytes([255])*36
   struct.pack_into('<I',legacy,offset+8184,zlib.crc32(legacy[offset:offset+8184]))
 fresh=Machine(bytes(legacy));fresh.service();assert fresh.fx_command(0,0)==defaults
-report={'status':'PASS_NAMLNK13_ARM_FX_AND_PAGED_BLE','elf_sha256':hashlib.sha256(elf.read_bytes()).hexdigest(),'dispatch_entries':len(seen),'seven_independent_fx_presets':True,'cold_patterns':[0,165,255],'legacy_preset_defaults':True,'duplicate_fx_saves_no_write':True,'preset_fx_save_recall_restart':True,'stock_order_unchanged':list(m.u.mem_read(m.preset+90,9))==fx[90:99],'tuner_long_reply_reassembled':True,'largest_paged_frame':56,'ram_guards':True,'physical_device_access':False,'audio_playback':False}
+report={'status':'PASS_'+v.plan['identity']+'_ARM_FX_AND_PAGED_BLE','elf_sha256':hashlib.sha256(elf.read_bytes()).hexdigest(),'dispatch_entries':len(seen),'seven_independent_fx_presets':True,'cold_patterns':[0,165,255],'legacy_preset_defaults':True,'duplicate_fx_saves_no_write':True,'preset_fx_save_recall_restart':True,'stock_order_unchanged':list(m.u.mem_read(m.preset+90,9))==fx[90:99],'tuner_long_reply_reassembled':True,'largest_paged_frame':56,'ram_guards':True,'physical_device_access':False,'audio_playback':False}
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(report)

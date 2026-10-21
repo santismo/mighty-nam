@@ -6,7 +6,7 @@ public enum NamLinkWire {
         identity == "NAMLNK01" || supportsStockChain(identity)
     }
     static func supportsStockChain(_ identity: String) -> Bool {
-        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13"].contains(identity)
+        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14"].contains(identity)
     }
     static let prefix: [UInt8] = [0xf0,0x43,0x58,0x70,4,2,0x4e,0x4c,1]
     static func crc(_ bytes: ArraySlice<UInt8>) -> UInt32 {
@@ -60,7 +60,7 @@ public enum NamLinkWire {
 public enum NamOutputBuffer {
     static let choices = [8,16,32]
     static func command(identity: String, samples: Int) -> [UInt8]? {
-        guard ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13"].contains(identity), choices.contains(samples) else { return nil }
+        guard ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14"].contains(identity), choices.contains(samples) else { return nil }
         return [0xf0,0x43,0x58,0x70,4,2,0x4e,0x42,UInt8(samples),0xf7] +
             [0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,24,0xf7]
     }
@@ -74,7 +74,7 @@ public enum NamOutputBuffer {
 
 public enum NamListening {
     static func supports(_ identity: String) -> Bool {
-        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13"].contains(identity)
+        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14"].contains(identity)
     }
     static func arm(identity: String, enabled: Bool) -> [UInt8]? {
         guard supports(identity) else { return nil }
@@ -121,7 +121,7 @@ public enum NamIrqTiming {
 // NAMLNK02 through 06 additionally permit NAM's bypass bit, preserving amp type.
 public enum NamStockWire {
     static let read: [UInt8] = [0xf0,0x43,0x58,0x70,12,2,0xf7]
-    static let heads: [Int:Int] = [1:3,2:13,4:2,5:1,6:13,7:5,8:6,9:34]
+    static let heads: [Int:Int] = [1:3,2:13,4:4,5:1,6:13,7:5,8:6,9:34]
     static let groups: [(ClosedRange<Int>,Int)] = [
         (13...16,15),(17...22,20),(31...42,36),(43...46,49),
         (47...52,54),(53...60,61),(61...64,70),(65...70,75)]
@@ -179,6 +179,7 @@ public enum NamStockWire {
         }
         func allowed(on identity: String) -> Bool {
             NamLinkWire.supportsModels(identity) &&
+                (identity == "NAMLNK14" || (expected[4].map { ($0 & 63) <= 2 } ?? true)) &&
                 ((namEnabled == nil && cabinetBypassed == nil) || NamLinkWire.supportsStockChain(identity))
         }
         func matches(_ preset: [UInt8], before: [UInt8]? = nil) -> Bool {

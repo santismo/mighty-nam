@@ -93,11 +93,21 @@ class HybridRig {
         }
       } else {
         b.choice = b.choices.indexWhere((e) => e.nuxIndex == item['choice']);
-        if (b.choice < 0 || item['settings'].length != b.choices.length) {
+        if (b.choice < 0 ||
+            (item['settings'] as Map)
+                .keys
+                .any((key) => !b.choices.any((e) => '${e.nuxIndex}' == key))) {
           throw const FormatException('Unknown stock effect');
         }
         for (final e in b.choices) {
           final values = item['settings']['${e.nuxIndex}'];
+          // Older saved chains predate the new EQ choice; retain its neutral defaults.
+          if (values == null &&
+              b.slot == 'eq' &&
+              e.nuxIndex == 4 &&
+              item['choice'] != 4) {
+            continue;
+          }
           if (values is! List || values.length != e.parameters.length) {
             throw const FormatException('Invalid effect parameters');
           }
