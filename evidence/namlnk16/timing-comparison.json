@@ -1,0 +1,63 @@
+{
+  "status": "PASS_MATCHED_NAMLNK15_16_TIMING_REPORTS",
+  "cases": [
+    {
+      "case": "NAM-only",
+      "baseline15": {
+        "min_cycles": 90862,
+        "median_cycles": 92946.5,
+        "max_cycles": 95528,
+        "snapshots": 24
+      },
+      "candidate16": {
+        "min_cycles": 86213,
+        "median_cycles": 88677.5,
+        "max_cycles": 91106,
+        "snapshots": 24
+      },
+      "median_cycle_change_percent": -4.592964770055897
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "baseline15": {
+        "min_cycles": 90290,
+        "median_cycles": 92313.0,
+        "max_cycles": 95145,
+        "snapshots": 24
+      },
+      "candidate16": {
+        "min_cycles": 87263,
+        "median_cycles": 88592.5,
+        "max_cycles": 91196,
+        "snapshots": 24
+      },
+      "median_cycle_change_percent": -4.030309923846042
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "baseline15": {
+        "min_cycles": 90957,
+        "median_cycles": 93137.5,
+        "max_cycles": 94881,
+        "snapshots": 24
+      },
+      "candidate16": {
+        "min_cycles": 86914,
+        "median_cycles": 88901.0,
+        "max_cycles": 92644,
+        "snapshots": 24
+      },
+      "median_cycle_change_percent": -4.548651187760033
+    }
+  ],
+  "capture_crc": 1854512385,
+  "buffer_samples": 8,
+  "physical_latency_measured": false,
+  "hardware_deadline_proven": false,
+  "caveats": [
+    "Quiet uncontrolled input; runs are sequential, not interleaved.",
+    "Effect state/history can differ between runs.",
+    "Last-call snapshots, not worst-case deadline coverage.",
+    "Cycle reductions do not shorten the fixed output path."
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "status": "PASS_NAMLNK16_PHYSICAL_RESTORE_RESTART_AND_QUIET_TIMING",
+  "recorded_at": "2026-10-21T17:25:47.782556+00:00",
+  "firmware": "NAMLNK16",
+  "installation": "User reported updater success and normal restart; exact identity confirmed over USB.",
+  "candidate_sha256": "9173dcb1122945e057bbf48edb26929f2790dca62277a20677aa7c251e7e6052",
+  "elf_sha256": "7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1",
+  "presets": {
+    "restored": 7,
+    "source": "Fresh NAMLNK15 bank read before this update, matching verified local Fender/Marshall captures",
+    "all_128_stock_bytes_and_extra_fx_verified": true,
+    "independent_save_read_recall_passed": true,
+    "startup_playback_flags_all_enabled": true,
+    "buffer_samples_by_color": {
+      "Green": 8,
+      "Orange": 8,
+      "Red": 8,
+      "Blue": 16,
+      "Cyan": 8,
+      "Pink": 16,
+      "Lilac": 32
+    },
+    "post_restore_power_cycle_verified": true,
+    "physical_button_cycle_verified": true,
+    "physical_button_cycle_source": "User confirmed seven colors returned to Green after POWER-only restart; subsequent USB read verified Green active and all seven saved records unchanged.",
+    "standalone_output_observed_on": true
+  },
+  "final": {
+    "active_color": "Green",
+    "capture": "Fender A2 Lite",
+    "buffer_samples": 8,
+    "sample_rate": 48000,
+    "bank_mask": 127,
+    "output_muted": true,
+    "processing_faults": 0,
+    "context_rejections": 0,
+    "raw_irq_flags": 0,
+    "raw_irq_rejected": 0
+  },
+  "compact_tuner": {
+    "transport": "USB MIDI",
+    "input": "Quiet input",
+    "readings": 15,
+    "frequency_hz": 0,
+    "reply_bytes": 42,
+    "pending_retries": 0,
+    "start_to_result_ms": {
+      "minimum": 112.08200454711914,
+      "median": 116.26100540161133,
+      "maximum": 118.09110641479492
+    },
+    "deliberate_capture_wait_ms": 90,
+    "bluefy_cadence_measured": false,
+    "physical_note_accuracy_measured": false
+  },
+  "timing_comparison": {
+    "status": "PASS_MATCHED_NAMLNK15_16_TIMING_REPORTS",
+    "cases": [
+      {
+        "case": "NAM-only",
+        "baseline15": {
+          "min_cycles": 90862,
+          "median_cycles": 92946.5,
+          "max_cycles": 95528,
+          "snapshots": 24
+        },
+        "candidate16": {
+          "min_cycles": 86213,
+          "median_cycles": 88677.5,
+          "max_cycles": 91106,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": -4.592964770055897
+      },
+      {
+        "case": "NAM-plus-Spring",
+        "baseline15": {
+          "min_cycles": 90290,
+          "median_cycles": 92313.0,
+          "max_cycles": 95145,
+          "snapshots": 24
+        },
+        "candidate16": {
+          "min_cycles": 87263,
+          "median_cycles": 88592.5,
+          "max_cycles": 91196,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": -4.030309923846042
+      },
+      {
+        "case": "NAM-after-bypassing-Spring",
+        "baseline15": {
+          "min_cycles": 90957,
+          "median_cycles": 93137.5,
+          "max_cycles": 94881,
+          "snapshots": 24
+        },
+        "candidate16": {
+          "min_cycles": 86914,
+          "median_cycles": 88901.0,
+          "max_cycles": 92644,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": -4.548651187760033
+      }
+    ],
+    "capture_crc": 1854512385,
+    "buffer_samples": 8,
+    "physical_latency_measured": false,
+    "hardware_deadline_proven": false,
+    "caveats": [
+      "Quiet uncontrolled input; runs are sequential, not interleaved.",
+      "Effect state/history can differ between runs.",
+      "Last-call snapshots, not worst-case deadline coverage.",
+      "Cycle reductions do not shorten the fixed output path."
+    ]
+  },
+  "limits": {
+    "guitar_to_headphone_latency_measured": false,
+    "calibrated_hardware_deadline_proven": false,
+    "arbitrary_broken_firmware_recovery_proven": false
+  },
+  "session": {
+    "host_audio_streams": 0,
+    "Mac_Teams_audio_changed": false,
+    "additional_firmware_flashes": 0,
+    "output_enable_commands": 0
+  },
+  "local_report_sha256": {
+    "restore16.json": "613ecf7e24bc8a9b39535d9bc29fc90484135b718c05505d79c89b55fb453d20",
+    "timing16.json": "2e355c5631df83ad230d898d2f2a8f2dfa20896df4aef76e60e10a6523632be5",
+    "timing-comparison.json": "91d5614c0d524d0e9b8685b71ca5699f8fd7730e497ddf5712feb66dd347f4da",
+    "restart16.json": "1127074e38a1bba64f28758182a33231acca3eed64a0098d4ebe86a14c24d3a3"
+  }
+}
