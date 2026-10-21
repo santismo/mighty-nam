@@ -1,0 +1,233 @@
+{
+  "status": "PASS_NAMLNK17_PHYSICAL_RESTORE_RESTART_AND_QUIET_TIMING",
+  "recorded_at": "2026-10-21T18:06:26.028812+00:00",
+  "firmware": "NAMLNK17",
+  "installation": "User reported updater success and normal restart; exact identity confirmed over USB.",
+  "candidate_sha256": "df20d3ae1f408266cf9d9094895933f4da6c2ca1810d589cc57502f24b945ac4",
+  "elf_sha256": "73c0b7e82734f4457418cccf6b357152a296fb4c1b4360af84895b2c2acebe02",
+  "converter": {
+    "cached_startup_status": "0xc10f220a",
+    "adc": 34,
+    "dac": 10,
+    "verified": true,
+    "part_identity_confirmed": false,
+    "predicted_reduction_ms": 0.2916666666666667,
+    "guitar_to_headphone_latency_measured": false,
+    "cached_startup_status_verified_after_restart": true
+  },
+  "presets": {
+    "restored": 7,
+    "source": "Fresh NAMLNK16 bank read before this update, with verified locally cached Fender/Marshall captures",
+    "all_128_stock_bytes_and_extra_fx_verified": true,
+    "save_read_recall_passed": true,
+    "startup_playback_flags_all_enabled": true,
+    "buffer_samples_by_color": {
+      "Green": 8,
+      "Orange": 8,
+      "Red": 8,
+      "Blue": 16,
+      "Cyan": 8,
+      "Pink": 16,
+      "Lilac": 32
+    },
+    "original_green_save_generation": 2,
+    "restored_green_save_generation": 1,
+    "post_restore_power_cycle_verified": true,
+    "physical_button_cycle_verified": true,
+    "physical_button_cycle_source": "User confirmed seven colors returned to Green after POWER-only restart; independent USB reads verified all seven saved records and FX unchanged.",
+    "standalone_output_observed_on": true
+  },
+  "final": {
+    "active_color": "Green",
+    "capture": "Fender A2 Lite",
+    "buffer_samples": 8,
+    "sample_rate": 48000,
+    "bank_mask": 127,
+    "output_muted": true,
+    "processing_faults": 0,
+    "context_rejections": 0,
+    "raw_irq_flags": 0,
+    "raw_irq_rejected": 0
+  },
+  "compact_tuner": {
+    "transport": "USB MIDI",
+    "input": "Quiet input",
+    "readings": 15,
+    "frequency_hz": 0,
+    "reply_bytes": 42,
+    "pending_retries": 0,
+    "start_to_result_ms": {
+      "minimum": 110.91804504394531,
+      "median": 115.63289165496826,
+      "maximum": 150.29096603393555
+    },
+    "deliberate_capture_wait_ms": 90,
+    "bluefy_cadence_measured": false,
+    "physical_note_accuracy_measured": false
+  },
+  "timing_comparison": {
+    "status": "PASS_MATCHED_NAMLNK16_17_TIMING_REPORTS",
+    "cases": [
+      {
+        "case": "NAM-only",
+        "baseline16": {
+          "min_cycles": 82009,
+          "median_cycles": 83911.0,
+          "max_cycles": 87653,
+          "snapshots": 24
+        },
+        "candidate17": {
+          "min_cycles": 86050,
+          "median_cycles": 88478.0,
+          "max_cycles": 91205,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": 5.442671401842425
+      },
+      {
+        "case": "NAM-plus-Spring",
+        "baseline16": {
+          "min_cycles": 82408,
+          "median_cycles": 83899.5,
+          "max_cycles": 86361,
+          "snapshots": 24
+        },
+        "candidate17": {
+          "min_cycles": 86499,
+          "median_cycles": 89022.5,
+          "max_cycles": 91351,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": 6.106115054320949
+      },
+      {
+        "case": "NAM-after-bypassing-Spring",
+        "baseline16": {
+          "min_cycles": 82025,
+          "median_cycles": 84138.0,
+          "max_cycles": 85975,
+          "snapshots": 24
+        },
+        "candidate17": {
+          "min_cycles": 85325,
+          "median_cycles": 88796.0,
+          "max_cycles": 91084,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": 5.536143003161476
+      }
+    ],
+    "capture_crc": 1854512385,
+    "buffer_samples": 8,
+    "physical_latency_measured": false,
+    "hardware_deadline_proven": false,
+    "caveats": [
+      "Quiet uncontrolled input; runs are sequential, not interleaved.",
+      "Effect state/history can differ between runs.",
+      "Last-call snapshots, not worst-case deadline coverage.",
+      "The intended ADC filter difference is outside these IRQ measurements."
+    ]
+  },
+  "limits": {
+    "guitar_to_headphone_latency_measured": false,
+    "calibrated_hardware_deadline_proven": false,
+    "arbitrary_broken_firmware_recovery_proven": false
+  },
+  "session": {
+    "host_audio_streams": 0,
+    "Mac_Teams_audio_changed": false,
+    "additional_firmware_flashes": 0,
+    "output_enable_commands": 0
+  },
+  "local_report_sha256": {
+    "initial17.json": "3a5e434b77b6ac02badd5e9be19cf80d3a35b7732443ae7660bd0faa10e356e0",
+    "restore17.json": "dd04025c45cc7042e293c69c50101b199baa9a3f4d2f5573025554b37d1243ba",
+    "timing17.json": "47d98e35430ba571397b73bd2d69c7a8c0c56d287e1d5a5042238fe28dc5f609",
+    "timing-comparison.json": "f310fddf524a892d01e923e7a9ea4c55077bbdcaa11455b2aba2b4d568d0a67c",
+    "restart17.json": "126370b673b8adf793516e756155fa437afea80ffe5fc41e0aa79cda7b09358c",
+    "timing17-after-restart.json": "b02b2f5af6d9f9333859190b9315728f47591b475f346ac3c9d8552af801ed23",
+    "timing-comparison-after-restart.json": "e2d215545a8c3cf5785f1fe2c6e4aa12c346462a876c5f48e78fc6881b054cde"
+  },
+  "timing_comparison_after_restart": {
+    "status": "PASS_MATCHED_NAMLNK16_17_TIMING_REPORTS",
+    "cases": [
+      {
+        "case": "NAM-only",
+        "baseline16": {
+          "min_cycles": 82009,
+          "median_cycles": 83911.0,
+          "max_cycles": 87653,
+          "snapshots": 24
+        },
+        "candidate17": {
+          "min_cycles": 86444,
+          "median_cycles": 88247.0,
+          "max_cycles": 91936,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": 5.167379723754939
+      },
+      {
+        "case": "NAM-plus-Spring",
+        "baseline16": {
+          "min_cycles": 82408,
+          "median_cycles": 83899.5,
+          "max_cycles": 86361,
+          "snapshots": 24
+        },
+        "candidate17": {
+          "min_cycles": 85869,
+          "median_cycles": 88857.5,
+          "max_cycles": 92818,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": 5.909451188624493
+      },
+      {
+        "case": "NAM-after-bypassing-Spring",
+        "baseline16": {
+          "min_cycles": 82025,
+          "median_cycles": 84138.0,
+          "max_cycles": 85975,
+          "snapshots": 24
+        },
+        "candidate17": {
+          "min_cycles": 86587,
+          "median_cycles": 88196.0,
+          "max_cycles": 92026,
+          "snapshots": 24
+        },
+        "median_cycle_change_percent": 4.823028833582921
+      }
+    ],
+    "capture_crc": 1854512385,
+    "buffer_samples": 8,
+    "physical_latency_measured": false,
+    "hardware_deadline_proven": false,
+    "caveats": [
+      "Quiet uncontrolled input; runs are sequential, not interleaved.",
+      "Effect state/history can differ between runs.",
+      "Last-call snapshots, not worst-case deadline coverage.",
+      "The intended ADC filter difference is outside these IRQ measurements."
+    ]
+  },
+  "processing_timing_observation": {
+    "immediate_preupdate_baseline_vs_first_trial_median_increase_percent": [
+      5.442671401842425,
+      6.106115054320949,
+      5.536143003161476
+    ],
+    "after_restart_median_increase_percent": [
+      5.167379723754939,
+      5.909451188624493,
+      4.823028833582921
+    ],
+    "cause_established": false,
+    "older_NAMLNK16_runs_also_near_89000_cycles": true,
+    "linked_kernel_table_address_before": "0x1b200",
+    "linked_kernel_table_address_after": "0x1b25c",
+    "linked_dilation_table_address_before": "0x1b25c",
+    "linked_dilation_table_address_after": "0x1b2b8",
+    "next_investigation": "Preserve prior hot data layout and measure controlled startup histories; do not infer cache behavior from byte-identical object files."
+  }
+}

@@ -1,6 +1,6 @@
 # NAMLNK17 converter latency trial
 
-NAMLNK17 is an offline-tested candidate, not installed or physically verified. NAMLNK16 remains the last verified installed firmware. Mac 0.3.9+12 and phone controller 0.6.4 recognize both versions. The trial changes the ADC filter only at startup and adds cached readback diagnostics. It retains the 48 kHz, eight-frame processing path, seven saved presets, existing effects, tuner and NAMLNK16 NAM optimization.
+NAMLNK17 is installed on the development plug. USB reads verified converter startup, all seven restored presets, restart persistence and fault-free quiet processing. Actual input-to-headphone latency and listening quality remain unmeasured for this trial. Mac 0.3.9+12 and phone controller 0.6.4 recognize both versions. The trial changes the ADC filter only at startup and adds cached readback diagnostics. It retains the 48 kHz, eight-frame processing path, seven saved presets, existing effects, tuner and NAMLNK16 NAM optimization.
 
 ## Expected benefit and limits
 
@@ -44,7 +44,19 @@ Four frames needs a separate driver/DSP prototype, with every block boundary aud
 
 ## Pre-update physical check
 
-A fresh NAMLNK16 USB read verified all seven saved records and FX A/B settings. Cached capture payloads match the fresh SHA-256 and CRC fields; they were not extracted from the device. The complete local restore plan passed validation. Three quiet timing cases completed with zero faults, and original live settings were restored with output muted. See [preflight results](../evidence/namlnk17/preflight.json). NAMLNK17 installation and converter readback remain pending.
+A fresh NAMLNK16 USB read verified all seven saved records and FX A/B settings. Cached capture payloads match the fresh SHA-256 and CRC fields; they were not extracted from the device. The complete local restore plan passed validation. Three quiet timing cases completed with zero faults, and original live settings were restored with output muted. See [preflight results](../evidence/namlnk17/preflight.json). The subsequent installation and verification are recorded below.
+
+## Physical NAMLNK17 results
+
+The official updater installation completed, followed by a normal restart. USB identity is NAMLNK17 and cached converter status is `0xc10f220a`, including after another power cycle. All seven fresh-backed-up records and FX A/B settings were restored, independently read and recalled, then checked unchanged after restart. The user confirmed all seven colors cycled back to Green. Startup output was observed on; the silent test session finished with Green/Fender, eight samples and output muted.
+
+NAM alone, NAM plus Spring, and NAM after bypassing Spring each completed 24 timing snapshots with zero processing/context faults and no rejected IRQ snapshots. Fifteen quiet compact-tuner operations returned valid silent-input results, with median USB start-to-result time about 116 ms. This does not test note accuracy or phone/Bluetooth cadence.
+
+The current comparison is **not a processing speedup**. Median IRQ counts were 5.4–6.1% above the immediate NAMLNK16 baseline after restoration, and 4.8–5.9% above it after restart and color cycling. Earlier NAMLNK16 sessions also ran near the new 88–89 thousand cycle range, so startup history and run conditions remain confounders. No deadline fault occurred, but these sparse snapshots do not establish a worst-case deadline or acoustic latency.
+
+The linked A2 kernel/dilation tables moved by 92 bytes even though their object file is unchanged (`0x1b200/0x1b25c` to `0x1b25c/0x1b2b8`); corresponding address loads changed. Dispatcher branch thunks also moved. This is a possible cache-layout variable, not an established cause. Preserve the old hot-data placement in a separate experiment before claiming unchanged hardware cost. No second firmware change was installed during these checks.
+
+See [physical summary](../evidence/namlnk17/physical-summary.json), [first timing comparison](../evidence/namlnk17/timing-comparison.json), [post-restart comparison](../evidence/namlnk17/timing-comparison-after-restart.json) and [linked-code differences](../evidence/namlnk17/hot-code-relocations.json). The estimated converter saving remains a datasheet prediction; these CPU counters cannot measure it.
 
 ## Build and physical test sequence
 

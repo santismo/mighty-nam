@@ -1,0 +1,65 @@
+{
+  "checked_functions": [
+    "_ZN3mpp6A2Lite7processEPKfPfj",
+    "mpp_fast_dispatch",
+    "mpp_link_irq",
+    "mpp_output_protect",
+    "mpp_stock_amp_process"
+  ],
+  "all_selected_functions_same_address_size_bytes": false,
+  "baseline": {
+    "mpp_fast_dispatch": {
+      "address": "0x1acc1",
+      "size": 204,
+      "sha256": "fe7b3f0b6971bc9d83e29a93927493215c4e2551c35da3612dd31c6b398c7124"
+    },
+    "mpp_link_irq": {
+      "address": "0x1b0a9",
+      "size": 152,
+      "sha256": "b1e80b84aef58517edf7b92bd467f9e31b5aa70aebaeff9833f19e60be3af5d5"
+    },
+    "mpp_stock_amp_process": {
+      "address": "0x1ae5d",
+      "size": 124,
+      "sha256": "c85ab175d375c4687edd42db9bbd643288fe308521e2c38c3bacf3942a4ad76c"
+    },
+    "_ZN3mpp6A2Lite7processEPKfPfj": {
+      "address": "0x1a399",
+      "size": 820,
+      "sha256": "cfcecd3f90fc89955e1fb70a11dbc2ef4a615413487e9c8a70e38faf589eb60c"
+    },
+    "mpp_output_protect": {
+      "address": "0x14c05",
+      "size": 172,
+      "sha256": "6fd2bef6942a27dadd21bde84971226158d78275260bfea3fd43eb037d1a1d7a"
+    }
+  },
+  "candidate": {
+    "mpp_fast_dispatch": {
+      "address": "0x1acc1",
+      "size": 204,
+      "sha256": "d0d682ab9fce34768f20174447dc654ebfc3fc6e735577b44ede6d88881a701d"
+    },
+    "mpp_link_irq": {
+      "address": "0x1b0a9",
+      "size": 152,
+      "sha256": "b1e80b84aef58517edf7b92bd467f9e31b5aa70aebaeff9833f19e60be3af5d5"
+    },
+    "mpp_stock_amp_process": {
+      "address": "0x1ae5d",
+      "size": 124,
+      "sha256": "c85ab175d375c4687edd42db9bbd643288fe308521e2c38c3bacf3942a4ad76c"
+    },
+    "_ZN3mpp6A2Lite7processEPKfPfj": {
+      "address": "0x1a399",
+      "size": 820,
+      "sha256": "e2c2498d60097aa0863d874688ed74da3094d809adc48306c588dc61fa3cd9f2"
+    },
+    "mpp_output_protect": {
+      "address": "0x14c05",
+      "size": 172,
+      "sha256": "6fd2bef6942a27dadd21bde84971226158d78275260bfea3fd43eb037d1a1d7a"
+    }
+  },
+  "limits": "Selected critical functions only; linked copied-bank code layout and hardware cache behavior are not proven identical."
+}

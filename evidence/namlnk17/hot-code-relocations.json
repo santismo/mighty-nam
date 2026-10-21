@@ -1,0 +1,94 @@
+{
+  "mpp_fast_dispatch": [
+    {
+      "baseline": {
+        "address": "0x1acd8",
+        "mnemonic": "bl",
+        "operands": "#0x1b1b0",
+        "bytes": "00f06afa",
+        "target": "__Thumbv7ABSLongThunk_mpp_fx_before"
+      },
+      "candidate": {
+        "address": "0x1acd8",
+        "mnemonic": "bl",
+        "operands": "#0x1b20c",
+        "bytes": "00f098fa",
+        "target": "__Thumbv7ABSLongThunk_mpp_fx_before"
+      }
+    },
+    {
+      "baseline": {
+        "address": "0x1ad7c",
+        "mnemonic": "bl",
+        "operands": "#0x1b1ba",
+        "bytes": "00f01dfa",
+        "target": "__Thumbv7ABSLongThunk_mpp_profile_dispatch"
+      },
+      "candidate": {
+        "address": "0x1ad7c",
+        "mnemonic": "bl",
+        "operands": "#0x1b216",
+        "bytes": "00f04bfa",
+        "target": "__Thumbv7ABSLongThunk_mpp_profile_dispatch"
+      }
+    }
+  ],
+  "_ZN3mpp6A2Lite7processEPKfPfj": [
+    {
+      "baseline": {
+        "address": "0x1a3d0",
+        "mnemonic": "movw",
+        "operands": "r7, #0xb200",
+        "bytes": "4bf20027"
+      },
+      "candidate": {
+        "address": "0x1a3d0",
+        "mnemonic": "movw",
+        "operands": "r7, #0xb25c",
+        "bytes": "4bf25c27"
+      }
+    },
+    {
+      "baseline": {
+        "address": "0x1a3e0",
+        "mnemonic": "movw",
+        "operands": "r5, #0xb25c",
+        "bytes": "4bf25c25"
+      },
+      "candidate": {
+        "address": "0x1a3e0",
+        "mnemonic": "movw",
+        "operands": "r5, #0xb2b8",
+        "bytes": "4bf2b825"
+      }
+    },
+    {
+      "baseline": {
+        "address": "0x1a4b2",
+        "mnemonic": "movw",
+        "operands": "r5, #0xb25c",
+        "bytes": "4bf25c25"
+      },
+      "candidate": {
+        "address": "0x1a4b2",
+        "mnemonic": "movw",
+        "operands": "r5, #0xb2b8",
+        "bytes": "4bf2b825"
+      }
+    },
+    {
+      "baseline": {
+        "address": "0x1a4ba",
+        "mnemonic": "movw",
+        "operands": "r7, #0xb200",
+        "bytes": "4bf20027"
+      },
+      "candidate": {
+        "address": "0x1a4ba",
+        "mnemonic": "movw",
+        "operands": "r7, #0xb25c",
+        "bytes": "4bf25c27"
+      }
+    }
+  ]
+}

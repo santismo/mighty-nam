@@ -1,0 +1,63 @@
+{
+  "status": "PASS_MATCHED_NAMLNK16_17_TIMING_REPORTS",
+  "cases": [
+    {
+      "case": "NAM-only",
+      "baseline16": {
+        "min_cycles": 82009,
+        "median_cycles": 83911.0,
+        "max_cycles": 87653,
+        "snapshots": 24
+      },
+      "candidate17": {
+        "min_cycles": 86050,
+        "median_cycles": 88478.0,
+        "max_cycles": 91205,
+        "snapshots": 24
+      },
+      "median_cycle_change_percent": 5.442671401842425
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "baseline16": {
+        "min_cycles": 82408,
+        "median_cycles": 83899.5,
+        "max_cycles": 86361,
+        "snapshots": 24
+      },
+      "candidate17": {
+        "min_cycles": 86499,
+        "median_cycles": 89022.5,
+        "max_cycles": 91351,
+        "snapshots": 24
+      },
+      "median_cycle_change_percent": 6.106115054320949
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "baseline16": {
+        "min_cycles": 82025,
+        "median_cycles": 84138.0,
+        "max_cycles": 85975,
+        "snapshots": 24
+      },
+      "candidate17": {
+        "min_cycles": 85325,
+        "median_cycles": 88796.0,
+        "max_cycles": 91084,
+        "snapshots": 24
+      },
+      "median_cycle_change_percent": 5.536143003161476
+    }
+  ],
+  "capture_crc": 1854512385,
+  "buffer_samples": 8,
+  "physical_latency_measured": false,
+  "hardware_deadline_proven": false,
+  "caveats": [
+    "Quiet uncontrolled input; runs are sequential, not interleaved.",
+    "Effect state/history can differ between runs.",
+    "Last-call snapshots, not worst-case deadline coverage.",
+    "The intended ADC filter difference is outside these IRQ measurements."
+  ]
+}
