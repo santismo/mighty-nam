@@ -1,0 +1,102 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK18_TO_19_SAMPLE_AGE",
+  "cases": [
+    {
+      "role": "baseline",
+      "identity": "NAMLNK18",
+      "case": "NAM-only",
+      "stock_preset_sha256": "2b4eea2f1aad72eb5e2fd1c7f686c9dfdb7c9f216445f5495ee197c3641eab53",
+      "warmup_blocks": 1350,
+      "comparison_blocks": 384,
+      "frames": 3072,
+      "PCM_sha256": "6ad8e0b7b463826983035713afd2b62ad42fe29119004b7b6d531de01eaf9981",
+      "protected_output_age_samples": 8,
+      "additional_output_queue_samples": 0,
+      "order": [
+        "render-previous",
+        "process-current-NAM",
+        "protect-current"
+      ],
+      "processing_faults": 0,
+      "context_rejections": 0
+    },
+    {
+      "role": "baseline",
+      "identity": "NAMLNK18",
+      "case": "NAM-and-spring-reverb",
+      "stock_preset_sha256": "6c7f03ee28c6864586a6253ac27dd8484254b7124752dda185ff4e3643d81ca1",
+      "warmup_blocks": 1350,
+      "comparison_blocks": 384,
+      "frames": 3072,
+      "PCM_sha256": "92d310c51be2fead0a3539373d18f5986042967a0608ef287d8da583e50e8720",
+      "protected_output_age_samples": 8,
+      "additional_output_queue_samples": 0,
+      "order": [
+        "render-previous",
+        "process-current-NAM",
+        "protect-current"
+      ],
+      "processing_faults": 0,
+      "context_rejections": 0
+    },
+    {
+      "role": "candidate",
+      "identity": "NAMLNK19",
+      "case": "NAM-only",
+      "stock_preset_sha256": "2b4eea2f1aad72eb5e2fd1c7f686c9dfdb7c9f216445f5495ee197c3641eab53",
+      "warmup_blocks": 1350,
+      "comparison_blocks": 384,
+      "frames": 3072,
+      "PCM_sha256": "6ad8e0b7b463826983035713afd2b62ad42fe29119004b7b6d531de01eaf9981",
+      "protected_output_age_samples": 8,
+      "additional_output_queue_samples": 0,
+      "order": [
+        "render-previous",
+        "process-current-NAM",
+        "protect-current"
+      ],
+      "processing_faults": 0,
+      "context_rejections": 0
+    },
+    {
+      "role": "candidate",
+      "identity": "NAMLNK19",
+      "case": "NAM-and-spring-reverb",
+      "stock_preset_sha256": "6c7f03ee28c6864586a6253ac27dd8484254b7124752dda185ff4e3643d81ca1",
+      "warmup_blocks": 1350,
+      "comparison_blocks": 384,
+      "frames": 3072,
+      "PCM_sha256": "92d310c51be2fead0a3539373d18f5986042967a0608ef287d8da583e50e8720",
+      "protected_output_age_samples": 8,
+      "additional_output_queue_samples": 0,
+      "order": [
+        "render-previous",
+        "process-current-NAM",
+        "protect-current"
+      ],
+      "processing_faults": 0,
+      "context_rejections": 0
+    }
+  ],
+  "baseline_elf_sha256": "6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2",
+  "candidate_elf_sha256": "4c058e7d985897a3ef84f78881a98f0fff0aa9ee3d930347d158a3f0421ebbb0",
+  "model_sha256": "951383563d6c00f4742565facedee3294293cbd49173d1895ebeb1ce9bb0175a",
+  "identical_objects": [],
+  "PCM_bit_identical_for_both_cases": true,
+  "unchanged_stock_audio_IRQ": true,
+  "sample_rate_hz": 48000,
+  "block_samples": 8,
+  "source_sample_age_ms": 0.16666666666666666,
+  "physical_latency_measured": false,
+  "physical_deadline_proven": false,
+  "host_audio_access": false,
+  "device_access": false,
+  "firmware_created": false,
+  "limits": [
+    "Two identical stock-preset fixtures with the same real model; not every preset/model.",
+    "Logical protected-block age excludes codec, DMA release and analog delay.",
+    "Synthetic timing cannot detect hardware deadline misses or establish CPU speed.",
+    "Bit-identical PCM rules out added software sample delay in these fixtures only."
+  ],
+  "seconds": 198.78763628704473
+}

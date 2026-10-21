@@ -33,8 +33,14 @@ class StockControlPlan {
       ['fxa', 'fxb'].contains(slot)
           ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
           : slot == 'eq' &&
-                  ['NAMLNK14', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17', 'NAMLNK18']
-                      .contains(identity)
+                  [
+                    'NAMLNK14',
+                    'NAMLNK15',
+                    'NAMLNK16',
+                    'NAMLNK17',
+                    'NAMLNK18',
+                    'NAMLNK19'
+                  ].contains(identity)
               ? 4
               : supportedTypes[slot]!;
   static const ranges = [

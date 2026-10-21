@@ -1,0 +1,1113 @@
+{
+  "status": "PASS_FX_PITCH_ANALYSIS",
+  "cases": [
+    {
+      "input_hz": 220,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 110.0,
+      "peak_hz": 109.954833984375,
+      "cents": -0.7109909229386714
+    },
+    {
+      "input_hz": 220,
+      "shift": -11,
+      "harmonics": false,
+      "expected_hz": 116.54094037952248,
+      "peak_hz": 116.546630859375,
+      "cents": 0.08453091193000577
+    },
+    {
+      "input_hz": 220,
+      "shift": -10,
+      "harmonics": false,
+      "expected_hz": 123.47082531403103,
+      "peak_hz": 123.504638671875,
+      "cents": 0.47404576822138533
+    },
+    {
+      "input_hz": 220,
+      "shift": -9,
+      "harmonics": false,
+      "expected_hz": 130.8127826502993,
+      "peak_hz": 130.828857421875,
+      "cents": 0.21272754528032783
+    },
+    {
+      "input_hz": 220,
+      "shift": -8,
+      "harmonics": false,
+      "expected_hz": 138.59131548843604,
+      "peak_hz": 138.61083984375,
+      "cents": 0.24387421317834043
+    },
+    {
+      "input_hz": 220,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 146.8323839587038,
+      "peak_hz": 146.8505859375,
+      "cents": 0.21459797620456716
+    },
+    {
+      "input_hz": 220,
+      "shift": -6,
+      "harmonics": false,
+      "expected_hz": 155.56349186104046,
+      "peak_hz": 155.548095703125,
+      "cents": -0.1713491486350826
+    },
+    {
+      "input_hz": 220,
+      "shift": -5,
+      "harmonics": false,
+      "expected_hz": 164.81377845643496,
+      "peak_hz": 164.794921875,
+      "cents": -0.19808430925519932
+    },
+    {
+      "input_hz": 220,
+      "shift": -4,
+      "harmonics": false,
+      "expected_hz": 174.61411571650194,
+      "peak_hz": 174.591064453125,
+      "cents": -0.22855979439230042
+    },
+    {
+      "input_hz": 220,
+      "shift": -3,
+      "harmonics": false,
+      "expected_hz": 184.9972113558172,
+      "peak_hz": 185.028076171875,
+      "cents": 0.28881388598272884
+    },
+    {
+      "input_hz": 220,
+      "shift": -2,
+      "harmonics": false,
+      "expected_hz": 195.99771799087463,
+      "peak_hz": 196.014404296875,
+      "cents": 0.14738269291201242
+    },
+    {
+      "input_hz": 220,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 207.65234878997256,
+      "peak_hz": 207.6416015625,
+      "cents": -0.08960383902509059
+    },
+    {
+      "input_hz": 220,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 220.0,
+      "peak_hz": 220.001220703125,
+      "cents": 0.009605986139799546
+    },
+    {
+      "input_hz": 220,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 233.08188075904496,
+      "peak_hz": 233.09326171875,
+      "cents": 0.08453091193000577
+    },
+    {
+      "input_hz": 220,
+      "shift": 2,
+      "harmonics": false,
+      "expected_hz": 246.94165062806206,
+      "peak_hz": 246.917724609375,
+      "cents": -0.16774628697554883
+    },
+    {
+      "input_hz": 220,
+      "shift": 3,
+      "harmonics": false,
+      "expected_hz": 261.6255653005986,
+      "peak_hz": 261.65771484375,
+      "cents": 0.21272754528032783
+    },
+    {
+      "input_hz": 220,
+      "shift": 4,
+      "harmonics": false,
+      "expected_hz": 277.1826309768721,
+      "peak_hz": 277.2216796875,
+      "cents": 0.24387421317834043
+    },
+    {
+      "input_hz": 220,
+      "shift": 5,
+      "harmonics": false,
+      "expected_hz": 293.6647679174076,
+      "peak_hz": 293.701171875,
+      "cents": 0.21459797620456716
+    },
+    {
+      "input_hz": 220,
+      "shift": 6,
+      "harmonics": false,
+      "expected_hz": 311.1269837220809,
+      "peak_hz": 311.09619140625,
+      "cents": -0.1713491486350826
+    },
+    {
+      "input_hz": 220,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 329.6275569128699,
+      "peak_hz": 329.58984375,
+      "cents": -0.19808430925519932
+    },
+    {
+      "input_hz": 220,
+      "shift": 8,
+      "harmonics": false,
+      "expected_hz": 349.2282314330039,
+      "peak_hz": 349.273681640625,
+      "cents": 0.22529629657155453
+    },
+    {
+      "input_hz": 220,
+      "shift": 9,
+      "harmonics": false,
+      "expected_hz": 369.9944227116344,
+      "peak_hz": 369.964599609375,
+      "cents": -0.13955034954839857
+    },
+    {
+      "input_hz": 220,
+      "shift": 10,
+      "harmonics": false,
+      "expected_hz": 391.99543598174927,
+      "peak_hz": 392.02880859375,
+      "cents": 0.14738269291201242
+    },
+    {
+      "input_hz": 220,
+      "shift": 11,
+      "harmonics": false,
+      "expected_hz": 415.3046975799451,
+      "peak_hz": 415.283203125,
+      "cents": -0.08960383902509059
+    },
+    {
+      "input_hz": 220,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 440.0,
+      "peak_hz": 440.00244140625,
+      "cents": 0.009605986139799546
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 41.2034445,
+      "peak_hz": 41.19873046875,
+      "cents": -0.19807951477902822
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 54.99999984768311,
+      "peak_hz": 55.023193359375,
+      "cents": 0.7299078781989554
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 77.78174571511161,
+      "peak_hz": 77.81982421875,
+      "cents": 0.8473282548536576
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 82.406889,
+      "peak_hz": 82.3974609375,
+      "cents": -0.19807951477902822
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 87.30705761646298,
+      "peak_hz": 87.34130859375,
+      "cents": 0.6790382313901789
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 123.47082497209117,
+      "peak_hz": 123.504638671875,
+      "cents": 0.4740505626977156
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 164.813778,
+      "peak_hz": 164.794921875,
+      "cents": -0.19807951477902822
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 41.2034445,
+      "peak_hz": 41.19873046875,
+      "cents": -0.19807951477902822
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 54.99999984768311,
+      "peak_hz": 55.023193359375,
+      "cents": 0.7299078781989554
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 77.78174571511161,
+      "peak_hz": 77.81982421875,
+      "cents": 0.8473282548536576
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 82.406889,
+      "peak_hz": 82.3974609375,
+      "cents": -0.19807951477902822
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 87.30705761646298,
+      "peak_hz": 87.34130859375,
+      "cents": 0.6790382313901789
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 123.47082497209117,
+      "peak_hz": 123.504638671875,
+      "cents": 0.4740505626977156
+    },
+    {
+      "input_hz": 82.406889,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 164.813778,
+      "peak_hz": 164.794921875,
+      "cents": -0.19807951477902822
+    },
+    {
+      "input_hz": 110,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 55.0,
+      "peak_hz": 55.023193359375,
+      "cents": 0.7299030837229724
+    },
+    {
+      "input_hz": 110,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 73.4161919793519,
+      "peak_hz": 73.42529296875,
+      "cents": 0.21459797620456716
+    },
+    {
+      "input_hz": 110,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 103.82617439498628,
+      "peak_hz": 103.82080078125,
+      "cents": -0.08960383902509059
+    },
+    {
+      "input_hz": 110,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 110.0,
+      "peak_hz": 109.954833984375,
+      "cents": -0.7109909229386714
+    },
+    {
+      "input_hz": 110,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 116.54094037952248,
+      "peak_hz": 116.546630859375,
+      "cents": 0.08453091193000577
+    },
+    {
+      "input_hz": 110,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 164.81377845643496,
+      "peak_hz": 164.794921875,
+      "cents": -0.19808430925519932
+    },
+    {
+      "input_hz": 110,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 220.0,
+      "peak_hz": 220.001220703125,
+      "cents": 0.009605986139799546
+    },
+    {
+      "input_hz": 110,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 55.0,
+      "peak_hz": 55.023193359375,
+      "cents": 0.7299030837229724
+    },
+    {
+      "input_hz": 110,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 73.4161919793519,
+      "peak_hz": 73.42529296875,
+      "cents": 0.21459797620456716
+    },
+    {
+      "input_hz": 110,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 103.82617439498628,
+      "peak_hz": 103.82080078125,
+      "cents": -0.08960383902509059
+    },
+    {
+      "input_hz": 110,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 110.0,
+      "peak_hz": 109.954833984375,
+      "cents": -0.7109909229386714
+    },
+    {
+      "input_hz": 110,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 116.54094037952248,
+      "peak_hz": 116.546630859375,
+      "cents": 0.08453091193000577
+    },
+    {
+      "input_hz": 110,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 164.81377845643496,
+      "peak_hz": 164.794921875,
+      "cents": -0.19808430925519932
+    },
+    {
+      "input_hz": 110,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 220.0,
+      "peak_hz": 220.001220703125,
+      "cents": 0.009605986139799546
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 73.416192,
+      "peak_hz": 73.42529296875,
+      "cents": 0.2145974892997619
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 97.99885902299924,
+      "peak_hz": 97.96142578125,
+      "cents": -0.6614167103934051
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 138.59131552741448,
+      "peak_hz": 138.61083984375,
+      "cents": 0.24387372627331314
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 146.832384,
+      "peak_hz": 146.8505859375,
+      "cents": 0.2145974892997619
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 155.56349190479227,
+      "peak_hz": 155.548095703125,
+      "cents": -0.1713496355400318
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 220.0000000618744,
+      "peak_hz": 220.001220703125,
+      "cents": 0.009605499234998817
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 293.664768,
+      "peak_hz": 293.701171875,
+      "cents": 0.2145974892997619
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 73.416192,
+      "peak_hz": 73.42529296875,
+      "cents": 0.2145974892997619
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 97.99885902299924,
+      "peak_hz": 97.96142578125,
+      "cents": -0.6614167103934051
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 138.59131552741448,
+      "peak_hz": 138.61083984375,
+      "cents": 0.24387372627331314
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 146.832384,
+      "peak_hz": 146.8505859375,
+      "cents": 0.2145974892997619
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 155.56349190479227,
+      "peak_hz": 155.548095703125,
+      "cents": -0.1713496355400318
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 220.0000000618744,
+      "peak_hz": 220.001220703125,
+      "cents": 0.009605499234998817
+    },
+    {
+      "input_hz": 146.832384,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 293.664768,
+      "peak_hz": 293.701171875,
+      "cents": 0.2145974892997619
+    },
+    {
+      "input_hz": 196,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 98.0,
+      "peak_hz": 97.96142578125,
+      "cents": -0.6815729321467741
+    },
+    {
+      "input_hz": 196,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 130.81430570866337,
+      "peak_hz": 130.828857421875,
+      "cents": 0.1925708366217816
+    },
+    {
+      "input_hz": 196,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 184.99936528561193,
+      "peak_hz": 185.028076171875,
+      "cents": 0.2686571773244841
+    },
+    {
+      "input_hz": 196,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 196.0,
+      "peak_hz": 196.014404296875,
+      "cents": 0.12722598425324438
+    },
+    {
+      "input_hz": 196,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 207.6547664944219,
+      "peak_hz": 207.6416015625,
+      "cents": -0.10976054768356601
+    },
+    {
+      "input_hz": 196,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 293.6681870678296,
+      "peak_hz": 293.701171875,
+      "cents": 0.19444126754637162
+    },
+    {
+      "input_hz": 196,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 392.0,
+      "peak_hz": 392.02880859375,
+      "cents": 0.12722598425324438
+    },
+    {
+      "input_hz": 196,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 98.0,
+      "peak_hz": 97.96142578125,
+      "cents": -0.6815729321467741
+    },
+    {
+      "input_hz": 196,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 130.81430570866337,
+      "peak_hz": 130.828857421875,
+      "cents": 0.1925708366217816
+    },
+    {
+      "input_hz": 196,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 184.99936528561193,
+      "peak_hz": 185.028076171875,
+      "cents": 0.2686571773244841
+    },
+    {
+      "input_hz": 196,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 196.0,
+      "peak_hz": 196.014404296875,
+      "cents": 0.12722598425324438
+    },
+    {
+      "input_hz": 196,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 207.6547664944219,
+      "peak_hz": 207.6416015625,
+      "cents": -0.10976054768356601
+    },
+    {
+      "input_hz": 196,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 293.6681870678296,
+      "peak_hz": 293.701171875,
+      "cents": 0.19444126754637162
+    },
+    {
+      "input_hz": 196,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 392.0,
+      "peak_hz": 392.02880859375,
+      "cents": 0.12722598425324438
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 123.4708255,
+      "peak_hz": 123.504638671875,
+      "cents": 0.47404316067563473
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 164.81377870467375,
+      "peak_hz": 164.794921875,
+      "cents": -0.19808691680083876
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 233.08188111010764,
+      "peak_hz": 233.09326171875,
+      "cents": 0.08452830438409345
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 246.941651,
+      "peak_hz": 246.917724609375,
+      "cents": -0.16774889452124359
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 261.6255656946532,
+      "peak_hz": 261.65771484375,
+      "cents": 0.2127249377341602
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 369.99442326891165,
+      "peak_hz": 369.964599609375,
+      "cents": -0.13955295709410645
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 493.883302,
+      "peak_hz": 493.927001953125,
+      "cents": 0.15317687320957732
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 123.4708255,
+      "peak_hz": 123.504638671875,
+      "cents": 0.47404316067563473
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 164.81377870467375,
+      "peak_hz": 164.794921875,
+      "cents": -0.19808691680083876
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 233.08188111010764,
+      "peak_hz": 233.09326171875,
+      "cents": 0.08452830438409345
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 246.941651,
+      "peak_hz": 246.917724609375,
+      "cents": -0.16774889452124359
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 261.6255656946532,
+      "peak_hz": 261.65771484375,
+      "cents": 0.2127249377341602
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 369.99442326891165,
+      "peak_hz": 369.964599609375,
+      "cents": -0.13955295709410645
+    },
+    {
+      "input_hz": 246.941651,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 493.883302,
+      "peak_hz": 493.927001953125,
+      "cents": 0.15317687320957732
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 164.8137785,
+      "peak_hz": 164.794921875,
+      "cents": -0.19808476687045404
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 220.00000005815235,
+      "peak_hz": 220.001220703125,
+      "cents": 0.00960552852466179
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 311.1269838043208,
+      "peak_hz": 311.09619140625,
+      "cents": -0.1713496062503828
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 329.627557,
+      "peak_hz": 329.58984375,
+      "cents": -0.19808476687045404
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 349.22823152531504,
+      "peak_hz": 349.273681640625,
+      "cents": 0.22529583895615657
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 493.88330138667175,
+      "peak_hz": 493.927001953125,
+      "cents": 0.15317902314025011
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 659.255114,
+      "peak_hz": 659.36279296875,
+      "cents": 0.2827468010217519
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 164.8137785,
+      "peak_hz": 164.794921875,
+      "cents": -0.19808476687045404
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 220.00000005815235,
+      "peak_hz": 220.001220703125,
+      "cents": 0.00960552852466179
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 311.1269838043208,
+      "peak_hz": 311.09619140625,
+      "cents": -0.1713496062503828
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 329.627557,
+      "peak_hz": 329.58984375,
+      "cents": -0.19808476687045404
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 349.22823152531504,
+      "peak_hz": 349.273681640625,
+      "cents": 0.22529583895615657
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 493.88330138667175,
+      "peak_hz": 493.927001953125,
+      "cents": 0.15317902314025011
+    },
+    {
+      "input_hz": 329.627557,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 659.255114,
+      "peak_hz": 659.36279296875,
+      "cents": 0.2827468010217519
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 329.627557,
+      "peak_hz": 329.132080078125,
+      "cents": -2.6042478353226017
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 440.0000001163047,
+      "peak_hz": 439.727783203125,
+      "cents": -1.071402342419118
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 622.2539676086416,
+      "peak_hz": 622.1923828125,
+      "cents": -0.1713496062503828
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 659.255114,
+      "peak_hz": 659.271240234375,
+      "cents": 0.04234771029775135
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 698.4564630506301,
+      "peak_hz": 698.54736328125,
+      "cents": 0.22529583895615657
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 987.7666027733435,
+      "peak_hz": 988.22021484375,
+      "cents": 0.7948521398512303
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 1318.510228,
+      "peak_hz": 1319.4580078125,
+      "cents": 1.2440094848332865
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 329.627557,
+      "peak_hz": 329.04052734375,
+      "cents": -3.085882015384661
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 440.0000001163047,
+      "peak_hz": 439.63623046875,
+      "cents": -1.4318883508151372
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 622.2539676086416,
+      "peak_hz": 622.1923828125,
+      "cents": -0.1713496062503828
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 659.255114,
+      "peak_hz": 659.271240234375,
+      "cents": 0.04234771029775135
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 698.4564630506301,
+      "peak_hz": 698.54736328125,
+      "cents": 0.22529583895615657
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 987.7666027733435,
+      "peak_hz": 988.311767578125,
+      "cents": 0.9552332645261963
+    },
+    {
+      "input_hz": 659.255114,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 1318.510228,
+      "peak_hz": 1319.549560546875,
+      "cents": 1.3641298005149247
+    },
+    {
+      "input_hz": 880,
+      "shift": -12,
+      "harmonics": false,
+      "expected_hz": 440.0,
+      "peak_hz": 439.453125,
+      "cents": -2.1530851746425674
+    },
+    {
+      "input_hz": 880,
+      "shift": -7,
+      "harmonics": false,
+      "expected_hz": 587.3295358348151,
+      "peak_hz": 586.944580078125,
+      "cents": -1.135081712539006
+    },
+    {
+      "input_hz": 880,
+      "shift": -1,
+      "harmonics": false,
+      "expected_hz": 830.6093951598903,
+      "peak_hz": 830.56640625,
+      "cents": -0.08960383902509059
+    },
+    {
+      "input_hz": 880,
+      "shift": 0,
+      "harmonics": false,
+      "expected_hz": 880.0,
+      "peak_hz": 880.0048828125,
+      "cents": 0.009605986139799546
+    },
+    {
+      "input_hz": 880,
+      "shift": 1,
+      "harmonics": false,
+      "expected_hz": 932.3275230361799,
+      "peak_hz": 932.373046875,
+      "cents": 0.08453091193000577
+    },
+    {
+      "input_hz": 880,
+      "shift": 7,
+      "harmonics": false,
+      "expected_hz": 1318.5102276514797,
+      "peak_hz": 1319.000244140625,
+      "cents": 0.6432833154188835
+    },
+    {
+      "input_hz": 880,
+      "shift": 12,
+      "harmonics": false,
+      "expected_hz": 1760.0,
+      "peak_hz": 1761.016845703125,
+      "cents": 0.9999372510729645
+    },
+    {
+      "input_hz": 880,
+      "shift": -12,
+      "harmonics": true,
+      "expected_hz": 440.0,
+      "peak_hz": 439.727783203125,
+      "cents": -1.0714018848039437
+    },
+    {
+      "input_hz": 880,
+      "shift": -7,
+      "harmonics": true,
+      "expected_hz": 587.3295358348151,
+      "peak_hz": 587.127685546875,
+      "cents": -0.5950835643472716
+    },
+    {
+      "input_hz": 880,
+      "shift": -1,
+      "harmonics": true,
+      "expected_hz": 830.6093951598903,
+      "peak_hz": 830.56640625,
+      "cents": -0.08960383902509059
+    },
+    {
+      "input_hz": 880,
+      "shift": 0,
+      "harmonics": true,
+      "expected_hz": 880.0,
+      "peak_hz": 880.0048828125,
+      "cents": 0.009605986139799546
+    },
+    {
+      "input_hz": 880,
+      "shift": 1,
+      "harmonics": true,
+      "expected_hz": 932.3275230361799,
+      "peak_hz": 932.373046875,
+      "cents": 0.08453091193000577
+    },
+    {
+      "input_hz": 880,
+      "shift": 7,
+      "harmonics": true,
+      "expected_hz": 1318.5102276514797,
+      "peak_hz": 1318.817138671875,
+      "cents": 0.40293428697978184
+    },
+    {
+      "input_hz": 880,
+      "shift": 12,
+      "harmonics": true,
+      "expected_hz": 1760.0,
+      "peak_hz": 1760.55908203125,
+      "cents": 0.549856903011674
+    }
+  ],
+  "max_error_cents": 3.085882015384661,
+  "source_sha256": {
+    "target/link/fx_blocks.cpp": "7fea887e3c8a670be8844e3b7c031b91b8b78d13ac713fddf7e5ed705790c08a",
+    "target/link/fx_blocks.hpp": "3e7d4f906d7736c5aaec0960f80bfa69656213cb780f7ece90ab77fc31e8fed2",
+    "research/test_fx_blocks.cpp": "578bb5e74e6bf3c704cf4d26cff9b1a388ed5996c3b9d1523e7e04f74a980ab2",
+    "research/test_fx_pitch_range.cpp": "366bac420f038eadc20349e533c908b458411b3e0ab1196e6284b9b73be78fb6"
+  },
+  "audio_playback": false,
+  "physical_device_access": false,
+  "limits": [
+    "Steady synthetic monophonic notes; not chord quality, transients or hardware timing"
+  ]
+}

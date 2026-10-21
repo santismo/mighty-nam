@@ -1,0 +1,344 @@
+{
+  "status": "PASS_NAMLNK19_COMPILED_TAIL_SLEEP",
+  "elf_sha256": "4c058e7d985897a3ef84f78881a98f0fff0aa9ee3d930347d158a3f0421ebbb0",
+  "cases": [
+    {
+      "case": "initial-active",
+      "baseline": {
+        "case": "initial-active",
+        "blocks": 1500,
+        "peak": 0.02241487428545952,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65535,
+          65535,
+          0,
+          0
+        ]
+      },
+      "experiment": {
+        "case": "initial-active",
+        "blocks": 1500,
+        "peak": 0.02241487428545952,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1198,
+          1198,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-spring-after-delay",
+      "baseline": {
+        "case": "NAM-plus-spring-after-delay",
+        "blocks": 1400,
+        "peak": 0.018540730699896812,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65535,
+          65535,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "7": 8,
+          "8": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 471306,
+        "observed_blocks": 8
+      },
+      "experiment": {
+        "case": "NAM-plus-spring-after-delay",
+        "blocks": 1400,
+        "peak": 0.01856047846376896,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65534,
+          1198,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "8": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 451674,
+        "observed_blocks": 8
+      },
+      "instruction_event_reduction_percent": 4.1654466524932845
+    },
+    {
+      "case": "NAM-only-after-both",
+      "baseline": {
+        "case": "NAM-only-after-both",
+        "blocks": 1400,
+        "peak": 0.016132354736328125,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65535,
+          65535,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "7": 8,
+          "8": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 471259,
+        "observed_blocks": 8
+      },
+      "experiment": {
+        "case": "NAM-only-after-both",
+        "blocks": 1400,
+        "peak": 0.016004329547286034,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65534,
+          65534,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 395095,
+        "observed_blocks": 8
+      },
+      "instruction_event_reduction_percent": 16.161813355288704
+    },
+    {
+      "case": "type-changes-while-asleep",
+      "baseline": {
+        "case": "type-changes-while-asleep",
+        "blocks": 32,
+        "peak": 0.0,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65535,
+          65535,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "7": 8,
+          "8": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 196602,
+        "observed_blocks": 8
+      },
+      "experiment": {
+        "case": "type-changes-while-asleep",
+        "blocks": 32,
+        "peak": 0.0,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65534,
+          65534,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 124854,
+        "observed_blocks": 8
+      },
+      "instruction_event_reduction_percent": 36.49403363139744
+    },
+    {
+      "case": "wake-new-types",
+      "baseline": {
+        "case": "wake-new-types",
+        "blocks": 1500,
+        "peak": 0.017619118094444275,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65535,
+          65535,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "7": 8,
+          "8": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 467043,
+        "observed_blocks": 8
+      },
+      "experiment": {
+        "case": "wake-new-types",
+        "blocks": 1500,
+        "peak": 0.017596127465367317,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1198,
+          1198,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "7": 8,
+          "8": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 467402,
+        "observed_blocks": 8
+      },
+      "instruction_event_reduction_percent": -0.07686658401903036
+    },
+    {
+      "case": "after-rapid-switches",
+      "baseline": {
+        "case": "after-rapid-switches",
+        "blocks": 1400,
+        "peak": 0.015708137303590775,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65535,
+          65535,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "7": 8,
+          "8": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 466996,
+        "observed_blocks": 8
+      },
+      "experiment": {
+        "case": "after-rapid-switches",
+        "blocks": 1400,
+        "peak": 0.015517715364694595,
+        "holds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          65534,
+          65534,
+          0,
+          0
+        ],
+        "callback_counts": {
+          "0": 8,
+          "3": 8,
+          "10": 8
+        },
+        "irq_instruction_events": 395175,
+        "observed_blocks": 8
+      },
+      "instruction_event_reduction_percent": 15.379360851056541
+    }
+  ],
+  "active_pcm_bit_identical": true,
+  "active_compared_frames": 2400,
+  "baseline_elf_sha256": "6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2",
+  "experimental_elf_sha256": "4c058e7d985897a3ef84f78881a98f0fff0aa9ee3d930347d158a3f0421ebbb0",
+  "stock_sha256": "a8a064a5b0e308b9cf193ebdf23d352ddff092d88db71531729ca1864a86d990",
+  "model_sha256": "79aacb0a22d4a333bccf9efb2115b0720076e3ebcc757d78a35dc8c68f6e2a84",
+  "seconds": 178.71705637080595,
+  "device_access": false,
+  "host_audio_access": false,
+  "limits": [
+    "Instruction events are not CPU cycles or latency measurements.",
+    "This compiled chain fixture covers digital delay/spring and waking pan delay/damp only.",
+    "Intentional hard-bypass/reset behavior removes stock residuals; no preserved spillover claim.",
+    "No electrical FIFO deadline, real foreground loading cost, listening or restart validation.",
+    "This report alone is insufficient for packaging; all-type and restart checks are separate."
+  ]
+}

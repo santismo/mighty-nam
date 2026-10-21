@@ -1,0 +1,11 @@
+{
+  "version": "0.3.11+14",
+  "installed": true,
+  "path": "/Applications/NAM Plug.app",
+  "archive_sha256": "bcbb277c9b9422d36a8d2bf278958833b266ba097f90595bed8ac7265a02e3da",
+  "signature": "ad-hoc verified; not notarized",
+  "app_launched": false,
+  "audio_access": false,
+  "device_commands_sent": false,
+  "previous_app_preserved": true
+}

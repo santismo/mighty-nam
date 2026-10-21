@@ -1,0 +1,25 @@
+{
+  "status": "PASS_NAMLNK19_GLOBAL_BUFFER_ARM",
+  "elf_sha256": "4c058e7d985897a3ef84f78881a98f0fff0aa9ee3d930347d158a3f0421ebbb0",
+  "empty_bank_persistence": true,
+  "seven_color_global_recall": true,
+  "physical_button_branch_keeps_global": true,
+  "cold_patterns": [
+    0,
+    165,
+    255
+  ],
+  "warm_restarts": 3,
+  "settings_changes_do_not_write_presets": true,
+  "buffer_and_save_preserve_listening_intent": true,
+  "duplicate_setting_no_writes": true,
+  "failed_write_visible_and_old_setting_retained": true,
+  "fault_still_mutes": true,
+  "invalid_commands_ignored": true,
+  "settings_flash_bounds": [
+    "0x303a4000",
+    "0x303a6000"
+  ],
+  "hardware_access": false,
+  "host_audio": false
+}

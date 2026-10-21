@@ -14,7 +14,7 @@ import Foundation
   precondition(NamLinkWire.supportsModels("NAMLNK15"));precondition(NamListening.supports("NAMLNK15"))
   precondition(NamLinkWire.supportsModels("NAMLNK16"));precondition(NamListening.supports("NAMLNK16"))
   precondition(NamOutputBuffer.command(identity:"NAMLNK16",samples:8) != nil)
-  precondition(!NamLinkWire.supportsModels("NAMLNK19"));count+=4
+  precondition(!NamLinkWire.supportsModels("NAMLNK20"));precondition(NamLinkWire.supportsModels("NAMLNK19"));precondition(NamListening.supports("NAMLNK19"));count+=6
   precondition(NamLinkWire.supportsModels("NAMLNK17"));precondition(NamListening.supports("NAMLNK17"))
   precondition(NamOutputBuffer.command(identity:"NAMLNK17",samples:8) != nil)
   precondition(NamCodecStatus.decode(0xc10f220a)?["verified"] as? Bool == true)

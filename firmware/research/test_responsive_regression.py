@@ -3,14 +3,15 @@ from pathlib import Path
 from test_preset_runtime import PresetMachine,build,v,preset_fixture
 p=argparse.ArgumentParser(description='NAMLNK15 memory, bypass PCM, full-chain FX and timing-fault regression; no device access.')
 for key in ['payload','baseline_build','candidate_build','model','output']:p.add_argument(key,type=Path)
-p.add_argument('--candidate-identity',choices=['NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18'],default='NAMLNK15')
+p.add_argument('--candidate-identity',choices=['NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18','NAMLNK19'],default='NAMLNK15')
 a=p.parse_args();base=a.baseline_build;candidate=a.candidate_build;stock=a.payload;model=a.model
 digest=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 baseline_revision=int(a.candidate_identity[-2:])-1
-assert digest(base/'nam-link-offline.elf')=={14:'8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d',15:'53d00afbf6773638671c4e99d1af592ba9d7b0d4be8ea79f2dcff572e42d3e75',16:'7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1',17:'73c0b7e82734f4457418cccf6b357152a296fb4c1b4360af84895b2c2acebe02'}[baseline_revision]
+assert digest(base/'nam-link-offline.elf')=={14:'8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d',15:'53d00afbf6773638671c4e99d1af592ba9d7b0d4be8ea79f2dcff572e42d3e75',16:'7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1',17:'73c0b7e82734f4457418cccf6b357152a296fb4c1b4360af84895b2c2acebe02',18:'6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2'}[baseline_revision]
 objects=['a2_lite.o','model_receiver.o','sysex_codec.o','listening.o','irq_timing.o','effect_profiler.o']
 if a.candidate_identity=='NAMLNK16':objects.remove('a2_lite.o')
-if a.candidate_identity=='NAMLNK18':objects.remove('listening.o') # Adds global status format; PCM compared below.
+if a.candidate_identity in ('NAMLNK18','NAMLNK19'):objects.remove('listening.o') # Adds global status format; PCM compared below.
+if a.candidate_identity=='NAMLNK19':objects.remove('irq_timing.o')
 for name in objects:assert (base/name).read_bytes()==(candidate/name).read_bytes(),name
 reference=[];rows=[]
 for role,revision,folder in [('baseline',baseline_revision,base),('candidate',int(a.candidate_identity[-2:]),candidate)]:
@@ -19,6 +20,7 @@ for role,revision,folder in [('baseline',baseline_revision,base),('candidate',in
  assert image[:0x400]==stock.read_bytes()[:0x400] and image[0x11d94:0x11dd8]==stock.read_bytes()[0x11d94:0x11dd8]
  m=PresetMachine(path=model);m.arm();counter=0
  for case in ['full-chain','reorder','bypass']:
+  if a.candidate_identity=='NAMLNK19' and case=='bypass':m=PresetMachine(path=model);m.arm();counter=0
   data=preset_fixture([] if case=='bypass' else [1,2,4,5,6,7,8,9])
   if case=='reorder':data[90:99]=bytes([5,3,1,2,4,9,8,6,7])
   m.u.mem_write(m.preset,bytes(data));samples=[]

@@ -26,7 +26,9 @@ p.add_argument('--responsive-controls',action='store_true',help='NAMLNK15 compac
 p.add_argument('--nam-pointer',action='store_true',help='NAMLNK16 non-fused NAM tap-address optimization; requires --responsive-controls and --m7-conv')
 p.add_argument('--adc-short-delay',action='store_true',help='NAMLNK17 startup-only ADC short-delay trial; requires --nam-pointer')
 p.add_argument('--global-buffer',action='store_true',help='NAMLNK18 global persistent buffer and playback-preserving successful saves; requires --adc-short-delay')
+p.add_argument('--driver-timing',action='store_true',help='NAMLNK19 delay/reverb bypass sleep and opt-in read-only DMA/SAI timing; requires --global-buffer')
 a=p.parse_args()
+if a.driver_timing and not a.global_buffer:p.error('--driver-timing requires --global-buffer')
 if a.global_buffer and not a.adc_short_delay:p.error('--global-buffer requires --adc-short-delay')
 if a.adc_short_delay and not a.nam_pointer:p.error('--adc-short-delay requires --nam-pointer')
 if a.nam_pointer and not (a.responsive_controls and a.m7_conv):p.error('--nam-pointer requires --responsive-controls and --m7-conv')
@@ -94,6 +96,9 @@ if a.adc_short_delay:
 if a.global_buffer:
  flags+=['-DMPP_GLOBAL_BUFFER']
  sources+=['target/link/global_buffer.cpp']
+if a.driver_timing:
+ flags+=['-DMPP_DRIVER_TIMING']
+ sources+=['target/link/driver_timing.cpp']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -102,6 +107,7 @@ for source in sources:
  objects.append(str(obj))
 elf=out/'nam-link-offline.elf';ld=root/('target/link/presets.ld' if a.preset_bank else ('target/link/listening.ld' if a.listening else 'target/link/link_firmware.ld'))
 if a.fx_blocks:ld=root/'target/link/fx_blocks.ld'
+if a.driver_timing:ld=root/'target/link/driver_timing.ld'
 subprocess.run([str(Path(ziglang.__path__[0])/'zig'),'cc','-target','thumb-freestanding-eabihf','-mcpu=cortex_m7',
  '-nostdlib','-Wl,--gc-sections','-Wl,--build-id=none','-Wl,-e,mpp_stock_amp_init','-Wl,-T,'+str(ld),
  *(['-Wl,-u,mpp_fast_dispatch'] if a.fast_bypass else []),
@@ -162,5 +168,8 @@ if a.adc_short_delay:
  report.update(identity='NAMLNK17',codec_filters='Startup-only ADC short-delay sharp, register 0x0a=0x22; other 20 writes unchanged',codec_status_page=117,codec_identification='Inferred AK4619; not a part-ID read',physical_codec_readback_verified=False)
 if a.global_buffer:
  report.update(identity='NAMLNK18',global_persistent_buffer=True,global_settings_flash=[hex(0x303a4000),hex(0x303a6000)],runtime_changes='Global 8/16/32 setting survives power-off and preset changes; buffer/save resume prior output intent',physical_global_buffer_verified=False)
+if a.driver_timing:
+ report.update(identity='NAMLNK19',driver_timing='Explicit one-shot; DMA/SAI/counter reads only; disabled at boot',driver_status_pages=[118,126],stock_bypass_tail_policy='Delay/reverb hard-bypass sleeps after 1198 blocks, resets on wake; gate unchanged',bypass='Used delay/reverb sleep and reset; no spillover',physical_driver_timing_verified=False)
+ report['linker_sha256']=hashlib.sha256(ld.read_bytes()).hexdigest()
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

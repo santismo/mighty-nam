@@ -3,6 +3,9 @@
 // Does not enable/reset counters or change clocks. The stock delay reset is
 // preserved and counted by a separate exact-site hook.
 #include <stdint.h>
+#ifdef MPP_DRIVER_TIMING
+#include "driver_timing.hpp"
+#endif
 extern "C" {
 // sequence, accepted, rejected, flags, last cycles, maximum cycles,
 // entry CTRL, exit CTRL, entry reset epoch, exit reset epoch.
@@ -33,6 +36,9 @@ void mpp_link_irq() {
  const uint32_t epoch=mpp_dwt_reset_epoch;
  const uint32_t ctrl=*(volatile uint32_t*)0xe0001000u;
  const uint32_t start=*(volatile uint32_t*)0xe0001004u;
+#ifdef MPP_DRIVER_TIMING
+ mpp_driver_capture(0,0);
+#endif
  ((void(*)(void))0x11d95u)();
  const uint32_t end=*(volatile uint32_t*)0xe0001004u;
  const uint32_t after=*(volatile uint32_t*)0xe0001000u;

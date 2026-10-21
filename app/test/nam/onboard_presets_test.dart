@@ -31,7 +31,7 @@ class BankFixture extends UsbFixture {
           'samples': bufferSamples,
           'sampleRate': 48000,
           'processingSamples': 8,
-          'global': identity == 'NAMLNK18',
+          'global': ['NAMLNK18', 'NAMLNK19'].contains(identity),
           'storageError': 0
         },
         'presetBank': {
@@ -47,7 +47,7 @@ class BankFixture extends UsbFixture {
     receiver = SimulatedPlug();
     await TransferClient(receiver).upload(models[slot]!);
     preset.setAll(0, h.sublist(128));
-    if (identity != 'NAMLNK18') {
+    if (!['NAMLNK18', 'NAMLNK19'].contains(identity)) {
       bufferSamples = ByteData.sublistView(h).getUint32(24, Endian.little);
     }
     listening = true;
@@ -122,7 +122,7 @@ class BankFixture extends UsbFixture {
         models[slot] = catalog
             .singleWhere((m) => m.checksum == crc32(receiver.activeSlot!));
         active = slot;
-        if (identity != 'NAMLNK18') listening = false;
+        if (!['NAMLNK18', 'NAMLNK19'].contains(identity)) listening = false;
       }
     } else if (op == 3) {
       recalls++;
@@ -138,7 +138,8 @@ class BankFixture extends UsbFixture {
     reply[14] = active;
     reply[15] = headers.keys.fold<int>(0, (a, b) => a | (1 << b));
     if (headers.containsKey(slot)) reply.setRange(16, 272, headers[slot]!);
-    if (identity == 'NAMLNK18' && headers.containsKey(slot)) {
+    if (['NAMLNK18', 'NAMLNK19'].contains(identity) &&
+        headers.containsKey(slot)) {
       w.setUint32(16 + 24, bufferSamples, Endian.little);
     }
     if (badReadback && op == 1 && saves > 0) reply[80] ^= 1;
@@ -264,41 +265,42 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
-  for (final playing in [false, true]) {
-    testWidgets('NAMLNK18 global buffer and save preserve playback=$playing',
-        (t) async {
-      usb.identity = 'NAMLNK18';
-      final a = capture('Fender', 1);
-      usb.catalog.add(a);
-      usb.seed([a], selected: a);
-      final dynamic home = await start(t);
-      await save(t, home, 0, a, 'Green');
-      usb.listening = playing;
-      final saves = usb.saves;
-      final stored = List<int>.from(usb.headers[0]!);
-      await work(t, home, () => home.setOutputBuffer(16));
-      expect(usb.listening, playing);
-      expect(home.hardware['audioBuffer']['global'], true);
-      expect(home.status, contains('saved globally'));
-      expect(usb.saves, saves);
-      expect(
-          usb.headers[0], stored); // No preset overwrite for a global change.
-      await usb.button(0);
-      expect(usb.bufferSamples, 16);
-      usb.listening = playing;
-      await work(t, home, () => home.saveOnboard());
-      expect(usb.listening, playing);
-      expect(home.onboard.dirty[0], false, reason: home.status);
-      expect(home.hardware['audioBuffer']['samples'], 16);
-      await work(t, home, () => home.setOutputBuffer(8));
-      expect(usb.listening, playing);
-      expect(usb.bufferSamples, 8);
-      expect(t.takeException(), isNull);
-      await t.pumpWidget(const SizedBox.shrink());
-      await t.pump();
-      debugDefaultTargetPlatformOverride = null;
-    });
-  }
+  for (final identity in ['NAMLNK18', 'NAMLNK19'])
+    for (final playing in [false, true]) {
+      testWidgets('$identity global buffer and save preserve playback=$playing',
+          (t) async {
+        usb.identity = identity;
+        final a = capture('Fender', 1);
+        usb.catalog.add(a);
+        usb.seed([a], selected: a);
+        final dynamic home = await start(t);
+        await save(t, home, 0, a, 'Green');
+        usb.listening = playing;
+        final saves = usb.saves;
+        final stored = List<int>.from(usb.headers[0]!);
+        await work(t, home, () => home.setOutputBuffer(16));
+        expect(usb.listening, playing);
+        expect(home.hardware['audioBuffer']['global'], true);
+        expect(home.status, contains('saved globally'));
+        expect(usb.saves, saves);
+        expect(
+            usb.headers[0], stored); // No preset overwrite for a global change.
+        await usb.button(0);
+        expect(usb.bufferSamples, 16);
+        usb.listening = playing;
+        await work(t, home, () => home.saveOnboard());
+        expect(usb.listening, playing);
+        expect(home.onboard.dirty[0], false, reason: home.status);
+        expect(home.hardware['audioBuffer']['samples'], 16);
+        await work(t, home, () => home.setOutputBuffer(8));
+        expect(usb.listening, playing);
+        expect(usb.bufferSamples, 8);
+        expect(t.takeException(), isNull);
+        await t.pumpWidget(const SizedBox.shrink());
+        await t.pump();
+        debugDefaultTargetPlatformOverride = null;
+      });
+    }
 
   for (final identity in [
     'NAMLNK10',
@@ -308,7 +310,8 @@ void main() {
     'NAMLNK15',
     'NAMLNK16',
     'NAMLNK17',
-    'NAMLNK18'
+    'NAMLNK18',
+    'NAMLNK19'
   ]) {
     testWidgets(
         '$identity: save colored captures, button recall, reconnect and app restart',

@@ -94,7 +94,7 @@ class Startup:
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ['payload', 'baseline_build', 'candidate_build', 'report']: p.add_argument(name, type=Path)
-    p.add_argument('--candidate-identity',choices=['NAMLNK17','NAMLNK18'],default='NAMLNK17')
+    p.add_argument('--candidate-identity',choices=['NAMLNK17','NAMLNK18','NAMLNK19'],default='NAMLNK17')
     a = p.parse_args(); stock = a.payload.read_bytes()
     elf = a.candidate_build/'nam-link-offline.elf'
     image, symbols, plan = build(stock, elf)
@@ -102,7 +102,8 @@ def main():
     baseline_elf = a.baseline_build/'nam-link-offline.elf'
     assert hashlib.sha256(baseline_elf.read_bytes()).hexdigest() == '7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1'
     baseline = build(stock, baseline_elf)
-    changed = ['stock_chain_firmware.o'] + (['preset_runtime.o','listening.o'] if a.candidate_identity == 'NAMLNK18' else [])
+    changed = ['stock_chain_firmware.o'] + (['preset_runtime.o','listening.o'] if a.candidate_identity in ('NAMLNK18','NAMLNK19') else [])
+    if a.candidate_identity == 'NAMLNK19':changed+=['irq_timing.o']
     unchanged = [x.name for x in a.baseline_build.glob('*.o') if x.name not in changed]
     for name in unchanged: assert (a.baseline_build/name).read_bytes() == (a.candidate_build/name).read_bytes(), name
     rows = []

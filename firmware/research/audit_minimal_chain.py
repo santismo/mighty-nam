@@ -33,7 +33,8 @@ m.u.mem_write(m.preset,bytes(data))
 for i in range(1300):m.process(1600+i)
 counts.clear()
 for i in range(64):m.process(3000+i)
-used=dict(counts);assert all(counts[x]==64 for x in [3,5,7,8]);m.guards()
+used=dict(counts);sleep=bundle[2]['identity']=='NAMLNK19'
+assert all(counts[x]==64 for x in [3,5]) and all(counts[x]==(0 if sleep else 64) for x in [7,8]);m.guards()
 # Confirm the actual linked hot NAM code and constants, not just compiler flags.
 def hot(path):
  with path.open('rb') as stream:
@@ -44,5 +45,5 @@ def hot(path):
     out[sym.name]={'address':hex(sym['st_value']),'bytes':sym['st_size'],'sha256':hashlib.sha256(blob).hexdigest()}
   return out
 old,new=hot(a.baseline16),hot(a.elf);assert len(new)==3 and old==new,(old,new)
-report=dict(status='PASS_NAMLNK18_MINIMAL_CHAIN_AUDIT',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),blocks_per_observation=64,fresh_NAM_spring_callback_counts=fresh,unused_bypassed_stock_callbacks=0,idle_custom_FX_calls=fx[0],used_then_bypassed_callback_counts=used,used_tail_policy_unchanged=True,NAMLNK16_hot_code_tables_restored_exactly=True,hot_symbols=new,hardware_cycles_measured=False,physical_latency_measured=False,device_access=False,host_audio_access=False,next_step='Per-type safe reset/drain for used stock gate/delay/reverb; do not freeze histories after an arbitrary timeout.')
+report=dict(status='PASS_'+bundle[2]['identity']+'_MINIMAL_CHAIN_AUDIT',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),blocks_per_observation=64,fresh_NAM_spring_callback_counts=fresh,unused_bypassed_stock_callbacks=0,idle_custom_FX_calls=fx[0],used_then_bypassed_callback_counts=used,used_tail_policy_unchanged=not sleep,used_delay_reverb_sleep=sleep,NAMLNK16_hot_code_tables_restored_exactly=True,hot_symbols=new,hardware_cycles_measured=False,physical_latency_measured=False,device_access=False,host_audio_access=False,next_step='Physical driver phase/timing measurements; no fixed latency reduction claimed.')
 a.report.write_text(json.dumps(report,indent=2)+'\n');print(report['status'])

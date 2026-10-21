@@ -4,7 +4,7 @@ from pathlib import Path
 from test_preset_runtime import PresetMachine,v,build,preset_fixture,model_slot,BANK,BANK_END
 p=argparse.ArgumentParser(description=__doc__)
 for key in ['payload','elf','model','output']:p.add_argument(key,type=Path)
-a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf);assert bundle[2]['identity']=='NAMLNK18';v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
+a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf);assert bundle[2]['identity'] in ('NAMLNK18','NAMLNK19');v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
 m=PresetMachine(path=a.model);m.service();assert m.page(24)==(0,(48000<<16)|(2<<8)|8)
 def command(samples):return bytes([240,67,88,112,4,2,78,66,samples,247])
 def status(m):
@@ -47,5 +47,5 @@ m.put(0xe000ed04,16);m.query(command(8));m.put(0xe000ed04,0);assert status(m)==(
 # only after validating the complete new model and effect chain.
 for block in range(1350):m.process(block)
 m.guards();m.timer_ticks=150;m.process(1350,healthy=False);assert m.words()[4]>0 and not m.words()[9] and not (m.page(23)[1]&1)
-report=dict(status='PASS_NAMLNK18_GLOBAL_BUFFER_ARM',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),empty_bank_persistence=True,seven_color_global_recall=True,physical_button_branch_keeps_global=True,cold_patterns=[0,165,255],warm_restarts=3,settings_changes_do_not_write_presets=True,buffer_and_save_preserve_listening_intent=True,duplicate_setting_no_writes=True,failed_write_visible_and_old_setting_retained=True,fault_still_mutes=True,invalid_commands_ignored=True,settings_flash_bounds=['0x303a4000','0x303a6000'],hardware_access=False,host_audio=False)
+report=dict(status='PASS_'+bundle[2]['identity']+'_GLOBAL_BUFFER_ARM',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),empty_bank_persistence=True,seven_color_global_recall=True,physical_button_branch_keeps_global=True,cold_patterns=[0,165,255],warm_restarts=3,settings_changes_do_not_write_presets=True,buffer_and_save_preserve_listening_intent=True,duplicate_setting_no_writes=True,failed_write_visible_and_old_setting_retained=True,fault_still_mutes=True,invalid_commands_ignored=True,settings_flash_bounds=['0x303a4000','0x303a6000'],hardware_access=False,host_audio=False)
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(report['status'])

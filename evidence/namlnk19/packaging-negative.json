@@ -1,0 +1,67 @@
+{
+  "status": "PASS_NAMLNK19_PACKAGING_NEGATIVES",
+  "cases": [
+    {
+      "report": "driver",
+      "corruption": "active_publication_exact",
+      "rejected": true,
+      "reason": "ValueError: Driver diagnostic isolation"
+    },
+    {
+      "report": "driver",
+      "corruption": "read_only_MMIO",
+      "rejected": true,
+      "reason": "ValueError: Driver diagnostic isolation"
+    },
+    {
+      "report": "all-tails",
+      "corruption": "cases",
+      "rejected": true,
+      "reason": "ValueError: All delay/reverb types required"
+    },
+    {
+      "report": "tail-profile",
+      "corruption": "active_pcm_bit_identical",
+      "rejected": true,
+      "reason": "ValueError: Active tail PCM regression"
+    },
+    {
+      "report": "global-arm",
+      "corruption": "seven_color_global_recall",
+      "rejected": true,
+      "reason": "ValueError: Global settings regression"
+    },
+    {
+      "report": "global-arm",
+      "corruption": "settings_flash_bounds",
+      "rejected": true,
+      "reason": "ValueError: Global settings bounds/restarts"
+    },
+    {
+      "report": "minimal-chain",
+      "corruption": "NAMLNK16_hot_code_tables_restored_exactly",
+      "rejected": true,
+      "reason": "ValueError: Minimal chain/hot placement regression"
+    },
+    {
+      "report": "controller",
+      "corruption": "elf_sha256",
+      "rejected": true,
+      "reason": "ValueError: Missing/mismatched controller"
+    },
+    {
+      "report": "latency-fender",
+      "corruption": "PCM_bit_identical_for_both_cases",
+      "rejected": true,
+      "reason": "ValueError: Sample-age or exact-output regression"
+    },
+    {
+      "report": "global-host",
+      "corruption": "source_sha256",
+      "rejected": true,
+      "reason": "ValueError: Global store source mismatch"
+    }
+  ],
+  "device_access": false,
+  "firmware_flashing": false
+}

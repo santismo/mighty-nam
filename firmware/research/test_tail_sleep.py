@@ -68,7 +68,9 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ['payload','baseline','experiment','model','report']:p.add_argument(name,type=Path)
     a=p.parse_args();started=time.monotonic()
-    assert json.loads((a.experiment.parent/'build.json').read_text())['status']=='OFFLINE_EXPERIMENT_NOT_INSTALLABLE'
+    meta=json.loads((a.experiment.parent/'build.json').read_text())
+    release=meta['identity']=='NAMLNK19'
+    assert release or meta['status']=='OFFLINE_EXPERIMENT_NOT_INSTALLABLE'
     before,old=exercise(a.payload,a.baseline,a.model,False)
     after,new=exercise(a.payload,a.experiment,a.model,True)
     assert old==new and max(map(abs,new))>1e-6,'Active PCM changed or comparison vacuous'
@@ -78,7 +80,7 @@ def main():
         if 'irq_instruction_events' in x:
             row['instruction_event_reduction_percent']=100*(x['irq_instruction_events']-y['irq_instruction_events'])/x['irq_instruction_events']
         rows.append(row)
-    report=dict(status='PASS_OFFLINE_COMPILED_TAIL_SLEEP',cases=rows,
+    report=dict(status='PASS_NAMLNK19_COMPILED_TAIL_SLEEP' if release else 'PASS_OFFLINE_COMPILED_TAIL_SLEEP',elf_sha256=hashlib.sha256(a.experiment.read_bytes()).hexdigest(),cases=rows,
         active_pcm_bit_identical=True,active_compared_frames=len(new)//2,
         baseline_elf_sha256=hashlib.sha256(a.baseline.read_bytes()).hexdigest(),
         experimental_elf_sha256=hashlib.sha256(a.experiment.read_bytes()).hexdigest(),
@@ -89,7 +91,7 @@ def main():
             'This compiled chain fixture covers digital delay/spring and waking pan delay/damp only.',
             'Intentional hard-bypass/reset behavior removes stock residuals; no preserved spillover claim.',
             'No electrical FIFO deadline, real foreground loading cost, listening or restart validation.',
-            'Research ELF retains baseline identity only for harness compatibility; never install.'])
+            'This report alone is insufficient for packaging; all-type and restart checks are separate.'])
     a.report.write_text(json.dumps(report,indent=2)+'\n');print(report['status'])
 
 

@@ -75,12 +75,12 @@ class PresetMachine(ListeningMachine):
    assert self.primask==1 and not self.words()[9], 'Flash access requires interrupted audio and masked IRQs'
    r0,r1,r2=[u.reg_read(r) for r in v.R[:3]]
    if pc==0xc080:
-    assert (BANK<=r1 and r1+r2<=BANK_END and r2==8192) or (v.plan['identity']=='NAMLNK18' and 0x303a4000<=r1 and r1+r2<=0x303a6000 and r2==256)
+    assert (BANK<=r1 and r1+r2<=BANK_END and r2==8192) or (v.plan['identity'] in ('NAMLNK18','NAMLNK19') and 0x303a4000<=r1 and r1+r2<=0x303a6000 and r2==256)
     assert v.state_start<=r0 and r0+r2<=v.state_end
     u.mem_write(r0,bytes(u.mem_read(r1,r2)));result=0
    else:
     addr=r0 if pc==0xbfa4 else r1;n=4096 if pc==0xbfa4 else 256-(addr&255)
-    assert (BANK<=addr and addr+n<=BANK_END) or (v.plan['identity']=='NAMLNK18' and 0x303a4000<=addr and addr+n<=0x303a6000),(hex(pc),hex(addr),n)
+    assert (BANK<=addr and addr+n<=BANK_END) or (v.plan['identity'] in ('NAMLNK18','NAMLNK19') and 0x303a4000<=addr and addr+n<=0x303a6000),(hex(pc),hex(addr),n)
     if pc==0xbfa4:assert addr%4096==0
     else:assert n in (4,256) and v.state_start<=r0 and r0+n<=v.state_end
     self.flash_operations.append((pc,addr,n));result=1 if self.fail_write else 0
@@ -92,7 +92,7 @@ class PresetMachine(ListeningMachine):
    u.reg_write(UC_ARM_REG_R0,result);u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR));return
   if self.phase=='probe' and pc==0xae80:
    data,n,ch=[u.reg_read(r) for r in v.R[:3]]
-   if n==326 or v.plan['identity'] in ('NAMLNK13','NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18') and n<=56:
+   if n==326 or v.plan['identity'] in ('NAMLNK13','NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18','NAMLNK19') and n<=56:
     self.messages.append((bytes(u.mem_read(data,n)),ch));u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR));return
   super().code(u,pc,size,unused)
  def service(self):self.call(0x57c0,[])

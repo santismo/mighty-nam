@@ -1,6 +1,9 @@
 // Exact V1.5.6 stock-effects bridge with RAM A2. NAMLNK02..06 stay silent;
 // NAMLNK07 adds explicitly armed listening. No flash or reset commands.
 #include "model_receiver.hpp"
+#ifdef MPP_DRIVER_TIMING
+#include "driver_timing.hpp"
+#endif
 #ifdef MPP_CUT_EQ
 #include "cut_eq.hpp"
 #endif
@@ -41,7 +44,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_GLOBAL_BUFFER)
+#if defined(MPP_DRIVER_TIMING)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','9'};
+#elif defined(MPP_GLOBAL_BUFFER)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','8'};
 #elif defined(MPP_ADC_SHORT_DELAY)
@@ -84,6 +90,150 @@ extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','0','4'};
 #else
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','0','3'};
 #endif
+#ifdef MPP_DRIVER_TIMING
+uint16_t mpp_bypass_hold[11];
+// Reuse the stock type-change handoff in foreground; never load overlays in IRQ.
+// 65534 denotes a used tail effect put to sleep, distinct from fresh bypass.
+extern "C" BANK_TEXT void mpp_tail_resume(unsigned stage){
+ const auto* preset=*(const volatile uint8_t**)0x20005ad0;
+ unsigned type=preset[stage]&63;
+ const unsigned maximum=stage==7?5:6;
+ if(type<1||type>maximum)type=1;
+ auto* base=(volatile uint8_t*)(stage==7?0x20003a08u:0x200041d8u);
+ base[0]=type;base[1]=0;
+ *(volatile uint32_t*)(base+12)=127;
+ *(volatile uint32_t*)(base+(stage==7?44:40))=0;
+}
+
+// Entered only from the exact V1.5.6 dispatcher patch at 0x12302.
+// r6 = remaining stages, r4 = descriptor+8; r9/r7 and r8/r5
+// are input/output L/R. Preserve all live registers except scratch r0-r3.
+// Original pre/post routing fades and BLX callback return address remain intact.
+extern "C" BANK_TEXT __attribute__((naked)) void mpp_fast_dispatch(){
+ __asm__ volatile(
+#ifdef MPP_FX_BLOCKS
+#ifdef MPP_RESPONSIVE_CONTROLS
+  "ldr r0, =mpp_fx_active\n"
+  "ldr r0, [r0]\n"
+  "cmp r0, #0\n"
+  "beq 8f\n"
+#endif
+  "cmp r6, #11\n"
+  "beq 8f\n"
+  "push {r0-r3,r12,lr}\n"
+  "rsb r0, r6, #10\n"
+  "mov r1, r9\n"
+  "mov r2, r7\n"
+  "bl mpp_fx_before\n"
+  "pop {r0-r3,r12,lr}\n"
+  "8:\n"
+#endif
+  "ldr r1, =0x20005ad0\n"
+  "ldr r1, [r1]\n"
+  "rsb r0, r6, #100\n"
+  "ldrb r0, [r1, r0]\n"
+#ifdef MPP_CUT_EQ
+  "cmp r0, #4\n"
+  "bne 7f\n"
+  "ldr r12, =mpp_cut_eq_process\n"
+  "7:\n"
+#endif
+#ifdef MPP_EFFECT_PROFILER
+  "ldr r2, =mpp_profile_selected\n"
+  "ldr r2, [r2]\n"
+  "adds r3, r0, #1\n"
+  "cmp r2, r3\n"
+  "beq 9f\n"
+#endif
+  "cmp r0, #9\n"
+  "bhi 3f\n"
+  "cmp r0, #0\n"
+  "beq 3f\n"
+  "cmp r0, #3\n"
+  "beq 3f\n"
+  "mov r3, r0\n"
+  "ldrb r1, [r1, r0]\n"
+  "ldr r2, =mpp_bypass_hold\n"
+  "add r2, r2, r0, lsl #1\n"
+  "tst r1, #64\n"
+  "bne 1f\n"
+  "cmp r0, #7\n"
+  "beq 10f\n"
+  "cmp r0, #8\n"
+  "bne 11f\n"
+  "10: ldrh r1, [r2]\n"
+  "movw r3, #65534\n"
+  "cmp r1, r3\n"
+  "bne 12f\n"
+  "push {r0-r3,r12,lr}\n"
+  "bl mpp_tail_resume\n"
+  "pop {r0-r3,r12,lr}\n"
+  // Finish sleeping two blocks before the existing 1200-block mute settles.
+  "12: movw r0, #1198\n"
+  "b 6f\n"
+  "11: cmp r0, #5\n"
+  "beq 5f\n"
+  "movw r0, #1200\n"
+  "b 6f\n"
+  "5: movw r0, #65535\n"
+  "6:\n"
+  "strh r0, [r2]\n"
+  "b 3f\n"
+  "1: ldrh r0, [r2]\n"
+  "cbz r0, 2f\n"
+  "movw r1, #65534\n"
+  "cmp r0, r1\n"
+  "beq 2f\n"
+  "movw r1, #65535\n"
+  "cmp r0, r1\n"
+  "beq 3f\n"
+  "subs r0, #1\n"
+  "bne 13f\n"
+  "cmp r3, #7\n"
+  "beq 14f\n"
+  "cmp r3, #8\n"
+  "bne 13f\n"
+  "14: movw r0, #65534\n"
+  "13: strh r0, [r2]\n"
+  "b 3f\n"
+  // After 9600 samples of stock bypass processing, suspend dry-bypass effects.
+  // Initially bypassed blocks have no previous tail, so can sleep immediately.
+  // Load both inputs before writing either output to support in-place buffers.
+  "2: movs r0, #0\n"
+  "4: ldr r1, [r9, r0]\n"
+  "ldr r2, [r7, r0]\n"
+  "str r1, [r8, r0]\n"
+  "str r2, [r5, r0]\n"
+  "adds r0, #4\n"
+  "cmp r0, #32\n"
+  "bne 4b\n"
+  "adds r4, #28\n"
+  "ldr pc, =0x1230f\n"
+  "3: mov r3, r5\n"
+  "mov r2, r8\n"
+  "mov r1, r7\n"
+  "mov r0, r9\n"
+  "adds r4, #28\n"
+  "ldr pc, =0x1230d\n"
+#ifdef MPP_EFFECT_PROFILER
+  // Stage in r0. Forward the original callback and all four audio pointers.
+  // Original SP is eight-byte aligned; retain LR and the routing's live regs.
+  "9: sub sp, #16\n"
+  "str r8, [sp]\n"
+  "str r5, [sp, #4]\n"
+  "str lr, [sp, #8]\n"
+  "mov r1, r12\n"
+  "mov r2, r9\n"
+  "mov r3, r7\n"
+  "bl mpp_profile_dispatch\n"
+  "ldr lr, [sp, #8]\n"
+  "add sp, #16\n"
+  "adds r4, #28\n"
+  "ldr pc, =0x1230f\n"
+#endif
+ );
+}
+#else
 uint16_t mpp_bypass_hold[11];
 // Entered only from the exact V1.5.6 dispatcher patch at 0x12302.
 // r6 = remaining stages, r4 = descriptor+8; r9/r7 and r8/r5
@@ -195,6 +345,7 @@ extern "C" __attribute__((naked)) void mpp_fast_dispatch(){
 #endif
  );
 }
+#endif
 #else
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','0','2'};
 #endif
@@ -330,6 +481,9 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
  // result before NAM can delay the TX refill. Mute/settling gates it here;
  // a fault below still clears this DMA half and disarms further output.
  mpp_listen_render(mpp_link_output,chain_right,tx);
+#ifdef MPP_DRIVER_TIMING
+ mpp_driver_capture(1,(uint32_t)(uintptr_t)tx);
+#endif
 #endif
 #endif
  float x[8];for(unsigned i=0;i<8;++i)x[i]=(float)rx[i*4+3]*0x1p-31f;
@@ -424,6 +578,9 @@ extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned c
   return;
  }
 #endif
+#ifdef MPP_DRIVER_TIMING
+ if(p[7]=='D'&&n==9){mpp_driver_control(p[8]);return;}
+#endif
  if(p[7]=='P'&&n==9&&p[8]<128){
   const unsigned page=p[8];uint32_t value=page<12?rd((uint32_t)(uintptr_t)&mpp_link+4*page):0;
   unsigned error=page>=12;
@@ -432,6 +589,9 @@ extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned c
 #endif
 #ifdef MPP_EFFECT_PROFILER
   if(page>=26)error=mpp_profile_page(page,&value);
+#endif
+#ifdef MPP_DRIVER_TIMING
+  if(page>=118)error=mpp_driver_page(page,&value);
 #endif
 #ifdef MPP_ADC_SHORT_DELAY
   if(page==117){value=mpp_codec_filter_page();error=0;}
