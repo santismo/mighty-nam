@@ -1,0 +1,61 @@
+{
+  "audioBuffer" : {
+    "choices" : [
+      8,
+      16,
+      32
+    ],
+    "minimumSamples" : 8,
+    "processingSamples" : 8,
+    "sampleRate" : 48000,
+    "samples" : 8,
+    "scope" : "output staging"
+  },
+  "audioStreamOpened" : false,
+  "compatible" : true,
+  "identity" : "NAMLNK14",
+  "irqTiming" : {
+    "accepted" : 271646,
+    "entryControl" : 1073741825,
+    "entryResetEpoch" : 24387,
+    "exitControl" : 1073741825,
+    "exitResetEpoch" : 24387,
+    "flags" : 0,
+    "hardwareDeadlineProven" : false,
+    "lastCycles" : 1135,
+    "maximumCycles" : 1346,
+    "rejected" : 0,
+    "sequence" : 543292,
+    "unit" : "raw counter cycles",
+    "usable" : true
+  },
+  "listening" : {
+    "enabled" : false,
+    "fadeComplete" : false,
+    "levelPadDB" : -18.061800000000002,
+    "settling" : true
+  },
+  "listeningSupported" : true,
+  "modelTransfer" : true,
+  "presetBank" : {
+    "active" : 255,
+    "mask" : 0,
+    "slots" : 7
+  },
+  "requests" : 27,
+  "stockChain" : true,
+  "words" : [
+    1313622833,
+    1,
+    1,
+    271583,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

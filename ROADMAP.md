@@ -35,6 +35,6 @@ First milestone: validate discovery, authentication, a bounded status/control ex
 
 Roadmap entries describe intent, not existing capability. Contributions should include test evidence and distinguish hardware observations from simulation.
 
-## High / Low Cut EQ — prepared for NAMLNK14
+## High / Low Cut EQ — NAMLNK14 installed for testing
 
-The user explicitly moved this ahead of TONE3000. The EQ addition passed offline release checks and is packaged for a physical trial; see [trial notes](docs/high-low-cut-trial.md). Physical installation and listening tests remain separate. TONE3000 on the phone controller remains the next requested feature after this addition.
+The user explicitly moved this ahead of TONE3000. The EQ addition passed offline release checks and bounded muted USB hardware checks, including preset save/recall; see [trial notes](docs/high-low-cut-trial.md). Listening, post-save power-off persistence and NAMLNK14 phone checks remain. TONE3000 on the phone controller remains the next requested feature after this addition.

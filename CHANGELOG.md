@@ -2,7 +2,7 @@
 
 ## NAMLNK14 / Mac 0.3.6 / phone controller 0.5.0 — High / Low Cut
 
-Add stereo 12 dB/oct High / Low Cut as a movable EQ choice, with independently disabled filters and logarithmic cutoff controls. Retain stock EQ choices, two FX slots, presets and output buffering. The new choice requires verified NAMLNK14; older firmware remains supported. Mac chain-library migration preserves existing settings. Candidate is prepared for a separate physical trial, not installed. See [EQ trial notes](docs/high-low-cut-trial.md).
+Add stereo 12 dB/oct High / Low Cut as a movable EQ choice, with independently disabled filters and logarithmic cutoff controls. Retain stock EQ choices, two FX slots, presets and output buffering. The new choice requires verified NAMLNK14; older firmware remains supported. Mac chain-library migration preserves existing settings. Installed on the development plug: bounded muted USB cut controls, movement/bypass, full-chain processing and a fresh preset save/read/recall passed. Listening and post-save power-off checks remain. See [EQ trial notes](docs/high-low-cut-trial.md).
 
 ## NAMLNK13 / Mac 0.3.5 / phone controller 0.4.1 — experimental trial
 
