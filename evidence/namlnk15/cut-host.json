@@ -1,0 +1,16 @@
+{
+  "status": "PASS_CUT_EQ_HOST",
+  "cutoff_checks": 10,
+  "sanitizers": true,
+  "exact_bypass": true,
+  "independent_filters": true,
+  "rapid_switching": true,
+  "stereo_and_in_place": true,
+  "combined_response": true,
+  "audio_playback": false,
+  "source_sha256": {
+    "target/link/cut_eq.cpp": "7c49c51d6ebaba6fe2ca20b3fa9721073299d6afadf3cc00f752bc4bc106c16b",
+    "target/link/cut_eq.hpp": "5403c6c793e7742cf061f06b3957f73a84bce457ac3bf7f93210ba8933a2dc15",
+    "research/test_cut_eq.cpp": "6cafa39a3f6477b64529c1b49ad05508736cb96f128421a8330ae9b18aec05d6"
+  }
+}

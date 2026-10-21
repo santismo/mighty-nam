@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'catalog.dart';
+import 'extra_fx.dart';
 
 const slotNames = {
   'gate': 'Gate',
   'comp': 'Compressor',
+  'fxa': 'FX A',
+  'fxb': 'FX B',
   'drive': 'Drive',
   'nam': 'NAM',
   'cab': 'Cabinet',
@@ -18,13 +21,18 @@ const slotNames = {
 class RigBlock {
   final String slot;
   final List<Processor> choices;
+  List<int>? fxWire;
   int choice = 0;
   bool enabled = true;
-  RigBlock(this.slot) : choices = slot == 'nam' ? [] : stockEffects(slot);
+  RigBlock(this.slot) : choices = slot == 'nam' ? [] : stockEffects(slot) {
+    if (slot == 'fxb') choice = 1;
+  }
+  bool get extra => slot == 'fxa' || slot == 'fxb';
   Processor? get effect => choices.isEmpty ? null : choices[choice];
   String get name => slotNames[slot]!;
   Map<String, dynamic> toJson() => {
         'slot': slot,
+        if (extra && fxWire != null) 'fx_wire': fxWire,
         'enabled': enabled,
         'choice': effect?.nuxIndex,
         // Remember settings when switching between effect types.
@@ -46,6 +54,23 @@ class HybridRig {
           .map((slot) =>
               RigBlock(slot)..enabled = (slot == 'nam' || slot == 'cab'))
           .toList());
+  List<int> fxConfig() {
+    final config = defaultFx();
+    for (var j = 0; j < 2; j++) {
+      final b = blocks.singleWhere((b) => b.slot == (j == 0 ? 'fxa' : 'fxb'));
+      final i = j * 16;
+      if (b.fxWire != null) config.setRange(i, i + 16, b.fxWire!);
+      config[i] = b.effect!.nuxIndex;
+      config[i + 1] = b.enabled ? 1 : 0;
+      config[i + 2] = blocks.indexOf(b);
+      for (final p in b.effect!.parameters) {
+        config[i + p.devicePresetIndex] = p.midiValue;
+      }
+    }
+    validateFx(config);
+    return config;
+  }
+
   void reorder(int oldIndex, int newIndex) {
     if (oldIndex < 0 ||
         oldIndex >= blocks.length ||
@@ -71,7 +96,7 @@ class HybridRig {
         j['name'].trim().isEmpty ||
         j['name'].length > 80 ||
         j['blocks'] is! List ||
-        j['blocks'].length != slotNames.length ||
+        ![9, 11].contains(j['blocks'].length) ||
         (j['model_sha256'] != null &&
             (j['model_sha256'] is! String ||
                 !RegExp(r'^[a-f0-9]{64}$').hasMatch(j['model_sha256'])))) {
@@ -87,6 +112,20 @@ class HybridRig {
         throw const FormatException('Invalid or duplicate signal-chain block');
       }
       final b = RigBlock(item['slot'])..enabled = item['enabled'];
+      if (b.extra && item['fx_wire'] != null) {
+        if (item['fx_wire'] is! List ||
+            (item['fx_wire'] as List).any((v) => v is! int) ||
+            item['fx_wire'].length != 16) {
+          throw const FormatException('Invalid FX state');
+        }
+        b.fxWire = List<int>.from(item['fx_wire']);
+        final probe = defaultFx();
+        probe.setRange(
+            b.slot == 'fxa' ? 0 : 16, b.slot == 'fxa' ? 16 : 32, b.fxWire!);
+        probe[2] = 2;
+        probe[18] = 3;
+        validateFx(probe);
+      }
       if (b.slot == 'nam') {
         if (item['choice'] != null || item['settings'].isNotEmpty) {
           throw const FormatException('Invalid NAM block');
@@ -125,6 +164,13 @@ class HybridRig {
         }
       }
       blocks.add(b);
+    }
+    if (blocks.length == 9) {
+      if (seen.contains('fxa') || seen.contains('fxb')) {
+        throw const FormatException('Incomplete chain');
+      }
+      blocks.insertAll(2,
+          [RigBlock('fxa')..enabled = false, RigBlock('fxb')..enabled = false]);
     }
     return HybridRig(j['name'], blocks, modelSha256: j['model_sha256']);
   }

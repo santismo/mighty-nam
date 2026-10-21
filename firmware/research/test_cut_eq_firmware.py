@@ -6,7 +6,7 @@ from test_preset_runtime import PresetMachine,v,build,preset_fixture
 p=argparse.ArgumentParser()
 for n in ['payload','elf','model','output']:p.add_argument(n,type=Path)
 a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf);v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
-assert bundle[2]['identity']=='NAMLNK14'
+assert bundle[2]['identity'] in ('NAMLNK14','NAMLNK15')
 m=PresetMachine();m.service();slot=a.model.read_bytes();m.upload(slot,33);m.phase='probe';m.run(0xb974)
 def cc(id,value):
  m.ingress([bytes([176,id,value])]);m.run(0xb954)
@@ -53,5 +53,5 @@ for typ in [1,2,3,4]:
  m.guards()
 # Timing guard remains active.
 m.timer_ticks=150;m.process(1800,healthy=False);assert m.words()[4]>0 and m.words()[9]==0
-report=dict(status='PASS_NAMLNK14_CUT_EQ_ARM',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),real_CC_ingress=True,dispatch_calls=len(seen),combined_1kHz_dB=db,seven_independent_presets=True,cold_patterns=[0,165,255],warm_restarts=True,duplicate_save_no_write=True,stock_EQ_types=[1,2,3],fault_guard=True,ram_guards=True,device_access=False,audio_playback=False)
+report=dict(status='PASS_'+bundle[2]['identity']+'_CUT_EQ_ARM',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),real_CC_ingress=True,dispatch_calls=len(seen),combined_1kHz_dB=db,seven_independent_presets=True,cold_patterns=[0,165,255],warm_restarts=True,duplicate_save_no_write=True,stock_EQ_types=[1,2,3],fault_guard=True,ram_guards=True,device_access=False,audio_playback=False)
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(report,flush=True)

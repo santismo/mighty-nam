@@ -6,6 +6,8 @@ import 'stock/control_plan.dart';
 const rigColors = {
   'gate': Color(0xff9aadc2),
   'comp': Color(0xffe5c779),
+  'fxa': Color(0xffd0a3ed),
+  'fxb': Color(0xff98c5e5),
   'drive': Color(0xfff4ac75),
   'nam': Color(0xff7bddf3),
   'cab': Color(0xff8aa6ee),
@@ -17,6 +19,8 @@ const rigColors = {
 const rigIcons = {
   'gate': Icons.multiline_chart,
   'comp': Icons.compress,
+  'fxa': Icons.tune,
+  'fxb': Icons.auto_awesome,
   'drive': Icons.bolt,
   'nam': Icons.graphic_eq,
   'cab': Icons.speaker_outlined,

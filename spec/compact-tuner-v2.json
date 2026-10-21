@@ -1,0 +1,28 @@
+{
+  "name": "NAM Plug compact pitch readings",
+  "firmware": "NAMLNK15",
+  "request_prefix": [240, 67, 88, 112, 4, 2, 78, 85, 1],
+  "request_suffix": ["operation", 0, "nonce low 7", "nonce high 7", 247],
+  "operations": {"3": "start 1024-sample capture", "4": "read computed pitch", "5": "stop"},
+  "nonce": "1..16383, echoed as little-endian u32 in raw response",
+  "reply_prefix": [240, 67, 88, 112, 4, 2, 78, 86, 2],
+  "reply": "prefix, 28 raw bytes encoded with existing mask-first pack7 into 32 bytes, F7; 42 total",
+  "raw_fields": {
+    "0": "u32 0x32554e4d",
+    "4": "u8 schema 2",
+    "5": "u8 operation | 0x80",
+    "6": "u8 zero",
+    "7": "u8 error: 0 success, 1 capture pending or unavailable, 3 output must be muted",
+    "8": "u32 nonce",
+    "12": "u32 capture generation",
+    "16": "u32 frequency in milli-Hz, zero for no reliable pitch",
+    "20": "u32 confidence scaled by 1000000",
+    "24": "u32 CRC32 of raw bytes 0..23"
+  },
+  "endianness": "little-endian",
+  "capture": {"samples": 1024, "sample_rate_hz": 12000, "source": "dry guitar", "duration_ms": 85.333333},
+  "execution": "Pitch calculation runs only in foreground, once per completed capture generation. No heap allocation or audio playback. Capture stops automatically at its limit.",
+  "controller": "One serialized start/read loop; match nonce, CRC, generation and bounds. Cancel on hidden/closed page. Never automatically enable output.",
+  "compatibility": "NU operations 0/1/2 and NV version 1 retain 2048-sample paged PCM for older phone and Mac clients. Select compact operations only after explicit NAMLNK15 identity.",
+  "physical_latency_verified": false
+}

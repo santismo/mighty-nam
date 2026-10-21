@@ -1,0 +1,42 @@
+{
+  "status": "PASS_NAMLNK15_STAGE_REJECTIONS",
+  "cases": [
+    {
+      "report": "responsive",
+      "field": "elf_sha256",
+      "rejected": true,
+      "candidate_written": false
+    },
+    {
+      "report": "responsive",
+      "field": "idle_fx_zero_dispatch",
+      "rejected": true,
+      "candidate_written": false
+    },
+    {
+      "report": "responsive",
+      "field": "single_preset_no_reload",
+      "rejected": true,
+      "candidate_written": false
+    },
+    {
+      "report": "controller",
+      "field": "arm_wire_roundtrip",
+      "rejected": true,
+      "candidate_written": false
+    },
+    {
+      "report": "tuner-host",
+      "field": "max_cents",
+      "rejected": true,
+      "candidate_written": false
+    },
+    {
+      "missing_report": true,
+      "rejected": true,
+      "candidate_written": false
+    }
+  ],
+  "device_access": false,
+  "firmware_flashing": false
+}

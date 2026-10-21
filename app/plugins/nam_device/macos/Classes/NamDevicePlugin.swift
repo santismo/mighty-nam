@@ -99,12 +99,12 @@ public final class NamDevicePlugin: NSObject, FlutterPlugin {
                     switch value { case .success(let data): result(data)
                     case .failure(let error): result(FlutterError(code:"connection",message:String(describing:error),details:nil)) }
                 }
-            case "exchangeModelFrame", "exchangePresetFrame":
+            case "exchangeModelFrame", "exchangePresetFrame", "exchangeFxFrame":
                 guard let args=call.arguments as? [String:Any],let id=args["source"] as? Int,
                       let frame=args["frame"] as? FlutterStandardTypedData else {
                     result(FlutterError(code:"arguments",message:"Select a device and model frame",details:nil));return
                 }
-                let exchange = call.method == "exchangePresetFrame" ? midi.preset : midi.exchange
+                let exchange = call.method == "exchangeFxFrame" ? midi.fx : (call.method == "exchangePresetFrame" ? midi.preset : midi.exchange)
                 exchange(id, Array(frame.data)) { value in
                     switch value {
                     case .success(let data):

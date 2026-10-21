@@ -7,6 +7,7 @@ import 'package:mighty_plug_manager/nam/nam_app.dart';
 import 'package:mighty_plug_manager/nam/onboard_presets.dart';
 import 'package:mighty_plug_manager/nam/stock/rig.dart';
 import 'package:nam_link/nam_link.dart';
+import 'package:mighty_plug_manager/nam/stock/extra_fx.dart';
 import 'connected_workflow_test.dart' show UsbFixture, capture;
 
 // Emulates only the transport/storage boundary. The controller, model upload,
@@ -15,6 +16,8 @@ class BankFixture extends UsbFixture {
   final headers = <int, Uint8List>{};
   final models = <int, LiteModel>{};
   final catalog = <LiteModel>[];
+  List<int> fx = defaultFx();
+  final savedFx = <int, List<int>>{};
   int active = 255, saves = 0, reads = 0, recalls = 0;
   bool failSave = false, badReadback = false;
   Future<void> Function()? beforeListen;
@@ -38,6 +41,7 @@ class BankFixture extends UsbFixture {
   Future<void> button(int slot) async {
     final h = headers[slot]!;
     active = slot;
+    fx = List<int>.from(savedFx[slot] ?? defaultFx());
     receiver = SimulatedPlug();
     await TransferClient(receiver).upload(models[slot]!);
     preset.setAll(0, h.sublist(128));
@@ -47,6 +51,34 @@ class BankFixture extends UsbFixture {
 
   @override
   Future<dynamic> call(MethodCall c) async {
+    if (c.method == 'exchangeFxFrame') {
+      final q = (c.arguments as Map)['frame'] as Uint8List;
+      var error = 0;
+      if (q[9] == 1) {
+        final model = List.generate(5, (i) => q[14 + i] << (7 * i))
+            .fold<int>(0, (a, b) => a | b);
+        if (q[10] != (active == 255 ? 127 : active) ||
+            model !=
+                (receiver.activeSlot == null
+                    ? 0
+                    : crc32(receiver.activeSlot!))) {
+          error = 2;
+        } else {
+          fx = q.sublist(19, 51);
+        }
+      }
+      return Uint8List.fromList([
+        ...q.take(9),
+        q[9] | 64,
+        q[10],
+        q[11],
+        q[12],
+        error,
+        active == 255 ? 127 : active,
+        ...(q[9] == 2 ? savedFx[q[10]] ?? defaultFx() : fx),
+        247
+      ]);
+    }
     if (c.method == 'setListening' && (c.arguments as Map)['enabled'] == true) {
       await beforeListen?.call();
     }
@@ -82,6 +114,7 @@ class BankFixture extends UsbFixture {
         h.setRange(32, 128, raw.sublist(32, 128));
         h.setRange(128, 256, preset);
         headers[slot] = h;
+        savedFx[slot] = List<int>.from(fx);
         models[slot] = catalog
             .singleWhere((m) => m.checksum == crc32(receiver.activeSlot!));
         active = slot;
@@ -207,7 +240,13 @@ void main() {
     expect(home.onboard.dirty[slot], false, reason: home.status);
   }
 
-  for (final identity in ['NAMLNK10', 'NAMLNK11', 'NAMLNK12']) {
+  for (final identity in [
+    'NAMLNK10',
+    'NAMLNK11',
+    'NAMLNK12',
+    'NAMLNK14',
+    'NAMLNK15'
+  ]) {
     testWidgets(
         '$identity: save colored captures, button recall, reconnect and app restart',
         (t) async {
@@ -226,6 +265,13 @@ void main() {
         await home.selectCapture(b);
         home.rig.blocks.first.enabled = !home.rig.blocks.first.enabled;
         home.rig.name = 'Crunch Marshall';
+        if (supportsExtraFx(identity)) {
+          final extra = home.rig.blocks.singleWhere((b) => b.slot == 'fxa');
+          extra.enabled = true;
+          extra.choice = 2;
+          extra.effect.parameters.first.value = 71.0;
+          home.rig.reorder(home.rig.blocks.indexOf(extra), 9);
+        }
         await home.saveOnboard();
       });
       expect(home.onboard.dirty[3], false, reason: home.status);
@@ -233,6 +279,12 @@ void main() {
       expect(usb.models[3]!.sha256Hex, b.sha256Hex);
       expect(usb.saves, 2);
       expect(usb.listening, false);
+      if (supportsExtraFx(identity)) {
+        expect(usb.savedFx[3]![0], 3);
+        expect(usb.savedFx[3]![1], 1);
+        expect(usb.savedFx[3]![2], 9);
+        expect(usb.savedFx[3]![5], 71);
+      }
       final uploads = usb.transfers;
       await usb.button(0);
       await t.pump(const Duration(seconds: 3));
@@ -240,6 +292,9 @@ void main() {
       expect(home.onboard.selected, 0);
       expect(home.rig.modelSha256, a.sha256Hex);
       expect(usb.preset, firstFx);
+      if (supportsExtraFx(identity)) {
+        expect(home.rig.fxConfig(), usb.savedFx[0]);
+      }
       expect(usb.transfers, uploads,
           reason: 'Reading an onboard recall must not upload over it');
       await work(t, home, () async {
@@ -247,6 +302,9 @@ void main() {
       });
       expect(home.rig.modelSha256, b.sha256Hex);
       expect(usb.recalls, 1);
+      if (supportsExtraFx(identity)) {
+        expect(home.rig.fxConfig(), usb.savedFx[3]);
+      }
       usb.connected = false;
       await t.pump(const Duration(seconds: 3));
       await t.pumpAndSettle();

@@ -2,14 +2,23 @@
 #include <stdint.h>
 namespace mpp::tuner {
 // Single audio-IRQ producer, foreground consumer. A completed capture is
-// immutable until the next explicit start. It always stops at 2048 samples.
+// immutable until the next start. Stops at 2048 (legacy) or 1024 (compact).
 struct Capture {
  volatile unsigned enabled, count, generation;
+#ifdef MPP_RESPONSIVE_CONTROLS
+ unsigned limit;
+#endif
  int16_t samples[2048];
  static void barrier(){__asm__ volatile("":::"memory");}
  void reset(){enabled=0;barrier();count=0;generation=0;}
  void stop(){enabled=0;barrier();count=0;}
- void start(){stop();++generation;barrier();enabled=1;}
+ void start(unsigned frames=2048){stop();
+#ifdef MPP_RESPONSIVE_CONTROLS
+ limit=frames==1024?1024:2048;
+#else
+ (void)frames;
+#endif
+ ++generation;barrier();enabled=1;}
  void feed(const int32_t* rx){
   if(!enabled)return;
   unsigned at=count;if(at>=2048)return;
@@ -20,7 +29,11 @@ struct Capture {
    samples[at+j]=(int16_t)(sum>>2);
   }
   barrier();count=at+2;
+#ifdef MPP_RESPONSIVE_CONTROLS
+  if(at+2==limit)enabled=0;
+#else
   if(at==2046)enabled=0;
+#endif
  }
 };
 }

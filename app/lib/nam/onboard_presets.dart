@@ -80,13 +80,15 @@ class PresetSnapshot {
   final String? modelSha;
   final String name;
   final List<int>? effects;
+  List<int>? extraFx;
   bool get occupied => (mask & (1 << slot)) != 0;
   PresetSnapshot(this.slot, this.active, this.mask, this.generation,
       this.modelCrc, this.buffer, this.modelSha, this.name, this.effects);
   HybridRig rig(HybridRig previous, {String? identity}) {
     final result = effects == null
         ? HybridRig.initial()
-        : StockControlPlan.readRig(previous, effects!, identity: identity);
+        : StockControlPlan.readRig(previous, effects!,
+            identity: identity, fx: extraFx);
     result.name = name;
     result.modelSha256 = modelSha;
     return result;

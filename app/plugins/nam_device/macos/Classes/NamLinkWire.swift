@@ -6,7 +6,7 @@ public enum NamLinkWire {
         identity == "NAMLNK01" || supportsStockChain(identity)
     }
     static func supportsStockChain(_ identity: String) -> Bool {
-        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14"].contains(identity)
+        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15"].contains(identity)
     }
     static let prefix: [UInt8] = [0xf0,0x43,0x58,0x70,4,2,0x4e,0x4c,1]
     static func crc(_ bytes: ArraySlice<UInt8>) -> UInt32 {
@@ -60,7 +60,7 @@ public enum NamLinkWire {
 public enum NamOutputBuffer {
     static let choices = [8,16,32]
     static func command(identity: String, samples: Int) -> [UInt8]? {
-        guard ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14"].contains(identity), choices.contains(samples) else { return nil }
+        guard ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15"].contains(identity), choices.contains(samples) else { return nil }
         return [0xf0,0x43,0x58,0x70,4,2,0x4e,0x42,UInt8(samples),0xf7] +
             [0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,24,0xf7]
     }
@@ -74,7 +74,7 @@ public enum NamOutputBuffer {
 
 public enum NamListening {
     static func supports(_ identity: String) -> Bool {
-        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14"].contains(identity)
+        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15"].contains(identity)
     }
     static func arm(identity: String, enabled: Bool) -> [UInt8]? {
         guard supports(identity) else { return nil }
@@ -179,7 +179,7 @@ public enum NamStockWire {
         }
         func allowed(on identity: String) -> Bool {
             NamLinkWire.supportsModels(identity) &&
-                (identity == "NAMLNK14" || (expected[4].map { ($0 & 63) <= 2 } ?? true)) &&
+                (["NAMLNK14","NAMLNK15"].contains(identity) || (expected[4].map { ($0 & 63) <= 2 } ?? true)) &&
                 ((namEnabled == nil && cabinetBypassed == nil) || NamLinkWire.supportsStockChain(identity))
         }
         func matches(_ preset: [UInt8], before: [UInt8]? = nil) -> Bool {
@@ -261,5 +261,24 @@ public enum NamTunerWire {
               NamLinkWire.word(raw,276)==NamLinkWire.crc(raw[0..<276]) else {return nil}
         if request[9]==2 && raw[7]==0 && Int(raw[18])+256*Int(raw[19]) != 2048 {return nil}
         return raw
+    }
+}
+
+// Two custom FX blocks; all writes carry expected active preset and model CRC.
+public enum NamFxWire {
+    static let prefix: [UInt8] = [240,67,88,112,4,2,78,70,1]
+    static func config(_ c:[UInt8]) -> Bool {
+        guard c.count==32,c[2] != c[18] else {return false}
+        for i in [0,16] {if c[i]<1 || c[i]>7 || c[i+1]>1 || c[i+2]>10 || c[i+3]>24 || c[(i+4)..<(i+10)].contains(where:{$0>100}) || c[(i+10)..<(i+16)].contains(where:{$0 != 0}) {return false}}
+        return true
+    }
+    static func request(_ q:[UInt8]) -> Bool {
+        guard [14,52].contains(q.count),Array(q.prefix(9))==prefix,q.last==247,q.dropFirst().dropLast().allSatisfy({$0<128}),q[9]<=2,[0,1,2,3,4,5,6,127].contains(q[10]),q[11]|q[12] != 0 else {return false}
+        if q[9]==1 {return q.count==52 && q[13]==0 && q[18]<16 && config(Array(q[19..<51]))}
+        return q.count==14 && (q[9] != 2 || q[10]<7)
+    }
+    static func reply(_ m:[UInt8],to q:[UInt8]) -> [UInt8]? {
+        guard request(q),m.count==48,Array(m.prefix(9))==prefix,m.last==247,m.dropFirst().dropLast().allSatisfy({$0<128}),m[9]==q[9]|64,Array(m[10...12])==Array(q[10...12]),m[13]<=2,[0,1,2,3,4,5,6,127].contains(m[14]),config(Array(m[15..<47])) else {return nil}
+        return m
     }
 }

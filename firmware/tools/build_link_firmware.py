@@ -22,7 +22,9 @@ p.add_argument('--performance',action='store_true',help='NAMLNK11 opt-in per-eff
 p.add_argument('--tuner',action='store_true',help='NAMLNK12 bounded dry-input captures for the Mac tuner; requires performance')
 p.add_argument('--fx-blocks',action='store_true',help='NAMLNK13 two independent FX blocks and bounded BLE replies; requires tuner')
 p.add_argument('--cut-eq',action='store_true',help='NAMLNK14 High/Low Cut EQ; requires --fx-blocks')
+p.add_argument('--responsive-controls',action='store_true',help='NAMLNK15 compact phone tuner, same-preset no-op and idle FX shortcut; requires --cut-eq')
 a=p.parse_args()
+if a.responsive_controls and not a.cut_eq:p.error('--responsive-controls requires --cut-eq')
 if a.cut_eq and not a.fx_blocks:p.error('--cut-eq requires --fx-blocks')
 if a.fx_blocks and not a.tuner:p.error('--fx-blocks requires --tuner')
 if a.fused and not a.stock_chain:p.error('--fused requires --stock-chain')
@@ -78,6 +80,7 @@ if a.fx_blocks:
 if a.cut_eq:
  flags+=['-DMPP_CUT_EQ']
  sources+=['target/link/cut_eq.cpp','target/link/cut_eq_runtime.cpp']
+if a.responsive_controls:flags+=['-DMPP_RESPONSIVE_CONTROLS']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -136,5 +139,8 @@ if a.fx_blocks:
  report.update(identity='NAMLNK13',custom_fx_slots=2,custom_fx_modes=['Pitch','Auto Wah','Chorus','Flanger','Phaser','Tremolo','Vibrato'],pitch_semitones=list(range(-12,13)),ble_reply_page_bytes=40,physical_fx_verified=False,copied_code_destination=hex(0x20310000))
 if a.cut_eq:
  report.update(identity='NAMLNK14',cut_eq_type=4,cut_eq_slope_db_oct=12,cut_eq_low_hz=[20,1000],cut_eq_high_hz=[1000,20000],cut_eq_off_value=0,physical_cut_eq_verified=False)
+if a.responsive_controls:
+ report.update(identity='NAMLNK15',compact_tuner=True,same_preset_button_no_op=True,idle_fx_shortcut=True,physical_latency_improvement_verified=False)
+ report['headers']={str(s.relative_to(root)):hashlib.sha256(s.read_bytes()).hexdigest() for s in sorted((root/'target').rglob('*.hpp'))}
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

@@ -1,0 +1,22 @@
+{
+  "status": "PASS_NAMLNK15_CONTROLLER_OFFLINE",
+  "elf_sha256": "53d00afbf6773638671c4e99d1af592ba9d7b0d4be8ea79f2dcff572e42d3e75",
+  "web_tests": 73,
+  "compact_browser_pass": true,
+  "arm_wire_roundtrip": true,
+  "arm_wire_frames": 17,
+  "mac_app_tests": 69,
+  "mac_app_optional_skips": 1,
+  "native_fx_checks": 67,
+  "native_stock_checks": 1597,
+  "native_tuner_checks": 921,
+  "analysis_no_errors_or_warnings": true,
+  "analysis_existing_infos": 1,
+  "release_signature_verified": true,
+  "app_version": "0.3.7+10",
+  "controller_version": "0.6.2",
+  "fx_roundtrip_combinations": 770,
+  "physical_device_tested": false,
+  "audio_playback": false,
+  "system_audio_changed": false
+}

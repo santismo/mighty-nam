@@ -38,7 +38,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_CUT_EQ)
+#if defined(MPP_RESPONSIVE_CONTROLS)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','5'};
+#elif defined(MPP_CUT_EQ)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','4'};
 #elif defined(MPP_FX_BLOCKS)
@@ -77,6 +80,12 @@ uint16_t mpp_bypass_hold[11];
 extern "C" __attribute__((naked)) void mpp_fast_dispatch(){
  __asm__ volatile(
 #ifdef MPP_FX_BLOCKS
+#ifdef MPP_RESPONSIVE_CONTROLS
+  "ldr r0, =mpp_fx_active\n"
+  "ldr r0, [r0]\n"
+  "cmp r0, #0\n"
+  "beq 8f\n"
+#endif
   "cmp r6, #11\n"
   "beq 8f\n"
   "push {r0-r3,r12,lr}\n"
@@ -496,7 +505,11 @@ extern "C" BANK_TEXT bool mpp_bank_load(const uint8_t* slot){
 // initialization has published mpp_hybrid_ready.
 extern "C" void mpp_stock_preset_select(unsigned slot){
  if(slot>=7)return;
- if(mpp_hybrid_ready)mpp_bank_request(slot);
+ if(mpp_hybrid_ready){mpp_bank_request(slot);
+#ifdef MPP_RESPONSIVE_CONTROLS
+  return; // Never replace live settings with stock defaults while a recall is pending.
+#endif
+ }
  const uint8_t* from=(const uint8_t*)(uintptr_t)(0x2000920c+128*slot);
  const uint32_t destinations[]={0x20005af0,0x20005b70,0x20012230};
  for(uint32_t dst:destinations){auto* p=(uint8_t*)(uintptr_t)dst;for(unsigned i=0;i<128;++i)p[i]=from[i];}

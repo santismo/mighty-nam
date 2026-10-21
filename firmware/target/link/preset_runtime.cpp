@@ -72,7 +72,15 @@ extern "C" void mpp_bank_init(){
 }
 extern "C" void mpp_bank_request(unsigned slot){
  if(slot>=7)return;
- resume_output=mpp_listen_enabled!=0;mpp_bank_pause();pending=slot;
+#ifdef MPP_RESPONSIVE_CONTROLS
+ if(pending==255 && slot==current)return; // One saved color wraps to itself: keep playing.
+#endif
+#ifdef MPP_RESPONSIVE_CONTROLS
+ if(pending==255)resume_output=mpp_listen_enabled!=0;
+#else
+ resume_output=mpp_listen_enabled!=0;
+#endif
+ mpp_bank_pause();pending=slot;
 }
 extern "C" void mpp_bank_service(){
  if(rd(0xe000ed04)&511)return;

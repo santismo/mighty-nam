@@ -15,6 +15,8 @@ import 'stock/control_plan.dart';
 import 'rig_editor.dart';
 import 'model_library.dart';
 import 'onboard_presets.dart';
+import 'fx_client.dart';
+import 'stock/extra_fx.dart';
 import 'tuner.dart';
 import 'tuner_dialog.dart';
 import 'plug_model_transport.dart';
@@ -80,9 +82,24 @@ class _NamHomeState extends State<NamHome> {
   final plugPresets = <int, PresetSnapshot>{};
   int? observedPreset;
   bool get hasPresetBank =>
-      const ['NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13', 'NAMLNK14']
-          .contains(hardware?['identity']) &&
+      const [
+        'NAMLNK10',
+        'NAMLNK11',
+        'NAMLNK12',
+        'NAMLNK13',
+        'NAMLNK14',
+        'NAMLNK15'
+      ].contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
+  bool get hasExtraFx => supportsExtraFx(hardware?['identity'] as String?);
+  FxClient get fxClient =>
+      FxClient((frame) => device.exchangeFxFrame(selectedSource!, frame));
+  Future<PresetSnapshot> readPresetWithFx(int slot) async {
+    final snapshot = await presetClient.read(slot);
+    if (hasExtraFx) snapshot.extraFx = await fxClient.read(savedSlot: slot);
+    return snapshot;
+  }
+
   PresetClient get presetClient => PresetClient(
       (frame) => device.exchangePresetFrame(selectedSource!, frame),
       identity: hardware?['identity'] as String?);
@@ -121,7 +138,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK11',
         'NAMLNK12',
         'NAMLNK13',
-        'NAMLNK14'
+        'NAMLNK14',
+        'NAMLNK15'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -138,7 +156,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK11',
         'NAMLNK12',
         'NAMLNK13',
-        'NAMLNK14'
+        'NAMLNK14',
+        'NAMLNK15'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -150,7 +169,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK11',
         'NAMLNK12',
         'NAMLNK13',
-        'NAMLNK14'
+        'NAMLNK14',
+        'NAMLNK15'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -336,6 +356,9 @@ class _NamHomeState extends State<NamHome> {
     }
     if (hasPresetBank) {
       await readOnboardBank();
+      if (!onboard.dirty[onboard.selected] && !pendingControls && !pendingModel) {
+        await readChainFromPlug();
+      }
       return;
     }
     if (!autoReloadBlocked &&
@@ -357,7 +380,8 @@ class _NamHomeState extends State<NamHome> {
     try {
       next = StockControlPlan.readRig(
           rig, List<int>.from(snapshot['preset'] as List),
-          identity: hardware?['identity'] as String?);
+          identity: hardware?['identity'] as String?,
+          fx: hasExtraFx ? await fxClient.read() : null);
     } on FormatException {
       if (mounted) {
         setState(() => status =
@@ -415,13 +439,13 @@ class _NamHomeState extends State<NamHome> {
     try {
       final source = selectedSource;
       if (source == null ||
-          !const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14']
+          !const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15']
               .contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
       }
       final muted = await device.setListening(source, false);
-      if (!const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14']
+      if (!const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15']
               .contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
@@ -615,6 +639,18 @@ class _NamHomeState extends State<NamHome> {
             : null);
     if (result['controlsVerified'] != true) {
       throw StateError('The plug did not confirm its effect controls.');
+    }
+    if (hasExtraFx) {
+      final expected = chain.fxConfig();
+      await fxClient.write(
+          expected,
+          (before['presetBank'] as Map)['active'] as int,
+          beforeWords[5] as int);
+      if ((await fxClient.read()).join(',') != expected.join(',')) {
+        throw StateError('The plug did not confirm FX A/B.');
+      }
+    } else if (chain.blocks.any((b) => b.extra && b.enabled)) {
+      throw StateError('FX A/B require NAMLNK13 or newer.');
     }
     await Future<void>.delayed(const Duration(milliseconds: 250));
     final after = await device.inspect(source);
@@ -819,7 +855,7 @@ class _NamHomeState extends State<NamHome> {
     if (first) {
       final snapshots = <PresetSnapshot>[];
       for (var i = 0; i < 7; i++) {
-        snapshots.add(await presetClient.read(i));
+        snapshots.add(await readPresetWithFx(i));
       }
       // Commit the bank only when every read succeeds, so a failed initial
       // connection retries the whole bank rather than leaving a partial cache.
@@ -834,7 +870,7 @@ class _NamHomeState extends State<NamHome> {
       }
     }
     if (active < 7 && (first || observedPreset != active)) {
-      final snapshot = await presetClient.read(active);
+      final snapshot = await readPresetWithFx(active);
       plugPresets[active] = snapshot;
       onboard.selected = active;
       if (!onboard.dirty[active]) {
@@ -910,7 +946,10 @@ class _NamHomeState extends State<NamHome> {
           'The plug did not confirm this complete preset. Your Mac copy is retained.');
     }
     // Read back independently. A successful send alone is never "Saved".
-    final checked = await presetClient.read(slot);
+    final checked = await readPresetWithFx(slot);
+    if (hasExtraFx && checked.extraFx?.join(',') != rig.fxConfig().join(',')) {
+      throw StateError('Saved FX A/B did not match.');
+    }
     if (checked.generation != saved.generation ||
         checked.modelSha != saved.modelSha ||
         checked.name != rig.name.trim() ||
@@ -1284,6 +1323,11 @@ class _NamHomeState extends State<NamHome> {
         observedPreset = null;
         plugPresets.clear();
         await readOnboardBank();
+        if (!onboard.dirty[onboard.selected] &&
+            !pendingControls &&
+            !pendingModel) {
+          await readChainFromPlug();
+        }
         return;
       }
       if (widget.autoConnect && canTransfer) {
@@ -1343,7 +1387,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK11',
             'NAMLNK12',
             'NAMLNK13',
-            'NAMLNK14'
+            'NAMLNK14',
+            'NAMLNK15'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1433,7 +1478,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK11',
           'NAMLNK12',
           'NAMLNK13',
-          'NAMLNK14'
+          'NAMLNK14',
+          'NAMLNK15'
         ].contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 to adjust output buffering.');
@@ -1446,7 +1492,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK11',
             'NAMLNK12',
             'NAMLNK13',
-            'NAMLNK14'
+            'NAMLNK14',
+            'NAMLNK15'
           ].contains(result['identity']) ||
           (result['audioBuffer'] as Map?)?['samples'] != samples ||
           (result['listening'] as Map?)?['enabled'] != false) {
@@ -1482,7 +1529,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK11',
           'NAMLNK12',
           'NAMLNK13',
-          'NAMLNK14'
+          'NAMLNK14',
+          'NAMLNK15'
         ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;

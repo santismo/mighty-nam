@@ -8,7 +8,7 @@ void main() {
       'live snapshot preserves every supported effect and exact control values',
       () {
     final rig = HybridRig.initial();
-    for (final block in rig.blocks.where((b) => b.slot != 'nam')) {
+    for (final block in rig.blocks.where((b) => b.slot != 'nam' && !b.extra)) {
       for (var choice = 0; choice < block.choices.length; choice++) {
         block.choice = choice;
         if (block.effect!.nuxIndex >
@@ -43,7 +43,7 @@ void main() {
   test('every supported effect compiles only scoped volatile control messages',
       () {
     final rig = HybridRig.initial();
-    for (final block in rig.blocks.where((b) => b.slot != 'nam')) {
+    for (final block in rig.blocks.where((b) => b.slot != 'nam' && !b.extra)) {
       for (var i = 0; i < block.choices.length; i++) {
         block.choice = i;
         if (block.effect!.nuxIndex >

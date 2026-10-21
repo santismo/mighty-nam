@@ -22,6 +22,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
+| NAMLNK15 candidate / Mac 0.3.7 / phone 0.6.2 | Mac update installed locally with FX A/B editing and preset persistence. Firmware candidate adds same-color button no-op, bypassed FX dispatch sleep and compact phone tuner. Offline checks pass; firmware not installed and physical latency remains unmeasured. See [responsive controls](docs/responsive-controls-trial.md). |
 | NAMLNK14 / Mac 0.3.6 / phone 0.6.0 | Installed locally. High / Low Cut has independent live sliders; muted USB control, full-chain and fresh preset save/recall checks passed. The user confirmed the cut EQ works. Broader listening and post-save restart checks remain. See [EQ trial notes](docs/high-low-cut-trial.md). |
 | Mac controller 0.3.2 | Handles large CoreMIDI replies and enables Listen for verified onboard captures even without a Mac-library copy. Universal build; Apple-silicon execution is not separately verified. |
 | Mac controller 0.3.4 / NAMLNK12 | App and firmware installed locally; seven presets restored and switched successfully; quiet tuner transport passed. Adds a chromatic USB tuner and includes the NAMLNK11 preparation/profiling work. No measured latency reduction claimed. See [trial notes](docs/tuner-performance-trial.md). |
@@ -32,7 +33,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
 
-The local 0.3.6 app includes High / Low Cut and NAMLNK14 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
+The local 0.3.7 app includes FX A/B, High / Low Cut and NAMLNK15 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
 
 ## Install the Mac app
 
@@ -76,3 +77,5 @@ NAMLNK14 adds **High / Low Cut** to the movable EQ block, with independent Off s
 The public [phone controller 0.6.0](https://santismo.github.io/nam-plug-controller/?v=0.6.0) now browses TONE3000, extracts A2 Lite, loads captures through the existing NAMLNK14 Bluetooth protocol and saves captures/FX to chosen colors. All 63 tests passed and real sign-in/download worked. The user will test the physical Bluefy transfer later; see [phone trial notes](docs/phone-tone3000-trial.md).
 
 Phone controller 0.6.1 adds automatic tuning, confirmed/saved buffer values and standalone startup-output defaults. See [phone fixes and validation](docs/phone-tuner-buffer-startup.md). No NAMLNK14 firmware update is required; the reported physical latency difference remains under investigation.
+
+Mac 0.3.7, phone 0.6.2 and the **uninstalled** NAMLNK15 candidate address extra-block editing, the single-saved-color pause, idle FX work and tuner transport overhead. See [scope, evidence and physical limitations](docs/responsive-controls-trial.md).

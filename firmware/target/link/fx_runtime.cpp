@@ -1,17 +1,31 @@
 #include "fx_blocks.hpp"
 #include "reply_transport.hpp"
+#ifdef MPP_RESPONSIVE_CONTROLS
+extern "C" {volatile unsigned mpp_fx_active;}
+#endif
 namespace {
 mpp::fx::Engine engines[2];uint8_t settings[2][32];volatile unsigned selected;
 uint32_t word(uintptr_t a){return *(volatile uint32_t*)a;}
 }
-extern "C" void mpp_fx_init(){mpp::fx::defaults(settings[0]);mpp::fx::defaults(settings[1]);selected=0;for(auto& e:engines)e.reset();mpp_reply_init();}
+extern "C" void mpp_fx_init(){mpp::fx::defaults(settings[0]);mpp::fx::defaults(settings[1]);selected=0;for(auto& e:engines)e.reset();mpp_reply_init();
+#ifdef MPP_RESPONSIVE_CONTROLS
+ mpp_fx_active=0;
+#endif
+}
 extern "C" void mpp_fx_get(uint8_t* out){const auto* p=settings[selected];for(unsigned i=0;i<32;++i)out[i]=p[i];}
 extern "C" bool mpp_fx_set(const uint8_t* input){
  if(!mpp::fx::valid(input))return false;unsigned next=selected^1;
- for(unsigned i=0;i<32;++i)settings[next][i]=input[i];__asm__ volatile("dmb":::"memory");selected=next;return true;
+ for(unsigned i=0;i<32;++i)settings[next][i]=input[i];__asm__ volatile("dmb":::"memory");selected=next;
+#ifdef MPP_RESPONSIVE_CONTROLS
+ mpp_fx_active=input[1]||input[17]||engines[0].wet!=0||engines[1].wet!=0;
+#endif
+ return true;
 }
 extern "C" void mpp_fx_before(unsigned boundary,float* l,float* r){
  if(boundary>9)return;const auto* c=settings[selected];
+#ifdef MPP_RESPONSIVE_CONTROLS
+ if(!c[1]&&!c[17]&&engines[0].wet==0&&engines[1].wet==0){mpp_fx_active=0;return;}
+#endif
  unsigned first=c[2]<c[18]?0:1;
  for(unsigned i=0;i<2;++i){unsigned slot=first^i;const auto* p=c+16*slot;
   if(unsigned(p[2])-i==boundary)engines[slot].process(p,l,r,8);}

@@ -1,4 +1,5 @@
 import 'rig.dart';
+import 'extra_fx.dart';
 
 /// RAM-only V1.5.6 settings. The silent NAMLNK01 audio hook runs NAM alone;
 /// the stock settings and order can be verified independently of stock DSP.
@@ -29,7 +30,11 @@ class StockControlPlan {
     'reverb': 6,
   };
   static int maximumType(String slot, String? identity) =>
-      slot == 'eq' && identity == 'NAMLNK14' ? 4 : supportedTypes[slot]!;
+      ['fxa', 'fxb'].contains(slot)
+          ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
+          : slot == 'eq' && ['NAMLNK14', 'NAMLNK15'].contains(identity)
+              ? 4
+              : supportedTypes[slot]!;
   static const ranges = [
     [13, 16, 15],
     [17, 22, 20],
@@ -50,12 +55,12 @@ class StockControlPlan {
 
   /// Import the live chain without discarding remembered inactive effect settings.
   static HybridRig readRig(HybridRig previous, List<int> preset,
-      {String? identity}) {
+      {String? identity, List<int>? fx}) {
     StockControlPlan.fromSnapshot(preset,
         identity:
             identity); // Validate the complete response before changing UI state.
     final next = HybridRig.parse(previous.encode());
-    for (final block in next.blocks) {
+    for (final block in next.blocks.where((b) => !b.extra)) {
       final id = stages[block.slot]!;
       block.enabled = (preset[id] & 64) == 0;
       if (block.slot == 'nam') continue;
@@ -71,9 +76,36 @@ class StockControlPlan {
       }
     }
     final order = preset.sublist(90, 99);
+    final extras = next.blocks.where((b) => b.extra).toList();
+    final positions = extras.map((b) => next.blocks.indexOf(b)).toList();
+    next.blocks.removeWhere((b) => b.extra);
     next.blocks.sort((a, b) => order
         .indexOf(stages[a.slot]!)
         .compareTo(order.indexOf(stages[b.slot]!)));
+    if (fx != null) {
+      validateFx(fx);
+      for (var j = 0; j < 2; j++) {
+        final b = extras.singleWhere((b) => b.slot == (j == 0 ? 'fxa' : 'fxb'));
+        final i = j * 16;
+        b.fxWire = fx.sublist(i, i + 16);
+        b.choice = fx[i] - 1;
+        b.enabled = fx[i + 1] == 1;
+        for (final p in b.effect!.parameters) {
+          p.midiValue = fx[i + p.devicePresetIndex];
+        }
+      }
+    }
+    final placements = [
+      for (var j = 0; j < 2; j++)
+        (
+          block: extras[j],
+          at: fx == null ? positions[j] : fx[extras[j].slot == 'fxa' ? 2 : 18]
+        )
+    ];
+    placements.sort((a, b) => a.at.compareTo(b.at));
+    for (final p in placements) {
+      next.blocks.insert(p.at, p.block);
+    }
     return HybridRig.parse(next.encode());
   }
 
@@ -81,7 +113,8 @@ class StockControlPlan {
     // Check stored values before translating into physical writes.
     final checked = HybridRig.parse(rig.encode());
     final controls = <List<int>>[];
-    for (final block in checked.blocks.where((b) => b.slot != 'nam')) {
+    for (final block
+        in checked.blocks.where((b) => b.slot != 'nam' && !b.extra)) {
       final effect = block.effect!;
       if (effect.nuxIndex > maximumType(block.slot, identity)) {
         throw FormatException('${effect.name} requires newer stock firmware. '
@@ -100,7 +133,11 @@ class StockControlPlan {
       }
     }
     return StockControlPlan._(
-        controls, checked.blocks.map((b) => stages[b.slot]!).toList());
+        controls,
+        checked.blocks
+            .where((b) => !b.extra)
+            .map((b) => stages[b.slot]!)
+            .toList());
   }
   factory StockControlPlan.fromSnapshot(List<int> preset, {String? identity}) {
     if (preset.length != 128 || preset.any((v) => v < 0 || v > 127)) {

@@ -1,0 +1,23 @@
+{
+  "version": "0.6.2",
+  "commit": "9baa94b2e3f905b721c4dd2f516d795deaca215a",
+  "assets_match": true,
+  "assets": [
+    {
+      "asset": "index.html",
+      "sha256": "af031c39ff39e4dd93da1942652fbe1bbabb83aab3ebd36395f207de06dfa8c4"
+    },
+    {
+      "asset": "src/app.js",
+      "sha256": "27138f6a6c74806feec2fea2eb19f8df9a9f8a09920f9c79770ce741b7affcfc"
+    },
+    {
+      "asset": "src/editor.js",
+      "sha256": "b09f5f59b77ebfee393668c891c933f7c65a52d0b2c1ee68c20107b35c9fb01e"
+    },
+    {
+      "asset": "src/commands.js",
+      "sha256": "cf412ea4572715d521f072cea8583774c65bc4db9fedd5f58ad8f7d3ce1a0b64"
+    }
+  ]
+}

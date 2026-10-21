@@ -298,7 +298,7 @@ void main() {
       final selected = HybridRig.parse(jsonDecode(library!)['active']);
       expect(selected.blocks.singleWhere((b) => b.slot == 'cab').enabled,
           gear == 'amp');
-      expect(selected.blocks.length, 9);
+      expect(selected.blocks.length, 11);
       expect(calls.where((c) => c == 'setCabinetBypassed').length,
           gear == 'amp-cab' ? 1 : 0);
       expect(lastControls!['namEnabled'], true);
@@ -370,7 +370,7 @@ void main() {
   });
   test('all stock choices preserve defaults and choice-specific settings', () {
     final rig = HybridRig.initial();
-    expect(rig.blocks.fold<int>(0, (n, b) => n + b.choices.length), 81);
+    expect(rig.blocks.fold<int>(0, (n, b) => n + b.choices.length), 95);
     for (final b in rig.blocks) {
       expect(b.choices.map((e) => e.nuxIndex).toSet().length, b.choices.length);
       for (var n = 0; n < b.choices.length; n++) {
@@ -451,8 +451,8 @@ void main() {
     await t.tap(find.text('Share chain'));
     await t.pumpAndSettle();
     final rig = HybridRig.parse(clipboard!);
-    expect(rig.blocks[4].slot, 'drive');
-    expect(rig.blocks[4].enabled, true);
+    expect(rig.blocks[6].slot, 'drive');
+    expect(rig.blocks.singleWhere((b)=>b.slot=='drive').enabled, true);
     await t.ensureVisible(find.byTooltip('Save chain'));
     await t.tap(find.byTooltip('Save chain'));
     await t.pump(const Duration(milliseconds: 400));

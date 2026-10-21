@@ -7,12 +7,14 @@ import 'vendor/Cabinet.dart';
 import 'vendor/Modulation.dart';
 import 'vendor/EQ.dart';
 import 'cut_eq.dart';
+import 'extra_fx.dart';
 import 'vendor/Delay.dart';
 import 'vendor/Reverb.dart';
 export 'vendor/Processor.dart' show Processor, Parameter;
 export 'vendor/SwitchFormatters.dart' show SwitchFormatter;
 
 List<Processor> stockEffects(String slot) => switch (slot) {
+      'fxa' || 'fxb' => List.generate(7, (i) => ExtraFx(i + 1)),
       'gate' => [NoiseGatePro()],
       'comp' => [RoseCompPro(), KComp(), StudioComp()],
       'drive' => [

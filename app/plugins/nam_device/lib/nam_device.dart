@@ -42,6 +42,9 @@ class NamDevice {
         'order': order,
         if (namEnabled != null) 'namEnabled': namEnabled
       }))!);
+  Future<Uint8List> exchangeFxFrame(int source, Uint8List frame) async =>
+      (await channel.invokeMethod<Uint8List>(
+          'exchangeFxFrame', {'source': source, 'frame': frame}))!;
   Future<Uint8List> exchangePresetFrame(int source, Uint8List frame) async =>
       (await channel.invokeMethod<Uint8List>(
           'exchangePresetFrame', {'source': source, 'frame': frame}))!;
