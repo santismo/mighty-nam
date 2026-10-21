@@ -3,11 +3,18 @@
 #include "model_receiver.hpp"
 #include "sysex_codec.hpp"
 #include "listening.hpp"
+#ifdef MPP_FX_BLOCKS
+#include "fx_blocks.hpp"
+#include "reply_transport.hpp"
+#endif
 using namespace mpp::presets;
 namespace {
 alignas(4) uint8_t record[8192],scratch[8192],model_slot[8192];
 uint8_t headers[7][256],input[132],output[276],wire[330];
 unsigned current,occupied,pending;
+#ifdef MPP_FX_BLOCKS
+uint8_t saved_fx[7][32];
+#endif
 bool booting,resume_output;
 uint32_t rd(uint32_t a){return *(volatile uint32_t*)(uintptr_t)a;}
 uint8_t* ptr(uint32_t a){return (uint8_t*)(uintptr_t)a;}
@@ -33,7 +40,11 @@ void copy(uint8_t* a,const uint8_t* b,unsigned n){for(unsigned i=0;i<n;++i)a[i]=
 void mask(){ptr(rd(0x20005ae0))[0x13]=occupied?occupied:127;}
 Result read_slot(unsigned slot){
  auto result=bank().read(slot,record,scratch);
- if(result==ok){copy(headers[slot],record,256);occupied|=1u<<slot;}
+ if(result==ok){copy(headers[slot],record,256);occupied|=1u<<slot;
+#ifdef MPP_FX_BLOCKS
+  if(word(record,7808)==0x33315846)copy(saved_fx[slot],record+7812,32);else mpp::fx::defaults(saved_fx[slot]);
+#endif
+ }
  else if(result==empty){for(auto& b:headers[slot])b=0;occupied&=~(1u<<slot);}
  mask();return result;
 }
@@ -45,6 +56,9 @@ Result recall(unsigned slot,bool listen){
  const uint32_t destinations[]={0x20005af0,0x20005b70,0x20012230};
  for(uint32_t dest:destinations)copy(ptr(dest),record+128,128);
  ptr(rd(0x20005ad8))[2]=slot;
+#ifdef MPP_FX_BLOCKS
+ mpp_fx_set(saved_fx[slot]);
+#endif
  mpp_buffer_set(word(record,24));mpp_bank_resume(listen);
  return ok;
 }
@@ -52,6 +66,9 @@ Result recall(unsigned slot,bool listen){
 extern "C" void mpp_bank_init(){
  current=pending=255;occupied=0;booting=true;resume_output=false;
  for(auto& h:headers)for(auto& b:h)b=0;
+#ifdef MPP_FX_BLOCKS
+ for(auto& c:saved_fx)mpp::fx::defaults(c);
+#endif
 }
 extern "C" void mpp_bank_request(unsigned slot){
  if(slot>=7)return;
@@ -85,7 +102,12 @@ extern "C" void mpp_bank_query(const uint8_t* p,unsigned n,unsigned channel){
   const uint8_t* model=mpp_bank_model();const uint8_t* fx=ptr(rd(0x20005ad0));const uint8_t* body=input+16;
   if(model&&word(body,0)==mpp::link::crc32(model,8192)&&word(body,4)==mpp::link::crc32(fx,128)){
    mpp_bank_pause();
+   #ifdef MPP_FX_BLOCKS
+   uint8_t extra[32];mpp_fx_get(extra);
+   error=bank().save(slot,model,fx,body+16,body+48,word(body,8),word(body,12),record,scratch,extra);
+#else
    error=bank().save(slot,model,fx,body+16,body+48,word(body,8),word(body,12),record,scratch);
+#endif
    if(error==ok){read_slot(slot);current=slot;ptr(rd(0x20005ad8))[2]=slot;}
    mpp_bank_resume(false);
   }
@@ -96,5 +118,15 @@ extern "C" void mpp_bank_query(const uint8_t* p,unsigned n,unsigned channel){
  copy(output+16,headers[slot],256);put(output,272,mpp::link::crc32(output,272));
  const uint8_t prefix[]={0xf0,0x43,0x58,0x70,4,2,'N','S',1};copy(wire,prefix,9);
  unsigned encoded=mpp::link::pack7(output,276,wire+9,sizeof(wire)-10);
- if(encoded){wire[9+encoded]=0xf7;((void(*)(const uint8_t*,unsigned,unsigned))0xae81)(wire,encoded+10,channel);}
+ if(encoded){wire[9+encoded]=0xf7;
+#ifdef MPP_FX_BLOCKS
+ mpp_reply_send(wire,encoded+10,channel);
+#else
+ ((void(*)(const uint8_t*,unsigned,unsigned))0xae81)(wire,encoded+10,channel);
+#endif
 }
+}
+
+#ifdef MPP_FX_BLOCKS
+extern "C" void mpp_fx_saved(unsigned slot,uint8_t* out){if(slot<7)copy(out,saved_fx[slot],32);}
+#endif

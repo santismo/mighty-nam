@@ -25,7 +25,11 @@ class Bank {
   Result read(unsigned slot,uint8_t* record,uint8_t* scratch,unsigned* copy=nullptr);
   Result save(unsigned slot,const uint8_t* model,const uint8_t* effects,
               const uint8_t* sha,const uint8_t* name,unsigned flags,unsigned buffer,
-              uint8_t* record,uint8_t* scratch);
+              uint8_t* record,uint8_t* scratch
+#ifdef MPP_FX_BLOCKS
+              ,const uint8_t* extra=nullptr
+#endif
+              );
   static bool valid(const uint8_t*,unsigned);
   static void unpack_model(const uint8_t* record,uint8_t* model);
  private:

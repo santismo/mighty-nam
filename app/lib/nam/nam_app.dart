@@ -80,7 +80,7 @@ class _NamHomeState extends State<NamHome> {
   final plugPresets = <int, PresetSnapshot>{};
   int? observedPreset;
   bool get hasPresetBank =>
-      const ['NAMLNK10', 'NAMLNK11', 'NAMLNK12']
+      const ['NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13']
           .contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   PresetClient get presetClient => PresetClient(
@@ -118,7 +118,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK09',
         'NAMLNK10',
         'NAMLNK11',
-        'NAMLNK12'
+        'NAMLNK12',
+        'NAMLNK13'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -133,7 +134,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK09',
         'NAMLNK10',
         'NAMLNK11',
-        'NAMLNK12'
+        'NAMLNK12',
+        'NAMLNK13'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -143,7 +145,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK09',
         'NAMLNK10',
         'NAMLNK11',
-        'NAMLNK12'
+        'NAMLNK12',
+        'NAMLNK13'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -406,12 +409,13 @@ class _NamHomeState extends State<NamHome> {
   Future<void> openTuner() async {
     try {
       final source = selectedSource;
-      if (source == null || hardware?['identity'] != 'NAMLNK12') {
+      if (source == null ||
+          !const ['NAMLNK12', 'NAMLNK13'].contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
       }
       final muted = await device.setListening(source, false);
-      if (muted['identity'] != 'NAMLNK12' ||
+      if (!const ['NAMLNK12', 'NAMLNK13'].contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
             'Could not confirm that the plug is muted.');
@@ -1326,7 +1330,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK09',
             'NAMLNK10',
             'NAMLNK11',
-            'NAMLNK12'
+            'NAMLNK12',
+            'NAMLNK13'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1410,14 +1415,14 @@ class _NamHomeState extends State<NamHome> {
   Future<void> setOutputBuffer(int samples) async {
     final source = selectedSource;
     if (source == null ||
-        !const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12']
+        !const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13']
             .contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 to adjust output buffering.');
     }
     try {
       final result = await device.setOutputBuffer(source, samples);
-      if (!const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12']
+      if (!const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12', 'NAMLNK13']
               .contains(result['identity']) ||
           (result['audioBuffer'] as Map?)?['samples'] != samples ||
           (result['listening'] as Map?)?['enabled'] != false) {
@@ -1447,8 +1452,13 @@ class _NamHomeState extends State<NamHome> {
   }
 
   Widget get latencySettings {
-    final adjustable = const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12']
-            .contains(hardware?['identity']) &&
+    final adjustable = const [
+          'NAMLNK09',
+          'NAMLNK10',
+          'NAMLNK11',
+          'NAMLNK12',
+          'NAMLNK13'
+        ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;
     final samples =

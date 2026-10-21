@@ -1,0 +1,37 @@
+{
+  "status": "PASS_NAMLNK13_CONTROLLER_OFFLINE",
+  "elf_sha256": "4ff3760c942138ece2064e50a1d6582b48ac7bab2cf2b34d17c0539c09a9d1c3",
+  "web_tests": 47,
+  "legacy_browser_pass": true,
+  "fx_browser_pass": true,
+  "browser_widths": [
+    320,
+    390,
+    430,
+    768,
+    1100
+  ],
+  "mac_app_tests": 61,
+  "optional_interop_skips": 1,
+  "native_wire_checks": 1581,
+  "analysis_clean": true,
+  "release_signature_verified": true,
+  "app_version": "0.3.5+8",
+  "public_controller_commit": "af31efd3986a59b6090379575d74d52173eaf762",
+  "web_source_sha256": {
+    "src/app.js": "9dc2c9edf0f1fc6d1ab6dcdc6a4efb9284f9d7fff01b12583add0dfc2511abc3",
+    "src/ble-midi.js": "b7393d774719303c82c518db5d37dc4c66a1d28817c85429163462e9e905c3d6",
+    "src/catalog.js": "d06677611a35e29b08f76305d04bb25d9ffda2ffc986ce0b189c359e7daec2dc",
+    "src/commands.js": "eb79610c2dea382cf236fb89197158dda4f9f7f2eded70bda506392fd9f3b775",
+    "src/controls.js": "234d167e478ee94f996304e8782ba482856554e1a6847162bae583dabf5ff8dd",
+    "src/device.js": "095fea6c006d9f7b23d390e3cf9b33d6851e5370b064170ccf1e04de72a2585b",
+    "src/editor.js": "e6aa01f1a905fe7447d72fad85c88734c2bedd87eb938b90ede75a471849a698",
+    "src/fx.js": "45c76963b09e1722e8f9f2f0a2aebc70f661fe137a9e1e75c07518f30c3ac5c9",
+    "src/live.js": "ddfbadec4a96b952e2a014e69576cb7f09206d9d54a2ce7662505cb2dda5e8a6",
+    "src/protocol.js": "040ee3f3a722504d083ddd78ca59c227ba59082ad0f7dadd9c828f6e74bf95df",
+    "src/reply-pages.js": "d587d175382baea63a8fde706a8b62098429a3e0d17e9f403d88aa0e4163380f",
+    "src/tuner.js": "eb043d49d65868972358f949c266634b17c05ce71b2e985394fe3633772b3ddb"
+  },
+  "physical_device_access": false,
+  "audio_playback": false
+}

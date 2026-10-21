@@ -67,3 +67,5 @@ TONE3000 captures have their own creator licenses. Your account/session, persona
 ## License and credits
 
 [MIT © 2026 santismo](LICENSE) covers original NAM Plug contributions. [Third-party notices](THIRD_PARTY_NOTICES.md) preserve Mightier Amp, NeuralAmpModelerCore, Eigen, nlohmann/json, musl, and dependency licenses. NUX, Neural Amp Modeler, and TONE3000 identify interoperability targets; this is an independent project.
+
+NAMLNK13 is an **offline-tested experimental candidate** adding two movable FX blocks and short Bluetooth reply pages. It has not been installed or validated on hardware. See [trial notes](docs/dual-fx-trial.md). The public [controller 0.4.0](https://santismo.github.io/nam-plug-controller/?v=0.4.0) supports it and retains NAMLNK12 fallback behavior.

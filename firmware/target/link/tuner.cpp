@@ -2,6 +2,9 @@
 #include "model_receiver.hpp"
 #include "sysex_codec.hpp"
 #include "listening.hpp"
+#ifdef MPP_FX_BLOCKS
+#include "reply_transport.hpp"
+#endif
 namespace {
 mpp::tuner::Capture capture;
 uint8_t reply[280],wire[330];
@@ -32,5 +35,11 @@ extern "C" void mpp_tuner_query(const uint8_t* p,unsigned n,unsigned channel){
  const uint8_t prefix[]={0xf0,0x43,0x58,0x70,4,2,'N','U',1};
  for(unsigned i=0;i<9;++i)wire[i]=prefix[i];
  unsigned size=mpp::link::pack7(reply,280,wire+9,320);
- if(size==320){wire[329]=0xf7;((void(*)(const uint8_t*,unsigned,unsigned))0xae81)(wire,330,channel);}
+ if(size==320){wire[329]=0xf7;
+#ifdef MPP_FX_BLOCKS
+ mpp_reply_send(wire,330,channel);
+#else
+ ((void(*)(const uint8_t*,unsigned,unsigned))0xae81)(wire,330,channel);
+#endif
+}
 }

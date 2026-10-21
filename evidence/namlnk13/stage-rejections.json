@@ -1,0 +1,10 @@
+{
+  "status": "PASS_NAMLNK13_STAGE_REJECTIONS",
+  "cases": [
+    "wrong_elf",
+    "missing_fx_persistence"
+  ],
+  "created_candidate": false,
+  "device_access": false,
+  "audio_access": false
+}

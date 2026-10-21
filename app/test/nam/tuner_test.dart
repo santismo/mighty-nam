@@ -46,8 +46,9 @@ class Fixture {
     b.setUint16(18, op == 2 ? 2048 : 0, Endian.little);
     if (op == 2) {
       final s = silent ? Int16List(2048) : signal(440);
-      for (var i = 0; i < 128; i++)
+      for (var i = 0; i < 128; i++) {
         b.setInt16(20 + 2 * i, s[page * 128 + i], Endian.little);
+      }
     }
     raw.setAll(0, b.buffer.asUint8List());
     ByteData.sublistView(raw)

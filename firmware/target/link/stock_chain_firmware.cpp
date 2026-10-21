@@ -2,6 +2,10 @@
 // NAMLNK07 adds explicitly armed listening. No flash or reset commands.
 #include "model_receiver.hpp"
 #include "sysex_codec.hpp"
+#ifdef MPP_FX_BLOCKS
+#include "fx_blocks.hpp"
+#include "reply_transport.hpp"
+#endif
 #ifdef MPP_TUNER
 extern "C" void mpp_tuner_init();
 extern "C" void mpp_tuner_feed(const int32_t*);
@@ -31,7 +35,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_TUNER)
+#if defined(MPP_FX_BLOCKS)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','3'};
+#elif defined(MPP_TUNER)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','2'};
 #elif defined(MPP_EFFECT_PROFILER)
@@ -63,6 +70,17 @@ uint16_t mpp_bypass_hold[11];
 // Original pre/post routing fades and BLX callback return address remain intact.
 extern "C" __attribute__((naked)) void mpp_fast_dispatch(){
  __asm__ volatile(
+#ifdef MPP_FX_BLOCKS
+  "cmp r6, #11\n"
+  "beq 8f\n"
+  "push {r0-r3,r12,lr}\n"
+  "rsb r0, r6, #10\n"
+  "mov r1, r9\n"
+  "mov r2, r7\n"
+  "bl mpp_fx_before\n"
+  "pop {r0-r3,r12,lr}\n"
+  "8:\n"
+#endif
   "ldr r1, =0x20005ad0\n"
   "ldr r1, [r1]\n"
   "rsb r0, r6, #100\n"
@@ -200,6 +218,9 @@ extern "C" void mpp_stock_amp_init(){
  *(volatile uint32_t*)0xe000ef50=0;
  __asm__ volatile("dsb\nisb":::"memory");
  mpp_bank_init();
+#ifdef MPP_FX_BLOCKS
+ mpp_fx_init();
+#endif
 #ifdef MPP_TUNER
  mpp_tuner_init();
 #endif
@@ -325,6 +346,10 @@ extern "C" BANK_TEXT void mpp_probe_version(const uint8_t* p,unsigned n,unsigned
 extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned channel){
  if(n<9||n>329||channel>1||p[0]!=0xf0||p[1]!=0x43||p[2]!=0x58||
     p[3]!=0x70||p[4]!=4||p[5]!=2||p[6]!='N'||p[n]!=0xf7)return;
+#ifdef MPP_FX_BLOCKS
+ if(p[7]=='R'){mpp_reply_query(p,n,channel);return;}
+ if(p[7]=='F'){mpp_fx_query(p,n,channel);return;}
+#endif
 #ifdef MPP_TUNER
  if(p[7]=='U'){mpp_tuner_query(p,n,channel);return;}
 #endif

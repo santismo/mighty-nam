@@ -1,5 +1,9 @@
 # Changelog
 
+## NAMLNK13 / Mac 0.3.5 — offline experimental trial
+
+Two independent movable FX slots, each with Pitch, Auto Wah, Chorus, Flanger, Phaser, Tremolo and Vibrato. Both persist with the seven onboard presets. Bluetooth preset/tuner replies are pulled in short numbered pages. Controller 0.4.0 exposes live controls; Mac 0.3.5 adds USB compatibility. No NAMLNK13 physical test or firmware installation is claimed. See [trial notes](docs/dual-fx-trial.md).
+
 ## 0.3.4 / NAMLNK12 — tuner and performance trial
 
 - Add a USB MIDI chromatic tuner with reference A adjustment, note/cents display, muted input capture and explicit listening resume. No host audio streams.

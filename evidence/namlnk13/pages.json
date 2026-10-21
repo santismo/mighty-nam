@@ -1,0 +1,58 @@
+{
+  "commit": "af31efd3986a59b6090379575d74d52173eaf762",
+  "status": "PASS_DEPLOYED_ASSETS",
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "41a342b2df02edfcadfd308d6ee918a1de3c719f577644b7292b3f0f161b7bc5"
+    },
+    {
+      "path": "src/app.js",
+      "sha256": "9dc2c9edf0f1fc6d1ab6dcdc6a4efb9284f9d7fff01b12583add0dfc2511abc3"
+    },
+    {
+      "path": "src/ble-midi.js",
+      "sha256": "b7393d774719303c82c518db5d37dc4c66a1d28817c85429163462e9e905c3d6"
+    },
+    {
+      "path": "src/catalog.js",
+      "sha256": "d06677611a35e29b08f76305d04bb25d9ffda2ffc986ce0b189c359e7daec2dc"
+    },
+    {
+      "path": "src/commands.js",
+      "sha256": "eb79610c2dea382cf236fb89197158dda4f9f7f2eded70bda506392fd9f3b775"
+    },
+    {
+      "path": "src/controls.js",
+      "sha256": "234d167e478ee94f996304e8782ba482856554e1a6847162bae583dabf5ff8dd"
+    },
+    {
+      "path": "src/device.js",
+      "sha256": "095fea6c006d9f7b23d390e3cf9b33d6851e5370b064170ccf1e04de72a2585b"
+    },
+    {
+      "path": "src/editor.js",
+      "sha256": "e6aa01f1a905fe7447d72fad85c88734c2bedd87eb938b90ede75a471849a698"
+    },
+    {
+      "path": "src/fx.js",
+      "sha256": "45c76963b09e1722e8f9f2f0a2aebc70f661fe137a9e1e75c07518f30c3ac5c9"
+    },
+    {
+      "path": "src/live.js",
+      "sha256": "ddfbadec4a96b952e2a014e69576cb7f09206d9d54a2ce7662505cb2dda5e8a6"
+    },
+    {
+      "path": "src/protocol.js",
+      "sha256": "040ee3f3a722504d083ddd78ca59c227ba59082ad0f7dadd9c828f6e74bf95df"
+    },
+    {
+      "path": "src/reply-pages.js",
+      "sha256": "d587d175382baea63a8fde706a8b62098429a3e0d17e9f403d88aa0e4163380f"
+    },
+    {
+      "path": "src/tuner.js",
+      "sha256": "eb043d49d65868972358f949c266634b17c05ce71b2e985394fe3633772b3ddb"
+    }
+  ]
+}

@@ -92,7 +92,7 @@ class PresetMachine(ListeningMachine):
    u.reg_write(UC_ARM_REG_R0,result);u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR));return
   if self.phase=='probe' and pc==0xae80:
    data,n,ch=[u.reg_read(r) for r in v.R[:3]]
-   if n==326:
+   if n==326 or v.plan['identity']=='NAMLNK13' and n<=56:
     self.messages.append((bytes(u.mem_read(data,n)),ch));u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR));return
   super().code(u,pc,size,unused)
  def service(self):self.call(0x57c0,[])
@@ -106,8 +106,18 @@ class PresetMachine(ListeningMachine):
   raw=bytearray(struct.pack('<IBBBB I HBB',0x3031504e,1,op,slot,0,nonce,len(body),0,0)+body)
   raw+=struct.pack('<I',zlib.crc32(raw));message=bytes.fromhex('f043587004024e5301')+pack(raw)+b'\xf7'
   replies=self.ingress([message],channel,start=2045);assert len(replies)==1
-  assert replies[0][0][:9]==message[:9] and replies[0][1]==channel
-  reply=unpack(replies[0][0][9:-1]);assert len(reply)==276 and reply[5]==op|128 and reply[6]==slot
+  wire=replies[0][0]
+  if wire[6:9]==b'NR\x01':
+   generation=wire[9:11];parts=wire[15:-1];total=wire[13]+128*wire[14]
+   assert wire[11]==0 and len(wire)<=56
+   for page in range(1,wire[12]):
+    request=bytes([240,67,88,112,4,2,78,82,1])+generation+bytes([page,247])
+    part=self.ingress([request],channel)[0][0]
+    assert part[9:11]==generation and part[11]==page and len(part)<=56
+    parts+=part[15:-1]
+   assert len(parts)==total;wire=b'\xf0'+parts+b'\xf7'
+  assert wire[:9]==message[:9] and replies[0][1]==channel
+  reply=unpack(wire[9:-1]);assert len(reply)==276 and reply[5]==op|128 and reply[6]==slot
   assert struct.unpack_from('<I',reply,272)[0]==zlib.crc32(reply[:272])
   return reply
 

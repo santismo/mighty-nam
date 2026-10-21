@@ -10,7 +10,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(() => debugDefaultTargetPlatformOverride = TargetPlatform.macOS);
   tearDown(() => debugDefaultTargetPlatformOverride = null);
-  for (final identity in ['NAMLNK10', 'NAMLNK12']) {
+  for (final identity in ['NAMLNK10', 'NAMLNK12', 'NAMLNK13']) {
     testWidgets('tuner transport gate and mute lifecycle: $identity',
         (t) async {
       final usb = UsbFixture()
@@ -27,8 +27,9 @@ void main() {
           return tuner.call(
               a['operation'] as int, a['page'] as int, a['nonce'] as int);
         }
-        if (c.method == 'readStockControls')
+        if (c.method == 'readStockControls') {
           return {'identity': identity, 'preset': usb.preset};
+        }
         if (c.method == 'setListening' && refusedMute) return usb.status();
         return usb.call(c);
       });
