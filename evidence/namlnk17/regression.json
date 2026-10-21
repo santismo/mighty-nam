@@ -1,0 +1,93 @@
+{
+  "status": "PASS_NAMLNK17_PLACEMENT_PCM_REGRESSION",
+  "elf_sha256": "73c0b7e82734f4457418cccf6b357152a296fb4c1b4360af84895b2c2acebe02",
+  "baseline14_exact_reference": false,
+  "baseline_identity": "NAMLNK16",
+  "baseline_exact_reference": true,
+  "unchanged_objects": [
+    "a2_lite.o",
+    "model_receiver.o",
+    "sysex_codec.o",
+    "listening.o",
+    "irq_timing.o",
+    "effect_profiler.o"
+  ],
+  "stock_vectors_and_IRQ_preserved": true,
+  "bypassed_fx_PCM": [
+    {
+      "case": "full-chain",
+      "blocks": 1350,
+      "bit_identical": true
+    },
+    {
+      "case": "reorder",
+      "blocks": 1350,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "blocks": 1350,
+      "bit_identical": true
+    }
+  ],
+  "full_chain_fx_pairs": [
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "timing_fault_mutes": true,
+  "full_chain_cut_eq_blocks": 1350,
+  "regions": [
+    {
+      "name": ".banktext",
+      "start": "0x20310000",
+      "end_exclusive": "0x20313990",
+      "bytes": 14736,
+      "load_address": "0x303a0000"
+    },
+    {
+      "name": ".retired_audio",
+      "start": "0x14c04",
+      "end_exclusive": "0x14ee0",
+      "bytes": 732
+    },
+    {
+      "name": ".text",
+      "start": "0x1a0a4",
+      "end_exclusive": "0x1b334",
+      "bytes": 4752
+    },
+    {
+      "name": ".ARM.exidx",
+      "start": "0x14ee0",
+      "end_exclusive": "0x14ef8",
+      "bytes": 24
+    },
+    {
+      "name": ".bss",
+      "start": "0x202e4020",
+      "end_exclusive": "0x2030ec60",
+      "bytes": 175168
+    }
+  ],
+  "real_time_performance_measured": false,
+  "device_access": false,
+  "audio_access": false
+}

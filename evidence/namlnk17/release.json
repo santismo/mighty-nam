@@ -1,0 +1,19 @@
+{
+  "schema": "nam-plug-release-1",
+  "target": "NUX-MP3",
+  "firmware": {
+    "identity": "NAMLNK17",
+    "sha256": "df20d3ae1f408266cf9d9094895933f4da6c2ca1810d589cc57502f24b945ac4",
+    "bytes": 14439215
+  },
+  "restore": {
+    "sha256": "95c704b6026cb26aceaae179039e994c261a93610b0c578f50634b39f4393dd6",
+    "bytes": 14439215
+  },
+  "loader": {
+    "vid": 38183,
+    "pid": 49495,
+    "identifier": "20220615"
+  },
+  "mode": "experimental-adc-filter-empty-at-install"
+}

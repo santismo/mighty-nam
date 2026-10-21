@@ -1,0 +1,26 @@
+{
+  "status": "PASS_NAMLNK17_STAGE_NEGATIVES",
+  "cases": [
+    {
+      "case": "changed-extra-codec-register",
+      "rejected_before_output": true,
+      "message": "Codec startup coverage"
+    },
+    {
+      "case": "wrong-controller-build",
+      "rejected_before_output": true,
+      "message": "Missing/mismatched controller"
+    },
+    {
+      "case": "nonidentical-pcm",
+      "rejected_before_output": true,
+      "message": "Sample-age or exact-output regression"
+    },
+    {
+      "case": "stale-host-source",
+      "rejected_before_output": true,
+      "message": "Cut EQ source mismatch"
+    }
+  ],
+  "device_access": false
+}

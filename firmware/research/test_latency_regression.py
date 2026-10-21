@@ -16,8 +16,8 @@ from test_preset_runtime import PresetMachine, build, preset_fixture, v
 p = argparse.ArgumentParser(description=__doc__)
 for name in ['payload', 'baseline_build', 'candidate_build', 'model', 'report']:
     p.add_argument(name, type=Path)
-p.add_argument('--baseline-identity', choices=['NAMLNK10', 'NAMLNK12', 'NAMLNK15'], default='NAMLNK12')
-p.add_argument('--candidate-identity', choices=['NAMLNK15', 'NAMLNK16'], default='NAMLNK15')
+p.add_argument('--baseline-identity', choices=['NAMLNK10', 'NAMLNK12', 'NAMLNK15', 'NAMLNK16'], default='NAMLNK12')
+p.add_argument('--candidate-identity', choices=['NAMLNK15', 'NAMLNK16', 'NAMLNK17'], default='NAMLNK15')
 a = p.parse_args()
 started = time.monotonic()
 digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()

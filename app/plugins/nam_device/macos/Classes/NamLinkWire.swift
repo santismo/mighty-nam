@@ -1,12 +1,24 @@
 import Foundation
 
+// Cached startup observations, not an electrical latency or part-ID test.
+enum NamCodecStatus {
+    static func decode(_ word: UInt32) -> [String:Any]? {
+        guard word >> 24 == 0xc1, (word >> 16) & 255 <= 15 else { return nil }
+        return ["raw":Int64(word), "verified":word == 0xc10f220a,
+                "flags":Int((word >> 16) & 15), "adc":Int((word >> 8) & 255), "dac":Int(word & 255)]
+    }
+    static func statusPage(index:Int, identity:String) -> UInt8 {
+        UInt8(identity == "NAMLNK17" && index == 26 ? 117 : index)
+    }
+}
+
 // Fixed RAM-model protocol only. No stock writes, firmware update or audio API.
 public enum NamLinkWire {
     static func supportsModels(_ identity: String) -> Bool {
         identity == "NAMLNK01" || supportsStockChain(identity)
     }
     static func supportsStockChain(_ identity: String) -> Bool {
-        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16"].contains(identity)
+        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17"].contains(identity)
     }
     static let prefix: [UInt8] = [0xf0,0x43,0x58,0x70,4,2,0x4e,0x4c,1]
     static func crc(_ bytes: ArraySlice<UInt8>) -> UInt32 {
@@ -60,7 +72,7 @@ public enum NamLinkWire {
 public enum NamOutputBuffer {
     static let choices = [8,16,32]
     static func command(identity: String, samples: Int) -> [UInt8]? {
-        guard ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16"].contains(identity), choices.contains(samples) else { return nil }
+        guard ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17"].contains(identity), choices.contains(samples) else { return nil }
         return [0xf0,0x43,0x58,0x70,4,2,0x4e,0x42,UInt8(samples),0xf7] +
             [0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,24,0xf7]
     }
@@ -74,7 +86,7 @@ public enum NamOutputBuffer {
 
 public enum NamListening {
     static func supports(_ identity: String) -> Bool {
-        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16"].contains(identity)
+        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17"].contains(identity)
     }
     static func arm(identity: String, enabled: Bool) -> [UInt8]? {
         guard supports(identity) else { return nil }
@@ -179,7 +191,7 @@ public enum NamStockWire {
         }
         func allowed(on identity: String) -> Bool {
             NamLinkWire.supportsModels(identity) &&
-                (["NAMLNK14","NAMLNK15", "NAMLNK16"].contains(identity) || (expected[4].map { ($0 & 63) <= 2 } ?? true)) &&
+                (["NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17"].contains(identity) || (expected[4].map { ($0 & 63) <= 2 } ?? true)) &&
                 ((namEnabled == nil && cabinetBypassed == nil) || NamLinkWire.supportsStockChain(identity))
         }
         func matches(_ preset: [UInt8], before: [UInt8]? = nil) -> Bool {

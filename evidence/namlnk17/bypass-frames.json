@@ -1,0 +1,201 @@
+{
+  "status": "PASS_OFFLINE_BYPASS_AND_FRAME_BOUNDARIES",
+  "identity": "NAMLNK17",
+  "elf_sha256": "73c0b7e82734f4457418cccf6b357152a296fb4c1b4360af84895b2c2acebe02",
+  "fixed_eight_frame_callbacks": [
+    {
+      "stage": 1,
+      "callback": "0x123bf",
+      "writes_past_four_frames": 8
+    },
+    {
+      "stage": 2,
+      "callback": "0x1262b",
+      "writes_past_four_frames": 8
+    },
+    {
+      "stage": 4,
+      "callback": "0x20310cfd",
+      "writes_past_four_frames": 8
+    },
+    {
+      "stage": 5,
+      "callback": "0x1f5ed",
+      "writes_past_four_frames": 8
+    },
+    {
+      "stage": 6,
+      "callback": "0x128bb",
+      "writes_past_four_frames": 8
+    },
+    {
+      "stage": 7,
+      "callback": "0x12c49",
+      "writes_past_four_frames": 8
+    },
+    {
+      "stage": 8,
+      "callback": "0x12eb3",
+      "writes_past_four_frames": 8
+    },
+    {
+      "stage": 9,
+      "callback": "0x13395",
+      "writes_past_four_frames": 8
+    }
+  ],
+  "bypass_history": [
+    {
+      "stage": 5,
+      "active_peak_difference": 0.018085017800331116,
+      "bypassed_seconds": 5,
+      "windows": [
+        {
+          "second": 1,
+          "input": "guitar-like",
+          "peak_residual": 0.0005055516958236694,
+          "rms_residual": 1.622748762672433e-05,
+          "exact_dry_blocks": 0
+        },
+        {
+          "second": 2,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        },
+        {
+          "second": 3,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        },
+        {
+          "second": 4,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        },
+        {
+          "second": 5,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        }
+      ],
+      "naive_sleep_wake_max_difference": 0.0,
+      "continuously_processed_wake_peak": 0.0,
+      "frozen_wake_peak": 0.0,
+      "sleep_after_200ms_wake_difference": 0.0,
+      "sleep_after_200ms_wake_peak": 0.0
+    },
+    {
+      "stage": 7,
+      "active_peak_difference": 0.09934436902403831,
+      "bypassed_seconds": 5,
+      "windows": [
+        {
+          "second": 1,
+          "input": "guitar-like",
+          "peak_residual": 0.07128124311566353,
+          "rms_residual": 0.02646983113514617,
+          "exact_dry_blocks": 0
+        },
+        {
+          "second": 2,
+          "input": "silence",
+          "peak_residual": 0.0021858718246221542,
+          "rms_residual": 0.0007046374944670161,
+          "exact_dry_blocks": 0
+        },
+        {
+          "second": 3,
+          "input": "silence",
+          "peak_residual": 6.712097092531621e-05,
+          "rms_residual": 1.7718140919969513e-05,
+          "exact_dry_blocks": 0
+        },
+        {
+          "second": 4,
+          "input": "silence",
+          "peak_residual": 2.1144721813470824e-06,
+          "rms_residual": 3.825672302504107e-07,
+          "exact_dry_blocks": 0
+        },
+        {
+          "second": 5,
+          "input": "silence",
+          "peak_residual": 1.4448067986450042e-07,
+          "rms_residual": 6.135464371107983e-08,
+          "exact_dry_blocks": 0
+        }
+      ],
+      "naive_sleep_wake_max_difference": 1.5729282054621763e-07,
+      "continuously_processed_wake_peak": 1.4436879780532763e-07,
+      "frozen_wake_peak": 1.443688546487465e-07,
+      "sleep_after_200ms_wake_difference": 0.07127680360285638,
+      "sleep_after_200ms_wake_peak": 0.0712767019867897
+    },
+    {
+      "stage": 8,
+      "active_peak_difference": 0.03767465241253376,
+      "bypassed_seconds": 5,
+      "windows": [
+        {
+          "second": 1,
+          "input": "guitar-like",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        },
+        {
+          "second": 2,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        },
+        {
+          "second": 3,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        },
+        {
+          "second": 4,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        },
+        {
+          "second": 5,
+          "input": "silence",
+          "peak_residual": 0.0,
+          "rms_residual": 0.0,
+          "exact_dry_blocks": 6000
+        }
+      ],
+      "naive_sleep_wake_max_difference": 0.0,
+      "continuously_processed_wake_peak": 0.0,
+      "frozen_wake_peak": 0.0,
+      "sleep_after_200ms_wake_difference": 0.0,
+      "sleep_after_200ms_wake_peak": 0.0
+    }
+  ],
+  "firmware_policy_changed": false,
+  "four_frame_firmware_created": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "seconds": 104.48555325390771,
+  "limits": [
+    "Isolated stock gate, digital delay and spring fixtures only; not every type or setting.",
+    "Skipping callbacks freezes delay/envelope state; output similarity on quiet input does not prove safe reactivation.",
+    "Four frames also requires changes to DMA halves, IRQ, conversion, custom DSP, tuner and protection.",
+    "No physical deadlines, true end-to-end latency, clicks or listening quality measured."
+  ]
+}

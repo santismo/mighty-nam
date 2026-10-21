@@ -32,7 +32,7 @@ class StockControlPlan {
   static int maximumType(String slot, String? identity) => ['fxa', 'fxb']
           .contains(slot)
       ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
-      : slot == 'eq' && ['NAMLNK14', 'NAMLNK15', 'NAMLNK16'].contains(identity)
+      : slot == 'eq' && ['NAMLNK14', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17'].contains(identity)
           ? 4
           : supportedTypes[slot]!;
   static const ranges = [

@@ -3,11 +3,11 @@ from pathlib import Path
 from test_preset_runtime import PresetMachine,build,v,preset_fixture
 p=argparse.ArgumentParser(description='NAMLNK15 memory, bypass PCM, full-chain FX and timing-fault regression; no device access.')
 for key in ['payload','baseline_build','candidate_build','model','output']:p.add_argument(key,type=Path)
-p.add_argument('--candidate-identity',choices=['NAMLNK15','NAMLNK16'],default='NAMLNK15')
+p.add_argument('--candidate-identity',choices=['NAMLNK15','NAMLNK16','NAMLNK17'],default='NAMLNK15')
 a=p.parse_args();base=a.baseline_build;candidate=a.candidate_build;stock=a.payload;model=a.model
 digest=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-baseline_revision=15 if a.candidate_identity=='NAMLNK16' else 14
-assert digest(base/'nam-link-offline.elf')=={14:'8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d',15:'53d00afbf6773638671c4e99d1af592ba9d7b0d4be8ea79f2dcff572e42d3e75'}[baseline_revision]
+baseline_revision=int(a.candidate_identity[-2:])-1
+assert digest(base/'nam-link-offline.elf')=={14:'8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d',15:'53d00afbf6773638671c4e99d1af592ba9d7b0d4be8ea79f2dcff572e42d3e75',16:'7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1'}[baseline_revision]
 objects=['a2_lite.o','model_receiver.o','sysex_codec.o','listening.o','irq_timing.o','effect_profiler.o']
 if a.candidate_identity=='NAMLNK16':objects.remove('a2_lite.o')
 for name in objects:assert (base/name).read_bytes()==(candidate/name).read_bytes(),name

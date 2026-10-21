@@ -24,7 +24,9 @@ p.add_argument('--fx-blocks',action='store_true',help='NAMLNK13 two independent 
 p.add_argument('--cut-eq',action='store_true',help='NAMLNK14 High/Low Cut EQ; requires --fx-blocks')
 p.add_argument('--responsive-controls',action='store_true',help='NAMLNK15 compact phone tuner, same-preset no-op and idle FX shortcut; requires --cut-eq')
 p.add_argument('--nam-pointer',action='store_true',help='NAMLNK16 non-fused NAM tap-address optimization; requires --responsive-controls and --m7-conv')
+p.add_argument('--adc-short-delay',action='store_true',help='NAMLNK17 startup-only ADC short-delay trial; requires --nam-pointer')
 a=p.parse_args()
+if a.adc_short_delay and not a.nam_pointer:p.error('--adc-short-delay requires --nam-pointer')
 if a.nam_pointer and not (a.responsive_controls and a.m7_conv):p.error('--nam-pointer requires --responsive-controls and --m7-conv')
 if a.responsive_controls and not a.cut_eq:p.error('--responsive-controls requires --cut-eq')
 if a.cut_eq and not a.fx_blocks:p.error('--cut-eq requires --fx-blocks')
@@ -84,6 +86,9 @@ if a.cut_eq:
  sources+=['target/link/cut_eq.cpp','target/link/cut_eq_runtime.cpp']
 if a.responsive_controls:flags+=['-DMPP_RESPONSIVE_CONTROLS']
 if a.nam_pointer:flags+=['-DMPP_M7_POINTER_TAPS']
+if a.adc_short_delay:
+ flags+=['-DMPP_ADC_SHORT_DELAY']
+ sources+=['target/link/codec_startup.cpp']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -96,6 +101,7 @@ subprocess.run([str(Path(ziglang.__path__[0])/'zig'),'cc','-target','thumb-frees
  '-nostdlib','-Wl,--gc-sections','-Wl,--build-id=none','-Wl,-e,mpp_stock_amp_init','-Wl,-T,'+str(ld),
  *(['-Wl,-u,mpp_fast_dispatch'] if a.fast_bypass else []),
  *(['-Wl,-u,mpp_link_irq','-Wl,-u,mpp_track_dwt_reset'] if a.irq_timing else []),
+ *(['-Wl,-u,mpp_codec_startup_write'] if a.adc_short_delay else []),
  *objects,'-o',str(elf)],check=True)
 with elf.open('rb') as f:
  e=ELFFile(f)
@@ -147,5 +153,7 @@ if a.responsive_controls:
  report['headers']={str(s.relative_to(root)):hashlib.sha256(s.read_bytes()).hexdigest() for s in sorted((root/'target').rglob('*.hpp'))}
 if a.nam_pointer:
  report.update(identity='NAMLNK16',nam_pointer_taps=True,codec_filters='Unchanged stock settings',physical_latency_improvement_verified=False)
+if a.adc_short_delay:
+ report.update(identity='NAMLNK17',codec_filters='Startup-only ADC short-delay sharp, register 0x0a=0x22; other 20 writes unchanged',codec_status_page=117,codec_identification='Inferred AK4619; not a part-ID read',physical_codec_readback_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

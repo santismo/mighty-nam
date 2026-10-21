@@ -1,0 +1,42 @@
+{
+  "status": "PASS_NAMLNK16_PREFLIGHT_FOR_NAMLNK17",
+  "recorded_at": "2026-10-21T18:00:20.974626+00:00",
+  "seven_saved_records_read": true,
+  "seven_extra_fx_records_read": true,
+  "cached_capture_payloads_matched_fresh_sha256_and_crc": true,
+  "capture_payloads_read_over_usb": false,
+  "restore_files_validated": true,
+  "original_settings_restored": true,
+  "final_output_muted": true,
+  "buffer_samples": 8,
+  "physical_latency_measured": false,
+  "host_audio_access": false,
+  "MacTeamsAudioChanged": false,
+  "firmware_writes": 0,
+  "preset_writes": 0,
+  "baseline_irq_cycles": {
+    "NAM-only": {
+      "snapshots": 24,
+      "min_cycles": 82009,
+      "median_cycles": 83911.0,
+      "max_cycles": 87653
+    },
+    "NAM-plus-Spring": {
+      "snapshots": 24,
+      "min_cycles": 82408,
+      "median_cycles": 83899.5,
+      "max_cycles": 86361
+    },
+    "NAM-after-bypassing-Spring": {
+      "snapshots": 24,
+      "min_cycles": 82025,
+      "median_cycles": 84138.0,
+      "max_cycles": 85975
+    }
+  },
+  "local_report_sha256": {
+    "preset-backup.json": "9af42de45fe147b834287e03e6e0180cec05a00bfcdda132c86dfd920a96369e",
+    "restore-validation.json": "5f2e51770fceca6fdfe37c5a4efa9cf2adfd546104ca4454ccc0745ad57f5c3d",
+    "baseline16.json": "a52bdf5c5385615780b2b21b4eed14a6b65979ddc04b008cdb4f2ba5ef9553e6"
+  }
+}

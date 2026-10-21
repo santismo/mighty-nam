@@ -1,0 +1,31 @@
+{
+  "status": "PASS_NAMLNK17_RESPONSIVE_ARM",
+  "elf_sha256": "73c0b7e82734f4457418cccf6b357152a296fb4c1b4360af84895b2c2acebe02",
+  "single_preset_no_reload": true,
+  "unsaved_settings_preserved": true,
+  "idle_fx_zero_dispatch": true,
+  "wake_and_fade_sleep": true,
+  "compact_tuner": [
+    {
+      "input": 82.4069,
+      "detected": 82.407
+    },
+    {
+      "input": 110,
+      "detected": 110.0
+    },
+    {
+      "input": 329.6276,
+      "detected": 329.628
+    },
+    {
+      "input": 0,
+      "detected": 0.0
+    }
+  ],
+  "one_42_byte_reply_per_request": true,
+  "stale_generation_and_muted_only": true,
+  "physical_latency_measured": false,
+  "device_access": false,
+  "audio_playback": false
+}

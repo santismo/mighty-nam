@@ -5,6 +5,9 @@
 #include "cut_eq.hpp"
 #endif
 #include "sysex_codec.hpp"
+#ifdef MPP_ADC_SHORT_DELAY
+extern "C" uint32_t mpp_codec_filter_page();
+#endif
 #ifdef MPP_FX_BLOCKS
 #include "fx_blocks.hpp"
 #include "reply_transport.hpp"
@@ -38,7 +41,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_M7_POINTER_TAPS)
+#if defined(MPP_ADC_SHORT_DELAY)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','7'};
+#elif defined(MPP_M7_POINTER_TAPS)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','6'};
 #elif defined(MPP_RESPONSIVE_CONTROLS)
@@ -416,6 +422,9 @@ extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned c
 #endif
 #ifdef MPP_EFFECT_PROFILER
   if(page>=26)error=mpp_profile_page(page,&value);
+#endif
+#ifdef MPP_ADC_SHORT_DELAY
+  if(page==117){value=mpp_codec_filter_page();error=0;}
 #endif
 #ifdef MPP_LISTENING
   if(page==23){value=mpp_listen_page();error=0;}
