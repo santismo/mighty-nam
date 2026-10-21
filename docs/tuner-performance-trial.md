@@ -1,6 +1,6 @@
 # NAMLNK12 tuner and performance trial
 
-The Mac controller 0.3.4 is installed on the development Mac. NAMLNK12 is prepared and offline-tested; physical installation and validation are pending. The repository remains private and GitHub Pages remains disabled. No new release installer is published; the local Applications app and ZIP contain 0.3.4.
+The Mac controller 0.3.4 is installed on the development Mac. NAMLNK12 is now installed on the development unit. Three bounded tuner snapshots passed before model loading; all seven current presets were then restored with exact 128-byte effects, capture hashes, names and buffers, and recalled/switched without processing faults. The repository remains private and GitHub Pages remains disabled. No new release installer is published; the local Applications app and ZIP contain 0.3.4.
 
 ## Using the tuner
 
@@ -25,7 +25,7 @@ The profiler defaults off. The existing output schedule, 48 kHz rate, 8/16/32 ou
 - Seven-preset save/recall, cold/warm restart, stock button branch, two-model reference accuracy, placement, 24 cache-preparation cases, 33 profiler PCM comparisons and 138 counter/ABI cases pass against the same final ELF.
 - NAMLNK10 rebuilds identically; output and storage objects, stock vectors and IRQ body are preserved. Incomplete or mismatched evidence is rejected by the packaging tool.
 
-Reports are in [evidence/namlnk12](../evidence/namlnk12). These are offline checks; physical tuner accuracy, timing and recovery for NAMLNK12 remain unverified.
+Reports are in [evidence/namlnk12](../evidence/namlnk12). Those reports describe offline checks. The separate [physical summary](../evidence/namlnk12/12-physical-summary.json) records the first tuner transport and seven-preset restore trial. The maximum observed guard value was 117 of 150 ticks; whole-IRQ maximum was 120,466 raw counter cycles, with valid telemetry. These are neither CPU percentages nor measured latency improvements. Real-guitar tuning, tuner capture with a loaded chain, power-off persistence, physical button cycling and recovery re-entry on NAMLNK12 remain to be checked.
 
 ## Build and hardware trial
 
@@ -36,3 +36,5 @@ Before installation, read the latest seven preset headers, verify matching local
 The `tools/namlnk12-trial` helper can validate a private restore plan without connecting, then restore empty slots with complete effect readback before each save. It refuses capture/header mismatches, existing different records and unverified effect state. Personal plans and captures stay local.
 
 Use the official NUX updater with headphones unplugged. Wait for explicit completion before power cycling. Confirm firmware identity, restore/recall all seven slots, test a quiet tuner capture, collect timing, and verify a normal restart and button cycle. The bootloader has not been fully backed up; stock recovery still depends on a reachable loader.
+
+The first restore attempt stopped before any preset save when stock amp parameters, patch level and tempo differed from the backup. A dedicated restore helper now restores only those documented fields while muted, verifies that other bytes did not change, then requires all 128 bytes to match before saving. Actual firmware simulation and the physical seven-slot restore both passed. This did not require another firmware update.

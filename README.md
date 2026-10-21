@@ -14,7 +14,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 - Provides a Mac editor with a movable signal chain, block bypass, and controls below the selected block.
 - Browses TONE3000 after sign-in; selecting a compatible capture makes it the active NAM capture. Favorites stay in your Mac library.
 - Retains the stock gate, compressor, drive, cabinet, EQ, modulation, delay, and reverb. Full amp-and-cab captures automatically bypass the separate cabinet block.
-- Adds a chromatic tuner in the Mac app with NAMLNK12, using dry-input snapshots over USB MIDI. Hardware tuner validation is pending.
+- Adds a chromatic tuner in the Mac app with NAMLNK12, using dry-input snapshots over USB MIDI. Quiet transport checks passed; real-guitar tuning checks remain.
 - Includes experimental seven-color onboard presets: capture, effects, order, settings, name, and output buffer per color.
 - Exposes 8 / 16 / 32-sample output staging at 48 kHz in the new firmware. This does not change the processing block or increase CPU capacity.
 
@@ -23,7 +23,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 | Component | State |
 | --- | --- |
 | Mac controller 0.3.2 | Handles large CoreMIDI replies and enables Listen for verified onboard captures even without a Mac-library copy. Universal build; Apple-silicon execution is not separately verified. |
-| Mac controller 0.3.4 / NAMLNK12 | App installed locally; firmware prepared for hardware trial. Adds a chromatic USB tuner and includes the NAMLNK11 preparation/profiling work. No measured latency reduction claimed. See [trial notes](docs/tuner-performance-trial.md). |
+| Mac controller 0.3.4 / NAMLNK12 | App and firmware installed locally; seven presets restored and switched successfully; quiet tuner transport passed. Adds a chromatic USB tuner and includes the NAMLNK11 preparation/profiling work. No measured latency reduction claimed. See [trial notes](docs/tuner-performance-trial.md). |
 | NAMLNK08 | Live NAM guitar listening and selected delay/reverb combinations worked on the development unit. |
 | NAMLNK10 | Physically installed. Seven captures/effects presets saved, recalled, and checked after a user power cycle. Buffer settings 8/16/32 recalled correctly. |
 | Seven presets | All seven saved records matched after restart; the user confirmed seven-color button cycling. Tested combinations had zero processing faults. This does not establish flash endurance, every effect combination, or NAMLNK10 recovery. |

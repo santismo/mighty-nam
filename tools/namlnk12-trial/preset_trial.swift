@@ -29,6 +29,7 @@ import Foundation
     guard let expected=p["expectedHeader"] as? [Int], expected.count==256,
      expected.allSatisfy({(0...255).contains($0)}) else {throw CheckError.message("Missing verified backup header")}
     let h=expected.map{UInt8($0)}
+    _=try RestoreSupplement.messages(Array(expected[128..<256]))
     try require(NamLinkWire.word(h,0)==0x3142504e && NamLinkWire.word(h,4)==1 && NamLinkWire.word(h,8)==UInt32(slot),"Invalid backup header")
     try require(NamLinkWire.word(h,16)==trace.slotCRC && h[32..<64].map{String(format:"%02x",$0)}.joined()==trace.slotSHA,"Capture must match verified backup CRC and SHA")
     try require([0,1].contains(p["bootPlay"] as? Int ?? -1) && p["namEnabled"] is Bool,"Missing playback state")
@@ -108,7 +109,8 @@ import Foundation
     let before=try request(1,slot)
     if before[15] & (1<<slot)==0 {
      try require(args[1]=="--save-empty","Cannot verify empty slot")
-     // Put inexpensive known controls in place before starting NAM processing.
+     record("restore-hidden-fields-slot-\(slot)",try RestoreSupplement.apply(midi,id,Array((p["expectedHeader"] as! [Int])[128..<256])))
+     // Put backed-up controls in place before loading the NAM capture.
      let plan=NamStockWire.Plan(controls:p["controls"] as! [[Int]],order:p["order"] as! [Int],namEnabled:p["namEnabled"] as? Bool)!
      let fxReply=try waitFor{midi.stock(id,plan:plan,completion:$0)};record("controls-slot-\(slot)",fxReply)
      try require(fxReply["controlsVerified"] as? Bool==true,"Effect controls unconfirmed")

@@ -1,0 +1,46 @@
+{
+  "status": "PASS_NAMLNK12_RESTORE_SUPPLEMENT_ARM",
+  "elf_sha256": "21a9e9a3ddeff174367e6a4ae642855b0ec343aebc82520df5a763ac5c160574",
+  "cases": [
+    {
+      "slot": 0,
+      "all128BytesMatch": true,
+      "supplementalMessages": 11
+    },
+    {
+      "slot": 1,
+      "all128BytesMatch": true,
+      "supplementalMessages": 11
+    },
+    {
+      "slot": 2,
+      "all128BytesMatch": true,
+      "supplementalMessages": 11
+    },
+    {
+      "slot": 3,
+      "all128BytesMatch": true,
+      "supplementalMessages": 11
+    },
+    {
+      "slot": 4,
+      "all128BytesMatch": true,
+      "supplementalMessages": 11
+    },
+    {
+      "slot": 5,
+      "all128BytesMatch": true,
+      "supplementalMessages": 11
+    },
+    {
+      "slot": 6,
+      "all128BytesMatch": true,
+      "supplementalMessages": 11
+    }
+  ],
+  "stockIngress": true,
+  "noPersistentWrites": true,
+  "noOutputEnable": true,
+  "onlyDocumentedPresetFieldsChanged": true,
+  "device_access": false
+}

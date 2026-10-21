@@ -4,8 +4,9 @@
 
 - Add a USB MIDI chromatic tuner with reference A adjustment, note/cents display, muted input capture and explicit listening resume. No host audio streams.
 - Include NAMLNK11 preparation and profiler changes; retain output scheduling, model math and the seven-color bank.
-- Pass 60 Mac tests plus firmware, parser, pitch and restart checks. App installed locally; physical firmware/tuner/timing checks pending.
+- Pass 60 Mac tests plus firmware, parser, pitch and restart checks. App and firmware installed locally. Seven presets restored/verified with no faults; quiet tuner transport passed. Real-guitar tuner accuracy and restart checks remain.
 - Back up all seven current presets and matching captures before installation; the update clears the onboard bank.
+- Restore stock amp metadata, patch level and tempo from verified backups before checking all 128 effect bytes and saving.
 - Keep repository private and Pages disabled; the older hosted installer is unchanged.
 
 ## 0.3.3 / NAMLNK11 — prepared performance trial
