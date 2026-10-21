@@ -1,8 +1,8 @@
 # Changelog
 
-## NAMLNK13 / Mac 0.3.5 — offline experimental trial
+## NAMLNK13 / Mac 0.3.5 / phone controller 0.4.1 — experimental trial
 
-Two independent movable FX slots, each with Pitch, Auto Wah, Chorus, Flanger, Phaser, Tremolo and Vibrato. Both persist with the seven onboard presets. Bluetooth preset/tuner replies are pulled in short numbered pages. Controller 0.4.0 exposes live controls; Mac 0.3.5 adds USB compatibility. No NAMLNK13 physical test or firmware installation is claimed. See [trial notes](docs/dual-fx-trial.md).
+Two independent movable FX slots, each with Pitch, Auto Wah, Chorus, Flanger, Phaser, Tremolo and Vibrato. Both persist with the seven onboard presets. Bluetooth preset/tuner replies are pulled in short numbered pages. Controller 0.4.1 exposes live controls and a second Enabled / Bypassed toggle below the chain; Mac 0.3.5 adds USB compatibility. NAMLNK13 is installed on the development plug. Bounded muted USB tests passed; one fresh Green Fender A2 Lite preset was saved and recalled. Bluefy status and current FX reads are confirmed by the user log. Listening quality, calibrated timing, phone save/tuner, power-cycle persistence and recovery on this build remain unverified. See [trial notes](docs/dual-fx-trial.md).
 
 ## 0.3.4 / NAMLNK12 — tuner and performance trial
 

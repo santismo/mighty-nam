@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-21",
+  "controllerVersion": "0.4.1",
+  "controllerCommit": "c49da50da65e6563d8bee79f476fd84882db2f0c",
+  "nodeTestsPassed": 47,
+  "browser": "Headless Chrome on macOS",
+  "transport": "Simulated Bluetooth only; no physical plug commands",
+  "firmwareFixtures": [
+    "NAMLNK12",
+    "NAMLNK13"
+  ],
+  "selectedBadgeVerifiedFor": [
+    "Compressor",
+    "NAM",
+    "FX A",
+    "FX B"
+  ],
+  "checks": [
+    "Badge and chain symbol send matching live bypass changes",
+    "Button state and labels stay synchronized",
+    "Space and Enter activate selected-block button",
+    "44px minimum tap height",
+    "No implicit preset save or output enable",
+    "Button disabled when offline, tuner open, or refresh needed",
+    "Existing save, recall, buffer, tuner, effect picker, stale-preset guards",
+    "No viewport overflow at 320, 390, 430, 768 and 1100 pixels",
+    "No browser errors or host audio/microphone access"
+  ],
+  "hardwareTestOfNewBadge": false
+}

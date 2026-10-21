@@ -1,6 +1,10 @@
 # Roadmap
 
-## Next goals
+## Next task — TONE3000 on the phone controller
+
+Bring TONE3000 sign-in, capture browsing and favorites, compatible A2 Lite selection, and verified model transfer to the GitHub Pages controller used in Bluefy. Selecting a capture should make it the active NAM model after a successful transfer; saving it into a colored onboard preset remains explicit. Investigate browser authentication and bounded Bluetooth transfer before promising direct-to-plug loading. Requested as the next task, ahead of the deferred Low Cut / High Cut EQ; not part of the current bypass-button change.
+
+## Further goals
 
 ### Standalone looper
 
@@ -30,3 +34,7 @@ First milestone: validate discovery, authentication, a bounded status/control ex
 - A guided updater only after its recovery contract is demonstrated.
 
 Roadmap entries describe intent, not existing capability. Contributions should include test evidence and distinguish hardware observations from simulation.
+
+## Next requested effect — deferred
+
+Add a simple Low Cut / High Cut EQ option with independent cutoff controls. Either filter can be disabled, or both can run together in the same EQ block. Requested after the NAMLNK13 installation; do not fold it into the current hardware trial.

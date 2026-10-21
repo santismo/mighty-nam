@@ -1,0 +1,254 @@
+{
+  "status": "PASS_NAMLNK13_INITIAL_USB_AND_MUTED_EFFECTS_TRIAL",
+  "time": "2026-10-21T13:28:31.105817+00:00",
+  "identity": "NAMLNK13",
+  "candidate_sha256": "dc36c9c3e87fc0148d370d3084434603a02099856074b0f911abc2d793d761ed",
+  "userWaivedPresetBackup": true,
+  "initialEmptyBankVerified": true,
+  "unsupportedDefaultEqType": 3,
+  "unsupportedDefaultEqReplacedWithType": 1,
+  "sevenFxTypesTested": true,
+  "dualFxPairs": [
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7,
+      2
+    ]
+  ],
+  "customFxOrderChangesVerified": true,
+  "stockChainWithPitchAndAutoWah": true,
+  "stockCabinetBypassedForFullCapture": true,
+  "knownCapture": "Fender A2 Lite",
+  "freshGreenPresetSavedAndRecalled": true,
+  "freshGreenBootPlay": false,
+  "finalFxBypassed": true,
+  "finalStockEffectsBypassed": true,
+  "outputBufferSamples": 8,
+  "noOutputEnableCommands": true,
+  "MacTeamsAudioChanged": false,
+  "audioStreamsOpened": 0,
+  "modelCRC": 1854512385,
+  "samples": [
+    {
+      "stage": "initial",
+      "faults": 0,
+      "modelCrc": 0,
+      "running": 0,
+      "maximumNamTimerTicks": 0,
+      "maximumIrqCycles": 1346,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "explicit-mute",
+      "faults": 0,
+      "modelCrc": 0,
+      "running": 0,
+      "maximumNamTimerTicks": 0,
+      "maximumIrqCycles": 1346,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "buffer-8",
+      "faults": 0,
+      "modelCrc": 0,
+      "running": 0,
+      "maximumNamTimerTicks": 0,
+      "maximumIrqCycles": 1346,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "NAM-baseline",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 81,
+      "maximumIrqCycles": 84190,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "FX-A-mode-1",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 93,
+      "maximumIrqCycles": 95973,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "FX-A-mode-2",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 93,
+      "maximumIrqCycles": 95973,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "FX-A-mode-3",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 93,
+      "maximumIrqCycles": 95973,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "FX-A-mode-4",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 93,
+      "maximumIrqCycles": 95973,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "FX-A-mode-5",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 93,
+      "maximumIrqCycles": 95973,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "FX-A-mode-6",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 93,
+      "maximumIrqCycles": 95973,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "FX-A-mode-7",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 93,
+      "maximumIrqCycles": 95973,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "dual-FX-[1, 2]-reorder-0",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 95,
+      "maximumIrqCycles": 98688,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "dual-FX-[1, 1]-reorder-1",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 106,
+      "maximumIrqCycles": 109055,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "dual-FX-[3, 4]-reorder-2",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 106,
+      "maximumIrqCycles": 109055,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "dual-FX-[5, 6]-reorder-3",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 106,
+      "maximumIrqCycles": 109055,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "dual-FX-[7, 2]-reorder-4",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 106,
+      "maximumIrqCycles": 109055,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "NAM-stock-effects-pitch-wah",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 127,
+      "maximumIrqCycles": 130598,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "dry-baseline-restored",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 127,
+      "maximumIrqCycles": 130598,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    },
+    {
+      "stage": "final-green-muted",
+      "faults": 0,
+      "modelCrc": 1854512385,
+      "running": 1,
+      "maximumNamTimerTicks": 127,
+      "maximumIrqCycles": 130598,
+      "rejectedIrqSamples": 0,
+      "muted": true
+    }
+  ],
+  "listeningQualityTested": false,
+  "realGuitarInputTested": false,
+  "BluetoothPagedPresetAndTunerVerified": false,
+  "normalRestartAfterSaveTested": false,
+  "recoveryModeAfter13Verified": false,
+  "calibratedFullAudioDeadlineProven": false,
+  "limitations": [
+    "Tests ran with headphone output muted, without a controlled played-guitar signal.",
+    "Maximum whole-IRQ counter readings are raw cycles; no calibrated end-to-end deadline claim.",
+    "After normalizing the unsupported factory EQ type, the user confirmed Bluefy Ready with the Green preset and both FX blocks visible. Phone edit/save, paged tuner and power-cycle checks are still pending.",
+    "No full bootloader backup or general recovery guarantee."
+  ],
+  "userReportedNormalRestart": true,
+  "installedIdentityVerified": true,
+  "userConfirmedBluefyReadyAndBlocksVisible": true,
+  "BluetoothCurrentStatusAndFxReadVerified": true
+}

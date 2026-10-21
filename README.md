@@ -27,7 +27,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 | NAMLNK08 | Live NAM guitar listening and selected delay/reverb combinations worked on the development unit. |
 | NAMLNK10 | Physically installed. Seven captures/effects presets saved, recalled, and checked after a user power cycle. Buffer settings 8/16/32 recalled correctly. |
 | Seven presets | All seven saved records matched after restart; the user confirmed seven-color button cycling. Tested combinations had zero processing faults. This does not establish flash endurance, every effect combination, or NAMLNK10 recovery. |
-| Looper / phone control | Next goals, not shipping features. iPhone is the first phone target. |
+| Phone controller | GitHub Pages / Bluefy controller supports live effects and FX A/B. Initial NAMLNK13 connection and reads confirmed. TONE3000 on the phone is the next task; the looper remains a later goal. |
 
 This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
 
@@ -68,4 +68,4 @@ TONE3000 captures have their own creator licenses. Your account/session, persona
 
 [MIT © 2026 santismo](LICENSE) covers original NAM Plug contributions. [Third-party notices](THIRD_PARTY_NOTICES.md) preserve Mightier Amp, NeuralAmpModelerCore, Eigen, nlohmann/json, musl, and dependency licenses. NUX, Neural Amp Modeler, and TONE3000 identify interoperability targets; this is an independent project.
 
-NAMLNK13 is an **offline-tested experimental candidate** adding two movable FX blocks and short Bluetooth reply pages. It has not been installed or validated on hardware. See [trial notes](docs/dual-fx-trial.md). The public [controller 0.4.0](https://santismo.github.io/nam-plug-controller/?v=0.4.0) supports it and retains NAMLNK12 fallback behavior.
+NAMLNK13 is **installed for an experimental trial**, adding two movable FX blocks and short Bluetooth reply pages. Initial muted USB runs passed, and the user confirmed Bluefy reaches Ready with both FX blocks visible. Listening quality, calibrated deadlines and phone save/tuner checks remain outstanding. See [trial notes](docs/dual-fx-trial.md). The public [controller 0.4.1](https://santismo.github.io/nam-plug-controller/?v=0.4.1) adds a second enable/bypass control in the selected-block header and retains NAMLNK12 fallback behavior. TONE3000 on that phone controller is the next requested task, ahead of the deferred high/low-cut EQ.
