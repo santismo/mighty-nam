@@ -6,7 +6,7 @@ public enum NamLinkWire {
         identity == "NAMLNK01" || supportsStockChain(identity)
     }
     static func supportsStockChain(_ identity: String) -> Bool {
-        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11"].contains(identity)
+        ["NAMLNK02", "NAMLNK03", "NAMLNK04", "NAMLNK05", "NAMLNK06", "NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12"].contains(identity)
     }
     static let prefix: [UInt8] = [0xf0,0x43,0x58,0x70,4,2,0x4e,0x4c,1]
     static func crc(_ bytes: ArraySlice<UInt8>) -> UInt32 {
@@ -60,7 +60,7 @@ public enum NamLinkWire {
 public enum NamOutputBuffer {
     static let choices = [8,16,32]
     static func command(identity: String, samples: Int) -> [UInt8]? {
-        guard ["NAMLNK09","NAMLNK10","NAMLNK11"].contains(identity), choices.contains(samples) else { return nil }
+        guard ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12"].contains(identity), choices.contains(samples) else { return nil }
         return [0xf0,0x43,0x58,0x70,4,2,0x4e,0x42,UInt8(samples),0xf7] +
             [0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,24,0xf7]
     }
@@ -74,7 +74,7 @@ public enum NamOutputBuffer {
 
 public enum NamListening {
     static func supports(_ identity: String) -> Bool {
-        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11"].contains(identity)
+        ["NAMLNK07", "NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12"].contains(identity)
     }
     static func arm(identity: String, enabled: Bool) -> [UInt8]? {
         guard supports(identity) else { return nil }
@@ -232,6 +232,33 @@ public enum NamPresetWire {
         }
         guard valid(raw),raw.count == 276,raw[5] == (request[5] | 128),raw[6] == request[6],
               raw[8..<12] == request[8..<12],(raw[14]<7 || raw[14]==255),raw[15]<128 else {return nil}
+        return raw
+    }
+}
+
+// NAMLNK12 only. Bounded dry-input snapshots over MIDI, never a host audio stream.
+public enum NamTunerWire {
+    static let prefix:[UInt8] = [0xf0,0x43,0x58,0x70,4,2,0x4e,0x55,1]
+    static func request(operation:Int,page:Int,nonce:Int)->[UInt8]? {
+        guard (0...2).contains(operation),(0...15).contains(page),(1...16383).contains(nonce),
+              operation == 2 || page == 0 else {return nil}
+        return prefix+[UInt8(operation),UInt8(page),UInt8(nonce&127),UInt8(nonce>>7),0xf7]
+    }
+    static func reply(_ wire:[UInt8],to request:[UInt8])->[UInt8]? {
+        guard request.count==14,Array(request.prefix(9))==prefix,request.last==247,
+              Self.request(operation:Int(request[9]),page:Int(request[10]),nonce:Int(request[11])+(Int(request[12])<<7))==request,
+              wire.count==330,Array(wire.prefix(9))==prefix,wire.last==247,
+              wire[9..<329].allSatisfy({$0<128}) else {return nil}
+        var raw:[UInt8]=[]
+        for start in stride(from:9,to:329,by:8) {
+            for i in 1...7 {raw.append(wire[start+i] | (((wire[start]>>(i-1))&1)<<7))}
+        }
+        guard raw.count==280,NamLinkWire.word(raw,0)==0x31554e4d,raw[4]==1,
+              raw[5]==request[9]|128,raw[6]==request[10],[0,1,3].contains(raw[7]),
+              NamLinkWire.word(raw,8)==UInt32(request[11])+(UInt32(request[12])<<7),
+              Int(raw[16])+256*Int(raw[17])==12000,Int(raw[18])+256*Int(raw[19])<=2048,
+              NamLinkWire.word(raw,276)==NamLinkWire.crc(raw[0..<276]) else {return nil}
+        if request[9]==2 && raw[7]==0 && Int(raw[18])+256*Int(raw[19]) != 2048 {return nil}
         return raw
     }
 }

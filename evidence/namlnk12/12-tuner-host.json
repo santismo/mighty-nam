@@ -1,0 +1,40 @@
+{
+  "status": "PASS_NAMLNK12_TUNER_HOST",
+  "elf_sha256": "21a9e9a3ddeff174367e6a4ae642855b0ec343aebc82520df5a763ac5c160574",
+  "sanitizer_capture_cases": 1039,
+  "native_wire_cases": 921,
+  "pitch_cases": 84,
+  "pitch_error_bound_cents": 2,
+  "frequencies_hz": [
+    41.2034,
+    55,
+    61.7354,
+    73.4162,
+    82.4069,
+    110,
+    146.8324,
+    196,
+    246.9417,
+    329.6276,
+    440,
+    659.2551,
+    880,
+    1318.5102
+  ],
+  "detuning_cents": [
+    -23,
+    0,
+    19
+  ],
+  "harmonic_amplitudes": [
+    0,
+    0.5
+  ],
+  "noise_and_decay_included": true,
+  "mute_and_close_lifecycle_checked": true,
+  "older_firmware_rejects_without_commands": true,
+  "silence_noise_and_DC_rejected": true,
+  "corrupt_or_mixed_capture_rejected": true,
+  "no_audio_streams": true,
+  "physical_guitar_accuracy_verified": false
+}

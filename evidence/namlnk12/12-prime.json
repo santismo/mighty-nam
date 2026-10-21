@@ -1,0 +1,227 @@
+{
+  "status": "PASS_NAMLNK12_PRIME_CACHE_COVERAGE",
+  "elf_sha256": "21a9e9a3ddeff174367e6a4ae642855b0ec343aebc82520df5a763ac5c160574",
+  "cases": [
+    {
+      "build": "baseline10",
+      "case": 0,
+      "model_reads": 5687,
+      "instructions": 27215,
+      "cache_lines": 602,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 1,
+      "model_reads": 5687,
+      "instructions": 27192,
+      "cache_lines": 602,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 2,
+      "model_reads": 5687,
+      "instructions": 27191,
+      "cache_lines": 609,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 3,
+      "model_reads": 5687,
+      "instructions": 27180,
+      "cache_lines": 606,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 4,
+      "model_reads": 5687,
+      "instructions": 27188,
+      "cache_lines": 607,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 5,
+      "model_reads": 5687,
+      "instructions": 27201,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 6,
+      "model_reads": 5687,
+      "instructions": 27174,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 7,
+      "model_reads": 5687,
+      "instructions": 27176,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 8,
+      "model_reads": 5687,
+      "instructions": 27181,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 9,
+      "model_reads": 5687,
+      "instructions": 27185,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 10,
+      "model_reads": 5687,
+      "instructions": 27183,
+      "cache_lines": 606,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "baseline10",
+      "case": 11,
+      "model_reads": 5687,
+      "instructions": 27187,
+      "cache_lines": 607,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 0,
+      "model_reads": 916,
+      "instructions": 8785,
+      "cache_lines": 602,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 1,
+      "model_reads": 932,
+      "instructions": 8851,
+      "cache_lines": 602,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 2,
+      "model_reads": 923,
+      "instructions": 8822,
+      "cache_lines": 609,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 3,
+      "model_reads": 933,
+      "instructions": 8870,
+      "cache_lines": 606,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 4,
+      "model_reads": 921,
+      "instructions": 8811,
+      "cache_lines": 607,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 5,
+      "model_reads": 921,
+      "instructions": 8828,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 6,
+      "model_reads": 923,
+      "instructions": 8821,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 7,
+      "model_reads": 919,
+      "instructions": 8809,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 8,
+      "model_reads": 925,
+      "instructions": 8835,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 9,
+      "model_reads": 923,
+      "instructions": 8818,
+      "cache_lines": 604,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 10,
+      "model_reads": 918,
+      "instructions": 8803,
+      "cache_lines": 606,
+      "coverage": true,
+      "state_unchanged": true
+    },
+    {
+      "build": "candidate",
+      "case": 11,
+      "model_reads": 924,
+      "instructions": 8831,
+      "cache_lines": 607,
+      "coverage": true,
+      "state_unchanged": true
+    }
+  ],
+  "model_read_reduction_min": 0.8359416212414278,
+  "instruction_reduction_min": 0.6736571008094188,
+  "physical_timing_measured": false,
+  "device_access": false,
+  "audio_access": false
+}

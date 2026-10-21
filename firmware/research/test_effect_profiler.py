@@ -63,5 +63,5 @@ r=struct.unpack('<8I',a.u.mem_read(stats,32));assert r[0:3]==(1,0,1) and r[7]&1
 a.put(v.sym['mpp_profile_sequence'],1);assert a.page(26)==(2,0) and a.page(27)==(3,0)
 a.put(v.sym['mpp_profile_sequence'],2)
 a.restart();assert snapshot(a)==[0]*90,'Warm restart failed to clear diagnostics'
-report=dict(status='PASS_NAMLNK11_EFFECT_PROFILER',elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),cases=rows,default_disabled=True,invalid_commands_ignored=True,IRQ_commands_rejected=True,disabled_counts_frozen=True,snapshot_coherent_and_frozen=True,odd_sequence_rejected=True,counter_disabled_rejected=True,warm_restart_clears=True,physical_cycles_measured=False,device_access=False,audio_access=False)
+report=dict(status='PASS_'+v.plan['identity']+'_EFFECT_PROFILER',elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),cases=rows,default_disabled=True,invalid_commands_ignored=True,IRQ_commands_rejected=True,disabled_counts_frozen=True,snapshot_coherent_and_frozen=True,odd_sequence_rejected=True,counter_disabled_rejected=True,warm_restart_clears=True,physical_cycles_measured=False,device_access=False,audio_access=False)
 args.output.write_text(json.dumps(report,indent=2)+'\n');print(report['status'])

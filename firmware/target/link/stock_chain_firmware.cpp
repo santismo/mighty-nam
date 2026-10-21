@@ -2,6 +2,11 @@
 // NAMLNK07 adds explicitly armed listening. No flash or reset commands.
 #include "model_receiver.hpp"
 #include "sysex_codec.hpp"
+#ifdef MPP_TUNER
+extern "C" void mpp_tuner_init();
+extern "C" void mpp_tuner_feed(const int32_t*);
+extern "C" void mpp_tuner_query(const uint8_t*,unsigned,unsigned);
+#endif
 #ifdef MPP_PRESET_BANK
 #include "preset_runtime.hpp"
 #define BANK_TEXT __attribute__((section(".banktext")))
@@ -26,7 +31,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_EFFECT_PROFILER)
+#if defined(MPP_TUNER)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','2'};
+#elif defined(MPP_EFFECT_PROFILER)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','1'};
 #elif defined(MPP_PRESET_BANK)
@@ -192,6 +200,9 @@ extern "C" void mpp_stock_amp_init(){
  *(volatile uint32_t*)0xe000ef50=0;
  __asm__ volatile("dsb\nisb":::"memory");
  mpp_bank_init();
+#ifdef MPP_TUNER
+ mpp_tuner_init();
+#endif
 #endif
  mpp_hybrid_ready=0;
  volatile uint8_t* p=(volatile uint8_t*)&mpp_link;
@@ -239,6 +250,9 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
   ++mpp_link.faults;mpp_link.running=0;return;
  }
  ((void(*)(void))0x15639)();
+#ifdef MPP_TUNER
+ mpp_tuner_feed(rx);
+#endif
  for(unsigned i=0;i<32;++i)tx[i]=0;
  ++mpp_link.callbacks;
  barrier();
@@ -311,6 +325,9 @@ extern "C" BANK_TEXT void mpp_probe_version(const uint8_t* p,unsigned n,unsigned
 extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned channel){
  if(n<9||n>329||channel>1||p[0]!=0xf0||p[1]!=0x43||p[2]!=0x58||
     p[3]!=0x70||p[4]!=4||p[5]!=2||p[6]!='N'||p[n]!=0xf7)return;
+#ifdef MPP_TUNER
+ if(p[7]=='U'){mpp_tuner_query(p,n,channel);return;}
+#endif
 #ifdef MPP_EFFECT_PROFILER
  if(p[7]=='T'&&n==9){
   if(!(rd(0xe000ed04)&511))mpp_profile_control(p[8]);

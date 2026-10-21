@@ -116,6 +116,21 @@ public final class NamDevicePlugin: NSObject, FlutterPlugin {
                         result(FlutterError(code:"connection",message:String(describing:error),details:nil))
                     }
                 }
+            case "tunerFrame":
+                guard let args=call.arguments as? [String:Any],let id=args["source"] as? Int,
+                      let op=args["operation"] as? Int,let page=args["page"] as? Int,let nonce=args["nonce"] as? Int else {
+                    result(FlutterError(code:"arguments",message:"Invalid tuner request",details:nil));return
+                }
+                midi.tuner(id,operation:op,page:page,nonce:nonce) { value in
+                    switch value {
+                    case .success(let data):
+                        guard let raw=data["frame"] as? [UInt8] else {
+                            result(FlutterError(code:"protocol",message:"Missing tuner reply",details:nil));return
+                        }
+                        result(FlutterStandardTypedData(bytes:Data(raw)))
+                    case .failure(let error):result(FlutterError(code:"connection",message:String(describing:error),details:nil))
+                    }
+                }
             case "disconnect": midi.disconnect(); result(nil)
             case "bluetooth":
                 result(FlutterError(code:"bluetooth",message:"Pair Bluetooth MIDI in Audio MIDI Setup, then refresh. USB is ready directly.",details:nil))

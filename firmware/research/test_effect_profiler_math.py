@@ -2,6 +2,7 @@
 """Execute NAMLNK11 DWT math, command and snapshot bounds with synthetic counters."""
 import argparse,hashlib,json,random,struct
 from pathlib import Path
+from link_image import elf_identity
 from elftools.elf.elffile import ELFFile
 from unicorn import *
 from unicorn.arm_const import *
@@ -73,5 +74,5 @@ for interruptions in [1,3]:
  result=call(sym['mpp_profile_page'],[26,output]);u.hook_del(h)
  assert result==(0 if interruptions==1 else 2) and n[0]==interruptions,(interruptions,result,n,get(SEQ))
  if result:assert call(sym['mpp_profile_page'],[27,output])==3
-report=dict(status='PASS_NAMLNK11_PROFILER_COUNTER_ABI',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),counter_cases=len(rows),callees_and_stack_preserved=True,no_counter_writes=True,wrap_reset_disabled_saturation_checked=True,snapshot_preemption_retry_and_busy_checked=True,device_access=False,audio_access=False)
+report=dict(status='PASS_'+elf_identity(a.elf)+'_PROFILER_COUNTER_ABI',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),counter_cases=len(rows),callees_and_stack_preserved=True,no_counter_writes=True,wrap_reset_disabled_saturation_checked=True,snapshot_preemption_retry_and_busy_checked=True,device_access=False,audio_access=False)
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(report)

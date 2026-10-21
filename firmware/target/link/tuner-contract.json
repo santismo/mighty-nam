@@ -1,0 +1,50 @@
+{
+  "schema": "nam-plug-tuner-1",
+  "identity": "NAMLNK12",
+  "transport": "USB MIDI SysEx; no host audio device",
+  "default": "off",
+  "sample_rate_hz": 12000,
+  "sample_count": 2048,
+  "input": "Dry guitar ADC, before NAM/effects. Average groups of four 48 kHz Q31 input samples after shifting to Q15; two samples per audio callback. Playback sample rate remains 48 kHz.",
+  "capture_duration_ms": 170.66666666666666,
+  "capture_behavior": "Explicit muted-only start. Stops automatically at 2048 samples; completed snapshot immutable until next start. Stop/reset clears count; restart defaults off. Enabling plug listening during collection cancels it.",
+  "request": [
+    240,
+    67,
+    88,
+    112,
+    4,
+    2,
+    78,
+    85,
+    1,
+    "operation",
+    "page",
+    "nonce low 7",
+    "nonce high 7",
+    247
+  ],
+  "operations": {
+    "0": "stop, page must be 0",
+    "1": "start a new capture, page must be 0",
+    "2": "read page 0..15"
+  },
+  "nonce": "1..16383 echoed; generation must match across pages",
+  "reply": "prefix F0 43 58 70 04 02 4E 55 01, pack7(280 raw bytes), F7; exactly330 bytes",
+  "raw_layout": {
+    "0": "uint32 LE magic0x31554e4d",
+    "4": "version1",
+    "5": "operation|128",
+    "6": "page",
+    "7": "status0 success,1 capture incomplete,3 cannot start while listening",
+    "8": "uint32 nonce",
+    "12": "uint32 capture generation",
+    "16": "uint16 rate12000",
+    "18": "uint16 sample count0..2048",
+    "20": "128 signed int16 LE samples for ready read; otherwise zero",
+    "276": "CRC32 of preceding276 bytes"
+  },
+  "mutation_scope": "Private RAM capture only; no preset/model/flash/clock/reset/output-enable writes",
+  "app": "Chromatic YIN with longer-period interpolation, A430..450Hz reference, silence/noise rejection. Tune mutes the plug; closing leaves it muted for an explicit Listen on plug click.",
+  "limits": "Offline synthetic pitch/ARM tests do not establish real-guitar accuracy or hardware timing. Boxcar decimation is not a general recording-quality anti-alias filter."
+}

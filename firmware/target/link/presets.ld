@@ -13,6 +13,7 @@ SECTIONS {
   *preset_bank.o(.text* .rodata*)
   *preset_runtime.o(.text* .rodata*)
   *effect_profiler.o(.text* .rodata*)
+  *tuner.o(.text* .rodata*)
   . = ALIGN(4); __bank_end = .;
  } > BANKCODE
  __bank_load = LOADADDR(.banktext);

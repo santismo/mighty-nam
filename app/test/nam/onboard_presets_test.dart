@@ -207,7 +207,7 @@ void main() {
     expect(home.onboard.dirty[slot], false, reason: home.status);
   }
 
-  for (final identity in ['NAMLNK10', 'NAMLNK11']) {
+  for (final identity in ['NAMLNK10', 'NAMLNK11', 'NAMLNK12']) {
     testWidgets(
         '$identity: save colored captures, button recall, reconnect and app restart',
         (t) async {

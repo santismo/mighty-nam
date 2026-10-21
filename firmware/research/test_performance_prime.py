@@ -1,5 +1,6 @@
 import sys,json,hashlib,struct,random,argparse
 from pathlib import Path
+from link_image import elf_identity
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from test_preset_runtime import PresetMachine,build,v
 from unicorn import UC_HOOK_MEM_READ,UC_HOOK_MEM_WRITE,UC_HOOK_CODE
@@ -9,7 +10,7 @@ a=p.parse_args();payload=a.payload;modelpath=a.model
 kernels=[6]*14+[15,15]+[6]*7
 dilations=[1,3,7,17,41,101,239,1,3,7,17,41,101,239,1,13,1,3,7,17,41,101,239]
 rows=[]
-for name,elf in [('baseline10',a.baseline),('candidate11',a.candidate)]:
+for name,elf in [('baseline10',a.baseline),('candidate',a.candidate)]:
  v.configure(payload,True,candidate_bundle=build(payload.read_bytes(),elf));v.elf_path=elf
  m=PresetMachine(path=modelpath);entry=v.sym['_ZNK3mpp6A2Lite17prime_working_setEv'];model=v.sym['_ZL5model']
  for case in range(12):
@@ -39,5 +40,5 @@ for name,elf in [('baseline10',a.baseline),('candidate11',a.candidate)]:
  print(name,rows[-1],flush=True)
 old=rows[:12];new=rows[12:]
 assert all(n['model_reads']<o['model_reads']*.3 and n['instructions']<o['instructions'] for o,n in zip(old,new))
-r=dict(status='PASS_NAMLNK11_PRIME_CACHE_COVERAGE',elf_sha256=hashlib.sha256(a.candidate.read_bytes()).hexdigest(),cases=rows,model_read_reduction_min=1-max(n['model_reads']/o['model_reads'] for o,n in zip(old,new)),instruction_reduction_min=1-max(n['instructions']/o['instructions'] for o,n in zip(old,new)),physical_timing_measured=False,device_access=False,audio_access=False)
+r=dict(status='PASS_'+elf_identity(a.candidate)+'_PRIME_CACHE_COVERAGE',elf_sha256=hashlib.sha256(a.candidate.read_bytes()).hexdigest(),cases=rows,model_read_reduction_min=1-max(n['model_reads']/o['model_reads'] for o,n in zip(old,new)),instruction_reduction_min=1-max(n['instructions']/o['instructions'] for o,n in zip(old,new)),physical_timing_measured=False,device_access=False,audio_access=False)
 a.output.write_text(json.dumps(r,indent=2)+'\n');print(r['status'],r['model_read_reduction_min'],r['instruction_reduction_min'])

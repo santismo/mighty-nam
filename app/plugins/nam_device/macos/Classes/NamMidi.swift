@@ -13,6 +13,7 @@ public final class NamMidi {
     private var version = ""
     private var values: [UInt32] = []
     private var page = -1
+    private var pendingTuner: [UInt8]?
     private var pendingPreset: [UInt8]?
     private var pendingModel: [UInt8]?
     private var pendingStock: NamStockWire.Plan?
@@ -92,6 +93,12 @@ public final class NamMidi {
         guard NamPresetWire.request(request) != nil else { completion(.failure(Failure.message("Invalid preset request"))); return }
         start(id, model:nil, preset:request, completion:completion)
     }
+    public func tuner(_ id: Int, operation: Int, page: Int, nonce: Int, completion: @escaping (Result<[String:Any],Error>)->Void) {
+        guard let request = NamTunerWire.request(operation:operation,page:page,nonce:nonce) else {
+            completion(.failure(Failure.message("Invalid tuner request"))); return
+        }
+        start(id, model:nil, tuner:request, completion:completion)
+    }
     public func inspect(_ id: Int, completion: @escaping (Result<[String:Any],Error>)->Void) {
         start(id, model: nil, completion: completion)
     }
@@ -105,7 +112,7 @@ public final class NamMidi {
         guard NamOutputBuffer.choices.contains(samples) else { completion(.failure(Failure.message("Unsupported output buffer"))); return }
         start(id,model:nil,outputBuffer:samples,completion:completion)
     }
-    private func start(_ id: Int, model: [UInt8]?, preset: [UInt8]? = nil, stock: NamStockWire.Plan? = nil, readStock: Bool = false, listen: Bool? = nil, outputBuffer: Int? = nil, completion: @escaping (Result<[String:Any],Error>)->Void) {
+    private func start(_ id: Int, model: [UInt8]?, tuner: [UInt8]? = nil, preset: [UInt8]? = nil, stock: NamStockWire.Plan? = nil, readStock: Bool = false, listen: Bool? = nil, outputBuffer: Int? = nil, completion: @escaping (Result<[String:Any],Error>)->Void) {
         guard callback == nil else { completion(.failure(Failure.message("A plug operation is already in progress"))); return }
         do {
             guard let entry = try devices().first(where: { $0["source"] as? Int == id }),
@@ -113,7 +120,7 @@ public final class NamMidi {
             detach()
             source = MIDIEndpointRef(id); destination = MIDIEndpointRef(dest)
             guard MIDIPortConnectSource(input, source, nil) == noErr else { throw Failure.message("Could not connect MIDI input") }
-            callback = completion; pendingPreset = preset; pendingModel = model; pendingStock = stock; stockRead = readStock
+            callback = completion; pendingTuner = tuner; pendingPreset = preset; pendingModel = model; pendingStock = stock; stockRead = readStock
             pendingListen = listen; listenSnapshot = [:]
             pendingBuffer = outputBuffer
             stockBefore = []; stockReadAttempts = 0; version = ""; values = []; page = -1; sent = 0
@@ -131,7 +138,7 @@ public final class NamMidi {
         source = 0; destination = 0; buffer = []
     }
     private func finish(_ result: Result<[String:Any],Error>) {
-        let done = callback; callback = nil; pendingPreset = nil; pendingModel = nil; pendingStock = nil; pendingListen = nil; pendingBuffer = nil; stockRead = false; detach(); done?(result)
+        let done = callback; callback = nil; pendingTuner = nil; pendingPreset = nil; pendingModel = nil; pendingStock = nil; pendingListen = nil; pendingBuffer = nil; stockRead = false; detach(); done?(result)
     }
     private func request(_ bytes: [UInt8]) {
         timer?.cancel(); generation += 1; let ticket = generation
@@ -172,14 +179,20 @@ public final class NamMidi {
             guard message.count == 45, Array(message[0..<4]) == [0xf0,0x43,0x58,0x10],
                   Array(message[36..<44]) == Array("PLUGPRO\0".utf8) else { return }
             version = String(bytes: message[4..<12], encoding: .ascii) ?? ""
-            if pendingBuffer != nil && !["NAMLNK09","NAMLNK10","NAMLNK11"].contains(version) {
+            if let tuner = pendingTuner {
+                guard version == "NAMLNK12" else {
+                    finish(.failure(Failure.message("The tuner requires NAMLNK12. No tuner command was sent."))); return
+                }
+                page = -10; request(tuner); return
+            }
+            if pendingBuffer != nil && !["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12"].contains(version) {
                 finish(.failure(Failure.message("Adjustable output buffering requires NAMLNK09. No setting was sent."))); return
             }
             if pendingListen != nil && !NamListening.supports(version) {
                 finish(.failure(Failure.message("Listening requires NAMLNK07 or NAMLNK08. No listening command sent."))); return
             }
             if let raw = pendingPreset {
-                guard ["NAMLNK10","NAMLNK11"].contains(version), let wire = NamPresetWire.request(raw) else {
+                guard ["NAMLNK10","NAMLNK11","NAMLNK12"].contains(version), let wire = NamPresetWire.request(raw) else {
                     finish(.failure(Failure.message("Onboard presets require NAMLNK10. Nothing was saved to the plug."))); return
                 }
                 page = -9; request(wire); return
@@ -199,8 +212,11 @@ public final class NamMidi {
             guard version == "NAMA2I01" || NamLinkWire.supportsModels(version) else {
                 finish(.success(["identity":version,"compatible":false,"modelTransfer":false,"requests":sent,"words":[],"audioStreamOpened":false])); return
             }
-            pageCount = ["NAMLNK10","NAMLNK11"].contains(version) ? 26 : (version == "NAMLNK09" ? 25 : (NamListening.supports(version) ? 24 : (version == "NAMLNK06" ? 23 : (NamLinkWire.supportsModels(version) ? 12 : 62))))
+            pageCount = ["NAMLNK10","NAMLNK11","NAMLNK12"].contains(version) ? 26 : (version == "NAMLNK09" ? 25 : (NamListening.supports(version) ? 24 : (version == "NAMLNK06" ? 23 : (NamLinkWire.supportsModels(version) ? 12 : 62))))
             page = 0
+        } else if page == -10 {
+            guard let pending = pendingTuner, let raw = NamTunerWire.reply(message,to:pending) else { return }
+            finish(.success(["frame":raw])); return
         } else if page == -9 {
             guard let pending=pendingPreset,let raw=NamPresetWire.reply(message,to:pending) else { return }
             finish(.success(["frame":raw]));return
@@ -284,7 +300,7 @@ public final class NamMidi {
             guard message.count == 15, Array(message[0..<6]) == [0xf0,0x43,0x58,0x70,4,2], message[6] == 1,
                   message[7] == page, message[13] < 16 else { return }
             if message[8] != 0 {
-                if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11"].contains(version) && page == 12 && message[8] == 2 && snapshotAttempts < 2 {
+                if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12"].contains(version) && page == 12 && message[8] == 2 && snapshotAttempts < 2 {
                     snapshotAttempts += 1
                     request([0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,12,0xf7]); return
                 }
@@ -300,7 +316,7 @@ public final class NamMidi {
             var result: [String:Any] = ["identity":version,"compatible":true,"modelTransfer":linked,
                              "stockChain":NamLinkWire.supportsStockChain(version),"requests":sent,
                              "words":(linked ? Array(values.prefix(12)) : values).map{Int64($0)},"audioStreamOpened":false]
-            if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11"].contains(version) {
+            if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12"].contains(version) {
                 guard let timing = NamIrqTiming.decode(Array(values[12..<23])) else {
                     finish(.failure(Failure.message("Unexpected timing snapshot. No hardware timing conclusion is available."))); return
                 }
@@ -312,13 +328,13 @@ public final class NamMidi {
                 }
                 result["listeningSupported"] = true; result["listening"] = listening
             }
-            if ["NAMLNK09","NAMLNK10","NAMLNK11"].contains(version) {
+            if ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12"].contains(version) {
                 guard let decoded = NamOutputBuffer.decode(values[24]) else {
                     finish(.failure(Failure.message("Unexpected output buffer status."))); return
                 }
                 result["audioBuffer"] = decoded
             }
-            if ["NAMLNK10","NAMLNK11"].contains(version) {
+            if ["NAMLNK10","NAMLNK11","NAMLNK12"].contains(version) {
                 let bank=values[25],active=bank & 255,mask=(bank >> 8) & 255
                 guard bank >> 24 == 1,bank & 0x00ff0000 == 0,(active < 7 || active == 255),mask < 128 else {
                     finish(.failure(Failure.message("Unexpected preset bank status"))); return

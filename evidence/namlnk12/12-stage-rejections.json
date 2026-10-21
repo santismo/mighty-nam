@@ -1,0 +1,26 @@
+{
+  "status": "PASS_TUNER_STAGE_REJECTIONS",
+  "cases": [
+    {
+      "case": "missing-tuner",
+      "rejected": true,
+      "created_image": false
+    },
+    {
+      "case": "wrong-tuner-elf",
+      "rejected": true,
+      "created_image": false
+    },
+    {
+      "case": "no-mute-proof",
+      "rejected": true,
+      "created_image": false
+    },
+    {
+      "case": "old-controller",
+      "rejected": true,
+      "created_image": false
+    }
+  ],
+  "device_access": false
+}

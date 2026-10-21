@@ -1,0 +1,17 @@
+{
+  "status": "PASS_NAMLNK12_TUNER_ARM",
+  "elf_sha256": "21a9e9a3ddeff174367e6a4ae642855b0ec343aebc82520df5a763ac5c160574",
+  "captured_samples": 2048,
+  "actual_stock_ingress": true,
+  "both_usb_channels": true,
+  "exact_dry_input_decimation": true,
+  "full_chain_blocks_identical": 1024,
+  "starts_muted_only": true,
+  "auto_stop_and_snapshot_frozen": true,
+  "invalid_and_irq_requests_ignored": true,
+  "warm_restart_clears": true,
+  "works_without_model": true,
+  "no_flash_writes": true,
+  "device_access": false,
+  "audio_access": false
+}

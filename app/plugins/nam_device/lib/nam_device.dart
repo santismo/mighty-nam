@@ -6,6 +6,14 @@ class NamDevice {
       ((await channel.invokeMethod<List<dynamic>>('devices')) ?? [])
           .map((e) => Map<String, dynamic>.from(e as Map))
           .toList();
+  Future<Uint8List> tunerFrame(
+          int source, int operation, int page, int nonce) async =>
+      (await channel.invokeMethod<Uint8List>('tunerFrame', {
+        'source': source,
+        'operation': operation,
+        'page': page,
+        'nonce': nonce
+      }))!;
   Future<void> bluetooth() => channel.invokeMethod<void>('bluetooth');
   Future<Map<String, dynamic>> inspect(int source) async =>
       Map<String, dynamic>.from(

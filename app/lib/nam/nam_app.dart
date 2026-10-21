@@ -15,6 +15,8 @@ import 'stock/control_plan.dart';
 import 'rig_editor.dart';
 import 'model_library.dart';
 import 'onboard_presets.dart';
+import 'tuner.dart';
+import 'tuner_dialog.dart';
 import 'plug_model_transport.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -78,7 +80,8 @@ class _NamHomeState extends State<NamHome> {
   final plugPresets = <int, PresetSnapshot>{};
   int? observedPreset;
   bool get hasPresetBank =>
-      const ['NAMLNK10', 'NAMLNK11'].contains(hardware?['identity']) &&
+      const ['NAMLNK10', 'NAMLNK11', 'NAMLNK12']
+          .contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   PresetClient get presetClient => PresetClient(
       (frame) => device.exchangePresetFrame(selectedSource!, frame));
@@ -114,7 +117,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK08',
         'NAMLNK09',
         'NAMLNK10',
-        'NAMLNK11'
+        'NAMLNK11',
+        'NAMLNK12'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -128,12 +132,19 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK08',
         'NAMLNK09',
         'NAMLNK10',
-        'NAMLNK11'
+        'NAMLNK11',
+        'NAMLNK12'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
-      const ['NAMLNK07', 'NAMLNK08', 'NAMLNK09', 'NAMLNK10', 'NAMLNK11']
-          .contains(hardware?['identity']) &&
+      const [
+        'NAMLNK07',
+        'NAMLNK08',
+        'NAMLNK09',
+        'NAMLNK10',
+        'NAMLNK11',
+        'NAMLNK12'
+      ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
   PresetSnapshot? get selectedOnboardCapture {
@@ -389,6 +400,45 @@ class _NamHomeState extends State<NamHome> {
         setState(() => busy = false);
         scheduleControls();
       }
+    }
+  }
+
+  Future<void> openTuner() async {
+    try {
+      final source = selectedSource;
+      if (source == null || hardware?['identity'] != 'NAMLNK12') {
+        throw const FormatException(
+            'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
+      }
+      final muted = await device.setListening(source, false);
+      if (muted['identity'] != 'NAMLNK12' ||
+          (muted['listening'] as Map?)?['enabled'] != false) {
+        throw const FormatException(
+            'Could not confirm that the plug is muted.');
+      }
+      if (!mounted) return;
+      setState(() => hardware = muted);
+      final failure = await showDialog<String>(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => TunerDialog(
+              client: TunerClient((op, page, nonce) =>
+                  device.tunerFrame(source, op, page, nonce))));
+      if (!mounted) return;
+      hardware = await device.inspect(source);
+      setState(() => status = failure ??
+          'Tuner closed. Plug muted; press Listen on plug to resume.');
+    } catch (error) {
+      if (mounted) {
+        final message = error is FormatException
+            ? error.message.toString()
+            : error is PlatformException
+                ? (error.message ?? 'Tuner connection failed.')
+                : 'Could not open the tuner. Check the USB connection.';
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(message)));
+      }
+      rethrow;
     }
   }
 
@@ -1275,7 +1325,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK08',
             'NAMLNK09',
             'NAMLNK10',
-            'NAMLNK11'
+            'NAMLNK11',
+            'NAMLNK12'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1359,14 +1410,14 @@ class _NamHomeState extends State<NamHome> {
   Future<void> setOutputBuffer(int samples) async {
     final source = selectedSource;
     if (source == null ||
-        !const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11']
+        !const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12']
             .contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 to adjust output buffering.');
     }
     try {
       final result = await device.setOutputBuffer(source, samples);
-      if (!const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11']
+      if (!const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12']
               .contains(result['identity']) ||
           (result['audioBuffer'] as Map?)?['samples'] != samples ||
           (result['listening'] as Map?)?['enabled'] != false) {
@@ -1396,7 +1447,7 @@ class _NamHomeState extends State<NamHome> {
   }
 
   Widget get latencySettings {
-    final adjustable = const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11']
+    final adjustable = const ['NAMLNK09', 'NAMLNK10', 'NAMLNK11', 'NAMLNK12']
             .contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;
@@ -1747,6 +1798,14 @@ class _NamHomeState extends State<NamHome> {
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                 actions: [
+                  TextButton.icon(
+                      key: const ValueKey('open-tuner'),
+                      onPressed: busy || restoring || !native
+                          ? null
+                          : () => perform(openTuner),
+                      icon: const Icon(Icons.graphic_eq, size: 18),
+                      label: const Text('Tuner')),
+                  const SizedBox(width: 18),
                   const Icon(Icons.volume_off_outlined,
                       size: 16, color: Colors.white54),
                   Padding(

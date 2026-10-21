@@ -1,5 +1,7 @@
 # NAMLNK11 performance trial
 
+Historical preparation notes. NAMLNK11 was not flashed; its changes are included in the [NAMLNK12 tuner trial](tuner-performance-trial.md).
+
 This trial is prepared offline, not installed or measured on hardware. The development app is 0.3.3; the installed local app remains 0.3.2. The repository is private and GitHub Pages is disabled.
 
 ## Changes

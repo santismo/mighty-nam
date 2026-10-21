@@ -24,7 +24,7 @@ def build(stock,elf):
   symbol=e.get_section_by_name('.symtab').get_symbol_by_name('mpp_probe_identity')[0]
   section=e.get_section(symbol['st_shndx']);off=symbol['st_value']-section['sh_addr']
   identity=section.data()[off:off+8].decode('ascii')
-  require(identity in ('NAMLNK10','NAMLNK11'),'Unexpected preset firmware identity')
+  require(identity in ('NAMLNK10','NAMLNK11','NAMLNK12'),'Unexpected preset firmware identity')
   require(not [s.name for s in syms if s.name and s['st_shndx']=='SHN_UNDEF'],'Unresolved symbols')
   for s in e.iter_sections():
    if not s['sh_flags']&2 or not s['sh_size']:continue

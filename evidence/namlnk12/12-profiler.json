@@ -1,0 +1,248 @@
+{
+  "status": "PASS_NAMLNK12_EFFECT_PROFILER",
+  "elf_sha256": "21a9e9a3ddeff174367e6a4ae642855b0ec343aebc82520df5a763ac5c160574",
+  "cases": [
+    {
+      "case": "enabled",
+      "stage": 0,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 1,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 2,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 3,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 4,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 5,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 6,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 7,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 8,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 9,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "enabled",
+      "stage": 10,
+      "samples": 32,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 0,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 1,
+      "samples": 16,
+      "sleeping": true,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 2,
+      "samples": 16,
+      "sleeping": true,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 3,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 4,
+      "samples": 16,
+      "sleeping": true,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 5,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 6,
+      "samples": 16,
+      "sleeping": true,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 7,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 8,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 9,
+      "samples": 16,
+      "sleeping": true,
+      "bit_identical": true
+    },
+    {
+      "case": "bypass",
+      "stage": 10,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 0,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 1,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 2,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 3,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 4,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 5,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 6,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 7,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 8,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 9,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    },
+    {
+      "case": "resume",
+      "stage": 10,
+      "samples": 16,
+      "sleeping": false,
+      "bit_identical": true
+    }
+  ],
+  "default_disabled": true,
+  "invalid_commands_ignored": true,
+  "IRQ_commands_rejected": true,
+  "disabled_counts_frozen": true,
+  "snapshot_coherent_and_frozen": true,
+  "odd_sequence_rejected": true,
+  "counter_disabled_rejected": true,
+  "warm_restart_clears": true,
+  "physical_cycles_measured": false,
+  "device_access": false,
+  "audio_access": false
+}

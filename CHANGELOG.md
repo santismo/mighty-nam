@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.4 / NAMLNK12 — tuner and performance trial
+
+- Add a USB MIDI chromatic tuner with reference A adjustment, note/cents display, muted input capture and explicit listening resume. No host audio streams.
+- Include NAMLNK11 preparation and profiler changes; retain output scheduling, model math and the seven-color bank.
+- Pass 60 Mac tests plus firmware, parser, pitch and restart checks. App installed locally; physical firmware/tuner/timing checks pending.
+- Back up all seven current presets and matching captures before installation; the update clears the onboard bank.
+- Keep repository private and Pages disabled; the older hosted installer is unchanged.
+
 ## 0.3.3 / NAMLNK11 — prepared performance trial
 
 - Add NAMLNK11 controller compatibility while retaining earlier versions.

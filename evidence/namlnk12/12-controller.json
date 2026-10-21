@@ -1,0 +1,28 @@
+{
+  "status": "PASS_NAMLNK12_MAC_CONTROLLER_OFFLINE",
+  "elf_sha256": "21a9e9a3ddeff174367e6a4ae642855b0ec343aebc82520df5a763ac5c160574",
+  "app_version": "0.3.4+7",
+  "app_tests": 60,
+  "optional_interop_skip": 1,
+  "native_wire_checks": 1573,
+  "tuner_wire_checks": 921,
+  "coremidi_packet_cases": 9,
+  "analysis_clean": true,
+  "release_build_verified": true,
+  "tuner_preview_rendered_and_inspected": true,
+  "logs_sha256": {
+    "app-tests-final.log": "d6fcae2ecb4a2728668a190cb583b8e26e4068e61f984bc9760899a1843b2964",
+    "tuner-tests.log": "0469b66ad78732075b13626079c7d50dd330272bfbaef53a865ca0c26756f3ef",
+    "tuner-connection-final.log": "8963839986b5ff3d7d589990e098b0a0c88f8f2ba668a27f5a2aba95ddaad8b1",
+    "preview.log": "2a1fbea085eff08ab2a9d958a046eb56250f7b7a1ac2a28fb61e39519c992abb",
+    "analyze.log": "1bfc6e73ace6acdb9bd4e31d4e4d4df1364ef3ddbd7c88f1262aee655d27279c",
+    "app-build-final.log": "e710e1dd33e0cea3be26921fd3f3773effed7f977888a2dcc088f7203cfcaa07",
+    "capture-host.log": "16296becf785f3a3a9117aaad05d4449f0d0d0a191894375f7333c30927efe6e",
+    "tuner-wire.log": "3d895e489704bea01287933e8157e6f3c9fc99f8c512261a0882ba5a48c8f8f0",
+    "stock-wire.log": "f45f64b051b1a9bfa037698455db2ae2e57807a34c5af1f021a6e6d667d3fad0",
+    "midi-packet.log": "4ea30131dd67dc7cb8acba73b5ef2d7acf1c2de23d6ff7e14d979f39ef3639e5"
+  },
+  "tests_note": "Full final suite: 60 passed, 1 optional interop skip",
+  "device_access": false,
+  "audio_access": false
+}

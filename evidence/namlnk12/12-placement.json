@@ -1,0 +1,66 @@
+{
+  "status": "PASS_NAMLNK12_PLACEMENT_REGRESSION",
+  "elf_sha256": "21a9e9a3ddeff174367e6a4ae642855b0ec343aebc82520df5a763ac5c160574",
+  "baseline10_rebuilt_exactly": true,
+  "output_and_storage_objects_unchanged": true,
+  "unchanged_objects": [
+    "sysex_codec.o",
+    "model_receiver.o",
+    "listening.o",
+    "irq_timing.o",
+    "preset_bank.o",
+    "preset_runtime.o"
+  ],
+  "stock_vectors_and_IRQ_preserved": true,
+  "regions": [
+    {
+      "name": ".banktext",
+      "start": "0x20308000",
+      "end_exclusive": "0x2030971c",
+      "bytes": 5916,
+      "load_address": "0x303a0000"
+    },
+    {
+      "name": ".retired_audio",
+      "start": "0x14c04",
+      "end_exclusive": "0x14ee0",
+      "bytes": 732
+    },
+    {
+      "name": ".text",
+      "start": "0x1a0a4",
+      "end_exclusive": "0x1b27c",
+      "bytes": 4568
+    },
+    {
+      "name": ".ARM.exidx",
+      "start": "0x14ee0",
+      "end_exclusive": "0x14ef8",
+      "bytes": 24
+    },
+    {
+      "name": ".bss",
+      "start": "0x202e4020",
+      "end_exclusive": "0x20306892",
+      "bytes": 141426
+    }
+  ],
+  "copied_code": {
+    "source": "0x303a0000",
+    "destination": "0x20308000",
+    "bytes": 5916
+  },
+  "preset_storage": {
+    "owners": [
+      12
+    ],
+    "base": "0x30384000",
+    "end": "0x303a0000",
+    "copies": 2,
+    "slots": 7,
+    "record_bytes": 8192
+  },
+  "physical_placement_tested": false,
+  "device_access": false,
+  "audio_access": false
+}
