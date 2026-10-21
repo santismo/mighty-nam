@@ -1,0 +1,9 @@
+{
+  "status": "INSTALLED_NOT_LAUNCHED",
+  "version": "0.3.10+13",
+  "signature_verified": true,
+  "previous_bundle_preserved": true,
+  "app_launch": false,
+  "device_access": false,
+  "host_audio_access": false
+}

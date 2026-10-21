@@ -1,5 +1,9 @@
 # Changelog
 
+## NAMLNK18 / Mac 0.3.10 / phone 0.6.5 — prepared global-buffer trial
+
+Persist one output-buffer choice for every color, defaulting to 8 samples. Ordinary successful edits preserve playback intent, and captures/effects are not rewritten when the global buffer changes. Restore exact NAMLNK16 NAM hot-code and constant-table placement while retaining the 17 converter setting. Firmware, controller and simulated-browser checks passed; this version has not been flashed or physically timed. See [trial notes](docs/global-buffer-trial.md).
+
 ## NAMLNK14 / Mac 0.3.6 / phone controller 0.5.0 — High / Low Cut
 
 Add stereo 12 dB/oct High / Low Cut as a movable EQ choice, with independently disabled filters and logarithmic cutoff controls. Retain stock EQ choices, two FX slots, presets and output buffering. The new choice requires verified NAMLNK14; older firmware remains supported. Mac chain-library migration preserves existing settings. Installed on the development plug: bounded muted USB cut controls, movement/bypass, full-chain processing and a fresh preset save/read/recall passed. Listening and post-save power-off checks remain. See [EQ trial notes](docs/high-low-cut-trial.md).

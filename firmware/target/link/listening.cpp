@@ -18,7 +18,12 @@ AUDIO_BODY void mpp_buffer_set(unsigned samples){
  mpp_output_delay_blocks=samples/8-1;
 }
 AUDIO_BODY uint32_t mpp_buffer_page(){
+ #ifdef MPP_GLOBAL_BUFFER
+ extern unsigned mpp_global_error;
+ return (48000u<<16)|((2u|(mpp_global_error<<4))<<8)|((mpp_output_delay_blocks+1)*8);
+#else
  return (48000u<<16)|(1u<<8)|((mpp_output_delay_blocks+1)*8);
+#endif
 }
 #endif
 

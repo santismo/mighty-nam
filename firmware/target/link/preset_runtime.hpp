@@ -2,6 +2,9 @@
 #include <stdint.h>
 extern "C" {
 void mpp_bank_init();
+#ifdef MPP_GLOBAL_BUFFER
+void mpp_global_buffer_set(unsigned);
+#endif
 void mpp_bank_service();
 void mpp_bank_request(unsigned);
 void mpp_bank_query(const uint8_t*,unsigned,unsigned);

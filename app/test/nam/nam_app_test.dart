@@ -182,7 +182,7 @@ void main() {
   }
   for (final listenIdentity in ['NAMLNK07', 'NAMLNK08', 'NAMLNK09']) {
     testWidgets(
-        'listening requires explicit click and model reload returns to mute: $listenIdentity',
+        'listening requires explicit first click and verified model reload resumes: $listenIdentity',
         (t) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
       link = chainFirmware = true;
@@ -257,9 +257,8 @@ void main() {
       await t.ensureVisible(find.byKey(const ValueKey('send-model')));
       await t.tap(find.byKey(const ValueKey('send-model')));
       await t.pumpAndSettle();
-      expect(listening, false);
-      expect(find.text('Listen on plug'), findsOneWidget);
-      expect(listening, false);
+      expect(listening, true);
+      expect(find.text('Mute plug'), findsOneWidget);
       expect(t.takeException(), isNull);
       debugDefaultTargetPlatformOverride = null;
     });
@@ -689,7 +688,7 @@ void main() {
       expect(receiver.activeSlot, capture.slot);
       expect(calls.where((s) => s == 'exchangeModelFrame').length, 35);
       expect(calls.where((s) => s == 'inspect').length,
-          stopped || !stockChain ? 2 : 4);
+          stopped || !stockChain ? 3 : 5); // Fresh playback intent read before upload.
       if (stopped) {
         expect(find.textContaining('did not confirm the capture is running'),
             findsOneWidget);

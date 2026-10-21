@@ -1,0 +1,24 @@
+{
+  "status": "PASS_NAMLNK18_CUT_EQ_ARM",
+  "elf_sha256": "6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2",
+  "real_CC_ingress": true,
+  "dispatch_calls": 320,
+  "combined_1kHz_dB": -6.020607252453161,
+  "seven_independent_presets": true,
+  "cold_patterns": [
+    0,
+    165,
+    255
+  ],
+  "warm_restarts": true,
+  "duplicate_save_no_write": true,
+  "stock_EQ_types": [
+    1,
+    2,
+    3
+  ],
+  "fault_guard": true,
+  "ram_guards": true,
+  "device_access": false,
+  "audio_playback": false
+}

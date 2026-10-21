@@ -4,6 +4,9 @@
 // stock codec-startup write call is redirected here; no live register writer.
 extern "C" {
 volatile uint32_t mpp_codec_startup_seen;
+#ifdef MPP_GLOBAL_BUFFER
+__attribute__((section(".codec_startup")))
+#endif
 unsigned mpp_codec_startup_write(unsigned device,unsigned reg,uint8_t* data,unsigned size){
  if(device==0x20 && reg<21 && size==1 && (uintptr_t)data==0x20000284u+reg){
   if(reg==0){

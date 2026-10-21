@@ -51,7 +51,7 @@ class UsbFixture {
 
   Map<String, dynamic> status() => {
         'identity': identity,
-        if (identity == 'NAMLNK09')
+        if (identity == 'NAMLNK09' || identity == 'NAMLNK18')
           'audioBuffer': {
             'samples': bufferSamples,
             'sampleRate': 48000,
@@ -98,7 +98,7 @@ class UsbFixture {
     if (c.method == 'setOutputBuffer') {
       bufferSamples = a['samples'] as int;
       bufferCommands.add(bufferSamples);
-      listening = false;
+      if (identity != 'NAMLNK18') listening = false;
       return status();
     }
     if (c.method == 'readStockControls') {
@@ -185,7 +185,7 @@ void main() {
   }
 
   testWidgets(
-      'output buffer uses firmware readback and mutes without losing the model',
+      'output buffer preserves playback using firmware readback without losing model',
       (t) async {
     usb.identity = 'NAMLNK09';
     final a = capture('First', 1);
@@ -200,18 +200,18 @@ void main() {
     await t.tap(find.text('32 samples · 0.67 ms').last);
     await t.pumpAndSettle();
     expect(usb.bufferCommands, [32]);
-    expect(usb.listening, false);
+    expect(usb.listening, true);
     expect(crc32(usb.receiver.activeSlot!), crc);
     final dynamic home = t.state(find.byType(NamHome));
     expect(home.hardware['audioBuffer']['samples'], 32);
-    expect(home.hardware['listening']['enabled'], false);
+    expect(home.hardware['listening']['enabled'], true);
     final work = home.perform(() async {
       await home.setOutputBuffer(8);
     });
     await t.pumpAndSettle();
     await work;
     expect(usb.bufferCommands, [32, 8]);
-    expect(usb.listenCommands, isNot(contains(true)));
+    expect(usb.listenCommands.where((v) => v), hasLength(2));
     await t.pumpWidget(const SizedBox.shrink());
     await t.pump();
     debugDefaultTargetPlatformOverride = null;

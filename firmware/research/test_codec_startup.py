@@ -94,14 +94,16 @@ class Startup:
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ['payload', 'baseline_build', 'candidate_build', 'report']: p.add_argument(name, type=Path)
+    p.add_argument('--candidate-identity',choices=['NAMLNK17','NAMLNK18'],default='NAMLNK17')
     a = p.parse_args(); stock = a.payload.read_bytes()
     elf = a.candidate_build/'nam-link-offline.elf'
     image, symbols, plan = build(stock, elf)
-    assert plan['identity'] == 'NAMLNK17'
+    assert plan['identity'] == a.candidate_identity
     baseline_elf = a.baseline_build/'nam-link-offline.elf'
     assert hashlib.sha256(baseline_elf.read_bytes()).hexdigest() == '7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1'
     baseline = build(stock, baseline_elf)
-    unchanged = [x.name for x in a.baseline_build.glob('*.o') if x.name != 'stock_chain_firmware.o']
+    changed = ['stock_chain_firmware.o'] + (['preset_runtime.o','listening.o'] if a.candidate_identity == 'NAMLNK18' else [])
+    unchanged = [x.name for x in a.baseline_build.glob('*.o') if x.name not in changed]
     for name in unchanged: assert (a.baseline_build/name).read_bytes() == (a.candidate_build/name).read_bytes(), name
     rows = []
     for fill in (0, 0xa5, 0xff):
@@ -138,7 +140,7 @@ def main():
     m.call(symbols['mpp_stock_amp_init'],[])
     for channel in (0,1): assert m.page(117,channel)==(0,0xc10f220a)
     m.guards()
-    report=dict(status='PASS_NAMLNK17_CODEC_STARTUP',elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),
+    report=dict(status='PASS_'+a.candidate_identity+'_CODEC_STARTUP',elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),
                 baseline_elf_sha256=hashlib.sha256(baseline_elf.read_bytes()).hexdigest(), unchanged_objects=unchanged,
                 changed_registers=[10], previous_value=0, new_value=34, cold_and_warm=rows, failed_transactions=failures,
                 wrong_call_passthrough_cases=negatives, real_stock_I2C_helpers=True, startup_before_bank_copy=True,

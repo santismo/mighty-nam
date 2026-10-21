@@ -6,7 +6,7 @@ from test_preset_runtime import PresetMachine,v,build,preset_fixture
 p=argparse.ArgumentParser()
 for n in ['payload','elf','model','output']:p.add_argument(n,type=Path)
 a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf);v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
-assert bundle[2]['identity'] in ('NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17')
+assert bundle[2]['identity'] in ('NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18')
 m=PresetMachine();m.service();slot=a.model.read_bytes();m.upload(slot,33);m.phase='probe';m.run(0xb974)
 def cc(id,value):
  m.ingress([bytes([176,id,value])]);m.run(0xb954)

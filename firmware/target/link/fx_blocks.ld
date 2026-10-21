@@ -16,6 +16,7 @@ SECTIONS {
   *fx_runtime.o(.text* .rodata*)
   *reply_transport.o(.text* .rodata*)
   *preset_bank.o(.text* .rodata*)
+  *global_buffer.o(.text* .rodata*)
   *preset_runtime.o(.text* .rodata*)
   *effect_profiler.o(.text* .rodata*)
   *tuner.o(.text* .rodata*)
@@ -23,7 +24,7 @@ SECTIONS {
  } > BANKCODE
  __bank_load = LOADADDR(.banktext);
  .retired_audio : { *(.retired_audio*) } > AUDIO_BODY
- .text : { *(.text*) *(.rodata*) } > CODE
+ .text : { *(.text*) *(.rodata*) *(.codec_startup) } > CODE
  .ARM.exidx : { *(.ARM.exidx*) } > AUDIO_BODY
  .data : { *(.data*) } > STATE
  .bss (NOLOAD) : { *(.bss*) *(COMMON) } > STATE

@@ -1,0 +1,44 @@
+{
+  "schema": "nam-plug-global-buffer-2",
+  "firmware": "NAMLNK18",
+  "sample_rate_hz": 48000,
+  "processing_block_samples": 8,
+  "choices": [
+    8,
+    16,
+    32
+  ],
+  "default": 8,
+  "scope": "global across colors and cold/warm restarts",
+  "set_sysex": "F0 43 58 70 04 02 4E 42 <samples> F7",
+  "status_query": "F0 43 58 70 04 02 4E 50 18 F7",
+  "status_word": "(48000 << 16) | ((2 | (storage_error << 4)) << 8) | samples",
+  "errors": {
+    "0": "ok",
+    "1": "empty (boot normalizes to ok/default 8)",
+    "2": "invalid",
+    "3": "I/O/readback failure",
+    "4": "generation exhausted"
+  },
+  "flash": {
+    "start": "0x303a4000",
+    "end_exclusive": "0x303a6000",
+    "copies": 2,
+    "sector_bytes": 4096,
+    "record_bytes": 256,
+    "magic": "NGB1",
+    "schema_word": 1,
+    "generation_offset": 8,
+    "samples_offset": 12,
+    "padding": "16..247 must be 0xff",
+    "crc_offset": 248,
+    "crc_coverage": "bytes 0..247",
+    "commit_offset": 252,
+    "commit_word": "0x454e4f44",
+    "program_order": "erase older sector, program uncommitted record, read verify, program 4-byte commit, read verify"
+  },
+  "behavior": "Pause/clear both DMA halves for flash write, keep old setting on failure, reset output queue and settle/fade, restore preceding playback intent if healthy. Invalid, IRQ-context, booting or pending-recall requests are ignored. Same setting with no pending storage error does not write.",
+  "presets": "Recall ignores legacy per-color buffer. Occupied metadata replies report the current global setting in the existing buffer field. Save requests must use that effective value; setting global buffer does not rewrite preset records.",
+  "installation": "Clears bank and settings; fresh install defaults to 8. Physical restart/write endurance unverified.",
+  "device_access_during_development": false
+}

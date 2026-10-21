@@ -15,13 +15,14 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 - Browses TONE3000 after sign-in; selecting a compatible capture makes it the active NAM capture. Favorites stay in your Mac library.
 - Retains the stock gate, compressor, drive, cabinet, EQ, modulation, delay, and reverb. Full amp-and-cab captures automatically bypass the separate cabinet block.
 - Adds a chromatic tuner in the Mac app with NAMLNK12, using dry-input snapshots over USB MIDI. Quiet transport checks passed; real-guitar tuning checks remain.
-- Includes experimental seven-color onboard presets: capture, effects, order, settings, name, and output buffer per color.
+- Includes experimental seven-color onboard presets: capture, effects, order, settings, and name per color; NAMLNK18 makes output buffering global.
 - Exposes 8 / 16 / 32-sample output staging at 48 kHz in the new firmware. This does not change the processing block or increase CPU capacity.
 
 ## Current state — read before updating
 
 | Component | State |
 | --- | --- |
+| NAMLNK18 / Mac 0.3.10 / phone 0.6.5 | Global persistent buffer and playback-preserving edits; earlier NAM hot-code/table placement restored. Offline checks passed; firmware not installed or physically measured. See [global buffer trial](docs/global-buffer-trial.md). |
 | NAMLNK17 / Mac 0.3.9 / phone 0.6.4 | Installed; converter startup readback, seven restored presets, restart/color cycling and fault-free eight-sample checks verified. CPU snapshots were about 5–6% higher than the immediate 16 baseline; cause remains under investigation. Approximate 0.292 ms converter saving is predicted, not measured. See [converter trial](docs/converter-latency-trial.md). |
 | NAMLNK16 / Mac 0.3.8 / phone 0.6.3 | Installed and verified over USB. All seven fresh-backed-up presets restored and checked after power-off; user confirmed color cycling. Quiet matched-chain runs used 4.0–4.6% fewer median IRQ cycles than 15. Mac app installed and phone controller live. Fixed audio path unchanged; no measured guitar-to-headphone latency reduction claimed. See [NAM processing trial](docs/nam-performance-trial.md). |
 | NAMLNK15 / Mac 0.3.7 / phone 0.6.2 | Installed on the development plug. Seven presets restored and independently checked after power-off; the user confirmed seven-color button cycling. Live FX controls and compact quiet USB tuner checks passed. Physical listening latency and Bluefy tuner cadence remain unmeasured. See [responsive controls](docs/responsive-controls-trial.md). |
@@ -35,7 +36,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
 
-The local 0.3.9 app includes FX A/B, High / Low Cut and explicit NAMLNK15/16/17 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
+The local 0.3.10 app includes FX A/B, High / Low Cut and explicit NAMLNK15/16/17/18 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
 
 ## Install the Mac app
 

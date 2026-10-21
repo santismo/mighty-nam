@@ -1,0 +1,12 @@
+{
+  "cases": 117,
+  "max_cents": 0.326086,
+  "silence_dc_noise_rejected": true,
+  "sanitizers": true,
+  "status": "PASS_COMPACT_TUNER_HOST",
+  "source_sha256": {
+    "target/link/tuner_pitch.hpp": "808556316466776f8ee1f9adb1878ea218ee94c6705194e63ff533eb67d63499",
+    "target/link/tuner_capture.hpp": "85c178f2b1c2ac31ed8fe49d4a92828d88afe235b6388096a03bd806bf2cc257",
+    "research/test_compact_tuner.cpp": "f3b9df7e0d76710d823265cb11ce57e5f512c2ad71e6f45ec64fd053b86d3cf7"
+  }
+}

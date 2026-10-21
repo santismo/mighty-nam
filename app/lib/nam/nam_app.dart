@@ -89,7 +89,9 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK13',
         'NAMLNK14',
         'NAMLNK15',
-        'NAMLNK16', 'NAMLNK17'
+        'NAMLNK16',
+        'NAMLNK17',
+        'NAMLNK18'
       ].contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   bool get hasExtraFx => supportsExtraFx(hardware?['identity'] as String?);
@@ -141,7 +143,9 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK13',
         'NAMLNK14',
         'NAMLNK15',
-        'NAMLNK16', 'NAMLNK17'
+        'NAMLNK16',
+        'NAMLNK17',
+        'NAMLNK18'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -160,7 +164,9 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK13',
         'NAMLNK14',
         'NAMLNK15',
-        'NAMLNK16', 'NAMLNK17'
+        'NAMLNK16',
+        'NAMLNK17',
+        'NAMLNK18'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -174,7 +180,9 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK13',
         'NAMLNK14',
         'NAMLNK15',
-        'NAMLNK16', 'NAMLNK17'
+        'NAMLNK16',
+        'NAMLNK17',
+        'NAMLNK18'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -445,14 +453,28 @@ class _NamHomeState extends State<NamHome> {
     try {
       final source = selectedSource;
       if (source == null ||
-          !const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17']
-              .contains(hardware?['identity'])) {
+          !const [
+            'NAMLNK12',
+            'NAMLNK13',
+            'NAMLNK14',
+            'NAMLNK15',
+            'NAMLNK16',
+            'NAMLNK17',
+            'NAMLNK18'
+          ].contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
       }
       final muted = await device.setListening(source, false);
-      if (!const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17']
-              .contains(muted['identity']) ||
+      if (!const [
+            'NAMLNK12',
+            'NAMLNK13',
+            'NAMLNK14',
+            'NAMLNK15',
+            'NAMLNK16',
+            'NAMLNK17',
+            'NAMLNK18'
+          ].contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
             'Could not confirm that the plug is muted.');
@@ -937,6 +959,9 @@ class _NamHomeState extends State<NamHome> {
           'Connect NAMLNK10 and choose an A2 Lite capture before saving onboard.');
     }
     final slot = onboard.selected, capture = model!;
+    final source = selectedSource!;
+    final before = await device.inspect(source);
+    final wasPlaying = (before['listening'] as Map?)?['enabled'] == true;
     await sendModel(); // Muted upload, followed by verified complete effect plan.
     final snapshot = await device.readStockControls(selectedSource!);
     final effects = List<int>.from(snapshot['preset'] as List);
@@ -963,12 +988,8 @@ class _NamHomeState extends State<NamHome> {
       throw StateError(
           'Saved preset readback did not match. Your Mac copy is retained.');
     }
-    hardware = await device.inspect(selectedSource!);
-    if ((hardware?['listening'] as Map?)?['enabled'] != false) {
-      await device.setListening(selectedSource!, false);
-      throw StateError(
-          'Preset saved, but mute was not confirmed. Check the plug before listening.');
-    }
+    hardware = await preservePlayback(
+        source, wasPlaying, await device.inspect(source));
     onboard.slots[slot] = HybridRig.parse(rig.encode());
     onboard.dirty[slot] = false;
     onboard.generations[slot] = saved.generation;
@@ -977,7 +998,7 @@ class _NamHomeState extends State<NamHome> {
     await persist();
     if (mounted) {
       setState(() => status =
-          '${presetColorNames[slot]} saved to the plug with its capture and effects. Output is muted now; saved presets play after power-on.');
+          '${presetColorNames[slot]} saved to the plug with its capture and effects. ${listening ? 'Playback resumed.' : 'Output remains muted.'} Saved presets play after power-on.');
     }
   }
 
@@ -1365,6 +1386,8 @@ class _NamHomeState extends State<NamHome> {
       await persist();
     }
     await persist();
+    final before = await device.inspect(source);
+    final wasPlaying = (before['listening'] as Map?)?['enabled'] == true;
     setState(() {
       transferProgress = 0;
       status = 'Sending capture. Output remains silent.';
@@ -1395,7 +1418,9 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK13',
             'NAMLNK14',
             'NAMLNK15',
-            'NAMLNK16', 'NAMLNK17'
+            'NAMLNK16',
+            'NAMLNK17',
+            'NAMLNK18'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1423,8 +1448,12 @@ class _NamHomeState extends State<NamHome> {
       if (hasStockChain) await sendStockControls();
       if (!mounted) return;
       pendingModel = false;
+      if (hasListening) {
+        hardware = await preservePlayback(
+            source, wasPlaying, await device.inspect(source));
+      }
       setState(() => status = hasListening
-          ? '${capture.metadata['name'] ?? 'A2 Lite'} is loaded. Choose Listen on plug when ready; output is muted.'
+          ? '${capture.metadata['name'] ?? 'A2 Lite'} is loaded. ${listening ? 'Playback resumed on the plug.' : 'Plug output remains muted.'}'
           : '${capture.metadata['name'] ?? 'A2 Lite'} is running on the plug. Output is silent; resend after a restart.');
     } catch (_) {
       autoReloadBlocked = true;
@@ -1476,6 +1505,43 @@ class _NamHomeState extends State<NamHome> {
     });
   }
 
+  // Resume only the playback intent observed immediately before a verified operation.
+  // Merely connecting, refreshing, or failing an operation never enables output.
+  Future<Map<String, dynamic>> preservePlayback(
+      int source, bool wasPlaying, Map<String, dynamic> after) async {
+    if ((after['listening'] as Map?)?['enabled'] == wasPlaying) return after;
+    final words = after['words'] as List?;
+    if (!wasPlaying ||
+        words?.length != 12 ||
+        words![4] != 0 ||
+        words[10] != 0 ||
+        words[9] != 1 ||
+        words[5] == 0) {
+      throw StateError(
+          'Output state changed. Check Plug status before listening.');
+    }
+    final resumed = await device.setListening(source, true);
+    final checked = resumed['words'] as List?;
+    if (resumed['identity'] != after['identity'] ||
+        checked?.length != 12 ||
+        checked![4] != 0 ||
+        checked[10] != 0 ||
+        checked[9] != 1 ||
+        checked[5] != words[5] ||
+        (resumed['presetBank'] as Map?)?['active'] !=
+            (after['presetBank'] as Map?)?['active'] ||
+        (resumed['audioBuffer'] as Map?)?['samples'] !=
+            (after['audioBuffer'] as Map?)?['samples'] ||
+        (resumed['listening'] as Map?)?['enabled'] != true) {
+      // A concurrent preset change must not leave unintended playback enabled.
+      try {
+        await device.setListening(source, false);
+      } catch (_) {}
+      throw StateError('Playback could not be confirmed. Check Plug status.');
+    }
+    return resumed;
+  }
+
   Future<void> setOutputBuffer(int samples) async {
     final source = selectedSource;
     if (source == null ||
@@ -1487,48 +1553,31 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK13',
           'NAMLNK14',
           'NAMLNK15',
-          'NAMLNK16', 'NAMLNK17'
+          'NAMLNK16',
+          'NAMLNK17',
+          'NAMLNK18'
         ].contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
-      throw StateError('Connect NAMLNK09 to adjust output buffering.');
+      throw StateError('Connect NAMLNK09 or newer to adjust output buffering.');
     }
-    try {
-      final result = await device.setOutputBuffer(source, samples);
-      if (!const [
-            'NAMLNK09',
-            'NAMLNK10',
-            'NAMLNK11',
-            'NAMLNK12',
-            'NAMLNK13',
-            'NAMLNK14',
-            'NAMLNK15',
-            'NAMLNK16', 'NAMLNK17'
-          ].contains(result['identity']) ||
-          (result['audioBuffer'] as Map?)?['samples'] != samples ||
-          (result['listening'] as Map?)?['enabled'] != false) {
-        throw StateError('The plug did not confirm its buffer and mute state.');
-      }
-      if (mounted) {
-        setState(() {
-          hardware = result;
-          status =
-              'Output buffer set to $samples samples. Output is muted; choose Listen on plug when ready.';
-        });
-      }
-    } catch (_) {
-      try {
-        final muted = await device.setListening(source, false);
-        if (mounted) setState(() => hardware = muted);
-      } catch (_) {
-        if (mounted) {
-          setState(() {
-            hardware = null;
-            selectedSource = null;
-          });
-        }
-      }
-      rethrow;
+    final before = await device.inspect(source);
+    final wasPlaying = (before['listening'] as Map?)?['enabled'] == true;
+    var result = await device.setOutputBuffer(source, samples);
+    if (result['identity'] != before['identity'] ||
+        (result['audioBuffer'] as Map?)?['samples'] != samples ||
+        ((result['audioBuffer'] as Map?)?['storageError'] ?? 0) != 0 ||
+        ((result['words'] as List?)?[5]) != ((before['words'] as List?)?[5])) {
+      throw StateError(
+          'The plug did not confirm its buffer setting. Refresh Plug status.');
     }
+    result = await preservePlayback(source, wasPlaying, result);
+    if (!mounted) return;
+    setState(() {
+      hardware = result;
+      status = result['identity'] == 'NAMLNK18'
+          ? '$samples samples saved globally for all seven colors, including after power-off.'
+          : 'Output buffer set to $samples samples. NAMLNK18 makes this global across colors.';
+    });
   }
 
   Widget get latencySettings {
@@ -1540,7 +1589,9 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK13',
           'NAMLNK14',
           'NAMLNK15',
-          'NAMLNK16', 'NAMLNK17'
+          'NAMLNK16',
+          'NAMLNK17',
+          'NAMLNK18'
         ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;
@@ -1567,9 +1618,9 @@ class _NamHomeState extends State<NamHome> {
       ),
       const SizedBox(height: 10),
       Text(adjustable
-          ? hasPresetBank
-              ? 'Confirmed on plug. Changing the buffer mutes output. Save to plug keeps this setting with the selected preset.'
-              : 'Confirmed on plug. Changing the buffer mutes output; restart restores 8 samples.'
+          ? (hardware?['identity'] == 'NAMLNK18')
+              ? 'Global setting. Saved automatically for every color and after power-off. Playback resumes if it was on.'
+              : 'Confirmed on plug. Install NAMLNK18 for one saved buffer setting across all colors.'
           : hardware?['identity'] == 'NAMLNK08'
               ? 'NAMLNK08 uses a fixed 8-sample buffer. NAMLNK09 adds this control.'
               : 'Connect a plug running NAMLNK09 or newer to adjust this setting.'),

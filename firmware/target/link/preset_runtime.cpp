@@ -3,6 +3,10 @@
 #include "model_receiver.hpp"
 #include "sysex_codec.hpp"
 #include "listening.hpp"
+#ifdef MPP_GLOBAL_BUFFER
+#include "global_buffer.hpp"
+extern "C" { unsigned mpp_global_samples, mpp_global_error; }
+#endif
 #ifdef MPP_FX_BLOCKS
 #include "fx_blocks.hpp"
 #include "reply_transport.hpp"
@@ -20,7 +24,14 @@ uint32_t rd(uint32_t a){return *(volatile uint32_t*)(uintptr_t)a;}
 uint8_t* ptr(uint32_t a){return (uint8_t*)(uintptr_t)a;}
 uint32_t lock(){uint32_t p;__asm__ volatile("mrs %0, primask\ncpsid i":"=r"(p)::"memory");return p;}
 void unlock(uint32_t p){__asm__ volatile("dsb\nisb\nmsr primask, %0"::"r"(p):"memory");}
-bool bounds(uint32_t a,unsigned n){return a>=base&&a<end&&n&&n<=end-a;}
+bool bounds(uint32_t a,unsigned n){
+ if(a>=base&&a<end&&n&&n<=end-a)return true;
+#ifdef MPP_GLOBAL_BUFFER
+ return a>=mpp::settings::base&&a<mpp::settings::end&&n&&n<=mpp::settings::end-a;
+#else
+ return false;
+#endif
+}
 bool read(void*,uint32_t a,uint8_t* b,unsigned n){
  if(!bounds(a,n))return false;
  uint32_t p=lock();int result=((int(*)(void*,uint32_t,unsigned))0xc081)(b,a,n);unlock(p);return result==0;
@@ -36,6 +47,10 @@ bool program(void*,uint32_t a,const uint8_t* b,unsigned n){
  uint32_t p=lock();int result=((int(*)(const void*,uint32_t))0xc035)(b,a);unlock(p);return result==0;
 }
 Bank bank(){return Bank({nullptr,read,erase,program});}
+#ifdef MPP_GLOBAL_BUFFER
+uint8_t settings_a[256],settings_b[256];
+mpp::settings::BufferStore settings(){return mpp::settings::BufferStore({nullptr,read,erase,program});}
+#endif
 void copy(uint8_t* a,const uint8_t* b,unsigned n){for(unsigned i=0;i<n;++i)a[i]=b[i];}
 void mask(){ptr(rd(0x20005ae0))[0x13]=occupied?occupied:127;}
 Result read_slot(unsigned slot){
@@ -59,12 +74,20 @@ Result recall(unsigned slot,bool listen){
 #ifdef MPP_FX_BLOCKS
  mpp_fx_set(saved_fx[slot]);
 #endif
- mpp_buffer_set(word(record,24));mpp_bank_resume(listen);
+ #ifdef MPP_GLOBAL_BUFFER
+ mpp_buffer_set(mpp_global_samples);
+#else
+ mpp_buffer_set(word(record,24));
+#endif
+ mpp_bank_resume(listen);
  return ok;
 }
 }
 extern "C" void mpp_bank_init(){
  current=pending=255;occupied=0;booting=true;resume_output=false;
+#ifdef MPP_GLOBAL_BUFFER
+ mpp_global_samples=8;mpp_global_error=0;
+#endif
  for(auto& h:headers)for(auto& b:h)b=0;
 #ifdef MPP_FX_BLOCKS
  for(auto& c:saved_fx)mpp::fx::defaults(c);
@@ -86,6 +109,12 @@ extern "C" void mpp_bank_service(){
  if(rd(0xe000ed04)&511)return;
  if(booting){
   booting=false;mpp_bank_pause();
+#ifdef MPP_GLOBAL_BUFFER
+  auto result=settings().load(settings_a,settings_b);
+  mpp_global_error=result==empty?0:result;
+  mpp_global_samples=result==ok?word(settings_a,12):8;
+  mpp_buffer_set(mpp_global_samples);
+#endif
   for(unsigned i=0;i<7;++i)read_slot(i);
   unsigned selected=ptr(rd(0x20005ad8))[2];
   if(selected>=7||!(occupied&(1u<<selected))){selected=0;while(selected<7&&!(occupied&(1u<<selected)))++selected;}
@@ -108,7 +137,14 @@ extern "C" void mpp_bank_query(const uint8_t* p,unsigned n,unsigned channel){
  }
  if(op==2&&size==132){
   const uint8_t* model=mpp_bank_model();const uint8_t* fx=ptr(rd(0x20005ad0));const uint8_t* body=input+16;
-  if(model&&word(body,0)==mpp::link::crc32(model,8192)&&word(body,4)==mpp::link::crc32(fx,128)){
+  if(
+#ifdef MPP_GLOBAL_BUFFER
+      word(body,12)==mpp_global_samples&&
+#endif
+      model&&word(body,0)==mpp::link::crc32(model,8192)&&word(body,4)==mpp::link::crc32(fx,128)){
+   #ifdef MPP_GLOBAL_BUFFER
+   bool listening=mpp_listen_enabled!=0;
+   #endif
    mpp_bank_pause();
    #ifdef MPP_FX_BLOCKS
    uint8_t extra[32];mpp_fx_get(extra);
@@ -117,13 +153,21 @@ extern "C" void mpp_bank_query(const uint8_t* p,unsigned n,unsigned channel){
    error=bank().save(slot,model,fx,body+16,body+48,word(body,8),word(body,12),record,scratch);
 #endif
    if(error==ok){read_slot(slot);current=slot;ptr(rd(0x20005ad8))[2]=slot;}
+   #ifdef MPP_GLOBAL_BUFFER
+   mpp_bank_resume(listening);
+   #else
    mpp_bank_resume(false);
+   #endif
   }
  }
  for(auto& b:output)b=0;
  put(output,0,0x3031504e);output[4]=1;output[5]=op|128;output[6]=slot;output[7]=error;
  copy(output+8,input+8,4);output[12]=0;output[13]=1;output[14]=current;output[15]=occupied;
- copy(output+16,headers[slot],256);put(output,272,mpp::link::crc32(output,272));
+ copy(output+16,headers[slot],256);
+#ifdef MPP_GLOBAL_BUFFER
+ if(occupied&(1u<<slot))put(output,40,mpp_global_samples); // Effective setting; capture/effect records are not rewritten.
+#endif
+ put(output,272,mpp::link::crc32(output,272));
  const uint8_t prefix[]={0xf0,0x43,0x58,0x70,4,2,'N','S',1};copy(wire,prefix,9);
  unsigned encoded=mpp::link::pack7(output,276,wire+9,sizeof(wire)-10);
  if(encoded){wire[9+encoded]=0xf7;
@@ -137,4 +181,15 @@ extern "C" void mpp_bank_query(const uint8_t* p,unsigned n,unsigned channel){
 
 #ifdef MPP_FX_BLOCKS
 extern "C" void mpp_fx_saved(unsigned slot,uint8_t* out){if(slot<7)copy(out,saved_fx[slot],32);}
+#endif
+
+#ifdef MPP_GLOBAL_BUFFER
+extern "C" void mpp_global_buffer_set(unsigned samples){
+ if((rd(0xe000ed04)&511)||booting||pending<7||!(samples==8||samples==16||samples==32))return;
+ if(samples==mpp_global_samples&&!mpp_global_error)return;
+ bool listening=mpp_listen_enabled!=0;mpp_bank_pause();
+ mpp_global_error=settings().save(samples,settings_a,settings_b);
+ if(!mpp_global_error)mpp_global_samples=samples;
+ mpp_buffer_set(mpp_global_samples);mpp_bank_resume(listening);
+}
 #endif

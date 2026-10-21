@@ -11,8 +11,14 @@ const extraFxNames = [
   'Tremolo',
   'Vibrato'
 ];
-bool supportsExtraFx(String? identity) =>
-    ['NAMLNK13', 'NAMLNK14', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17'].contains(identity);
+bool supportsExtraFx(String? identity) => [
+      'NAMLNK13',
+      'NAMLNK14',
+      'NAMLNK15',
+      'NAMLNK16',
+      'NAMLNK17',
+      'NAMLNK18'
+    ].contains(identity);
 
 class FxValue extends ValueFormatter {
   final int index;

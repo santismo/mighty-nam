@@ -29,12 +29,14 @@ class StockControlPlan {
     'delay': 5,
     'reverb': 6,
   };
-  static int maximumType(String slot, String? identity) => ['fxa', 'fxb']
-          .contains(slot)
-      ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
-      : slot == 'eq' && ['NAMLNK14', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17'].contains(identity)
-          ? 4
-          : supportedTypes[slot]!;
+  static int maximumType(String slot, String? identity) =>
+      ['fxa', 'fxb'].contains(slot)
+          ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
+          : slot == 'eq' &&
+                  ['NAMLNK14', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17', 'NAMLNK18']
+                      .contains(identity)
+              ? 4
+              : supportedTypes[slot]!;
   static const ranges = [
     [13, 16, 15],
     [17, 22, 20],

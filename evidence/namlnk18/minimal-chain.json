@@ -1,0 +1,45 @@
+{
+  "status": "PASS_NAMLNK18_MINIMAL_CHAIN_AUDIT",
+  "elf_sha256": "6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2",
+  "blocks_per_observation": 64,
+  "fresh_NAM_spring_callback_counts": {
+    "0": 64,
+    "3": 64,
+    "8": 64,
+    "10": 64
+  },
+  "unused_bypassed_stock_callbacks": 0,
+  "idle_custom_FX_calls": 0,
+  "used_then_bypassed_callback_counts": {
+    "0": 64,
+    "5": 64,
+    "3": 64,
+    "7": 64,
+    "8": 64,
+    "10": 64
+  },
+  "used_tail_policy_unchanged": true,
+  "NAMLNK16_hot_code_tables_restored_exactly": true,
+  "hot_symbols": {
+    "_ZN3mpp12_GLOBAL__N_17kernelsE": {
+      "address": "0x1b200",
+      "bytes": 92,
+      "sha256": "2f25d1002f4dbb91d9fdf484afedfd7fa3d0b197fdcd2eb8b1d8e30fb59c04b7"
+    },
+    "_ZN3mpp12_GLOBAL__N_19dilationsE": {
+      "address": "0x1b25c",
+      "bytes": 92,
+      "sha256": "b412b34e6cf7c47ccc2549bd1f55725031a3114b9c089dc3dfdf4720fd50e9d1"
+    },
+    "_ZN3mpp6A2Lite7processEPKfPfj": {
+      "address": "0x1a399",
+      "bytes": 820,
+      "sha256": "cfcecd3f90fc89955e1fb70a11dbc2ef4a615413487e9c8a70e38faf589eb60c"
+    }
+  },
+  "hardware_cycles_measured": false,
+  "physical_latency_measured": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "next_step": "Per-type safe reset/drain for used stock gate/delay/reverb; do not freeze histories after an arbitrary timeout."
+}

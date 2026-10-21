@@ -25,7 +25,9 @@ p.add_argument('--cut-eq',action='store_true',help='NAMLNK14 High/Low Cut EQ; re
 p.add_argument('--responsive-controls',action='store_true',help='NAMLNK15 compact phone tuner, same-preset no-op and idle FX shortcut; requires --cut-eq')
 p.add_argument('--nam-pointer',action='store_true',help='NAMLNK16 non-fused NAM tap-address optimization; requires --responsive-controls and --m7-conv')
 p.add_argument('--adc-short-delay',action='store_true',help='NAMLNK17 startup-only ADC short-delay trial; requires --nam-pointer')
+p.add_argument('--global-buffer',action='store_true',help='NAMLNK18 global persistent buffer and playback-preserving successful saves; requires --adc-short-delay')
 a=p.parse_args()
+if a.global_buffer and not a.adc_short_delay:p.error('--global-buffer requires --adc-short-delay')
 if a.adc_short_delay and not a.nam_pointer:p.error('--adc-short-delay requires --nam-pointer')
 if a.nam_pointer and not (a.responsive_controls and a.m7_conv):p.error('--nam-pointer requires --responsive-controls and --m7-conv')
 if a.responsive_controls and not a.cut_eq:p.error('--responsive-controls requires --cut-eq')
@@ -89,6 +91,9 @@ if a.nam_pointer:flags+=['-DMPP_M7_POINTER_TAPS']
 if a.adc_short_delay:
  flags+=['-DMPP_ADC_SHORT_DELAY']
  sources+=['target/link/codec_startup.cpp']
+if a.global_buffer:
+ flags+=['-DMPP_GLOBAL_BUFFER']
+ sources+=['target/link/global_buffer.cpp']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -155,5 +160,7 @@ if a.nam_pointer:
  report.update(identity='NAMLNK16',nam_pointer_taps=True,codec_filters='Unchanged stock settings',physical_latency_improvement_verified=False)
 if a.adc_short_delay:
  report.update(identity='NAMLNK17',codec_filters='Startup-only ADC short-delay sharp, register 0x0a=0x22; other 20 writes unchanged',codec_status_page=117,codec_identification='Inferred AK4619; not a part-ID read',physical_codec_readback_verified=False)
+if a.global_buffer:
+ report.update(identity='NAMLNK18',global_persistent_buffer=True,global_settings_flash=[hex(0x303a4000),hex(0x303a6000)],runtime_changes='Global 8/16/32 setting survives power-off and preset changes; buffer/save resume prior output intent',physical_global_buffer_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

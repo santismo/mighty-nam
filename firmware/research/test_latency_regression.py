@@ -16,14 +16,16 @@ from test_preset_runtime import PresetMachine, build, preset_fixture, v
 p = argparse.ArgumentParser(description=__doc__)
 for name in ['payload', 'baseline_build', 'candidate_build', 'model', 'report']:
     p.add_argument(name, type=Path)
-p.add_argument('--baseline-identity', choices=['NAMLNK10', 'NAMLNK12', 'NAMLNK15', 'NAMLNK16'], default='NAMLNK12')
-p.add_argument('--candidate-identity', choices=['NAMLNK15', 'NAMLNK16', 'NAMLNK17'], default='NAMLNK15')
+p.add_argument('--baseline-identity', choices=['NAMLNK10', 'NAMLNK12', 'NAMLNK15', 'NAMLNK16', 'NAMLNK17', 'NAMLNK18'], default='NAMLNK12')
+p.add_argument('--candidate-identity', choices=['NAMLNK15', 'NAMLNK16', 'NAMLNK17', 'NAMLNK18'], default='NAMLNK15')
 a = p.parse_args()
 started = time.monotonic()
 digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
 objects = ['listening.o', 'irq_timing.o']
 if a.baseline_identity == 'NAMLNK12':
     objects.append('a2_lite.o')
+if a.candidate_identity == 'NAMLNK18':
+    objects.remove('listening.o') # Only buffer status changed; actual render order/PCM checked below.
 for name in objects:
     assert (a.baseline_build / name).read_bytes() == (a.candidate_build / name).read_bytes(), name
 stock = a.payload.read_bytes()

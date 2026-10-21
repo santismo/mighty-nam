@@ -30,7 +30,9 @@ class BankFixture extends UsbFixture {
         'audioBuffer': {
           'samples': bufferSamples,
           'sampleRate': 48000,
-          'processingSamples': 8
+          'processingSamples': 8,
+          'global': identity == 'NAMLNK18',
+          'storageError': 0
         },
         'presetBank': {
           'active': active,
@@ -45,7 +47,9 @@ class BankFixture extends UsbFixture {
     receiver = SimulatedPlug();
     await TransferClient(receiver).upload(models[slot]!);
     preset.setAll(0, h.sublist(128));
-    bufferSamples = ByteData.sublistView(h).getUint32(24, Endian.little);
+    if (identity != 'NAMLNK18') {
+      bufferSamples = ByteData.sublistView(h).getUint32(24, Endian.little);
+    }
     listening = true;
   }
 
@@ -118,7 +122,7 @@ class BankFixture extends UsbFixture {
         models[slot] = catalog
             .singleWhere((m) => m.checksum == crc32(receiver.activeSlot!));
         active = slot;
-        listening = false;
+        if (identity != 'NAMLNK18') listening = false;
       }
     } else if (op == 3) {
       recalls++;
@@ -134,6 +138,9 @@ class BankFixture extends UsbFixture {
     reply[14] = active;
     reply[15] = headers.keys.fold<int>(0, (a, b) => a | (1 << b));
     if (headers.containsKey(slot)) reply.setRange(16, 272, headers[slot]!);
+    if (identity == 'NAMLNK18' && headers.containsKey(slot)) {
+      w.setUint32(16 + 24, bufferSamples, Endian.little);
+    }
     if (badReadback && op == 1 && saves > 0) reply[80] ^= 1;
     w.setUint32(272, crc32(reply.sublist(0, 272)), Endian.little);
     return reply;
@@ -240,13 +247,68 @@ void main() {
     expect(home.onboard.dirty[slot], false, reason: home.status);
   }
 
+  testWidgets('buffer resume rejects a concurrent capture change', (t) async {
+    usb.identity = 'NAMLNK17';
+    final a = capture('First', 1), b = capture('Changed', 2);
+    usb.catalog.addAll([a, b]);
+    usb.seed([a], selected: a);
+    final dynamic home = await start(t);
+    await save(t, home, 0, a, 'First');
+    usb.listening = true;
+    usb.beforeListen = () async => TransferClient(usb.receiver).upload(b);
+    await work(t, home, () => home.setOutputBuffer(16));
+    expect(usb.listening, false);
+    expect(home.status, contains('Playback could not be confirmed'));
+    await t.pumpWidget(const SizedBox.shrink());
+    await t.pump();
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  for (final playing in [false, true]) {
+    testWidgets('NAMLNK18 global buffer and save preserve playback=$playing',
+        (t) async {
+      usb.identity = 'NAMLNK18';
+      final a = capture('Fender', 1);
+      usb.catalog.add(a);
+      usb.seed([a], selected: a);
+      final dynamic home = await start(t);
+      await save(t, home, 0, a, 'Green');
+      usb.listening = playing;
+      final saves = usb.saves;
+      final stored = List<int>.from(usb.headers[0]!);
+      await work(t, home, () => home.setOutputBuffer(16));
+      expect(usb.listening, playing);
+      expect(home.hardware['audioBuffer']['global'], true);
+      expect(home.status, contains('saved globally'));
+      expect(usb.saves, saves);
+      expect(
+          usb.headers[0], stored); // No preset overwrite for a global change.
+      await usb.button(0);
+      expect(usb.bufferSamples, 16);
+      usb.listening = playing;
+      await work(t, home, () => home.saveOnboard());
+      expect(usb.listening, playing);
+      expect(home.onboard.dirty[0], false, reason: home.status);
+      expect(home.hardware['audioBuffer']['samples'], 16);
+      await work(t, home, () => home.setOutputBuffer(8));
+      expect(usb.listening, playing);
+      expect(usb.bufferSamples, 8);
+      expect(t.takeException(), isNull);
+      await t.pumpWidget(const SizedBox.shrink());
+      await t.pump();
+      debugDefaultTargetPlatformOverride = null;
+    });
+  }
+
   for (final identity in [
     'NAMLNK10',
     'NAMLNK11',
     'NAMLNK12',
     'NAMLNK14',
     'NAMLNK15',
-    'NAMLNK16', 'NAMLNK17'
+    'NAMLNK16',
+    'NAMLNK17',
+    'NAMLNK18'
   ]) {
     testWidgets(
         '$identity: save colored captures, button recall, reconnect and app restart',

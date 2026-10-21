@@ -1,0 +1,78 @@
+{
+  "status": "PASS_NAMLNK18_CODEC_STARTUP",
+  "elf_sha256": "6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2",
+  "baseline_elf_sha256": "7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1",
+  "unchanged_objects": [
+    "model_receiver.o",
+    "tuner.o",
+    "preset_bank.o",
+    "effect_profiler.o",
+    "a2_lite.o",
+    "cut_eq.o",
+    "reply_transport.o",
+    "fx_blocks.o",
+    "sysex_codec.o",
+    "fx_runtime.o",
+    "cut_eq_runtime.o",
+    "irq_timing.o"
+  ],
+  "changed_registers": [
+    10
+  ],
+  "previous_value": 0,
+  "new_value": 34,
+  "cold_and_warm": [
+    {
+      "fill": 0,
+      "cold_and_warm": true,
+      "status": "c10f220a"
+    },
+    {
+      "fill": 165,
+      "cold_and_warm": true,
+      "status": "c10f220a"
+    },
+    {
+      "fill": 255,
+      "cold_and_warm": true,
+      "status": "c10f220a"
+    }
+  ],
+  "failed_transactions": [
+    {
+      "kind": "read",
+      "register": 10,
+      "status": "0xc10bff0a"
+    },
+    {
+      "kind": "read",
+      "register": 20,
+      "status": "0xc10722ff"
+    },
+    {
+      "kind": "write",
+      "register": 10,
+      "status": "0xc10b000a"
+    },
+    {
+      "kind": "write",
+      "register": 20,
+      "status": "0xc10f220a"
+    }
+  ],
+  "wrong_call_passthrough_cases": 4,
+  "real_stock_I2C_helpers": true,
+  "startup_before_bank_copy": true,
+  "identical_codec_GPIO_SAI_DMA": true,
+  "cached_readback_survives_amp_init": true,
+  "status_page": 117,
+  "read_only_protocol_both_channels": true,
+  "physical_codec_identification_verified": false,
+  "physical_latency_measured": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "limits": [
+    "Byte primitives are a simulated I2C device; electrical ACK and silicon behavior need physical validation.",
+    "A failed write of a value already held by the model cannot be inferred from matching readback."
+  ]
+}

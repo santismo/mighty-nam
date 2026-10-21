@@ -41,7 +41,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_ADC_SHORT_DELAY)
+#if defined(MPP_GLOBAL_BUFFER)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','8'};
+#elif defined(MPP_ADC_SHORT_DELAY)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','7'};
 #elif defined(MPP_M7_POINTER_TAPS)
@@ -401,7 +404,14 @@ extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned c
 #ifdef MPP_OUTPUT_BUFFER
  if(n==9&&(p[7]=='A'||p[7]=='B')){
   if(rd(0xe000ed04)&511)return;
-  if(p[7]=='B'){mpp_buffer_set(p[8]);return;}
+  if(p[7]=='B'){
+#ifdef MPP_GLOBAL_BUFFER
+   mpp_global_buffer_set(p[8]);
+#else
+   mpp_buffer_set(p[8]);
+#endif
+   return;}
+
   if(p[8]>1)return;
 #else
  if(p[7]=='A'&&n==9&&p[8]<2){
