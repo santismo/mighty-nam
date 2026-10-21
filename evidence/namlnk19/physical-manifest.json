@@ -1,0 +1,20 @@
+{
+  "schema": "namlnk19-physical-evidence-1",
+  "files": {
+    "evidence/namlnk19/physical-summary.json": "e64c8085e18b0586d571eedc59926f78cce985ecae5caf5901a9be0a098496c2",
+    "evidence/namlnk19/physical-timing-summary.json": "da119a1db49724998ec4e93dc0778c70169060c8e2c075b7a6c2cd06287e77ed",
+    "evidence/namlnk19/physical-timing-raw.json": "dd3f882b79469f2f1ac18091605785023c624ffbb04975782ea512232590cd7d",
+    "tools/namlnk19-trial/README.md": "934c9206ed6f0481d38f9e05ac3b89d127999a07568d4c7bdefcd67d9fb65fbd",
+    "tools/namlnk19-trial/build.py": "95778074e9b741b75661ecfe8818c2308900a06f989683c6c7291149c0cb4998",
+    "tools/namlnk19-trial/driver-header.c": "2742b28bfb2833c1a4972ec739d4bcd94a293e4aedf4893803481763ccec566e",
+    "tools/namlnk19-trial/global.swift": "38b01a358f74cea6b37a92c4c57610b0914ea61c80edb6b475b46acbb4b08e0b",
+    "tools/namlnk19-trial/inspect.swift": "c90c9a93cc132d7ba829f3ed97b76682bfa818a0ab98e850fe779b6dce7a8bfa",
+    "tools/namlnk19-trial/physical_helpers.swift": "fbe0b0b54a4e2b37d398e4ff4f0d85f78c9bad31e151f7148c4544b22752f937",
+    "tools/namlnk19-trial/restore.swift": "dcde93c79d5fc0f6e528de9972d653915f140d696c87ad64d907a7f1fa4ba036",
+    "tools/namlnk19-trial/restore_supplement.swift": "008f85e929d3436404e89999d54ac8dbbbd174fcff9dc6b0793660f37286f9e3",
+    "tools/namlnk19-trial/timing.swift": "d20f6db518cd427de20ed61dbb78c74f6895ff44a2dabbb19309bbea8e2d3df9",
+    "tools/namlnk19-trial/verify_restart.swift": "89f3436e6c2b4d8ce6f1f41e9d12652de1661cc2032c9299e9557429696a97c8"
+  },
+  "firmwareFileUnchanged": true,
+  "privateModelAndBackupPayloadsDistributed": false
+}

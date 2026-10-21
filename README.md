@@ -22,7 +22,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
-| NAMLNK19 / Mac 0.3.11 / phone 0.6.6 | Delay/reverb bypass sleep and explicit one-shot driver timing. All-type, restart, full-chain and controller checks passed offline; firmware not installed. See [test build and limits](docs/bypass-driver-timing-trial.md). |
+| NAMLNK19 / Mac 0.3.11 / phone 0.6.6 | Delay/reverb bypass sleep and explicit one-shot driver timing. Installed; seven restored presets and global 8-sample setting survived restart. Seven chain states, 84 driver snapshots and bypass/wake checks passed without reported faults. Playback left enabled; analog latency not measured. See [test build and limits](docs/bypass-driver-timing-trial.md). |
 | Latency research after NAMLNK18 preparation | Offline driver/FIFO audit and compiled delay/reverb sleep prototype. Fewer instruction events after bypass; no measured headphone-latency gain; integrated test build documented above. See [research and evidence](docs/audio-driver-and-bypass-audit.md). |
 | NAMLNK18 / Mac 0.3.10 / phone 0.6.5 | Global persistent buffer and playback-preserving edits; earlier NAM hot-code/table placement restored. Offline checks passed; firmware not installed or physically measured. See [global buffer trial](docs/global-buffer-trial.md). |
 | NAMLNK17 / Mac 0.3.9 / phone 0.6.4 | Installed; converter startup readback, seven restored presets, restart/color cycling and fault-free eight-sample checks verified. CPU snapshots were about 5–6% higher than the immediate 16 baseline; cause remains under investigation. Approximate 0.292 ms converter saving is predicted, not measured. See [converter trial](docs/converter-latency-trial.md). |

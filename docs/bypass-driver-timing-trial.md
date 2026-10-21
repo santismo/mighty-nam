@@ -1,6 +1,6 @@
 # NAMLNK19: bypass sleep and driver timing trial
 
-NAMLNK19 is prepared for an experimental physical test, **not installed**. The last physically verified build remains NAMLNK17. No USB/Bluetooth commands, mute commands, audio streams or updater actions were used while preparing this release. NAMLNK18's previously staged container remains unchanged.
+NAMLNK19 is **installed and physically checked** on the development plug. Seven restored presets, global buffer persistence, 168 IRQ snapshots and 84 driver captures passed; the user confirmed restart and seven-color button cycling. Playback was left enabled, with no explicit mute commands or host audio access. [Physical results and limits](#physical-results) distinguish these checks from the earlier offline preparation. NAMLNK18's staged container remains unchanged.
 
 - Firmware: `NAMLNK19-bypass-timing-test.bin`
 - SHA-256: `40e12512141730bdfbdd1c64c9b38d5c99032fa2546db5fed832b8912b8cc732`
@@ -47,14 +47,41 @@ clang -Wall -Wextra -Werror -Wno-deprecated-declarations firmware/tools/mpp_driv
 
 **Do not run until the physical test is requested.** Its sole operation is `--capture`. It requires exactly one matching MIDI endpoint pair and an NAMLNK19 identity, arms once, reads a bounded snapshot, and prints JSON. It has no generic packet sender and no listen, mute, preset-save or firmware-update operation. Feed the result to `decode_driver_timing.py` for interpretation. It was compiled, not connected to the plug during preparation.
 
-## Next physical test
+## Installation procedure (completed on the development plug)
 
 1. In normal mode, take a fresh seven-color backup while leaving output intent unchanged. This build's update still clears the onboard bank and global setting sectors; restore is required. Don't use an old backup without checking for newer edits.
 2. Only after explicit update readiness, install the exact named container through the stock updater. Do not reset/power off during the update.
 3. Restart normally, restore the seven colors with the chosen global buffer (normally eight), then verify power-off storage and button cycling.
 4. Compare matched fresh and used-then-bypassed minimal chains. Take explicit driver snapshots while checking faults and output. Measure the analog input-to-headphone path if equipment becomes available.
 
-No shorter handoff, four-frame processing, FIFO-watermark change or sample-rate change is included. The candidate's USB recovery and real-time headroom remain physically unverified. Existing stock recovery depends on reaching the stock updater; no full bootloader backup exists.
+No shorter handoff, four-frame processing, FIFO-watermark change or sample-rate change is included. NAMLNK19 USB recovery and worst-case real-time headroom remain unverified; the quiet physical checks below are narrower. Existing stock recovery depends on reaching the stock updater; no full bootloader backup exists.
+
+## Physical results
+
+All seven presets were restored from the checksum-verified bank used for NAMLNK17. There was no fresh backup immediately before NAMLNK19, so any later unsaved/unbacked-up edits are not included. Preset headers and both extra-FX records matched after a POWER-only restart; the user confirmed all seven button colors returned to Green. Global 16 and then 8 samples were checked across every color while preserving playback intent. Eight survived power-off.
+
+Seven chain states produced 168 ordinary IRQ timing snapshots and 84 complete two-phase driver captures. All had valid counters, zero reported processing faults and no observed FIFO/sync errors. Bypassed used tails returned processing cost to the NAM-only level, and waking Spring worked. After restart, the driver diagnostic header was idle with generation zero.
+
+| Chain/history | Median IRQ cycles |
+| --- | ---: |
+| NAM only | 73,921.5 |
+| NAM + Spring | 84,685.5 |
+| NAM after bypassing Spring | 73,887.5 |
+| NAM + Digital Delay + Spring | 89,491 |
+| NAM + Spring after bypassing Delay | 85,608.5 |
+| NAM after bypassing both | 73,963.5 |
+| NAM + Spring re-enabled | 84,764 |
+
+The two bypassed-tail runs returned within 0.1% of the initial NAM-only median. This is evidence that retained tail processing is being removed. It is not a measured reduction in guitar-to-headphone latency. Earlier NAMLNK16/17 numbers also differ in output mute state and DSP/cache history, so their percentage comparisons are indicative, not a controlled version benchmark.
+
+Driver publication snapshots covered both TX halves. At the sampled publication points the TX FIFO held 29 words and RX held 2; no cursor motion was observed inside the short register-read brackets. Entry-to-publication spans were 4,687–4,974 raw cycles, including diagnostic overhead. These sequential observations neither establish the worst refill deadline nor justify replacing the protected output handoff. No clocks, DMA descriptors, FIFO watermarks, processing size or sample rate were changed during this test.
+
+No explicit mute commands were sent. The existing firmware briefly silences transfers, preset changes and effect settling; that behavior remains. One output-enable command restored normal playback after the erased-bank restore. Saved startup playback is on, and the final read-only check found it still on.
+
+NAMLNK19 USB recovery, real phone Bluetooth behavior, worst-case chains and analog/listening latency have not been re-tested here. No further update is required to use this tested build.
+
+Evidence: [summary](../evidence/namlnk19/physical-summary.json), [timing summary](../evidence/namlnk19/physical-timing-summary.json), and [raw timing observations](../evidence/namlnk19/physical-timing-raw.json).
+
 
 ## What could reduce latency next?
 

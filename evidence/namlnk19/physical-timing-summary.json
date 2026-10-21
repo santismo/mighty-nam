@@ -1,0 +1,199 @@
+{
+  "status": "PASS_PHYSICAL_TIMING_CHECKS",
+  "cases": [
+    {
+      "case": "NAM-only",
+      "irq_min": 71458,
+      "irq_median": 73921.5,
+      "irq_max": 77187,
+      "irq_snapshots": 24,
+      "driver_snapshots": 12,
+      "entry_to_publication_min": 4687,
+      "entry_to_publication_median": 4777.5,
+      "entry_to_publication_max": 4911,
+      "publication_tx_fifo_occupancy": [
+        29
+      ],
+      "publication_rx_fifo_occupancy": [
+        2
+      ],
+      "observed_dma_motion": 0
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "irq_min": 83275,
+      "irq_median": 84685.5,
+      "irq_max": 87467,
+      "irq_snapshots": 24,
+      "driver_snapshots": 12,
+      "entry_to_publication_min": 4712,
+      "entry_to_publication_median": 4747.0,
+      "entry_to_publication_max": 4823,
+      "publication_tx_fifo_occupancy": [
+        29
+      ],
+      "publication_rx_fifo_occupancy": [
+        2
+      ],
+      "observed_dma_motion": 0
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "irq_min": 71492,
+      "irq_median": 73887.5,
+      "irq_max": 75804,
+      "irq_snapshots": 24,
+      "driver_snapshots": 12,
+      "entry_to_publication_min": 4716,
+      "entry_to_publication_median": 4776.0,
+      "entry_to_publication_max": 4845,
+      "publication_tx_fifo_occupancy": [
+        29
+      ],
+      "publication_rx_fifo_occupancy": [
+        2
+      ],
+      "observed_dma_motion": 0
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "irq_min": 87201,
+      "irq_median": 89491.0,
+      "irq_max": 91603,
+      "irq_snapshots": 24,
+      "driver_snapshots": 12,
+      "entry_to_publication_min": 4691,
+      "entry_to_publication_median": 4775.5,
+      "entry_to_publication_max": 4844,
+      "publication_tx_fifo_occupancy": [
+        29
+      ],
+      "publication_rx_fifo_occupancy": [
+        2
+      ],
+      "observed_dma_motion": 0
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "irq_min": 83008,
+      "irq_median": 85608.5,
+      "irq_max": 88163,
+      "irq_snapshots": 24,
+      "driver_snapshots": 12,
+      "entry_to_publication_min": 4699,
+      "entry_to_publication_median": 4780.5,
+      "entry_to_publication_max": 4974,
+      "publication_tx_fifo_occupancy": [
+        29
+      ],
+      "publication_rx_fifo_occupancy": [
+        2
+      ],
+      "observed_dma_motion": 0
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "irq_min": 71717,
+      "irq_median": 73963.5,
+      "irq_max": 76459,
+      "irq_snapshots": 24,
+      "driver_snapshots": 12,
+      "entry_to_publication_min": 4716,
+      "entry_to_publication_median": 4786.0,
+      "entry_to_publication_max": 4857,
+      "publication_tx_fifo_occupancy": [
+        29
+      ],
+      "publication_rx_fifo_occupancy": [
+        2
+      ],
+      "observed_dma_motion": 0
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "irq_min": 82138,
+      "irq_median": 84764.0,
+      "irq_max": 86541,
+      "irq_snapshots": 24,
+      "driver_snapshots": 12,
+      "entry_to_publication_min": 4724,
+      "entry_to_publication_median": 4800.5,
+      "entry_to_publication_max": 4886,
+      "publication_tx_fifo_occupancy": [
+        29
+      ],
+      "publication_rx_fifo_occupancy": [
+        2
+      ],
+      "observed_dma_motion": 0
+    }
+  ],
+  "comparisons": [
+    {
+      "case": "NAM-only",
+      "baseline_version": 16,
+      "baseline_median": 83911.0,
+      "candidate19_median": 73921.5,
+      "cycle_change_percent": -11.904875403701542,
+      "limitations": "Earlier baseline output was muted; current output enabled. Different DSP/cache history, uncontrolled input, sequential samples. Not a clean causal version comparison or latency measurement."
+    },
+    {
+      "case": "NAM-only",
+      "baseline_version": 17,
+      "baseline_median": 88247.0,
+      "candidate19_median": 73921.5,
+      "cycle_change_percent": -16.233413033870836,
+      "limitations": "Earlier baseline output was muted; current output enabled. Different DSP/cache history, uncontrolled input, sequential samples. Not a clean causal version comparison or latency measurement."
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "baseline_version": 16,
+      "baseline_median": 83899.5,
+      "candidate19_median": 84685.5,
+      "cycle_change_percent": 0.936835142044945,
+      "limitations": "Earlier baseline output was muted; current output enabled. Different DSP/cache history, uncontrolled input, sequential samples. Not a clean causal version comparison or latency measurement."
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "baseline_version": 17,
+      "baseline_median": 88857.5,
+      "candidate19_median": 84685.5,
+      "cycle_change_percent": -4.695157977660857,
+      "limitations": "Earlier baseline output was muted; current output enabled. Different DSP/cache history, uncontrolled input, sequential samples. Not a clean causal version comparison or latency measurement."
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "baseline_version": 16,
+      "baseline_median": 84138.0,
+      "candidate19_median": 73887.5,
+      "cycle_change_percent": -12.182961325441532,
+      "limitations": "Earlier baseline output was muted; current output enabled. Different DSP/cache history, uncontrolled input, sequential samples. Not a clean causal version comparison or latency measurement."
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "baseline_version": 17,
+      "baseline_median": 88196.0,
+      "candidate19_median": 73887.5,
+      "cycle_change_percent": -16.22352487641163,
+      "limitations": "Earlier baseline output was muted; current output enabled. Different DSP/cache history, uncontrolled input, sequential samples. Not a clean causal version comparison or latency measurement."
+    }
+  ],
+  "driver_snapshots": 84,
+  "counter_invalid": 0,
+  "fifo_errors_observed": 0,
+  "observed_dma_motion": 0,
+  "published_halves": [
+    "0x20016900",
+    "0x20016980"
+  ],
+  "physical_latency_measured": false,
+  "hardware_deadline_proven": false,
+  "outputEnabledAtEnd": true,
+  "faultsAtEnd": 0,
+  "limitations": [
+    "84 sequential snapshots do not establish worst-case real-time capacity.",
+    "Register reads are sequential, not atomic; stable cursors cannot exclude an ABA race.",
+    "Cycle spans include capture overhead and are not calibrated to milliseconds.",
+    "Effect enable/bypass cost differs from fixed audio latency."
+  ]
+}
