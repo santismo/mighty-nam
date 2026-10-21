@@ -51,3 +51,5 @@ Read and back up the latest bank over USB in normal mode before updating: instal
 ## Reproduction
 
 Build with the existing stock/listening/preset/performance/tuner/FX/cut flags plus `--responsive-controls` (see `firmware/tools/build_link_firmware.py`). Run `test_preset_runtime.py`, `test_fx_firmware.py`, `test_cut_eq_firmware.py`, `test_responsive_firmware.py`, and `test_responsive_regression.py` against that ELF and the exact stock payload. Compile `test_compact_tuner.cpp` with address/undefined-behavior sanitizers. `stage_responsive_firmware.py STOCK_PACKAGE BUILD_DIR REPORTS OUTPUT_DIR` requires all matching evidence and refuses modified/missing reports. It never accesses USB or flashes a device.
+
+A subsequent [offline latency audit](latency-audit.md) compares exact NAMLNK12 and NAMLNK15 output and quantifies the Green cut EQ’s filter phase. No hardware latency improvement is claimed.
