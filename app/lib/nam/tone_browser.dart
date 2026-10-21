@@ -8,10 +8,14 @@ class ToneBrowser extends StatefulWidget {
   final Future<Tone3000Client> Function() signIn;
   final Future<void> Function() officialPicker;
   final int? initialToneId;
+  final bool loadToPlug;
+  final String? activeCaptureName;
   const ToneBrowser(
       {super.key,
       this.client,
       this.initialToneId,
+      this.loadToPlug = false,
+      this.activeCaptureName,
       required this.signIn,
       required this.officialPicker});
   @override
@@ -33,6 +37,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
   int page = 1, pages = 1, modelPage = 1, modelPages = 1;
   List<Map<String, dynamic>> tones = [], models = [];
   Map<String, dynamic>? tone;
+  final browseScroll = ScrollController(), detailScroll = ScrollController();
   final cache = <String, Map<String, dynamic>>{};
   @override
   void initState() {
@@ -52,6 +57,8 @@ class _ToneBrowserState extends State<ToneBrowser> {
     for (final c in [query, make, creator, tag]) {
       c.dispose();
     }
+    browseScroll.dispose();
+    detailScroll.dispose();
     super.dispose();
   }
 
@@ -159,6 +166,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
           tone = detail;
           models = next;
           modelPage = 1;
+          if (detailScroll.hasClients) detailScroll.jumpTo(0);
           modelPages = result['total_pages'] is int ? result['total_pages'] : 1;
         });
       });
@@ -240,87 +248,14 @@ class _ToneBrowserState extends State<ToneBrowser> {
       t['images'] is List && (t['images'] as List).isNotEmpty
           ? t['images'][0]
           : null;
-  @override
-  Widget build(BuildContext context) => SafeArea(
-          child: Column(children: [
-        Padding(
-            padding: const EdgeInsets.fromLTRB(18, 8, 8, 8),
-            child: Row(children: [
-              if (tone != null)
-                IconButton(
-                    tooltip: 'Back to tones',
-                    onPressed: busy ? null : () => setState(() => tone = null),
-                    icon: const Icon(Icons.arrow_back)),
-              const Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    Text('TONE3000',
-                        style: TextStyle(
-                            fontSize: 23, fontWeight: FontWeight.bold)),
-                    Text('Choose a capture for this NAM block',
-                        style: TextStyle(fontSize: 12, color: Colors.white60))
-                  ])),
-              IconButton(
-                  tooltip: 'Close tone browser',
-                  onPressed: busy ? null : () => Navigator.pop(context),
-                  icon: const Icon(Icons.close))
-            ])),
-        if (busy) const LinearProgressIndicator(minHeight: 2),
-        Expanded(
-            child: ListView(padding: const EdgeInsets.all(18), children: [
-          Row(children: [
-            const Icon(Icons.volume_off, size: 16),
-            const SizedBox(width: 6),
-            const Expanded(
-                child: Text('Silent browsing · A2 Lite target',
-                    style: TextStyle(fontSize: 12))),
-            if (client?.connected ?? false)
-              TextButton(
-                  onPressed: busy
-                      ? null
-                      : () => run(() async {
-                            await client!.signOut();
-                            cache.clear();
-                            setState(() {
-                              tone = null;
-                              tones = [];
-                              models = [];
-                              message = 'Signed out.';
-                            });
-                          }),
-                  child: const Text('Sign out'))
-          ]),
-          if (message.isNotEmpty)
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Text(message,
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.error))),
-          if (!(client?.connected ?? false)) ...[
-            const SizedBox(height: 12),
-            const Text('Choose a NAM model',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
-            const Text(
-                'Sign in to search TONE3000, browse your favorites and revisit downloaded tones. Choose a model to replace the selected NAM capture.'),
-            const SizedBox(height: 14),
-            FilledButton.icon(
-                onPressed: busy
-                    ? null
-                    : () => run(() async {
-                          client = await widget.signIn();
-                          if (!mounted) return;
-                          await fetch();
-                        }),
-                icon: const Icon(Icons.login),
-                label: const Text('Sign in to TONE3000')),
-            const SizedBox(height: 12),
-            const Text(
-                'The Mac app remembers sign-in securely in Keychain. The web preview keeps it for this browser session.',
-                style: TextStyle(fontSize: 12, color: Colors.white60)),
-          ],
-          if (tone == null) ...[
+  Widget browseList() => Scrollbar(
+      controller: browseScroll,
+      thumbVisibility: true,
+      child: ListView(
+          key: const PageStorageKey('tone-results'),
+          controller: browseScroll,
+          padding: const EdgeInsets.all(18),
+          children: [
             const SizedBox(height: 16),
             SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -436,6 +371,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
                           })
               ]),
               ExpansionTile(
+                  key: const PageStorageKey('tone-more-filters'),
                   title: const Text('Make, creator & tag'),
                   tilePadding: EdgeInsets.zero,
                   children: [
@@ -486,6 +422,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
                                 const SizedBox(height: 5),
                                 stats(t)
                               ])),
+                      selected: tone?['id'] == t['id'],
                       trailing: const Icon(Icons.chevron_right),
                       onTap: busy ? null : () => openTone(t))),
             if (client?.connected ?? false)
@@ -502,69 +439,200 @@ class _ToneBrowserState extends State<ToneBrowser> {
                         : null,
                     child: const Text('Next'))
               ]),
-            const SizedBox(height: 12),
-            TextButton(
-                onPressed: busy ? null : () => run(widget.officialPicker),
-                child: const Text('Open official tone picker')),
-            const Text(
-                'Catalog access follows TONE3000 API limits. If search is unavailable, use the official picker. Model bytes are validated before selection.',
-                style: TextStyle(fontSize: 12, color: Colors.white54)),
-          ] else ...[
-            const SizedBox(height: 12),
-            Text('${tone!['title']}',
-                style:
-                    const TextStyle(fontSize: 27, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
-            Row(children: [
-              thumbnail(toneImage(tone!)),
-              const SizedBox(width: 12),
-              Expanded(child: creatorLine(tone!))
-            ]),
-            const SizedBox(height: 10),
-            stats(tone!),
-            const SizedBox(height: 8),
-            Text('${tone!['license'] ?? 'See tone license'}',
-                style: const TextStyle(color: Colors.white60)),
-            const SizedBox(height: 12),
-            Text('${tone!['description'] ?? ''}'),
-            const SizedBox(height: 20),
-            if (tone!['format'] == 'ir')
-              const Text(
-                  'This is an impulse response, not a NAM capture. Custom IR transfer to the Cabinet block is not available yet.'),
-            if (tone!['format'] == 'nam') ...[
-              const Text('Choose a model', style: TextStyle(fontSize: 20)),
-              const Text(
-                  'A2 is the architecture; Lite compatibility is checked from the actual model. A larger capture will not replace your current model.',
-                  style: TextStyle(fontSize: 12, color: Colors.white60)),
-              for (final m in models)
-                Card(
-                    child: ListTile(
-                        title: Text('${m['name'] ?? 'Model'}'),
-                        subtitle: Text('A2 · ${m['size'] ?? 'unknown size'}'),
-                        trailing: const Icon(Icons.add_circle_outline),
-                        onTap: busy ? null : () => choose(m))),
-              if (models.isEmpty)
-                const Padding(
-                    padding: EdgeInsets.all(18),
-                    child: Text('No A2 models found for this tone.')),
-              if (modelPage < modelPages)
+          ]));
+  Widget detailList() => tone == null
+      ? const Center(
+          child: Padding(
+              padding: EdgeInsets.all(32),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Icon(Icons.graphic_eq, size: 36, color: Colors.white38),
+                SizedBox(height: 16),
+                Text('Choose a tone to see its captures',
+                    style: TextStyle(fontSize: 18)),
+                SizedBox(height: 8),
+                Text(
+                    'Load an A2 Lite capture into NAM. Favorites stay in Your captures.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white54))
+              ])))
+      : Scrollbar(
+          controller: detailScroll,
+          thumbVisibility: true,
+          child: ListView(
+              key: ValueKey('tone-detail-${tone!['id']}'),
+              controller: detailScroll,
+              padding: const EdgeInsets.all(22),
+              children: [
+                const SizedBox(height: 12),
+                Text('${tone!['title']}',
+                    style: const TextStyle(
+                        fontSize: 27, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 8),
+                Row(children: [
+                  thumbnail(toneImage(tone!)),
+                  const SizedBox(width: 12),
+                  Expanded(child: creatorLine(tone!))
+                ]),
+                const SizedBox(height: 10),
+                stats(tone!),
+                const SizedBox(height: 8),
+                Text('${tone!['license'] ?? 'See tone license'}',
+                    style: const TextStyle(color: Colors.white60)),
+                const SizedBox(height: 12),
+                Text('${tone!['description'] ?? ''}'),
+                const SizedBox(height: 20),
+                if (tone!['format'] == 'ir')
+                  const Text(
+                      'This is an impulse response, not a NAM capture. Custom IR transfer to the Cabinet block is not available yet.'),
+                if (tone!['format'] == 'nam') ...[
+                  const Text('Choose a model', style: TextStyle(fontSize: 20)),
+                  const Text(
+                      'A2 is the architecture; Lite compatibility is checked from the actual model. A larger capture will not replace your current model.',
+                      style: TextStyle(fontSize: 12, color: Colors.white60)),
+                  for (final m in models)
+                    Card(
+                        child: ListTile(
+                            title: Text('${m['name'] ?? 'Model'}'),
+                            subtitle:
+                                Text('A2 · ${m['size'] ?? 'unknown size'}'),
+                            trailing: FilledButton(
+                                key: ValueKey('load-model-${m['id']}'),
+                                onPressed: busy ? null : () => choose(m),
+                                child: Text(widget.loadToPlug
+                                    ? 'Load on plug'
+                                    : 'Use capture')),
+                            onTap: busy ? null : () => choose(m))),
+                  if (models.isEmpty)
+                    const Padding(
+                        padding: EdgeInsets.all(18),
+                        child: Text('No A2 models found for this tone.')),
+                  if (modelPage < modelPages)
+                    TextButton(
+                        onPressed: busy
+                            ? null
+                            : () => run(() async {
+                                  final r = await client!
+                                      .models(tone!['id'], page: modelPage + 1);
+                                  final next = rows(r);
+                                  if (mounted) {
+                                    setState(() {
+                                      models.addAll(next);
+                                      modelPage++;
+                                    });
+                                  }
+                                }),
+                        child: const Text('More models')),
+                ],
+              ]));
+  @override
+  Widget build(BuildContext context) => SafeArea(
+          child: Column(children: [
+        Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 12, 12),
+            child: Row(children: [
+              if (tone != null)
+                IconButton(
+                    tooltip: 'Back to tones',
+                    onPressed: busy
+                        ? null
+                        : () {
+                            setState(() => tone = null);
+                            if (tones.isEmpty) load();
+                          },
+                    icon: const Icon(Icons.arrow_back)),
+              const Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    Text('TONE3000',
+                        style: TextStyle(
+                            fontSize: 23, fontWeight: FontWeight.w600)),
+                    Text('Choose a capture for NAM',
+                        style: TextStyle(fontSize: 12, color: Colors.white60))
+                  ])),
+              if (widget.initialToneId == null)
+                FilledButton.icon(
+                    key: const ValueKey('official-tone-picker'),
+                    onPressed: busy ? null : () => run(widget.officialPicker),
+                    icon: const Icon(Icons.search),
+                    label: const Text('Browse TONE3000')),
+              IconButton(
+                  tooltip: 'Close tone browser',
+                  onPressed: busy ? null : () => Navigator.pop(context),
+                  icon: const Icon(Icons.close)),
+            ])),
+        Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            child: Row(children: [
+              Expanded(
+                  child: Text(
+                      widget.activeCaptureName == null
+                          ? '48 kHz · A2 Lite · no audio previews'
+                          : 'Selected in NAM: ${widget.activeCaptureName}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 12, color: Colors.white60))),
+              if (client?.connected ?? false)
                 TextButton(
                     onPressed: busy
                         ? null
                         : () => run(() async {
-                              final r = await client!
-                                  .models(tone!['id'], page: modelPage + 1);
-                              final next = rows(r);
-                              if (mounted) {
-                                setState(() {
-                                  models.addAll(next);
-                                  modelPage++;
-                                });
-                              }
+                              await client!.signOut();
+                              cache.clear();
+                              setState(() {
+                                tone = null;
+                                tones = [];
+                                models = [];
+                                message = 'Signed out.';
+                              });
                             }),
-                    child: const Text('More models')),
-            ],
-          ]
-        ]))
+                    child: const Text('Sign out')),
+            ])),
+        if (busy) const LinearProgressIndicator(minHeight: 2),
+        if (message.isNotEmpty)
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Text(message,
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.error))),
+        const Divider(height: 1),
+        Expanded(
+            child: !(client?.connected ?? false)
+                ? Center(
+                    child: SizedBox(
+                        width: 440,
+                        child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text('Your next capture',
+                                      style: TextStyle(fontSize: 24)),
+                                  const SizedBox(height: 12),
+                                  const Text(
+                                      'Browse the full TONE3000 catalog, or sign in here for your favorites and downloads.',
+                                      textAlign: TextAlign.center),
+                                  const SizedBox(height: 20),
+                                  FilledButton.icon(
+                                      onPressed: busy
+                                          ? null
+                                          : () => run(() async {
+                                                client = await widget.signIn();
+                                                if (mounted) await fetch();
+                                              }),
+                                      icon: const Icon(Icons.login),
+                                      label: const Text('Sign in to TONE3000')),
+                                ]))))
+                : LayoutBuilder(
+                    builder: (context, size) => size.maxWidth >= 820
+                        ? Row(children: [
+                            Expanded(flex: 5, child: browseList()),
+                            const VerticalDivider(width: 1),
+                            Expanded(flex: 4, child: detailList())
+                          ])
+                        : tone == null
+                            ? browseList()
+                            : detailList())),
       ]));
 }

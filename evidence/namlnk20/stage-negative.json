@@ -1,0 +1,14 @@
+{
+  "status": "PASS_NAMLNK20_PACKAGE_REJECTION",
+  "cases": [
+    "identity",
+    "runtime-hash",
+    "planner-source",
+    "linker-hash",
+    "dma-prototype",
+    "missing-evidence",
+    "controller-changed",
+    "stock-package"
+  ],
+  "device_access": false
+}

@@ -88,3 +88,20 @@ python3 -m http.server 8765 --directory docs
 ```
 
 Edit the HTML/CSS/JS, then run `python3 scripts/check_site.py`. The chain illustration is a local teaching demo, not a device connection or live TONE3000 browser.
+
+## NAMLNK20 active-chain candidate
+
+The current experimental release uses the same feature flags through NAMLNK19 plus `--active-chain` (not `--active-chain-prototype` or either DMA prototype). See [trial behavior and limits](docs/active-chain-trial.md) and [exact evidence](evidence/namlnk20/README.md).
+
+```sh
+python3 firmware/tools/build_link_firmware.py build/link20 \
+  --stock-chain --m7-conv --fast-bypass --m7-dense --prime-state \
+  --irq-timing --listening --early-output --output-buffer --preset-bank \
+  --performance --tuner --fx-blocks --cut-eq --responsive-controls \
+  --nam-pointer --adc-short-delay --global-buffer --driver-timing --active-chain
+python3 firmware/tools/stage_active_chain_firmware.py \
+  'private/MP3_V1.5.6_Original(VT).bin' build/link20 evidence/namlnk20 build/candidate20 \
+  --controller-dir ../nam-plug-controller
+```
+
+The source checkout and exact build must match the evidence, or the gate rejects packaging. Current reports are reference evidence, not permission to skip fresh tests after changes. The package contains empty preset/settings storage and requires a fresh backup and restore for a physical update. Packaging does not contact the plug. USB recording compatibility is a required next-release check, not a result established by these offline tests.

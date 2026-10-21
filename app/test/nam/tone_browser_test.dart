@@ -109,6 +109,48 @@ class CatalogFixture extends Tone3000Client {
 }
 
 void main() {
+  for (final width in [520.0, 1180.0]) {
+    testWidgets(
+        'capture navigation at $width px keeps selection and load action',
+        (t) async {
+      final api = CatalogFixture();
+      addTearDown(api.close);
+      await t.binding.setSurfaceSize(Size(width, 760));
+      addTearDown(() => t.binding.setSurfaceSize(null));
+      var pickerCalls = 0;
+      await t.pumpWidget(MaterialApp(
+          home: Scaffold(
+              body: ToneBrowser(
+        client: api,
+        signIn: () async => api,
+        loadToPlug: true,
+        activeCaptureName: 'Current Fender',
+        officialPicker: () async {
+          pickerCalls++;
+        },
+      ))));
+      await t.pumpAndSettle();
+      await t.tap(find.text('Browse TONE3000'));
+      await t.pumpAndSettle();
+      expect(pickerCalls, 1);
+      await t.ensureVisible(find.text('Test amp'));
+      await t.pump();
+      await t.tap(find.text('Test amp'));
+      await t.pumpAndSettle();
+      expect(find.text('Load on plug'), findsOneWidget);
+      expect(find.textContaining('Current Fender'), findsOneWidget);
+      if (width > 820)
+        expect(find.widgetWithText(TextField, 'Search tones'), findsOneWidget);
+      await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
+      await t.pump();
+      expect(t.takeException(), isNull);
+      await t.tap(find.byTooltip('Back to tones'));
+      await t.pumpAndSettle();
+      expect(find.text('Test amp'), findsOneWidget);
+      expect(t.takeException(), isNull);
+    });
+  }
+
   testWidgets('tone filters, real counts and cabinet IR browse-only details',
       (t) async {
     final api = CatalogFixture();
@@ -122,7 +164,7 @@ void main() {
                 signIn: () async => api,
                 officialPicker: () async {}))));
     await t.pumpAndSettle();
-    expect(find.text('12,345 downloads'), findsOneWidget);
+    expect(find.text('12,345 downloads'), findsWidgets);
     for (final entry in {
       'Amp head': 'amp',
       'Amp + cab': 'amp-cab',
@@ -145,7 +187,7 @@ void main() {
     expect(api.modelRequests, 0);
     expect(find.textContaining('Custom IR transfer'), findsOneWidget);
     expect(find.text('Choose a model'), findsNothing);
-    expect(find.text('12,345 downloads'), findsOneWidget);
+    expect(find.text('12,345 downloads'), findsWidgets);
     await t.tap(find.byTooltip('Back to tones'));
     await t.pumpAndSettle();
     await t.ensureVisible(find.byKey(const ValueKey('tone-format')));
@@ -252,8 +294,8 @@ void main() {
                 officialPicker: () async {}))));
     await t.pumpAndSettle();
     expect(find.textContaining('rate limit'), findsOneWidget);
-    await t.ensureVisible(find.text('Open official tone picker'));
-    expect(find.text('Open official tone picker'), findsOneWidget);
+    await t.ensureVisible(find.text('Browse TONE3000'));
+    expect(find.text('Browse TONE3000'), findsOneWidget);
     await t.ensureVisible(find.text('Sign out'));
     await t.tap(find.text('Sign out'));
     await t.pumpAndSettle();

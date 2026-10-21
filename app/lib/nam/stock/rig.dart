@@ -71,6 +71,22 @@ class HybridRig {
     return config;
   }
 
+  List<RigBlock> visibleBlocks({required bool activeOnly}) =>
+      activeOnly ? blocks.where((b) => b.enabled).toList() : blocks;
+
+  void addBlock(RigBlock block) {
+    if (!blocks.contains(block)) throw ArgumentError('Unknown block');
+    if (block.enabled) return;
+    block.enabled = true;
+    reorder(blocks.indexOf(block), blocks.length - 1);
+  }
+
+  void moveVisible(int oldIndex, int newIndex, {required bool activeOnly}) {
+    final visible = visibleBlocks(activeOnly: activeOnly);
+    reorder(
+        blocks.indexOf(visible[oldIndex]), blocks.indexOf(visible[newIndex]));
+  }
+
   void reorder(int oldIndex, int newIndex) {
     if (oldIndex < 0 ||
         oldIndex >= blocks.length ||

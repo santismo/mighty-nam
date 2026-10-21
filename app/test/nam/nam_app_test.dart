@@ -291,8 +291,9 @@ void main() {
       await t.tap(find.text('Test amp'));
       await t.pump();
       await t.pump(const Duration(seconds: 1));
-      await t.ensureVisible(find.text('Test Lite capture'));
-      await t.tap(find.text('Test Lite capture'));
+      await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
+      await t.pump();
+      await t.tap(find.byKey(const ValueKey('load-model-5')));
       await t.pumpAndSettle();
       final selected = HybridRig.parse(jsonDecode(library!)['active']);
       expect(selected.blocks.singleWhere((b) => b.slot == 'cab').enabled,
@@ -451,7 +452,7 @@ void main() {
     await t.pumpAndSettle();
     final rig = HybridRig.parse(clipboard!);
     expect(rig.blocks[6].slot, 'drive');
-    expect(rig.blocks.singleWhere((b)=>b.slot=='drive').enabled, true);
+    expect(rig.blocks.singleWhere((b) => b.slot == 'drive').enabled, true);
     await t.ensureVisible(find.byTooltip('Save chain'));
     await t.tap(find.byTooltip('Save chain'));
     await t.pump(const Duration(milliseconds: 400));
@@ -687,8 +688,11 @@ void main() {
       await t.pumpAndSettle();
       expect(receiver.activeSlot, capture.slot);
       expect(calls.where((s) => s == 'exchangeModelFrame').length, 35);
-      expect(calls.where((s) => s == 'inspect').length,
-          stopped || !stockChain ? 3 : 5); // Fresh playback intent read before upload.
+      expect(
+          calls.where((s) => s == 'inspect').length,
+          stopped || !stockChain
+              ? 3
+              : 5); // Fresh playback intent read before upload.
       if (stopped) {
         expect(find.textContaining('did not confirm the capture is running'),
             findsOneWidget);

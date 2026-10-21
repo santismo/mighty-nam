@@ -24,7 +24,7 @@ def main():
    v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=elf
    m=kind(fill=fill,path=a.model);assert not any(m.stats());m.arm();m.u.mem_write(m.preset,bytes(preset_fixture([8],{8:4})))
    m.process(0);m.process(1);assert not m.words()[4]
-   if identity=='NAMACP01':assert m.stats()[0]==2
+   if identity in ('NAMACP01','NAMLNK20'):assert m.stats()[0]==2
    else:assert m.stats()[0]==0 and m.stats()[1:3]==[2,2]
    m.restart();assert not any(m.stats());m.upload(model_slot(a.model),444);m.arm();m.process(0)
    rows.append(dict(identity=identity,elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),fill=fill,cold_and_warm=True,reloaded=True,descriptor_bytes_unchanged=True,changed_register_writes=delta))

@@ -39,7 +39,8 @@ class StockControlPlan {
                     'NAMLNK16',
                     'NAMLNK17',
                     'NAMLNK18',
-                    'NAMLNK19'
+                    'NAMLNK19',
+                    'NAMLNK20'
                   ].contains(identity)
               ? 4
               : supportedTypes[slot]!;

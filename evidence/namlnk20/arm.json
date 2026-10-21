@@ -1,0 +1,143 @@
+{
+  "status": "PASS_OFFLINE_ACTIVE_CHAIN",
+  "identity": "NAMLNK20",
+  "elf_sha256": "6cd51578d2ec623c9c44c5350bafaf564bead7b79a66b6b3ca83e881b01df8d6",
+  "cases": [
+    {
+      "case": "NAM",
+      "actual_callbacks": [
+        3
+      ],
+      "baseline_callbacks": [
+        0,
+        3,
+        10
+      ],
+      "active_instructions": 46130,
+      "baseline_instructions": 49378,
+      "steady_output_exact": true,
+      "peak_difference": 0.0,
+      "relative_RMS_difference": 0.0,
+      "max_NAM_reference_error": 0.0
+    },
+    {
+      "case": "NAM-Spring",
+      "actual_callbacks": [
+        3,
+        8
+      ],
+      "baseline_callbacks": [
+        0,
+        3,
+        8,
+        10
+      ],
+      "active_instructions": 53259,
+      "baseline_instructions": 56435,
+      "steady_output_exact": true,
+      "peak_difference": 0.0,
+      "relative_RMS_difference": 0.0,
+      "max_NAM_reference_error": 0.0
+    },
+    {
+      "case": "full",
+      "actual_callbacks": [
+        5,
+        1,
+        2,
+        3,
+        9,
+        4,
+        6,
+        7,
+        8
+      ],
+      "baseline_callbacks": [
+        0,
+        5,
+        1,
+        2,
+        3,
+        9,
+        4,
+        6,
+        7,
+        8,
+        10
+      ],
+      "active_instructions": 91059,
+      "baseline_instructions": 93715,
+      "steady_output_exact": true,
+      "peak_difference": 0.0,
+      "relative_RMS_difference": 0.0,
+      "max_NAM_reference_error": 0.0
+    },
+    {
+      "case": "empty",
+      "actual_callbacks": [],
+      "baseline_callbacks": [
+        0,
+        3,
+        10
+      ],
+      "active_instructions": 3735,
+      "baseline_instructions": 15887,
+      "steady_output_exact": true,
+      "peak_difference": 0.0,
+      "relative_RMS_difference": 0.0,
+      "max_NAM_reference_error": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "case": "two-block",
+      "blocks": 1350,
+      "stock_calls_per_block": 2,
+      "FX_calls_per_block": 0,
+      "NAM_error": 0.0
+    },
+    {
+      "case": "add-full-and-FX",
+      "blocks": 1350,
+      "stock_calls_per_block": 9,
+      "FX_calls_per_block": 2,
+      "NAM_error": 0.0
+    },
+    {
+      "case": "reorder",
+      "blocks": 1350,
+      "stock_calls_per_block": 9,
+      "FX_calls_per_block": 2,
+      "NAM_error": 0.0
+    },
+    {
+      "case": "remove-stock",
+      "blocks": 1350,
+      "stock_calls_per_block": 1,
+      "FX_calls_per_block": 2,
+      "NAM_error": 0.0
+    },
+    {
+      "case": "restore-reverb",
+      "blocks": 1350,
+      "stock_calls_per_block": 2,
+      "FX_calls_per_block": 2,
+      "NAM_error": 0.0
+    }
+  ],
+  "custom_removal_no_calls": true,
+  "invalid_topology_silent": true,
+  "restart_rebuild": true,
+  "saved_membership_recalled": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false,
+  "physical_latency_measured": false,
+  "limits": [
+    "Instruction counts are not M7 cycle measurements",
+    "One Fender capture, bounded effect settings",
+    "Existing routing gain sequence retained during transitions; no gain loops at unity",
+    "Effects remain compiled as an available library; only active nodes execute",
+    "Physical performance and listening validation remain pending"
+  ]
+}

@@ -1,6 +1,10 @@
 # Roadmap
 
-## Next task — TONE3000 on the phone controller
+## Next firmware requirement — USB recording
+
+Keep Mighty Plug Pro usable as a USB recording interface for Logic Pro and other Core Audio DAWs, alongside standalone headphone playback and controller MIDI. NAMLNK20 retains the existing USB driver, but this is not a verified recording guarantee. Before the next firmware release: audit USB audio descriptors and channel routing; identify dry versus processed recording channels; verify enumeration after restart/reconnect, clean sustained 48 kHz capture, no repeated/dropped blocks, and recording with NAM + reverb while USB MIDI controls remain active. Record input in a dedicated silent test session with software monitoring disabled; do not change the system output, Teams device or volume. Coordinate physical audio testing separately.
+
+## Phone TONE3000 follow-up
 
 Bring TONE3000 sign-in, capture browsing and favorites, compatible A2 Lite selection, and verified model transfer to the GitHub Pages controller used in Bluefy. Selecting a capture should make it the active NAM model after a successful transfer; saving it into a colored onboard preset remains explicit. Investigate browser authentication and bounded Bluetooth transfer before promising direct-to-plug loading. Requested as the next feature after the High / Low Cut EQ addition; not implemented in NAMLNK14.
 

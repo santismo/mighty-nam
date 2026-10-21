@@ -32,10 +32,12 @@ def main():
  p.add_argument('--baseline-cache',type=Path)
  p.add_argument('--storage-only',action='store_true')
  a=p.parse_args();stock=a.payload.read_bytes();base=build(stock,a.baseline);bundle=build(stock,a.elf,allow_active_prototype=True)
- assert bundle[2]['identity']=='NAMACP01'
- try:build(stock,a.elf)
- except ValueError as e:assert 'offline-only' in str(e)
- else:raise AssertionError('Prototype accepted for normal packaging')
+ identity=bundle[2]['identity'];assert identity in ('NAMACP01','NAMLNK20')
+ if identity=='NAMACP01':
+  try:build(stock,a.elf)
+  except ValueError as e:assert 'offline-only' in str(e)
+  else:raise AssertionError('Prototype accepted for normal packaging')
+ else:assert build(stock,a.elf)[2]['identity']=='NAMLNK20'
  if a.storage_only:
   v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
   a.report.write_text(json.dumps(dict(status='PASS_OFFLINE_ACTIVE_CHAIN_STORAGE',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),**storage_check(a.model),device_access=False,host_audio_access=False),indent=2)+'\n')
@@ -108,10 +110,10 @@ def main():
  m.restart();assert m.stats()==[0]*5
  m.upload(model_slot(a.model),333);m.arm();m.u.mem_write(m.preset,bytes(preset_fixture([8],{8:4})));m.process(0);assert m.stats()[0]==2
  storage_check(a.model)
- a.report.write_text(json.dumps(dict(status='PASS_OFFLINE_ACTIVE_CHAIN',identity='NAMACP01',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),
+ a.report.write_text(json.dumps(dict(status='PASS_OFFLINE_ACTIVE_CHAIN',identity=identity,elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),
   cases=rows,transitions=transitions,custom_removal_no_calls=True,invalid_topology_silent=True,restart_rebuild=True,saved_membership_recalled=True,
   device_access=False,host_audio_access=False,flash_container_created=False,physical_latency_measured=False,
   limits=['Instruction counts are not M7 cycle measurements','One Fender capture, bounded effect settings',
   'Existing routing gain sequence retained during transitions; no gain loops at unity',
-  'Effects remain compiled as an available library; only active nodes execute','No app or controller capability is published before hardware validation']),indent=2)+'\n')
+  'Effects remain compiled as an available library; only active nodes execute','Physical performance and listening validation remain pending']),indent=2)+'\n')
 if __name__=='__main__':main()

@@ -92,7 +92,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK16',
         'NAMLNK17',
         'NAMLNK18',
-        'NAMLNK19'
+        'NAMLNK19',
+        'NAMLNK20'
       ].contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   bool get hasExtraFx => supportsExtraFx(hardware?['identity'] as String?);
@@ -147,7 +148,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK16',
         'NAMLNK17',
         'NAMLNK18',
-        'NAMLNK19'
+        'NAMLNK19',
+        'NAMLNK20'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -169,7 +171,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK16',
         'NAMLNK17',
         'NAMLNK18',
-        'NAMLNK19'
+        'NAMLNK19',
+        'NAMLNK20'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -186,7 +189,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK16',
         'NAMLNK17',
         'NAMLNK18',
-        'NAMLNK19'
+        'NAMLNK19',
+        'NAMLNK20'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -465,7 +469,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK16',
             'NAMLNK17',
             'NAMLNK18',
-            'NAMLNK19'
+            'NAMLNK19',
+            'NAMLNK20'
           ].contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
@@ -479,7 +484,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK16',
             'NAMLNK17',
             'NAMLNK18',
-            'NAMLNK19'
+            'NAMLNK19',
+            'NAMLNK20'
           ].contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
@@ -554,26 +560,39 @@ class _NamHomeState extends State<NamHome> {
     if (canTransfer) await sendModel();
   }
 
+  Future<LiteModel?> captureDialog(Widget Function(BuildContext) builder) {
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.macOS) {
+      return showDialog<LiteModel>(
+          context: context,
+          builder: (ctx) => Dialog(
+              insetPadding: const EdgeInsets.all(28),
+              clipBehavior: Clip.antiAlias,
+              child: SizedBox(
+                  width: 1180,
+                  height: MediaQuery.sizeOf(ctx).height * .88,
+                  child: builder(ctx))));
+    }
+    return showModalBottomSheet<LiteModel>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        constraints: const BoxConstraints(maxWidth: 1180),
+        builder: (ctx) =>
+            FractionallySizedBox(heightFactor: .94, child: builder(ctx)));
+  }
+
   Future<void> openToneBrowser() async {
     if (toneConfigured) await toneClient();
     if (!mounted) return;
-    final next = await showModalBottomSheet<LiteModel>(
-        context: context,
-        isScrollControlled: true,
-        showDragHandle: true,
-        useSafeArea: true,
-        constraints: const BoxConstraints(maxWidth: 1000),
-        builder: (ctx) => FractionallySizedBox(
-            heightFactor: .94,
-            child: ToneBrowser(
-                client: api,
-                signIn: signInTone,
-                officialPicker: () async {
-                  final capture = await officialBrowse();
-                  if (ctx.mounted && capture != null) {
-                    Navigator.pop(ctx, capture);
-                  }
-                })));
+    final next = await captureDialog((ctx) => ToneBrowser(
+        client: api,
+        signIn: signInTone,
+        loadToPlug: canTransfer,
+        activeCaptureName: model?.metadata['name']?.toString(),
+        officialPicker: () async {
+          final capture = await officialBrowse();
+          if (ctx.mounted && capture != null) Navigator.pop(ctx, capture);
+        }));
     if (next != null && mounted) await selectCapture(next);
     if (mounted) setState(() {});
   }
@@ -589,18 +608,13 @@ class _NamHomeState extends State<NamHome> {
     final id = await client.complete(flow, Uri.parse(callback));
     if (id == null || !mounted) return null;
     // Enter the same in-app detail view after the official picker has selected a tone.
-    return showModalBottomSheet<LiteModel>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        constraints: const BoxConstraints(maxWidth: 1000),
-        builder: (_) => FractionallySizedBox(
-            heightFactor: .94,
-            child: ToneBrowser(
-                client: client,
-                initialToneId: id,
-                signIn: signInTone,
-                officialPicker: () async {})));
+    return captureDialog((ctx) => ToneBrowser(
+        client: client,
+        initialToneId: id,
+        signIn: signInTone,
+        loadToPlug: canTransfer,
+        activeCaptureName: model?.metadata['name']?.toString(),
+        officialPicker: () async {}));
   }
 
   Future<void> importFile() async {
@@ -1427,7 +1441,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK16',
             'NAMLNK17',
             'NAMLNK18',
-            'NAMLNK19'
+            'NAMLNK19',
+            'NAMLNK20'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1563,7 +1578,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK16',
           'NAMLNK17',
           'NAMLNK18',
-          'NAMLNK19'
+          'NAMLNK19',
+          'NAMLNK20'
         ].contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 or newer to adjust output buffering.');
@@ -1582,7 +1598,7 @@ class _NamHomeState extends State<NamHome> {
     if (!mounted) return;
     setState(() {
       hardware = result;
-      status = ['NAMLNK18', 'NAMLNK19'].contains(result['identity'])
+      status = ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(result['identity'])
           ? '$samples samples saved globally for all seven colors, including after power-off.'
           : 'Output buffer set to $samples samples. NAMLNK18 makes this global across colors.';
     });
@@ -1600,7 +1616,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK16',
           'NAMLNK17',
           'NAMLNK18',
-          'NAMLNK19'
+          'NAMLNK19',
+          'NAMLNK20'
         ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;
@@ -1627,7 +1644,8 @@ class _NamHomeState extends State<NamHome> {
       ),
       const SizedBox(height: 10),
       Text(adjustable
-          ? (['NAMLNK18', 'NAMLNK19'].contains(hardware?['identity']))
+          ? (['NAMLNK18', 'NAMLNK19', 'NAMLNK20']
+                  .contains(hardware?['identity']))
               ? 'Global setting. Saved automatically for every color and after power-off. Playback resumes if it was on.'
               : 'Confirmed on plug. Install NAMLNK18 for one saved buffer setting across all colors.'
           : hardware?['identity'] == 'NAMLNK08'

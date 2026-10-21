@@ -52,7 +52,7 @@ class UsbFixture {
   Map<String, dynamic> status() => {
         'identity': identity,
         if (identity == 'NAMLNK09' ||
-            ['NAMLNK18', 'NAMLNK19'].contains(identity))
+            ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity))
           'audioBuffer': {
             'samples': bufferSamples,
             'sampleRate': 48000,
@@ -99,7 +99,8 @@ class UsbFixture {
     if (c.method == 'setOutputBuffer') {
       bufferSamples = a['samples'] as int;
       bufferCommands.add(bufferSamples);
-      if (!['NAMLNK18', 'NAMLNK19'].contains(identity)) listening = false;
+      if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity))
+        listening = false;
       return status();
     }
     if (c.method == 'readStockControls') {
@@ -249,8 +250,9 @@ void main() {
     await t.tap(find.text('Test amp'));
     await t.pump();
     await t.pump(const Duration(seconds: 1));
-    await t.ensureVisible(find.text('Test Lite capture'));
-    await t.tap(find.text('Test Lite capture'));
+    await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
+    await t.pump();
+    await t.tap(find.byKey(const ValueKey('load-model-5')));
     await t.pumpAndSettle();
     final saved = HybridRig.parse(jsonDecode(usb.library!)['active']);
     expect(saved.modelSha256, LiteModel.fixture().sha256Hex);

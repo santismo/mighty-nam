@@ -1,0 +1,19 @@
+{
+  "status": "PASS_GLOBAL_BUFFER_STORAGE_HOST",
+  "cases": 38,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "torn_write_boundaries": 3,
+  "source_sha256": {
+    "target/link/global_buffer.cpp": "465887e905b63d83f1843a69d3087fd17493364aee11d7c8e2e10401e56df055",
+    "target/link/global_buffer.hpp": "7e332e4e14f0dd651f6627eb2409bd8b1d4d432cfe31df61ca5b96a8fda45256",
+    "tests/global_buffer_test.cpp": "72ac1bbf212a8b663886a446cff63a11751c694fb1636781cab646c93c787467",
+    "target/link/preset_bank.cpp": "d37b0d296fa0772ef01c79b15c8dcf2f98376704f97131babaffd2f602b95925",
+    "target/link/model_receiver.cpp": "c0c17b19348dbdd4a1712fe3a6c405f88543e0c56f84e7b0a6c15fed89cb5b2a",
+    "target/a2/a2_lite.cpp": "d914db04b1b8b334633a620bf6724ff7d72ff49757023853f68f66c5c9c4c66b"
+  },
+  "device_access": false,
+  "host_audio_access": false
+}

@@ -4,7 +4,7 @@ from pathlib import Path
 from test_preset_runtime import PresetMachine,v,build,preset_fixture,model_slot,BANK,BANK_END
 p=argparse.ArgumentParser(description=__doc__)
 for key in ['payload','elf','model','output']:p.add_argument(key,type=Path)
-a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf);assert bundle[2]['identity'] in ('NAMLNK18','NAMLNK19');v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
+a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf);assert bundle[2]['identity'] in ('NAMLNK18','NAMLNK19','NAMLNK20');v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
 m=PresetMachine(path=a.model);m.service();assert m.page(24)==(0,(48000<<16)|(2<<8)|8)
 def command(samples):return bytes([240,67,88,112,4,2,78,66,samples,247])
 def status(m):

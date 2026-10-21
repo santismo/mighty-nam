@@ -31,7 +31,7 @@ class BankFixture extends UsbFixture {
           'samples': bufferSamples,
           'sampleRate': 48000,
           'processingSamples': 8,
-          'global': ['NAMLNK18', 'NAMLNK19'].contains(identity),
+          'global': ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity),
           'storageError': 0
         },
         'presetBank': {
@@ -47,7 +47,7 @@ class BankFixture extends UsbFixture {
     receiver = SimulatedPlug();
     await TransferClient(receiver).upload(models[slot]!);
     preset.setAll(0, h.sublist(128));
-    if (!['NAMLNK18', 'NAMLNK19'].contains(identity)) {
+    if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity)) {
       bufferSamples = ByteData.sublistView(h).getUint32(24, Endian.little);
     }
     listening = true;
@@ -122,7 +122,8 @@ class BankFixture extends UsbFixture {
         models[slot] = catalog
             .singleWhere((m) => m.checksum == crc32(receiver.activeSlot!));
         active = slot;
-        if (!['NAMLNK18', 'NAMLNK19'].contains(identity)) listening = false;
+        if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity))
+          listening = false;
       }
     } else if (op == 3) {
       recalls++;
@@ -138,7 +139,7 @@ class BankFixture extends UsbFixture {
     reply[14] = active;
     reply[15] = headers.keys.fold<int>(0, (a, b) => a | (1 << b));
     if (headers.containsKey(slot)) reply.setRange(16, 272, headers[slot]!);
-    if (['NAMLNK18', 'NAMLNK19'].contains(identity) &&
+    if (['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity) &&
         headers.containsKey(slot)) {
       w.setUint32(16 + 24, bufferSamples, Endian.little);
     }
@@ -265,7 +266,7 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
-  for (final identity in ['NAMLNK18', 'NAMLNK19'])
+  for (final identity in ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'])
     for (final playing in [false, true]) {
       testWidgets('$identity global buffer and save preserve playback=$playing',
           (t) async {
@@ -311,7 +312,8 @@ void main() {
     'NAMLNK16',
     'NAMLNK17',
     'NAMLNK18',
-    'NAMLNK19'
+    'NAMLNK19',
+    'NAMLNK20'
   ]) {
     testWidgets(
         '$identity: save colored captures, button recall, reconnect and app restart',

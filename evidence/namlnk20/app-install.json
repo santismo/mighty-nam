@@ -1,0 +1,10 @@
+{
+  "version": "0.4.0+15",
+  "installed": true,
+  "archive_sha256": "498eab80d2fe9813eecbf2841fea9e3810a61a7b2eac05945dc126ed7fdfc8ac",
+  "signature": "ad-hoc verified; not notarized",
+  "app_launched": false,
+  "audio_access": false,
+  "device_commands_sent": false,
+  "previous_app_preserved": true
+}

@@ -1,0 +1,100 @@
+{
+  "status": "PASS_OFFLINE_ROUTING_STARTUP",
+  "cases": [
+    {
+      "identity": "NAMDMP02",
+      "elf_sha256": "48e3ece20dce75ae8b8151a914350e0a5ed752679b092ea08da6afc424b3f1fd",
+      "fill": 0,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": [
+        [
+          [
+            1077952524,
+            4,
+            16
+          ],
+          [
+            1077952524,
+            4,
+            8
+          ]
+        ]
+      ]
+    },
+    {
+      "identity": "NAMDMP02",
+      "elf_sha256": "48e3ece20dce75ae8b8151a914350e0a5ed752679b092ea08da6afc424b3f1fd",
+      "fill": 165,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": [
+        [
+          [
+            1077952524,
+            4,
+            16
+          ],
+          [
+            1077952524,
+            4,
+            8
+          ]
+        ]
+      ]
+    },
+    {
+      "identity": "NAMDMP02",
+      "elf_sha256": "48e3ece20dce75ae8b8151a914350e0a5ed752679b092ea08da6afc424b3f1fd",
+      "fill": 255,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": [
+        [
+          [
+            1077952524,
+            4,
+            16
+          ],
+          [
+            1077952524,
+            4,
+            8
+          ]
+        ]
+      ]
+    },
+    {
+      "identity": "NAMLNK20",
+      "elf_sha256": "6cd51578d2ec623c9c44c5350bafaf564bead7b79a66b6b3ca83e881b01df8d6",
+      "fill": 0,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": []
+    },
+    {
+      "identity": "NAMLNK20",
+      "elf_sha256": "6cd51578d2ec623c9c44c5350bafaf564bead7b79a66b6b3ca83e881b01df8d6",
+      "fill": 165,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": []
+    },
+    {
+      "identity": "NAMLNK20",
+      "elf_sha256": "6cd51578d2ec623c9c44c5350bafaf564bead7b79a66b6b3ca83e881b01df8d6",
+      "fill": 255,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": []
+    }
+  ],
+  "device_access": false,
+  "host_audio_access": false
+}

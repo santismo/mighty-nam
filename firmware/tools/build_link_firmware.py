@@ -30,7 +30,10 @@ p.add_argument('--driver-timing',action='store_true',help='NAMLNK19 delay/reverb
 p.add_argument('--dma-current-prototype',action='store_true',help='OFFLINE ONLY: NAMDMP01 current-block output with experimental TX watermark eight; no release packaging')
 p.add_argument('--dma-deadline-prototype',action='store_true',help='OFFLINE ONLY: NAMDMP02 deadline guard and latched prior-block fallback; requires --dma-current-prototype')
 p.add_argument('--active-chain-prototype',action='store_true',help='OFFLINE ONLY: NAMACP01 compact active-node graph; independent of DMA trials')
+p.add_argument('--active-chain',action='store_true',help='NAMLNK20 active-only chain test release, retaining NAMLNK19 DMA scheduling')
 a=p.parse_args()
+if a.active_chain and (a.active_chain_prototype or not a.driver_timing or a.dma_current_prototype):p.error('--active-chain requires --driver-timing and excludes research DMA/graph identities')
+active_graph=a.active_chain or a.active_chain_prototype
 if a.active_chain_prototype and (not a.driver_timing or a.dma_current_prototype):p.error('--active-chain-prototype requires --driver-timing and cannot combine with DMA trials')
 if a.dma_deadline_prototype and not a.dma_current_prototype:p.error('--dma-deadline-prototype requires --dma-current-prototype')
 if a.dma_current_prototype and not a.driver_timing:p.error('--dma-current-prototype requires --driver-timing')
@@ -114,11 +117,12 @@ if a.dma_deadline_prototype:
  sources.remove('target/link/effect_profiler.cpp')
  sources.remove('target/link/driver_timing.cpp')
  sources+=['target/link/dma_deadline.cpp']
-if a.active_chain_prototype:
+if active_graph:
  flags.remove('-DMPP_EFFECT_PROFILER')
  sources.remove('target/link/effect_profiler.cpp')
  sources.remove('target/link/driver_timing.cpp')
  flags+=['-DMPP_ACTIVE_CHAIN_PROTOTYPE']
+ if a.active_chain:flags+=['-DMPP_ACTIVE_CHAIN_RELEASE']
  sources+=['target/link/active_chain.cpp']
 objects=[]
 for source in sources:
@@ -131,8 +135,8 @@ if a.fx_blocks:ld=root/'target/link/fx_blocks.ld'
 if a.driver_timing:ld=root/'target/link/driver_timing.ld'
 subprocess.run([str(Path(ziglang.__path__[0])/'zig'),'cc','-target','thumb-freestanding-eabihf','-mcpu=cortex_m7',
  '-nostdlib','-Wl,--gc-sections','-Wl,--build-id=none','-Wl,-e,mpp_stock_amp_init','-Wl,-T,'+str(ld),
- *(['-Wl,-u,mpp_fast_dispatch'] if a.fast_bypass and not a.active_chain_prototype else []),
- *(['-Wl,-u,mpp_active_dispatch'] if a.active_chain_prototype else []),
+ *(['-Wl,-u,mpp_fast_dispatch'] if a.fast_bypass and not active_graph else []),
+ *(['-Wl,-u,mpp_active_dispatch'] if active_graph else []),
  *(['-Wl,-u,mpp_link_irq','-Wl,-u,mpp_track_dwt_reset'] if a.irq_timing else []),
  *(['-Wl,-u,mpp_codec_startup_write'] if a.adc_short_delay else []),
  *objects,'-o',str(elf)],check=True)
@@ -209,11 +213,13 @@ if a.dma_deadline_prototype:
   output_pipeline_latency_samples={'fast':0,'fallback':8},
   buffer_scope='Additional output queue 0/8/24 frames; fallback adds one further eight-frame block',
   physical_guard_budget_verified=False)
- report['linker_sha256']=hashlib.sha256(ld.read_bytes()).hexdigest()
-if a.active_chain_prototype:
+report['linker_sha256']=hashlib.sha256(ld.read_bytes()).hexdigest()
+if active_graph:
  report.update(identity='NAMACP01',status='OFFLINE_ACTIVE_CHAIN_PROTOTYPE_NOT_FOR_INSTALLATION',
   dispatcher='Cached active-only graph; absent nodes have no callback or copy; routing gain loops skip at unity',
   effect_profiler='Omitted to fit audited copied-code extent',driver_timing='Graph counts on pages 118..123; one-shot timing omitted',requires_offline_image_opt_in=True,
   physical_performance_gain_verified=False)
+if a.active_chain:
+ report.update(identity='NAMLNK20',status='EXPERIMENTAL_ACTIVE_CHAIN_TEST_BUILD',requires_offline_image_opt_in=False,active_chain=True,stock_bypass_tail_policy='Removed nodes have no callbacks; delay/reverb reset on re-add; no spillover',bypass='Compact active-only dispatcher',driver_status_pages=[118,123])
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

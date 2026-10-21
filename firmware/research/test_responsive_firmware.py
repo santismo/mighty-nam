@@ -26,9 +26,11 @@ print('PASS single-color PRESET keeps live audio, model state and unsaved effect
 # Idle FX skips dispatch entirely, re-enables, then becomes idle after fade.
 entries=[0]
 def observe(u,pc,size,unused):entries[0]+=1
-hook=n.u.hook_add(UC_HOOK_CODE,observe,begin=v.sym['mpp_fx_before']&~1,end=v.sym['mpp_fx_before']&~1)
+graph=v.plan['identity']=='NAMLNK20'
+entry=v.sym['mpp_fx_graph_process' if graph else 'mpp_fx_before']&~1
+hook=n.u.hook_add(UC_HOOK_CODE,observe,begin=entry,end=entry)
 for i in range(20):n.process(1400+i)
-assert entries[0]==0 and n.get(v.sym['mpp_fx_active'])==0
+assert entries[0]==0 and (graph or n.get(v.sym['mpp_fx_active'])==0)
 config=[1,1,2,12,100,30,50,0,50,50,0,0,0,0,0,0,2,0,3,12,100,30,50,0,50,50,0,0,0,0,0,0]
 def fx(c):
  q=bytes([240,67,88,112,4,2,78,70,1,1,0,61,0,0]+[(n.words()[5]>>(7*i))&127 for i in range(5)]+c+[247]);assert n.ingress([q])[0][0][13]==0
@@ -36,7 +38,7 @@ fx(config)
 for i in range(50):n.process(1420+i)
 assert entries[0]>0;config[1]=0;fx(config)
 for i in range(70):n.process(1470+i)
-assert n.get(v.sym['mpp_fx_active'])==0
+assert graph or n.get(v.sym['mpp_fx_active'])==0
 count=entries[0]
 for i in range(20):n.process(1540+i)
 assert entries[0]==count;n.u.hook_del(hook)

@@ -49,6 +49,37 @@ class RigEditor extends StatefulWidget {
 
 class _RigEditorState extends State<RigEditor> {
   String selected = 'nam';
+  bool get compact => widget.firmwareIdentity == 'NAMLNK20';
+  Future<void> addBlock() async {
+    final available = widget.rig.blocks.where((b) => !b.enabled).toList();
+    final slot = await showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+                title: const Text('Add block'),
+                content: SizedBox(
+                    width: 360,
+                    height: (available.length * 52.0).clamp(80.0, 380.0),
+                    child: ListView(children: [
+                      for (final b in available)
+                        ListTile(
+                            key: ValueKey('add-${b.slot}'),
+                            title: Text(b.name),
+                            onTap: () => Navigator.pop(context, b.slot))
+                    ])),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Close'))
+                ]));
+    if (mounted && slot != null) {
+      change(() {
+        final block = widget.rig.blocks.singleWhere((b) => b.slot == slot);
+        widget.rig.addBlock(block);
+        selected = slot;
+      });
+    }
+  }
+
   Future<void> chooseEffect(RigBlock block) async {
     final choice = await showDialog<int>(
         context: context,
@@ -64,9 +95,13 @@ class _RigEditorState extends State<RigEditor> {
 
   @override
   Widget build(BuildContext context) {
+    final visible = widget.rig.visibleBlocks(activeOnly: compact);
+    if (compact && !visible.any((b) => b.slot == selected)) {
+      selected = visible.isEmpty ? 'nam' : visible.first.slot;
+    }
     final b = widget.rig.blocks.firstWhere((b) => b.slot == selected);
     final color = rigColors[b.slot]!;
-    final index = widget.rig.blocks.indexOf(b);
+    final index = visible.indexOf(b);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       const Row(children: [
         Text('INPUT', style: TextStyle(fontSize: 11, color: Colors.white54)),
@@ -76,200 +111,232 @@ class _RigEditorState extends State<RigEditor> {
         Text('OUTPUT', style: TextStyle(fontSize: 11, color: Colors.white54)),
       ]),
       const SizedBox(height: 16),
-      SizedBox(
-          height: 122,
-          child: LayoutBuilder(
-              builder: (context, width) => ReorderableListView.builder(
-                    key: const ValueKey('signal-chain'),
-                    scrollDirection: Axis.horizontal,
-                    itemExtent: (width.maxWidth / widget.rig.blocks.length)
-                        .clamp(94.0, 108.0),
-                    buildDefaultDragHandles: false,
-                    itemCount: widget.rig.blocks.length,
-                    onReorder: (old, next) => change(() {
-                      if (next > old) next--;
-                      selected = widget.rig.blocks[old].slot;
-                      widget.rig.reorder(old, next);
-                    }),
-                    proxyDecorator: (child, _, animation) =>
-                        Material(color: Colors.transparent, child: child),
-                    itemBuilder: (context, i) {
-                      final item = widget.rig.blocks[i],
-                          c = rigColors[item.slot]!;
-                      return Padding(
-                        key: ValueKey('block-${item.slot}'),
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () => setState(() => selected = item.slot),
-                              borderRadius: BorderRadius.circular(6),
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: selected == item.slot
-                                        ? const Color(0xff2b3036)
-                                        : const Color(0xff202327),
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(
-                                        color: selected == item.slot
-                                            ? c
-                                            : const Color(0xff3d4147),
-                                        width: 1)),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(children: [
-                                        IconButton(
-                                            key:
-                                                ValueKey('toggle-${item.slot}'),
-                                            tooltip: item.enabled
-                                                ? 'Turn off ${item.name}'
-                                                : 'Turn on ${item.name}',
-                                            padding: EdgeInsets.zero,
-                                            constraints: const BoxConstraints(
-                                                minWidth: 30, minHeight: 30),
-                                            visualDensity:
-                                                VisualDensity.compact,
-                                            onPressed: () => change(() {
-                                                  selected = item.slot;
-                                                  item.enabled = !item.enabled;
-                                                }),
-                                            icon: Icon(rigIcons[item.slot],
-                                                size: 21,
-                                                color: item.enabled
-                                                    ? c
-                                                    : Colors.white30)),
+      if (compact)
+        Align(
+            alignment: Alignment.centerLeft,
+            child: OutlinedButton.icon(
+                key: const ValueKey('add-block'),
+                onPressed: visible.length == widget.rig.blocks.length
+                    ? null
+                    : addBlock,
+                icon: const Icon(Icons.add),
+                label: const Text('Add block'))),
+      if (visible.isEmpty)
+        const Padding(
+            padding: EdgeInsets.all(20),
+            child: Text('Direct signal · add a block to begin.')),
+      if (visible.isNotEmpty)
+        SizedBox(
+            height: 122,
+            child: LayoutBuilder(
+                builder: (context, width) => ReorderableListView.builder(
+                      key: const ValueKey('signal-chain'),
+                      scrollDirection: Axis.horizontal,
+                      itemExtent:
+                          (width.maxWidth / visible.length).clamp(94.0, 108.0),
+                      buildDefaultDragHandles: false,
+                      itemCount: visible.length,
+                      onReorder: (old, next) => change(() {
+                        if (next > old) next--;
+                        selected = visible[old].slot;
+                        widget.rig.moveVisible(old, next, activeOnly: compact);
+                      }),
+                      proxyDecorator: (child, _, animation) =>
+                          Material(color: Colors.transparent, child: child),
+                      itemBuilder: (context, i) {
+                        final item = visible[i], c = rigColors[item.slot]!;
+                        return Padding(
+                          key: ValueKey('block-${item.slot}'),
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () =>
+                                    setState(() => selected = item.slot),
+                                borderRadius: BorderRadius.circular(6),
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: selected == item.slot
+                                          ? const Color(0xff2b3036)
+                                          : const Color(0xff202327),
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(
+                                          color: selected == item.slot
+                                              ? c
+                                              : const Color(0xff3d4147),
+                                          width: 1)),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(children: [
+                                          IconButton(
+                                              key: ValueKey(
+                                                  'toggle-${item.slot}'),
+                                              tooltip: compact
+                                                  ? 'Remove ${item.name}'
+                                                  : item.enabled
+                                                      ? 'Turn off ${item.name}'
+                                                      : 'Turn on ${item.name}',
+                                              padding: EdgeInsets.zero,
+                                              constraints: const BoxConstraints(
+                                                  minWidth: 30, minHeight: 30),
+                                              visualDensity:
+                                                  VisualDensity.compact,
+                                              onPressed: () => change(() {
+                                                    selected = item.slot;
+                                                    item.enabled =
+                                                        !item.enabled;
+                                                  }),
+                                              icon: Icon(rigIcons[item.slot],
+                                                  size: 21,
+                                                  color: item.enabled
+                                                      ? c
+                                                      : Colors.white30)),
+                                          const Spacer(),
+                                          ReorderableDragStartListener(
+                                              index: i,
+                                              child: MouseRegion(
+                                                  cursor:
+                                                      SystemMouseCursors.grab,
+                                                  child: Icon(
+                                                      Icons.drag_indicator,
+                                                      key: ValueKey(
+                                                          'drag-${item.slot}'),
+                                                      size: 20,
+                                                      color: Colors.white38))),
+                                        ]),
                                         const Spacer(),
-                                        ReorderableDragStartListener(
-                                            index: i,
-                                            child: MouseRegion(
-                                                cursor: SystemMouseCursors.grab,
-                                                child: Icon(
-                                                    Icons.drag_indicator,
-                                                    key: ValueKey(
-                                                        'drag-${item.slot}'),
-                                                    size: 20,
-                                                    color: Colors.white38))),
+                                        Text(item.name,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: item.enabled
+                                                    ? Colors.white
+                                                    : Colors.white38,
+                                                fontWeight: FontWeight.w600)),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                            item.enabled
+                                                ? (item.effect?.name ??
+                                                    widget.modelName ??
+                                                    'Choose tone')
+                                                : 'Bypassed',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 10, color: c)),
                                       ]),
-                                      const Spacer(),
-                                      Text(item.name,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: item.enabled
-                                                  ? Colors.white
-                                                  : Colors.white38,
-                                              fontWeight: FontWeight.w600)),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                          item.enabled
-                                              ? (item.effect?.name ??
-                                                  widget.modelName ??
-                                                  'Choose tone')
-                                              : 'Bypassed',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 10, color: c)),
-                                    ]),
-                              ),
-                            )),
-                      );
-                    },
-                  ))),
-      const Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
+                                ),
+                              )),
+                        );
+                      },
+                    ))),
+      Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
-              'Click a symbol to turn an effect on or off. Select a block to edit. Drag to reorder.',
-              style: TextStyle(fontSize: 11, color: Colors.white38))),
-      Container(
-        key: const ValueKey('selected-controls'),
-        padding: const EdgeInsets.all(22),
-        decoration: BoxDecoration(
-            color: const Color(0xff202327),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: color.withValues(alpha: .25))),
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Row(children: [
-            Icon(rigIcons[b.slot], color: color),
-            const SizedBox(width: 12),
-            Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  Text(b.slot == 'nam' ? 'NAM amplifier' : b.name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 20)),
-                  Text(
-                      b.slot == 'nam'
-                          ? 'Your captures and favorites'
-                          : 'Mighty Plug Pro · ${b.choices.length} ${b.choices.length == 1 ? 'effect' : 'effects'}',
-                      style:
-                          const TextStyle(fontSize: 12, color: Colors.white54)),
-                ])),
-            Tooltip(
-                message: b.enabled ? 'Bypass ${b.name}' : 'Enable ${b.name}',
-                child: Switch(
-                    key: ValueKey('bypass-${b.slot}'),
-                    value: b.enabled,
-                    onChanged: (v) => change(() => b.enabled = v))),
-          ]),
-          const SizedBox(height: 22),
-          if (b.slot == 'nam')
-            widget.namControls
-          else ...[
-            OutlinedButton(
-                key: ValueKey('choose-effect-${b.slot}'),
-                onPressed: () => chooseEffect(b),
-                style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16)),
-                child: Row(children: [
-                  Expanded(
-                      child: Text(b.effect!.name,
-                          maxLines: 1, overflow: TextOverflow.ellipsis)),
-                  const SizedBox(width: 12),
-                  const Icon(Icons.unfold_more, size: 20),
-                ])),
-            const SizedBox(height: 18),
-            LayoutBuilder(
-                builder: (context, constraints) => Wrap(
-                      spacing: 24,
-                      runSpacing: 12,
+              compact
+                  ? '${visible.length} active blocks · click a symbol to remove, select to edit, drag to reorder.'
+                  : 'Click a symbol to turn an effect on or off. Select a block to edit. Drag to reorder.',
+              style: const TextStyle(fontSize: 11, color: Colors.white38))),
+      if (!compact || visible.isNotEmpty)
+        Container(
+          key: const ValueKey('selected-controls'),
+          padding: const EdgeInsets.all(22),
+          decoration: BoxDecoration(
+              color: const Color(0xff202327),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: color.withValues(alpha: .25))),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Row(children: [
+              Icon(rigIcons[b.slot], color: color),
+              const SizedBox(width: 12),
+              Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (final p in b.effect!.parameters)
-                          SizedBox(
-                              width: constraints.maxWidth >= 650
-                                  ? (constraints.maxWidth - 24) / 2
-                                  : constraints.maxWidth,
-                              child: parameter(b, p, color))
-                      ],
-                    )),
-          ],
-          const SizedBox(height: 12),
-          Row(children: [
-            IconButton(
-                tooltip: 'Move earlier',
-                onPressed: index == 0
-                    ? null
-                    : () => change(() => widget.rig.reorder(index, index - 1)),
-                icon: const Icon(Icons.arrow_back)),
-            IconButton(
-                tooltip: 'Move later',
-                onPressed: index == widget.rig.blocks.length - 1
-                    ? null
-                    : () => change(() => widget.rig.reorder(index, index + 1)),
-                icon: const Icon(Icons.arrow_forward)),
-            const Spacer(),
-            Text(b.enabled ? 'On' : 'Off',
-                style: const TextStyle(fontSize: 12, color: Colors.white54)),
+                    Text(b.slot == 'nam' ? 'NAM amplifier' : b.name,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 20)),
+                    Text(
+                        b.slot == 'nam'
+                            ? 'Your captures and favorites'
+                            : 'Mighty Plug Pro · ${b.choices.length} ${b.choices.length == 1 ? 'effect' : 'effects'}',
+                        style: const TextStyle(
+                            fontSize: 12, color: Colors.white54)),
+                  ])),
+              if (compact)
+                TextButton.icon(
+                    key: ValueKey('remove-${b.slot}'),
+                    onPressed: () => change(() => b.enabled = false),
+                    icon: const Icon(Icons.remove_circle_outline),
+                    label: const Text('Remove'))
+              else
+                Tooltip(
+                    message:
+                        b.enabled ? 'Bypass ${b.name}' : 'Enable ${b.name}',
+                    child: Switch(
+                        key: ValueKey('bypass-${b.slot}'),
+                        value: b.enabled,
+                        onChanged: (v) => change(() => b.enabled = v))),
+            ]),
+            const SizedBox(height: 22),
+            if (b.slot == 'nam')
+              widget.namControls
+            else ...[
+              OutlinedButton(
+                  key: ValueKey('choose-effect-${b.slot}'),
+                  onPressed: () => chooseEffect(b),
+                  style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16)),
+                  child: Row(children: [
+                    Expanded(
+                        child: Text(b.effect!.name,
+                            maxLines: 1, overflow: TextOverflow.ellipsis)),
+                    const SizedBox(width: 12),
+                    const Icon(Icons.unfold_more, size: 20),
+                  ])),
+              const SizedBox(height: 18),
+              LayoutBuilder(
+                  builder: (context, constraints) => Wrap(
+                        spacing: 24,
+                        runSpacing: 12,
+                        children: [
+                          for (final p in b.effect!.parameters)
+                            SizedBox(
+                                width: constraints.maxWidth >= 650
+                                    ? (constraints.maxWidth - 24) / 2
+                                    : constraints.maxWidth,
+                                child: parameter(b, p, color))
+                        ],
+                      )),
+            ],
+            const SizedBox(height: 12),
+            Row(children: [
+              IconButton(
+                  tooltip: 'Move earlier',
+                  onPressed: index == 0
+                      ? null
+                      : () => change(() => widget.rig
+                          .moveVisible(index, index - 1, activeOnly: compact)),
+                  icon: const Icon(Icons.arrow_back)),
+              IconButton(
+                  tooltip: 'Move later',
+                  onPressed: index == visible.length - 1
+                      ? null
+                      : () => change(() => widget.rig
+                          .moveVisible(index, index + 1, activeOnly: compact)),
+                  icon: const Icon(Icons.arrow_forward)),
+              const Spacer(),
+              Text(b.enabled ? 'On' : 'Off',
+                  style: const TextStyle(fontSize: 12, color: Colors.white54)),
+            ]),
           ]),
-        ]),
-      ),
+        ),
     ]);
   }
 

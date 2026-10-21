@@ -1,0 +1,5 @@
+{
+  "StockWireTests": "{\"status\":\"PASS\",\"checks\":1677,\"deviceAccess\":false,\"audioStreamOpened\":false}",
+  "FxWireTests": "PASS native FX validation: 85 checks",
+  "TunerWireTests": "PASS: 921 tuner wire cases; no device/audio access"
+}
