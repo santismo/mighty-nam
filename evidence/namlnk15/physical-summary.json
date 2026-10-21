@@ -1,0 +1,80 @@
+{
+  "status": "PASS_NAMLNK15_PHYSICAL_RESTORE_RESTART_FX_AND_QUIET_TUNER",
+  "recorded_at": "2026-10-21T16:27:43.580566+00:00",
+  "firmware": "NAMLNK15",
+  "installation": "User reported successful manual update and normal restart; exact identity confirmed by USB.",
+  "firmware_sha256": "fef888ff7e8f7cdb8c2eeb4fd24c488b9da86ee0000eef9bd596cb89436d7bc0",
+  "elf_sha256": "53d00afbf6773638671c4e99d1af592ba9d7b0d4be8ea79f2dcff572e42d3e75",
+  "presets": {
+    "restored": 7,
+    "source": "Latest reported Green plus the six older verified backup presets, as explicitly chosen by the user.",
+    "independent_save_read_recall_passed": true,
+    "post_power_cycle_header_and_saved_fx_readback_passed": true,
+    "physical_seven_color_cycle": "User confirmed all seven colors cycled back to Green after POWER-only restart.",
+    "startup_output_observed_on": true,
+    "buffer_samples_by_color": {
+      "Green": 8,
+      "Orange": 8,
+      "Red": 8,
+      "Blue": 16,
+      "Cyan": 8,
+      "Pink": 16,
+      "Lilac": 32
+    },
+    "mapped_effect_settings_preserved": true,
+    "unmapped_trailing_stock_byte": {
+      "index": 127,
+      "backup_value": 7,
+      "retained_current_device_value": 0,
+      "reason": "No audited write command maps this byte. Initial validation stopped before preset saves; normalized records subsequently matched on save, recall and restart."
+    }
+  },
+  "final": {
+    "active_color": "Green",
+    "capture": "Fender A2 Lite",
+    "capture_crc32": 1854512385,
+    "bank_mask": 127,
+    "buffer_samples": 8,
+    "sample_rate": 48000,
+    "output_muted": true,
+    "processing_faults": 0,
+    "timing_faults": 0
+  },
+  "extra_fx": {
+    "enable_two_move_bypass_and_restore_passed": true,
+    "preset_writes": 0,
+    "original_settings_restored": true,
+    "faults": 0
+  },
+  "compact_tuner": {
+    "transport": "USB MIDI",
+    "input": "Quiet input; frequency and confidence zero",
+    "readings": 15,
+    "reply_bytes": 42,
+    "pending_retries": 0,
+    "start_to_result_ms": {
+      "minimum": 113.12603950500488,
+      "median": 115.72206020355225,
+      "maximum": 118.1570291519165
+    },
+    "includes_deliberate_capture_wait_ms": 90,
+    "bluefy_cadence_measured": false,
+    "physical_note_accuracy_measured": false
+  },
+  "limits": {
+    "guitar_to_headphone_latency_measured": false,
+    "calibrated_hardware_deadline_proven": false,
+    "arbitrary_broken_firmware_usb_recovery_proven": false
+  },
+  "session": {
+    "host_audio_streams": 0,
+    "mac_teams_audio_changed": false,
+    "additional_firmware_flashes": 0,
+    "output_enable_commands": 0
+  },
+  "local_report_sha256": {
+    "restore-and-tuner.json": "163d4d4168e345deedf935cac3aa695e4d7b9466f163e372da7b1950031a6d79",
+    "fx-controls.json": "a7677bc0a08a4c5defb927a345efe3a5f947f077535b4a5c72d3c2aec940a299",
+    "after-power-cycle.json": "4e80a0534d45818989729c1fcdd5efdae9a4c41453b2031a5de54aac0d2b61b2"
+  }
+}

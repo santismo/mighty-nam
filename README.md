@@ -22,7 +22,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
-| NAMLNK15 candidate / Mac 0.3.7 / phone 0.6.2 | Mac update installed locally with FX A/B editing and preset persistence. Firmware candidate adds same-color button no-op, bypassed FX dispatch sleep and compact phone tuner. Offline checks pass; firmware not installed and physical latency remains unmeasured. See [responsive controls](docs/responsive-controls-trial.md). |
+| NAMLNK15 / Mac 0.3.7 / phone 0.6.2 | Installed on the development plug. Seven presets restored and independently checked after power-off; the user confirmed seven-color button cycling. Live FX controls and compact quiet USB tuner checks passed. Physical listening latency and Bluefy tuner cadence remain unmeasured. See [responsive controls](docs/responsive-controls-trial.md). |
 | NAMLNK14 / Mac 0.3.6 / phone 0.6.0 | Installed locally. High / Low Cut has independent live sliders; muted USB control, full-chain and fresh preset save/recall checks passed. The user confirmed the cut EQ works. Broader listening and post-save restart checks remain. See [EQ trial notes](docs/high-low-cut-trial.md). |
 | Mac controller 0.3.2 | Handles large CoreMIDI replies and enables Listen for verified onboard captures even without a Mac-library copy. Universal build; Apple-silicon execution is not separately verified. |
 | Mac controller 0.3.4 / NAMLNK12 | App and firmware installed locally; seven presets restored and switched successfully; quiet tuner transport passed. Adds a chromatic USB tuner and includes the NAMLNK11 preparation/profiling work. No measured latency reduction claimed. See [trial notes](docs/tuner-performance-trial.md). |
@@ -78,4 +78,4 @@ The public [phone controller 0.6.0](https://santismo.github.io/nam-plug-controll
 
 Phone controller 0.6.1 adds automatic tuning, confirmed/saved buffer values and standalone startup-output defaults. See [phone fixes and validation](docs/phone-tuner-buffer-startup.md). No NAMLNK14 firmware update is required; the reported physical latency difference remains under investigation.
 
-Mac 0.3.7, phone 0.6.2 and the **uninstalled** NAMLNK15 candidate address extra-block editing, the single-saved-color pause, idle FX work and tuner transport overhead. See [scope, evidence and physical limitations](docs/responsive-controls-trial.md).
+Mac 0.3.7, phone 0.6.2 and the installed NAMLNK15 trial address extra-block editing, the single-saved-color pause, idle FX work and tuner transport overhead. Seven restored presets survived a physical restart, and the user confirmed button cycling through every color. Standalone playback was observed on at startup; the final USB check explicitly muted current output. See [scope, evidence and physical limitations](docs/responsive-controls-trial.md).
