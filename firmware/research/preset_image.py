@@ -7,7 +7,7 @@ from audit_reclaimed_code import audit as code_audit
 from audit_retired_audio import audit as audio_audit
 FLASH=0x30040000;BANK=0x30384000;BANK_END=0x303a0000;SOURCE=BANK_END
 
-def build(stock,elf):
+def build(stock,elf,*,allow_dma_prototype=False):
  require(hashlib.sha256(stock).hexdigest()==STOCK_SHA,'Exact stock image required')
  code_audit(stock);retired=audio_audit(stock)
  descriptors=[struct.unpack_from('<8I',stock,0x18428+32*i) for i in range(30)]
@@ -24,6 +24,10 @@ def build(stock,elf):
   symbol=e.get_section_by_name('.symtab').get_symbol_by_name('mpp_probe_identity')[0]
   section=e.get_section(symbol['st_shndx']);off=symbol['st_value']-section['sh_addr']
   identity=section.data()[off:off+8].decode('ascii')
+  prototype=identity=='NAMDMP01'
+  require(not prototype or allow_dma_prototype,'NAMDMP01 is offline-only; explicit research opt-in required')
+  firmware_identity=identity
+  if prototype:identity='NAMLNK19' # Same audited layout/feature set; not a release identity.
   require(identity in ('NAMLNK10','NAMLNK11','NAMLNK12','NAMLNK13','NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18','NAMLNK19'),'Unexpected preset firmware identity')
   require(not [s.name for s in syms if s.name and s['st_shndx']=='SHN_UNDEF'],'Unresolved symbols')
   for s in e.iter_sections():
@@ -71,9 +75,14 @@ def build(stock,elf):
   branch=struct.pack('<HH',0xf000|(s<<10)|((delta>>12)&1023),0xd000|((1^(i1^s))<<13)|((1^(i2^s))<<11)|((delta>>1)&2047))
   patch(0x116fa,bytes.fromhex('fcf79bf9'),branch,'Startup-only ADC short-delay register write')
 
+ if prototype:
+  # Exact stock instruction, used only by TCR1 at 0x4040400c; RX stays 16.
+  # Keep the existing 64-byte minor transfers and both two-iteration TCDs.
+  patch(0x11aa0,bytes.fromhex('1022'),bytes.fromhex('0822'),'OFFLINE ONLY: TX FIFO watermark 16 to 8')
+
  require(out[:0x400]==stock[:0x400] and len(out)==len(stock),'Vector/extent changed')
  require(all(any(a<=i<b for a,b in spans) for i,(x,y) in enumerate(zip(stock,out)) if x!=y),'Change outside allowlist')
- plan=dict(identity=identity,mode='IN_MEMORY_OFFLINE_ONLY',elf_regions=regions,patches=patches,
+ plan=dict(identity=firmware_identity,mode='IN_MEMORY_OFFLINE_ONLY',elf_regions=regions,patches=patches,
   stock_sha256=STOCK_SHA,elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),candidate_sha256=hashlib.sha256(out).hexdigest(),
   retired_audio_audit=retired,preset_ownership=dict(owners=owners,base=hex(BANK),end=hex(BANK_END),copies=2,slots=7,record_bytes=8192),
   copied_code=dict(source=hex(SOURCE),destination=hex(0x20310000 if identity in ('NAMLNK13','NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18','NAMLNK19') else 0x20308000),bytes=next(r['bytes'] for r in regions if r['name']=='.banktext')),

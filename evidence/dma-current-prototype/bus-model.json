@@ -1,0 +1,5827 @@
+{
+  "status": "PASS_OFFLINE_DMA_MODEL_INCLUDING_EXPECTED_FAILURES",
+  "candidate_elf_sha256": "c46573f0800213fc90310723883833194755c1310d8e00e746586b5e7c577ebd",
+  "inputs_sha256": {
+    "arm_report": "dd24de0d35dddaa1398d82fed02a6fbd5c4dbbd0014cf13f0033af3d3aceca3f",
+    "phase_report": "b246c083d7390ae9374db60ccaf3ee5316fb7d1c49894a76ba6111ca823e0a45"
+  },
+  "word_rate_hz": 192000,
+  "subticks_per_word": 16,
+  "tx_watermark": 8,
+  "rx_watermark": 16,
+  "burst_words": 16,
+  "baseline19": {
+    "safe_in_model": true,
+    "serial_label_age_words": [
+      95
+    ],
+    "sequence_discontinuities": 0,
+    "missing_output_words": 0,
+    "fifo_underruns": 0,
+    "fifo_overflows": 0,
+    "cpu_overlap_events": 0,
+    "irq_period_subticks": [
+      512
+    ]
+  },
+  "candidate_ideal": {
+    "safe_in_model": true,
+    "serial_label_age_words": [
+      63
+    ],
+    "sequence_discontinuities": 0,
+    "missing_output_words": 0,
+    "fifo_underruns": 0,
+    "fifo_overflows": 0,
+    "cpu_overlap_events": 0,
+    "irq_period_subticks": [
+      512
+    ]
+  },
+  "current_block_without_retiming": {
+    "safe_in_model": false,
+    "serial_label_age_words": [
+      63
+    ],
+    "sequence_discontinuities": 39,
+    "missing_output_words": 640,
+    "fifo_underruns": 0,
+    "fifo_overflows": 0,
+    "cpu_overlap_events": 0,
+    "irq_period_subticks": [
+      512
+    ]
+  },
+  "modeled_source_age_reduction_samples": 8,
+  "modeled_reduction_ms": 0.16666666666666666,
+  "negative_controls": {
+    "exact_deadline": {
+      "safe_in_model": false,
+      "serial_label_age_words": [
+        63
+      ],
+      "sequence_discontinuities": 39,
+      "missing_output_words": 640,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "cpu_overlap_events": 0,
+      "irq_period_subticks": [
+        512
+      ]
+    },
+    "late_publication": {
+      "safe_in_model": false,
+      "serial_label_age_words": [
+        63
+      ],
+      "sequence_discontinuities": 39,
+      "missing_output_words": 640,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "cpu_overlap_events": 0,
+      "irq_period_subticks": [
+        512
+      ]
+    },
+    "TX_starvation": {
+      "safe_in_model": false,
+      "serial_label_age_words": [
+        37,
+        41,
+        45,
+        49,
+        51,
+        53,
+        55,
+        57,
+        59,
+        61,
+        63,
+        65,
+        67,
+        69,
+        71,
+        73,
+        75,
+        77,
+        79,
+        81,
+        83,
+        87,
+        91,
+        95
+      ],
+      "sequence_discontinuities": 19,
+      "missing_output_words": 479,
+      "fifo_underruns": 162,
+      "fifo_overflows": 0,
+      "cpu_overlap_events": 0,
+      "irq_period_subticks": [
+        512
+      ]
+    },
+    "RX_overflow": {
+      "safe_in_model": false,
+      "serial_label_age_words": [
+        127,
+        191,
+        255,
+        319,
+        383,
+        447,
+        511,
+        575,
+        639
+      ],
+      "sequence_discontinuities": 21,
+      "missing_output_words": 250,
+      "fifo_underruns": 0,
+      "fifo_overflows": 1561,
+      "cpu_overlap_events": 0,
+      "irq_period_subticks": [
+        828
+      ]
+    },
+    "CPU_overload": {
+      "safe_in_model": false,
+      "serial_label_age_words": [
+        127
+      ],
+      "sequence_discontinuities": 16,
+      "missing_output_words": 707,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "cpu_overlap_events": 48,
+      "irq_period_subticks": [
+        512
+      ]
+    }
+  },
+  "cases": [
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-only",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 300,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 18,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 300,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 15,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "instantaneous",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 0,
+      "RX_arbitration_delay_words": 0,
+      "bus_beat_subticks": 0,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "small-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 2,
+      "RX_arbitration_delay_words": 1,
+      "bus_beat_subticks": 1,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 320,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "larger-service",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 4,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 19,
+        "missing_output_words": 300,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 0,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 2,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 4,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "service_profile": "near-empty-TX",
+      "whole_IRQ_proxy_words": 17,
+      "extra_IRQ_delay_words": 8,
+      "TX_arbitration_delay_words": 8,
+      "RX_arbitration_delay_words": 2,
+      "bus_beat_subticks": 2,
+      "publication_span_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    }
+  ],
+  "case_count": 224,
+  "passes": 197,
+  "failures": 27,
+  "startup_phase_sweep": [
+    {
+      "rx_start_words": 0,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          64
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 1,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          63
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 2,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          62
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 3,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          61
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 4,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          60
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 5,
+      "result": {
+        "safe_in_model": true,
+        "serial_label_age_words": [
+          59
+        ],
+        "sequence_discontinuities": 0,
+        "missing_output_words": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 6,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          58
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 7,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          57
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 8,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          56
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 9,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          55
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 10,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          54
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 11,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          53
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 12,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          52
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 13,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          51
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 14,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          50
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    },
+    {
+      "rx_start_words": 15,
+      "result": {
+        "safe_in_model": false,
+        "serial_label_age_words": [
+          49
+        ],
+        "sequence_discontinuities": 39,
+        "missing_output_words": 640,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "cpu_overlap_events": 0,
+        "irq_period_subticks": [
+          512
+        ]
+      }
+    }
+  ],
+  "device_access": false,
+  "host_audio_access": false,
+  "physical_latency_measured": false,
+  "ready_to_flash": false,
+  "limits": [
+    "Historical19 whole IRQ duration is a proxy for candidate publication completion, not a measured deadline.",
+    "Store order is actual compiled ARM; store durations/visibility and all service delays are synthetic.",
+    "RX and TX service use independently injected delays, not a cycle-accurate shared bus arbiter.",
+    "No cache, peripheral synchronizer, interrupt-priority or electrical codec model.",
+    "Modeled labels are serial words, not guitar-to-headphone analog latency.",
+    "The current GPT guard is too late for some DMA races; expected failures block physical installation."
+  ]
+}

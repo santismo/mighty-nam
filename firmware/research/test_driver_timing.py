@@ -6,8 +6,9 @@ from test_preset_runtime import PresetMachine,build,v
 from decode_driver_timing import decode
 p=argparse.ArgumentParser(description=__doc__)
 for k in ['payload','elf','model','report']:p.add_argument(k,type=Path)
-a=p.parse_args();v.configure(a.payload,True,candidate_bundle=build(a.payload.read_bytes(),a.elf));v.elf_path=a.elf
-assert v.plan['identity']=='NAMLNK19'
+p.add_argument('--dma-prototype',action='store_true',help='Explicit offline-only NAMDMP01 research opt-in')
+a=p.parse_args();v.configure(a.payload,True,candidate_bundle=build(a.payload.read_bytes(),a.elf,allow_dma_prototype=a.dma_prototype));v.elf_path=a.elf
+assert v.plan['identity']==('NAMDMP01' if a.dma_prototype else 'NAMLNK19')
 m=PresetMachine(path=a.model);m.arm()
 state=lambda:m.get(v.sym['mpp_driver_state'])
 def command(action,channel=0):
@@ -29,7 +30,11 @@ for channel in [0,1]:
  gen=m.get(v.sym['mpp_driver_generation']);command(127,channel);assert m.get(v.sym['mpp_driver_generation'])==gen
  previous=m.read(v.sym['mpp_link_output'])+m.read(v.sym['_ZL11chain_right'])
  expected=[int(x*2**28)*2**-31 for x in previous];assert max(map(abs,expected))>1e-6
- writes.clear();actual=m.process(20+channel);assert actual==expected
+ writes.clear();actual=m.process(20+channel)
+ if a.dma_prototype:
+  current=m.read(v.sym['mpp_link_output'])+m.read(v.sym['_ZL11chain_right'])
+  expected=[int(x*2**28)*2**-31 for x in current]
+ assert actual==expected
  assert state()==3 and m.get(v.sym['mpp_listen_enabled'])==1
  # The existing IRQ counter reads/reset accounting are independent. New captures write no MMIO.
  assert not writes,writes
@@ -60,4 +65,5 @@ for fill in [0,165,255]:
  n.put(v.sym['mpp_driver_state'],3);n.restart();assert n.get(v.sym['mpp_driver_state'])==0
 m.guards()
 report=dict(status='PASS_NAMLNK19_DRIVER_TIMING_ARM',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),default_off=True,explicit_one_shot=True,read_only_MMIO=True,active_publication_exact=True,no_listen_commands=True,bounded_6_windows_8_words=True,both_channels=True,no_render_incomplete=True,cold_patterns=[0,165,255],warm_restarts=3,negative_vectors=checks,synthetic_example=decode(words),device_access=False,host_audio_access=False)
+if a.dma_prototype:report.update(status='PASS_NAMDMP01_DRIVER_TIMING_ARM',publication='current protected output; after DSB',physical_deadline_proven=False)
 a.report.write_text(json.dumps(report,indent=2)+'\n');print(report['status'])

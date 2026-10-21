@@ -27,7 +27,9 @@ p.add_argument('--nam-pointer',action='store_true',help='NAMLNK16 non-fused NAM 
 p.add_argument('--adc-short-delay',action='store_true',help='NAMLNK17 startup-only ADC short-delay trial; requires --nam-pointer')
 p.add_argument('--global-buffer',action='store_true',help='NAMLNK18 global persistent buffer and playback-preserving successful saves; requires --adc-short-delay')
 p.add_argument('--driver-timing',action='store_true',help='NAMLNK19 delay/reverb bypass sleep and opt-in read-only DMA/SAI timing; requires --global-buffer')
+p.add_argument('--dma-current-prototype',action='store_true',help='OFFLINE ONLY: NAMDMP01 current-block output with experimental TX watermark eight; no release packaging')
 a=p.parse_args()
+if a.dma_current_prototype and not a.driver_timing:p.error('--dma-current-prototype requires --driver-timing')
 if a.driver_timing and not a.global_buffer:p.error('--driver-timing requires --global-buffer')
 if a.global_buffer and not a.adc_short_delay:p.error('--global-buffer requires --adc-short-delay')
 if a.adc_short_delay and not a.nam_pointer:p.error('--adc-short-delay requires --nam-pointer')
@@ -99,6 +101,7 @@ if a.global_buffer:
 if a.driver_timing:
  flags+=['-DMPP_DRIVER_TIMING']
  sources+=['target/link/driver_timing.cpp']
+if a.dma_current_prototype:flags+=['-DMPP_DMA_CURRENT_PROTOTYPE']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -170,6 +173,14 @@ if a.global_buffer:
  report.update(identity='NAMLNK18',global_persistent_buffer=True,global_settings_flash=[hex(0x303a4000),hex(0x303a6000)],runtime_changes='Global 8/16/32 setting survives power-off and preset changes; buffer/save resume prior output intent',physical_global_buffer_verified=False)
 if a.driver_timing:
  report.update(identity='NAMLNK19',driver_timing='Explicit one-shot; DMA/SAI/counter reads only; disabled at boot',driver_status_pages=[118,126],stock_bypass_tail_policy='Delay/reverb hard-bypass sleeps after 1198 blocks, resets on wake; gate unchanged',bypass='Used delay/reverb sleep and reset; no spillover',physical_driver_timing_verified=False)
+if a.dma_current_prototype:
+ report.update(identity='NAMDMP01',status='OFFLINE_DMA_PROTOTYPE_NOT_FOR_INSTALLATION',
+  output_pipeline='current protected block after timing guard; DSB then publication snapshot',
+  output_pipeline_latency_samples=0,experimental_tx_fifo_watermark=8,
+  buffer_scope='Output staging only: adds 0/8/24 frames to current-block publication; DSP stays eight frames',
+  requires_offline_image_opt_in=True,physical_output_deadline_verified=False,
+  timer_guard_scope='Checks DSP/protection before publication; excludes final render. Whole-IRQ diagnostics still enclose all work.',
+  deadline_guard='Existing GPT processing guard only; no proven TX ownership/deadline guard')
  report['linker_sha256']=hashlib.sha256(ld.read_bytes()).hexdigest()
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

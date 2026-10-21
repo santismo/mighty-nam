@@ -44,7 +44,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_DRIVER_TIMING)
+#if defined(MPP_DMA_CURRENT_PROTOTYPE)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','D','M','P','0','1'};
+#elif defined(MPP_DRIVER_TIMING)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','9'};
 #elif defined(MPP_GLOBAL_BUFFER)
@@ -475,7 +478,7 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
  ((void(*)(void))0x11663)();
 #ifdef MPP_LISTENING
  mpp_listen_prepare();
-#ifdef MPP_EARLY_OUTPUT
+#if defined(MPP_EARLY_OUTPUT) && !defined(MPP_DMA_CURRENT_PROTOTYPE)
  // Match stock's one-block output pipeline: its packer runs at 0x14c2e,
  // before the next chain invocation at 0x14d5c. Publish the previous protected
  // result before NAM can delay the TX refill. Mute/settling gates it here;
@@ -504,7 +507,7 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
 #endif
  uint32_t bits;__builtin_memcpy(&bits,mpp_link_output+7,4);
  mpp_link.last_output_bits=bits;++mpp_link.runs;
-#if defined(MPP_LISTENING) && !defined(MPP_EARLY_OUTPUT)
+#if defined(MPP_LISTENING) && !defined(MPP_EARLY_OUTPUT) && !defined(MPP_DMA_CURRENT_PROTOTYPE)
  if(mpp_link.running)mpp_listen_render(mpp_link_output,chain_right,tx);
 #endif
  ((float(*)(void))0x11671)();
@@ -513,6 +516,16 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
  if(!ticks||ticks>=150||rd(0x400ec000)!=0x46){
   ++mpp_link.faults;mpp_link.running=0;
  }
+#ifdef MPP_DMA_CURRENT_PROTOTYPE
+ // Offline experiment only. The image builder separately changes TX's FIFO
+ // watermark to eight. Existing GPT guards do NOT establish DMA ownership:
+ // late publication can still race a fetch. No updater may package this ID.
+ if(mpp_link.running){
+  mpp_listen_render(mpp_link_output,chain_right,tx);
+  __asm__ volatile("dsb":::"memory");
+  mpp_driver_capture(1,(uint32_t)(uintptr_t)tx);
+ }
+#endif
 #ifdef MPP_LISTENING
  // A fault on this block cancels output before the DMA half is released.
  if(!mpp_link.running){

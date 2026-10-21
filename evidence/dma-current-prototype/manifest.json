@@ -1,0 +1,28 @@
+{
+  "status": "OFFLINE_PROTOTYPE_COMPLETE_NOT_READY_TO_FLASH",
+  "identity": "NAMDMP01",
+  "elf_sha256": "c46573f0800213fc90310723883833194755c1310d8e00e746586b5e7c577ebd",
+  "baseline_rebuilt_exactly": true,
+  "reports": {
+    "arm.json": "dd24de0d35dddaa1398d82fed02a6fbd5c4dbbd0014cf13f0033af3d3aceca3f",
+    "build.json": "9f8bf8f38eb14a267acd330d0e435db2995c89d19bdf2fcbc91c5a6f7e231a5b",
+    "bus-model.json": "53ffb345a1d8c70e4bae27ae9e8a0083cedea7cf1c8bdbe29d309c93f51ee103",
+    "driver.json": "f27957fa2ab3b3185cba5257c6b0cd463440a2d726fa81b7387bc4c37b826dd7"
+  },
+  "sources": {
+    "firmware/target/link/stock_chain_firmware.cpp": "4abb3b7d119b76728370ae12a3b09b338fc64e7c7691e01fd1a1740ad3def841",
+    "firmware/tools/build_link_firmware.py": "1890b4f5497e4b93bebe61a2115a398a279c3bc363066c9687d107da4f0edb3c",
+    "firmware/research/preset_image.py": "f00957b2802da7de8e0851383fa6065d62cde81ccdd9a43c1f3fa3d55918a968",
+    "firmware/research/test_preset_runtime.py": "9953d4f0ef590954c79c4b19dc3787a679dcffb66196187ea2483bdd18054e2f",
+    "firmware/research/test_driver_timing.py": "9ad4ffa30510661767f9bc11ce805ca40ba7c5e402562392d7ef7abe0e755295",
+    "firmware/research/test_dma_current_prototype.py": "804fd7f0cf783d8a94f1cc0069f9f1daa76f560879f72b110cf3a735bb26890e",
+    "firmware/research/simulate_dma_current_prototype.py": "884a6ef89cc27377cfdfddd8d810a380dc863ddc8aa967b61e5b0e35133cc55b",
+    "tools/dma-current-prototype/run_offline.py": "eee3cdee796e3deddb1a91469ffd42c7e35817ebaaefea88464bd92896a7c437"
+  },
+  "baseline_elf_sha256": "4c058e7d985897a3ef84f78881a98f0fff0aa9ee3d930347d158a3f0421ebbb0",
+  "installed19_updater_file_unchanged": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false,
+  "physical_latency_measured": false
+}

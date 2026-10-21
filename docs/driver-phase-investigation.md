@@ -60,6 +60,10 @@ The candidate is not ready to install. The model assumes instantaneous DMA and a
 
 ## Next useful work
 
+The first offline prototype is now tracked separately in
+[Current-block DMA prototype](dma-current-prototype.md). The remaining hardware
+deadline and analog-measurement requirements below still apply.
+
 1. Build an offline prototype that preserves all eight-frame effect contracts and output guards while testing a later TX fetch plus current-block publication. Keep the present NAMLNK19 as the usable version.
 2. Before any hardware trial, test all used chains and transitions with a bus-service/jitter model and exact compiled publication order. Include FIFO underrun and partial-fetch failures. A new diagnostic point after output protection would be needed to measure actual candidate completion, with its overhead accounted for.
 3. Measure the real guitar-input-to-headphone path with suitable external input/output equipment. USB status and loopback timing cannot establish that end-to-end figure. This follow-up does not start an audio test.
