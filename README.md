@@ -74,3 +74,5 @@ NAMLNK13 is **installed for an experimental trial**, adding two movable FX block
 NAMLNK14 adds **High / Low Cut** to the movable EQ block, with independent Off settings, live controls and saved cutoffs. Matching controllers: Mac 0.3.6 and [phone 0.5.0](https://santismo.github.io/nam-plug-controller/?v=0.5.0). It is installed on the development plug; bounded muted USB controls and preset save/recall passed. See [EQ trial notes](docs/high-low-cut-trial.md).
 
 The public [phone controller 0.6.0](https://santismo.github.io/nam-plug-controller/?v=0.6.0) now browses TONE3000, extracts A2 Lite, loads captures through the existing NAMLNK14 Bluetooth protocol and saves captures/FX to chosen colors. All 63 tests passed and real sign-in/download worked. The user will test the physical Bluefy transfer later; see [phone trial notes](docs/phone-tone3000-trial.md).
+
+Phone controller 0.6.1 adds automatic tuning, confirmed/saved buffer values and standalone startup-output defaults. See [phone fixes and validation](docs/phone-tuner-buffer-startup.md). No NAMLNK14 firmware update is required; the reported physical latency difference remains under investigation.

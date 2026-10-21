@@ -1,0 +1,87 @@
+{
+  "version": "0.6.1",
+  "commit": "675afc28ace26c29b78103412c2ebc5f16f9d2a1",
+  "status": "LIVE_ASSETS_MATCH",
+  "files": [
+    {
+      "file": "index.html",
+      "sha256": "9a92ed9cf4f1902c0e5dba896d64b681f8d348dd7b01361f41bdf2c705241a81"
+    },
+    {
+      "file": "style.css",
+      "sha256": "f7e1a353dedfc8b27f77f3cfbbf568b5d1bec108a7f228738ddc0e618eeeaa02"
+    },
+    {
+      "file": "src/protocol.js",
+      "sha256": "114c76ce96b493fdc446621857add162dba29a17171216e7d7fc25ace054344d"
+    },
+    {
+      "file": "src/tone-browser.js",
+      "sha256": "5f3a755c84e0e0bcdc4a83c09f222ba9a796c132e9ae14c0ab7b3b9cad4d0873"
+    },
+    {
+      "file": "src/device.js",
+      "sha256": "1ee5fb3d070af83083c8b3ee5a97f79325cfcff0e7a99d3f27ef7670e4818b77"
+    },
+    {
+      "file": "src/reply-pages.js",
+      "sha256": "d587d175382baea63a8fde706a8b62098429a3e0d17e9f403d88aa0e4163380f"
+    },
+    {
+      "file": "src/controls.js",
+      "sha256": "91f5036374700636ee32cb877c9d9d1d47ea525907feffb64ca4d6022fda208f"
+    },
+    {
+      "file": "src/catalog.js",
+      "sha256": "d06677611a35e29b08f76305d04bb25d9ffda2ffc986ce0b189c359e7daec2dc"
+    },
+    {
+      "file": "src/a2-topology.js",
+      "sha256": "bb1374cd0a8d6a77fd07d0b66c0eb7e0eafb2e959076f2df825640d41fedc781"
+    },
+    {
+      "file": "src/ble-midi.js",
+      "sha256": "b7393d774719303c82c518db5d37dc4c66a1d28817c85429163462e9e905c3d6"
+    },
+    {
+      "file": "src/fx.js",
+      "sha256": "74d4b3f9e84b67326cab919ec9017ac4c59c80535f29dabf09e0c08a7f7c1bf6"
+    },
+    {
+      "file": "src/tone3000.js",
+      "sha256": "cf9ca3ffeed1676546147126acf5f9de842786fd4194bf1db5b69baa00a0360c"
+    },
+    {
+      "file": "src/editor.js",
+      "sha256": "e124c9df00c744e3950f8d31605e91b2d8c8a1b7d36e5c4c0d46db61fc38905d"
+    },
+    {
+      "file": "src/tuner.js",
+      "sha256": "bbf0fade11755a4a6a03fac69ff5e20c6e4e1a2c930fae4a3f662355e81d2194"
+    },
+    {
+      "file": "src/auto-tuner.js",
+      "sha256": "d867e6a8193bc783c9799d1a299d66337a2cf9712861928b0c4426f8a03f4ead"
+    },
+    {
+      "file": "src/commands.js",
+      "sha256": "5f970ff5111a4e7c453cfb04b8bef4816dcede3819462b2211d261a0cdd6f34c"
+    },
+    {
+      "file": "src/model.js",
+      "sha256": "2af5abe72d7b68c21907a43761b9b6ed28c353cb53b917bd50eaf758417f7849"
+    },
+    {
+      "file": "src/model-wire.js",
+      "sha256": "cf0201f8df02991ebd42d831149eccee3c4e7c4fe8da8d62d48a32ece1a594e7"
+    },
+    {
+      "file": "src/live.js",
+      "sha256": "ddfbadec4a96b952e2a014e69576cb7f09206d9d54a2ce7662505cb2dda5e8a6"
+    },
+    {
+      "file": "src/app.js",
+      "sha256": "62a28d420c987d008c55ed68e60226b4a128ee3c215138fb72a1d01d60ddcfbb"
+    }
+  ]
+}

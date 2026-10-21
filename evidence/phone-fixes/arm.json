@@ -1,0 +1,40 @@
+{
+  "status": "PASS_NAMLNK14_PHONE_BUFFER_BOOT_TUNER",
+  "elf_sha256": "8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d",
+  "buffers": [
+    {
+      "samples": 32,
+      "extra_blocks": 3,
+      "exact_pcm": true
+    },
+    {
+      "samples": 16,
+      "extra_blocks": 1,
+      "exact_pcm": true
+    },
+    {
+      "samples": 8,
+      "extra_blocks": 0,
+      "exact_pcm": true
+    }
+  ],
+  "cold_and_warm_startup_output": true,
+  "saved_buffer": 8,
+  "tuner_sample_count": 2048,
+  "exact_dry_decimation": true,
+  "bluetooth_reply_frames": 162,
+  "objects_identical_to_NAMLNK12": [
+    "listening.o",
+    "a2_lite.o",
+    "effect_profiler.o"
+  ],
+  "physical_device_access": false,
+  "audio_playback": false,
+  "real_time_latency_measured": false,
+  "limits": [
+    "ARM execution models peripherals; does not measure physical latency or Bluefy radio behavior",
+    "Existing saved colors must be explicitly re-saved with startup output enabled"
+  ],
+  "javascript_decodes_real_arm_paged_tuner": true,
+  "real_arm_capture_pitch_error_cents": -0.00889841961111415
+}
