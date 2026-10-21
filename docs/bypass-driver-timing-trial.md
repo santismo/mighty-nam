@@ -18,7 +18,7 @@ The one-shot driver capture records observations at the IRQ wrapper before the s
 
 All tests bind to the exact ELF hash above:
 
-- 22 compiled full-IRQ cases: all five delays and six reverbs, each at ordinary and long settings. Sleeping blocks had zero dispatch calls; real foreground history clears were observed; silent wake stayed below 1e-6 normalized output after settling. New input remained audible in the numerical output.
+- 22 compiled full-IRQ cases: all five delays and six reverbs, each at ordinary and long settings. Sleeping blocks had zero dispatch calls; real foreground history clears were observed; silent wake stayed below 1e-6 normalized output after settling. New input produced nonzero numerical output.
 - Active delay/reverb PCM matched NAMLNK18 over 2,400 frames/channel. Type changes while asleep, wake into other algorithms and rapid switching passed.
 - Full stock chain with real NAM, five dual-custom-FX combinations and High/Low Cut passed. Two real captures matched the reference NAM core at the tested boundary with zero recorded error. This is numerical validation, not real-time capacity proof.
 - Cold starts with RAM filled 0/0xa5/0xff, warm restarts, seven independent presets, stock button branches, global buffer persistence, failed writes and fault guards passed.
