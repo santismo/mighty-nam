@@ -1,5 +1,7 @@
 # Latency investigation after NAMLNK15
 
+Follow-up: [NAMLNK10 comparison, bypass-history workload and NAM/converter experiments](latency-workload.md). The EQ comparison below is one hypothesis, not an established explanation of the reported feel.
+
 The exact NAMLNK12 and installed NAMLNK15 builds produced bit-identical output in the offline comparison with the same Fender A2 Lite capture, 8-sample setting and two matched presets: NAM alone and NAM with stock Spring reverb. This rules out an added software sample delay in those tested cases. It does not establish physical headphone latency or rule out a hardware deadline problem.
 
 Each of the four runs executed 1,350 actual settling/fade blocks followed by 384 comparison blocks (3,072 frames). Every compared callback rendered the previous protected eight-sample block, then processed and protected the current block. Additional output staging was zero. The NAM engine, output renderer and IRQ-timing object files are byte-identical across the two builds; the original stock audio IRQ body is preserved. Timing in the emulator is synthetic, so these are sample-order results, not CPU or converter measurements.

@@ -1,4 +1,4 @@
-"""Compare settled NAMLNK12/15 PCM and logical sample age, offline only.
+"""Compare settled baseline builds against NAMLNK15 PCM/sample age, offline only.
 
 Does not model DMA deadlines, physical converter delay or wall-clock CPU time.
 No audio APIs, USB, firmware packaging or device writes.
@@ -16,16 +16,19 @@ from test_preset_runtime import PresetMachine, build, preset_fixture, v
 p = argparse.ArgumentParser(description=__doc__)
 for name in ['payload', 'baseline_build', 'candidate_build', 'model', 'report']:
     p.add_argument(name, type=Path)
+p.add_argument('--baseline-identity', choices=['NAMLNK10', 'NAMLNK12', 'NAMLNK15'], default='NAMLNK12')
 a = p.parse_args()
 started = time.monotonic()
 digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
-objects = ['a2_lite.o', 'listening.o', 'irq_timing.o']
+objects = ['listening.o', 'irq_timing.o']
+if a.baseline_identity == 'NAMLNK12':
+    objects.append('a2_lite.o')
 for name in objects:
     assert (a.baseline_build / name).read_bytes() == (a.candidate_build / name).read_bytes(), name
 stock = a.payload.read_bytes()
 references = {}
 rows = []
-for identity, folder in [('NAMLNK12', a.baseline_build), ('NAMLNK15', a.candidate_build)]:
+for role, identity, folder in [('baseline', a.baseline_identity, a.baseline_build), ('candidate', 'NAMLNK15', a.candidate_build)]:
     elf = folder / 'nam-link-offline.elf'
     bundle = build(stock, elf)
     assert bundle[2]['identity'] == identity
@@ -65,18 +68,18 @@ for identity, folder in [('NAMLNK12', a.baseline_build), ('NAMLNK15', a.candidat
             m.u.hook_del(hook)
         assert max(map(abs, samples)) > 1e-6
         m.guards()
-        if identity == 'NAMLNK12':
+        if role == 'baseline':
             references[label] = samples
         else:
             assert samples == references[label], (label, 'PCM changed between builds')
-        rows.append(dict(identity=identity, case=label, stock_preset_sha256=hashlib.sha256(data).hexdigest(),
+        rows.append(dict(role=role, identity=identity, case=label, stock_preset_sha256=hashlib.sha256(data).hexdigest(),
                          warmup_blocks=1350, comparison_blocks=384, frames=3072,
                          PCM_sha256=hashlib.sha256(struct.pack('<%dd' % len(samples), *samples)).hexdigest(),
                          protected_output_age_samples=8, additional_output_queue_samples=0,
                          order=['render-previous', 'process-current-NAM', 'protect-current'],
                          processing_faults=m.words()[4], context_rejections=m.words()[10]))
         print(identity, label, 'PASS: one-block output age; exact PCM comparison', flush=True)
-report = dict(status='PASS_OFFLINE_NAMLNK12_TO_15_SAMPLE_AGE', cases=rows,
+report = dict(status='PASS_OFFLINE_'+a.baseline_identity+'_TO_15_SAMPLE_AGE', cases=rows,
               baseline_elf_sha256=digest(a.baseline_build / 'nam-link-offline.elf'),
               candidate_elf_sha256=digest(a.candidate_build / 'nam-link-offline.elf'),
               model_sha256=digest(a.model), identical_objects=objects,

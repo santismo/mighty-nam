@@ -1,0 +1,25 @@
+{
+  "scope": "Offline startup writes only; no physical codec reads, analog response or end-to-end timing measured",
+  "expected_codec": "AK4619; inferred identification",
+  "baseline_ADC_register_0x0a": 0,
+  "experimental_ADC_register_0x0a": 34,
+  "unchanged_DAC_register_0x14": 10,
+  "only_ADC_short_delay_bits_changed": true,
+  "other_20_codec_writes_equal": true,
+  "SAI_and_DMA_configuration_equal": true,
+  "datasheet_ADC_delay_samples": [
+    22,
+    8
+  ],
+  "datasheet_predicted_difference_ms": 0.2916666666666667,
+  "datasheet_source": "https://www.mouser.com/datasheet/2/1431/ak4619vn_en_datasheet-3010069.pdf",
+  "datasheet_pages": [
+    13,
+    15,
+    48,
+    52,
+    64,
+    66
+  ],
+  "physical_verification": false
+}

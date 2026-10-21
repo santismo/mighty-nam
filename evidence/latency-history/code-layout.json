@@ -1,0 +1,50 @@
+[
+  {
+    "identity": "NAMLNK10",
+    "experimental": false,
+    "active_NAM_bytes": 808,
+    "active_NAM_object_sha256": "554da869cb0df772929113650d1fc4d8fc3850273f59f18788cb0e8d86d05d6e",
+    "addresses": {
+      "_ZL5model": "0x202e4020",
+      "_ZN3mpp6A2Lite7processEPKfPfj": "0x1a34d",
+      "mpp_listen_render": "0x14dc5",
+      "mpp_link_output": "0x202fe724"
+    }
+  },
+  {
+    "identity": "NAMLNK12",
+    "experimental": false,
+    "active_NAM_bytes": 808,
+    "active_NAM_object_sha256": "554da869cb0df772929113650d1fc4d8fc3850273f59f18788cb0e8d86d05d6e",
+    "addresses": {
+      "_ZL5model": "0x202e4020",
+      "_ZN3mpp6A2Lite7processEPKfPfj": "0x1a399",
+      "mpp_listen_render": "0x14dc5",
+      "mpp_link_output": "0x202fe724"
+    }
+  },
+  {
+    "identity": "NAMLNK15",
+    "experimental": false,
+    "active_NAM_bytes": 808,
+    "active_NAM_object_sha256": "554da869cb0df772929113650d1fc4d8fc3850273f59f18788cb0e8d86d05d6e",
+    "addresses": {
+      "_ZL5model": "0x202e4020",
+      "_ZN3mpp6A2Lite7processEPKfPfj": "0x1a399",
+      "mpp_listen_render": "0x14dc5",
+      "mpp_link_output": "0x202fe724"
+    }
+  },
+  {
+    "identity": "NAMLNK15",
+    "experimental": true,
+    "active_NAM_bytes": 820,
+    "active_NAM_object_sha256": "f76f5a955408a6f5dbcef9e0591a82e0b40fce0efdae15f1177edf1dcfe4cc8b",
+    "addresses": {
+      "_ZL5model": "0x202e4020",
+      "_ZN3mpp6A2Lite7processEPKfPfj": "0x1a399",
+      "mpp_listen_render": "0x14dc5",
+      "mpp_link_output": "0x202fe724"
+    }
+  }
+]

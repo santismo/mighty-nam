@@ -1,0 +1,370 @@
+{
+  "status": "PASS_OFFLINE_MINIMAL_CHAIN_PROFILE",
+  "identity": "NAMLNK15",
+  "elf_sha256": "53d00afbf6773638671c4e99d1af592ba9d7b0d4be8ea79f2dcff572e42d3e75",
+  "model_sha256": "79aacb0a22d4a333bccf9efb2115b0720076e3ebcc757d78a35dc8c68f6e2a84",
+  "cases": [
+    {
+      "case": "fresh-NAM-only",
+      "observed_blocks": 8,
+      "instruction_events_per_IRQ": [
+        51297,
+        51289,
+        51250,
+        51249,
+        51247,
+        51330,
+        51272,
+        51270
+      ],
+      "calls": {
+        "IRQ_instruction_events": 410204,
+        "mpp_tuner_feed": 8,
+        "mpp_listen_render": 8,
+        "mpp_fast_dispatch": 88,
+        "mpp_stock_amp_process": 8,
+        "mpp_output_protect": 8
+      },
+      "dispatches_by_stage": {
+        "0": 8,
+        "5": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "9": 8,
+        "4": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "callbacks_by_stage": {
+        "0": 8,
+        "3": 8,
+        "10": 8
+      },
+      "bypass_hold": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "controls": [
+        65,
+        65,
+        65,
+        1,
+        65,
+        65,
+        65,
+        65,
+        68,
+        65,
+        65
+      ],
+      "faults": 0,
+      "PCM_sha256": "a152ea16c10025dcca2fe822066308eb029fda24d49b1244e12e261314a06bd6"
+    },
+    {
+      "case": "NAM-and-spring",
+      "observed_blocks": 8,
+      "instruction_events_per_IRQ": [
+        58385,
+        58361,
+        58333,
+        58413,
+        58339,
+        58328,
+        58314,
+        58336
+      ],
+      "calls": {
+        "IRQ_instruction_events": 466809,
+        "mpp_tuner_feed": 8,
+        "mpp_listen_render": 8,
+        "mpp_fast_dispatch": 88,
+        "mpp_stock_amp_process": 8,
+        "mpp_output_protect": 8
+      },
+      "dispatches_by_stage": {
+        "0": 8,
+        "5": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "9": 8,
+        "4": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "callbacks_by_stage": {
+        "0": 8,
+        "3": 8,
+        "8": 8,
+        "10": 8
+      },
+      "bypass_hold": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535,
+        0,
+        0
+      ],
+      "controls": [
+        65,
+        65,
+        65,
+        1,
+        65,
+        65,
+        65,
+        65,
+        4,
+        65,
+        65
+      ],
+      "faults": 0,
+      "PCM_sha256": "a83b763567972e5ce2c08e72688b495942bd7149a3e9a6145cf0508db64752b2"
+    },
+    {
+      "case": "gate-delay-spring-active",
+      "observed_blocks": 8,
+      "instruction_events_per_IRQ": [
+        62033,
+        62079,
+        62041,
+        62059,
+        62012,
+        61982,
+        61992,
+        62077
+      ],
+      "calls": {
+        "IRQ_instruction_events": 496275,
+        "mpp_tuner_feed": 8,
+        "mpp_listen_render": 8,
+        "mpp_fast_dispatch": 88,
+        "mpp_stock_amp_process": 8,
+        "mpp_output_protect": 8
+      },
+      "dispatches_by_stage": {
+        "0": 8,
+        "5": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "9": 8,
+        "4": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "callbacks_by_stage": {
+        "0": 8,
+        "5": 8,
+        "3": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "bypass_hold": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535,
+        0,
+        65535,
+        65535,
+        0,
+        0
+      ],
+      "controls": [
+        65,
+        65,
+        65,
+        1,
+        65,
+        1,
+        65,
+        1,
+        4,
+        65,
+        65
+      ],
+      "faults": 0,
+      "PCM_sha256": "ec6ac480b558bd6c6d84a90e687f6bdb2f67abfb2cd94129915a2d9b23455529"
+    },
+    {
+      "case": "NAM-and-spring-after-bypassing-gate-delay",
+      "observed_blocks": 8,
+      "instruction_events_per_IRQ": [
+        62063,
+        62066,
+        62048,
+        62069,
+        62060,
+        62108,
+        62016,
+        62031
+      ],
+      "calls": {
+        "IRQ_instruction_events": 496461,
+        "mpp_tuner_feed": 8,
+        "mpp_listen_render": 8,
+        "mpp_fast_dispatch": 88,
+        "mpp_stock_amp_process": 8,
+        "mpp_output_protect": 8
+      },
+      "dispatches_by_stage": {
+        "0": 8,
+        "5": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "9": 8,
+        "4": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "callbacks_by_stage": {
+        "0": 8,
+        "5": 8,
+        "3": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "bypass_hold": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535,
+        0,
+        65535,
+        65535,
+        0,
+        0
+      ],
+      "controls": [
+        65,
+        65,
+        65,
+        1,
+        65,
+        65,
+        65,
+        65,
+        4,
+        65,
+        65
+      ],
+      "faults": 0,
+      "PCM_sha256": "be4ffe79c1dd6c0d08317edf8c4cc866ae35264a6b396c4eeea056c68e3fe916"
+    },
+    {
+      "case": "NAM-only-after-bypassing-used-tails",
+      "observed_blocks": 8,
+      "instruction_events_per_IRQ": [
+        62049,
+        62040,
+        62038,
+        62116,
+        62063,
+        62026,
+        62050,
+        62084
+      ],
+      "calls": {
+        "IRQ_instruction_events": 496466,
+        "mpp_tuner_feed": 8,
+        "mpp_listen_render": 8,
+        "mpp_fast_dispatch": 88,
+        "mpp_stock_amp_process": 8,
+        "mpp_output_protect": 8
+      },
+      "dispatches_by_stage": {
+        "0": 8,
+        "5": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "9": 8,
+        "4": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "callbacks_by_stage": {
+        "0": 8,
+        "5": 8,
+        "3": 8,
+        "7": 8,
+        "8": 8,
+        "10": 8
+      },
+      "bypass_hold": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535,
+        0,
+        65535,
+        65535,
+        0,
+        0
+      ],
+      "controls": [
+        65,
+        65,
+        65,
+        1,
+        65,
+        65,
+        65,
+        65,
+        68,
+        65,
+        65
+      ],
+      "faults": 0,
+      "PCM_sha256": "9d085172f1af03d5f971709b1ab12ac4f880a03e9582c5c35448b52b769f153f"
+    }
+  ],
+  "metric": "Emulator instruction events, not M7 cycles, CPU percentage or headphone latency",
+  "physical_timing_measured": false,
+  "hardware_deadline_proven": false,
+  "host_audio_access": false,
+  "device_access": false,
+  "firmware_created": false,
+  "seconds": 61.525140162790194,
+  "limits": [
+    "Short windows do not establish worst-case execution cost.",
+    "Synthetic timer, no target caches, bus contention or interrupt preemption.",
+    "Used gate/delay/reverb continue stock residual/tail callbacks; counts alone do not justify truncating them."
+  ]
+}

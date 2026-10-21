@@ -1,0 +1,85 @@
+{
+  "status": "PASS_OFFLINE_HISTORY_AND_EXPERIMENT_COMPARISON",
+  "metric": "Unicorn instruction events, not physical cycles, CPU percentage or acoustic latency",
+  "workload_comparison": [
+    {
+      "case": "fresh-NAM-only",
+      "version10_instruction_events_mean": 51143.5,
+      "version15_instruction_events_mean": 51275.5,
+      "experiment_instruction_events_mean": 49330.5,
+      "added_since10": 132.0,
+      "experiment_reduction": 1945.0,
+      "experiment_reduction_percent": 3.7932345857183254,
+      "PCM_equal": true
+    },
+    {
+      "case": "NAM-and-spring",
+      "version10_instruction_events_mean": 58219.125,
+      "version15_instruction_events_mean": 58351.125,
+      "experiment_instruction_events_mean": 56406.125,
+      "added_since10": 132.0,
+      "experiment_reduction": 1945.0,
+      "experiment_reduction_percent": 3.333269067220212,
+      "PCM_equal": true
+    },
+    {
+      "case": "gate-delay-spring-active",
+      "version10_instruction_events_mean": 61902.375,
+      "version15_instruction_events_mean": 62034.375,
+      "experiment_instruction_events_mean": 60089.375,
+      "added_since10": 132.0,
+      "experiment_reduction": 1945.0,
+      "experiment_reduction_percent": 3.1353584202307188,
+      "PCM_equal": true
+    },
+    {
+      "case": "NAM-and-spring-after-bypassing-gate-delay",
+      "version10_instruction_events_mean": 61925.625,
+      "version15_instruction_events_mean": 62057.625,
+      "experiment_instruction_events_mean": 60112.625,
+      "added_since10": 132.0,
+      "experiment_reduction": 1945.0,
+      "experiment_reduction_percent": 3.1341837526009093,
+      "PCM_equal": true
+    },
+    {
+      "case": "NAM-only-after-bypassing-used-tails",
+      "version10_instruction_events_mean": 61926.25,
+      "version15_instruction_events_mean": 62058.25,
+      "experiment_instruction_events_mean": 60113.25,
+      "added_since10": 132.0,
+      "experiment_reduction": 1945.0,
+      "experiment_reduction_percent": 3.134152187662398,
+      "PCM_equal": true
+    }
+  ],
+  "used_tail_NAM_overhead_percent": 21.02904896100477,
+  "used_gate_delay_NAM_spring_overhead_percent": 6.352062620900623,
+  "production_source_modified": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false,
+  "experiment_release_ready": false,
+  "source_sha256": {
+    "firmware/research/test_latency_regression.py": "5fd6b1bc895af10603abb96b2b916cc7dd053329308d8758daf64a4f87485bb1",
+    "firmware/research/profile_minimal_chain.py": "38e715d51cd3cd61bd9413ecea511b0f99cf8f6faa99b9501fe3de8d7bbb5d3f",
+    "firmware/research/experiment_a2_pointer_taps.py": "c303a1ea32284711d02fcdfae79e5e9882ffb9e2d37c1aeb96205e363de8c641",
+    "firmware/research/probe_stock_audio.py": "89cd93d4bf408dd4e9074a11ff1ce7813e69a8825cbc50a3762883e551e0a3d0",
+    "firmware/research/test_preset_runtime.py": "d75acf2382f3675ed36b0f8b9815f2968a54e849fe417fe87ce7a0d8c0bbe5ea",
+    "firmware/target/a2/a2_lite.cpp": "8f6ff6debc47b3b5426defe46be49bbe58e8a1cce04490d92b7864db2951e783",
+    "firmware/tools/build_link_firmware.py": "6848209be0ca5fe02292d9feaf5602055afb91b4d8c4867d8c094c71c48ebf5d"
+  },
+  "evidence_sha256": {
+    "code-layout.json": "cb119b9eee704611cb9b11a77c2188f5d3d8e79d21d2c6aa4d74c99339c4f591",
+    "codec-filter-audit.json": "3d92355a804963b07f12d51602cbc2ee03a1ddc13d73792c454324b27be0c066",
+    "codec-short-delay-probe.json": "68323fa633e18cb670162ec4e8aefc914f8f22d359a2abbb583619045bdec734",
+    "codec-stock-probe.json": "27612269e06d524a692c4761f4b63bb6b4cefeea18e73952f7988f63ef524e56",
+    "pointer-build-metadata.json": "e48eb07601cfe3f2d0303498c2a26d8f43036432f8c0f4b970646da3379cbc3c",
+    "pointer-fender.json": "db56f3cb5411e3652e623c2a461cb3ea8c8635159ac9b975e10580f40b660a55",
+    "pointer-marshall.json": "2e243c244388432ec4c96e1fcb5c0e823c2a348e7a4df6ee4a9344b41729295f",
+    "profile-pointer.json": "d865f2abe341a7d60ccdcdc6bbbdce87d97bd5f61a98beb4be702b9f41e1fc0d",
+    "profile10.json": "d14d92af2bbbddd4d92446de471c71f17e16ec0ad3805a0eb3af28e34d3e74ce",
+    "profile15.json": "b8dcc6c61946aa99f949b0fd1ac45df363449772c5f8420fca2d987c8f91268a",
+    "version10-regression.json": "927dffce9737b9d691300aedf2616bc518103bcd3222b94443c4f790918b44c5"
+  }
+}
