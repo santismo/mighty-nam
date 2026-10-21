@@ -1,0 +1,19 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK19_PHASE_AND_BUFFER_INVESTIGATION",
+  "recorded_at": "2026-10-21T19:56:06.416740+00:00",
+  "files": {
+    "firmware/research/analyze_driver_phase.py": "afb70d1dac307815161256aa213abb7cc76efa87259fa331a29d8ea3992c7b5c",
+    "firmware/research/probe_render_sample_age.py": "7aab9e1caffbf556d223d2363fdc94e9c819c82e5a6d33e2236ef7f5b430f0be",
+    "docs/driver-phase-investigation.md": "ca26e9b39e4915342f2cb48497660ed224d69538fbe0c1b05f1d5cbb512a0340",
+    "evidence/driver-phase19/phase-screen.json": "b246c083d7390ae9374db60ccaf3ee5316fb7d1c49894a76ba6111ca823e0a45",
+    "evidence/driver-phase19/render-age19.json": "e7556a7893c59f0676a16a7d622e94a9f88afea13f575375fae17c48d4bda34d",
+    "evidence/driver-phase19/startup19-scheduling.json": "6d219b90fe81a585cfd666a19cc05c2a582c79d73a29fc555882798d19b9353f"
+  },
+  "installed_firmware_file_sha256": "40e12512141730bdfbdd1c64c9b38d5c99032fa2546db5fed832b8912b8cc732",
+  "device_commands_sent": 0,
+  "host_audio_access": false,
+  "firmware_created": false,
+  "physical_latency_measured": false,
+  "device_output_changed": false,
+  "MacTeamsAudioChanged": false
+}

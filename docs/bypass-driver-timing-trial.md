@@ -90,3 +90,7 @@ Faster NAM and effects free compute margin and can prevent overload. They do not
 Reducing sample rate works against fixed-sample buffer latency: eight samples at 32 kHz take 0.250 ms instead of 0.167 ms at 48 kHz. These captures are validated at 48 kHz; resampling introduces its own work and phase response. Effect-specific delay, especially pitch shifting, and capture/EQ phase response are separate from the buffer. A lower-delay effect algorithm may help where generic CPU optimization cannot.
 
 See [exact evidence](../evidence/namlnk19/manifest.json) and [the preceding driver audit](audio-driver-and-bypass-audit.md).
+
+## Subsequent driver investigation
+
+The [recorded-phase follow-up](driver-phase-investigation.md) verifies the exact 8/16/32 output queue, estimates IRQ cost relative to the observed period, and screens a later DMA fetch as a possible way to remove one protected block. It sends no device commands and produces no new firmware. The potential 0.167 ms saving is modeled, not implemented or measured.

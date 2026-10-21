@@ -1,0 +1,40 @@
+{
+  "status": "PASS_NAMLNK19_EXACT_RENDER_QUEUE_AGE",
+  "cases": [
+    {
+      "setting_samples": 8,
+      "input_impulse_frame": 1056,
+      "output_impulse_frame": 1056,
+      "extra_frames": 0,
+      "extra_ms_at_48k": 0.0,
+      "stereo_pcm_exact": true
+    },
+    {
+      "setting_samples": 16,
+      "input_impulse_frame": 1056,
+      "output_impulse_frame": 1064,
+      "extra_frames": 8,
+      "extra_ms_at_48k": 0.16666666666666666,
+      "stereo_pcm_exact": true
+    },
+    {
+      "setting_samples": 32,
+      "input_impulse_frame": 1056,
+      "output_impulse_frame": 1080,
+      "extra_frames": 24,
+      "extra_ms_at_48k": 0.5,
+      "stereo_pcm_exact": true
+    }
+  ],
+  "elf_sha256": "4c058e7d985897a3ef84f78881a98f0fff0aa9ee3d930347d158a3f0421ebbb0",
+  "rendered_frames": 3360,
+  "guard_checks_passed": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "firmware_created": false,
+  "physical_latency_measured": false,
+  "limits": [
+    "Renderer isolated after settling, with synthetic impulse input.",
+    "Excludes the existing protected prior block and all analog/DMA latency."
+  ]
+}

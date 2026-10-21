@@ -1,0 +1,4177 @@
+{
+  "status": "PASS_OFFLINE_RECORDED_PHASE_SCREEN",
+  "tests": {
+    "period_wrap": true,
+    "invalid_intervals_rejected": 6,
+    "discrete_phase_candidates_checked": 256,
+    "deadline_boundary_rejected": true
+  },
+  "input_sha256": {
+    "physical_raw": "dd3f882b79469f2f1ac18091605785023c624ffbb04975782ea512232590cd7d",
+    "startup_audit": "6d219b90fe81a585cfd666a19cc05c2a582c79d73a29fc555882798d19b9353f"
+  },
+  "physical_snapshots": 84,
+  "same_epoch_period_pairs": 77,
+  "estimated_cycles_per_irq_period": {
+    "min": 166025.28646222886,
+    "median": 166025.33108361455,
+    "max": 166025.38169642858
+  },
+  "counter_to_wall_clock_calibrated": false,
+  "cases": [
+    {
+      "case": "NAM-only",
+      "period_pairs": 11,
+      "estimated_cycles_per_irq_period": 166025.3302857143,
+      "median_irq_cycles": 73921.5,
+      "max_observed_irq_cycles": 77187,
+      "median_irq_fraction_of_period": 0.44524230051395114,
+      "max_irq_fraction_of_period": 0.4649109859752622,
+      "whole_irq_proxy_in_serial_word_times": 14.87715155120839,
+      "publication_fraction_of_period_max": 0.029579823702495404
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "period_pairs": 11,
+      "estimated_cycles_per_irq_period": 166025.33485714285,
+      "median_irq_cycles": 84685.5,
+      "max_observed_irq_cycles": 87467,
+      "median_irq_fraction_of_period": 0.510075766887433,
+      "max_irq_fraction_of_period": 0.526829234076,
+      "whole_irq_proxy_in_serial_word_times": 16.858535490432,
+      "publication_fraction_of_period_max": 0.02904978330054247
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "period_pairs": 11,
+      "estimated_cycles_per_irq_period": 166025.33270178098,
+      "median_irq_cycles": 73887.5,
+      "max_observed_irq_cycles": 75804,
+      "median_irq_fraction_of_period": 0.44503750600951153,
+      "max_irq_fraction_of_period": 0.4565809251300289,
+      "whole_irq_proxy_in_serial_word_times": 14.610589604160925,
+      "publication_fraction_of_period_max": 0.029182293576262335
+    },
+    {
+      "case": "NAM-plus-Delay-and-Spring",
+      "period_pairs": 11,
+      "estimated_cycles_per_irq_period": 166025.32291666666,
+      "median_irq_cycles": 89491.0,
+      "max_observed_irq_cycles": 91603,
+      "median_irq_fraction_of_period": 0.5390201833543089,
+      "max_irq_fraction_of_period": 0.5517411343688724,
+      "whole_irq_proxy_in_serial_word_times": 17.655716299803917,
+      "publication_fraction_of_period_max": 0.029176272118629495
+    },
+    {
+      "case": "NAM-plus-Spring-after-bypassing-Delay",
+      "period_pairs": 11,
+      "estimated_cycles_per_irq_period": 166025.3340832396,
+      "median_irq_cycles": 85608.5,
+      "max_observed_irq_cycles": 88163,
+      "median_irq_fraction_of_period": 0.5156351617824707,
+      "max_irq_fraction_of_period": 0.5310213678341282,
+      "whole_irq_proxy_in_serial_word_times": 16.992683770692103,
+      "publication_fraction_of_period_max": 0.029959283186903277
+    },
+    {
+      "case": "NAM-after-bypassing-both",
+      "period_pairs": 11,
+      "estimated_cycles_per_irq_period": 166025.33153638814,
+      "median_irq_cycles": 73963.5,
+      "max_observed_irq_cycles": 76459,
+      "median_irq_fraction_of_period": 0.44549527060446953,
+      "max_irq_fraction_of_period": 0.4605261094343444,
+      "whole_irq_proxy_in_serial_word_times": 14.736835501899021,
+      "publication_fraction_of_period_max": 0.029254571908115604
+    },
+    {
+      "case": "NAM-plus-Spring-wake",
+      "period_pairs": 11,
+      "estimated_cycles_per_irq_period": 166025.32335907337,
+      "median_irq_cycles": 84764.0,
+      "max_observed_irq_cycles": 86541,
+      "median_irq_fraction_of_period": 0.5105486216501779,
+      "max_irq_fraction_of_period": 0.5212518081523766,
+      "whole_irq_proxy_in_serial_word_times": 16.68005786087605,
+      "publication_fraction_of_period_max": 0.029429245497885535
+    }
+  ],
+  "discrete_phase_matches": [
+    {
+      "rx_start_words": 1,
+      "entry_lag_words": 0
+    }
+  ],
+  "candidate_screens": [
+    {
+      "tx_watermark": 16,
+      "fifo_reserve_words_at_request": 16,
+      "protected_output_model": {
+        "burst_words": 16,
+        "rx_watermark": 16,
+        "tx_watermark": 16,
+        "rx_start_delay_words": 1,
+        "publication": "previous protected block",
+        "publication_after_irq_us": 5.208,
+        "minimum_first_word_deadline_us": 72.917,
+        "nominal_publication_margin_us": 67.708,
+        "modeled_label_age_words": [
+          95
+        ],
+        "modeled_label_age_ms": [
+          0.494792
+        ],
+        "sequence_discontinuities": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "irq_period_words": [
+          32
+        ]
+      },
+      "cases": [
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -46.875,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -36.458,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -57.292,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -46.875,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 93.75,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -20.833,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 104.167,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -31.25,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 114.583,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -41.667,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 135.417,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -62.5,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -36.458,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -57.292,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -46.875,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -36.458,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 16,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 72.917,
+            "nominal_publication_margin_us": -57.292,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "tx_watermark": 12,
+      "fifo_reserve_words_at_request": 12,
+      "protected_output_model": {
+        "burst_words": 16,
+        "rx_watermark": 16,
+        "tx_watermark": 12,
+        "rx_start_delay_words": 1,
+        "publication": "previous protected block",
+        "publication_after_irq_us": 5.208,
+        "minimum_first_word_deadline_us": 93.75,
+        "nominal_publication_margin_us": 88.542,
+        "modeled_label_age_words": [
+          95
+        ],
+        "modeled_label_age_ms": [
+          0.494792
+        ],
+        "sequence_discontinuities": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "irq_period_words": [
+          32
+        ]
+      },
+      "cases": [
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -36.458,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 93.75,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 0.0,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 104.167,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -10.417,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 114.583,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -20.833,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 135.417,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -41.667,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -36.458,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -26.042,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 12,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 93.75,
+            "nominal_publication_margin_us": -36.458,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "tx_watermark": 8,
+      "fifo_reserve_words_at_request": 8,
+      "protected_output_model": {
+        "burst_words": 16,
+        "rx_watermark": 16,
+        "tx_watermark": 8,
+        "rx_start_delay_words": 1,
+        "publication": "previous protected block",
+        "publication_after_irq_us": 5.208,
+        "minimum_first_word_deadline_us": 114.583,
+        "nominal_publication_margin_us": 109.375,
+        "modeled_label_age_words": [
+          95
+        ],
+        "modeled_label_age_ms": [
+          0.494792
+        ],
+        "sequence_discontinuities": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "irq_period_words": [
+          32
+        ]
+      },
+      "cases": [
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 93.75,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 20.833,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 104.167,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 10.417,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 114.583,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 0.0,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 135.417,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": -20.833,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": -5.208,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 8,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 114.583,
+            "nominal_publication_margin_us": -15.625,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "tx_watermark": 4,
+      "fifo_reserve_words_at_request": 4,
+      "protected_output_model": {
+        "burst_words": 16,
+        "rx_watermark": 16,
+        "tx_watermark": 4,
+        "rx_start_delay_words": 1,
+        "publication": "previous protected block",
+        "publication_after_irq_us": 5.208,
+        "minimum_first_word_deadline_us": 135.417,
+        "nominal_publication_margin_us": 130.208,
+        "modeled_label_age_words": [
+          95
+        ],
+        "modeled_label_age_ms": [
+          0.494792
+        ],
+        "sequence_discontinuities": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "irq_period_words": [
+          32
+        ]
+      },
+      "cases": [
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 93.75,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 41.667,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 104.167,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 31.25,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 114.583,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 20.833,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 135.417,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 0.0,
+            "modeled_label_age_words": [
+              63,
+              127
+            ],
+            "modeled_label_age_ms": [
+              0.328125,
+              0.661458
+            ],
+            "sequence_discontinuities": 78,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 15.625,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 4,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 135.417,
+            "nominal_publication_margin_us": 5.208,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "tx_watermark": 0,
+      "fifo_reserve_words_at_request": 0,
+      "protected_output_model": {
+        "burst_words": 16,
+        "rx_watermark": 16,
+        "tx_watermark": 0,
+        "rx_start_delay_words": 1,
+        "publication": "previous protected block",
+        "publication_after_irq_us": 5.208,
+        "minimum_first_word_deadline_us": 156.25,
+        "nominal_publication_margin_us": 151.042,
+        "modeled_label_age_words": [
+          95
+        ],
+        "modeled_label_age_ms": [
+          0.494792
+        ],
+        "sequence_discontinuities": 0,
+        "fifo_underruns": 0,
+        "fifo_overflows": 0,
+        "irq_period_words": [
+          32
+        ]
+      },
+      "cases": [
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 78.125,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 67.708,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-only",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 67.708,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 78.125,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 67.708,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-Spring",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 93.75,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 62.5,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 104.167,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 52.083,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 114.583,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 41.667,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Delay-and-Spring",
+          "whole_irq_proxy_words": 18,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 135.417,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 20.833,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 67.708,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-after-bypassing-Delay",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 78.125,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 78.125,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 67.708,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-after-bypassing-both",
+          "whole_irq_proxy_words": 15,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 119.792,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 36.458,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 0,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 88.542,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 67.708,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 2,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 98.958,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 57.292,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 4,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 109.375,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 46.875,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        },
+        {
+          "case": "NAM-plus-Spring-wake",
+          "whole_irq_proxy_words": 17,
+          "extra_jitter_words": 8,
+          "model": {
+            "burst_words": 16,
+            "rx_watermark": 16,
+            "tx_watermark": 0,
+            "rx_start_delay_words": 1,
+            "publication": "current completed block",
+            "publication_after_irq_us": 130.208,
+            "minimum_first_word_deadline_us": 156.25,
+            "nominal_publication_margin_us": 26.042,
+            "modeled_label_age_words": [
+              63
+            ],
+            "modeled_label_age_ms": [
+              0.328125
+            ],
+            "sequence_discontinuities": 0,
+            "fifo_underruns": 0,
+            "fifo_overflows": 0,
+            "irq_period_words": [
+              32
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "buffer_settings": [
+    {
+      "setting_samples": 8,
+      "extra_samples": 0,
+      "extra_ms": 0.0,
+      "processing_samples": 8
+    },
+    {
+      "setting_samples": 16,
+      "extra_samples": 8,
+      "extra_ms": 0.16666666666666666,
+      "processing_samples": 8
+    },
+    {
+      "setting_samples": 32,
+      "extra_samples": 24,
+      "extra_ms": 0.5,
+      "processing_samples": 8
+    }
+  ],
+  "maximum_protected_stage_saving_ms": 0.16666666666666666,
+  "device_access": false,
+  "host_audio_access": false,
+  "firmware_created": false,
+  "physical_latency_measured": false,
+  "hardware_deadline_proven": false,
+  "limits": [
+    "Sparse period estimates assume no unseen whole counter wraps or untracked resets.",
+    "One discrete model phase fits the observations; continuous phases, IRQ latency and non-atomic reads remain uncertain.",
+    "The startup reference is executed stock setup, not a new live register read.",
+    "Whole IRQ cost is a proxy, not a timestamp for hypothetical post-DSP publication.",
+    "Instantaneous DMA excludes bus arbitration, synchronization, IRQ preemption and store visibility.",
+    "Alternative watermarks change fetch margin, not steady serial label age by themselves.",
+    "A smaller watermark reduces FIFO reserve; zero is only a mathematical bound.",
+    "Serial labels exclude ADC/DAC filters, channel-slot mapping, NAM response and analog delay.",
+    "No model result makes any candidate safe to flash."
+  ]
+}

@@ -1,0 +1,1341 @@
+{
+  "status": "PASS_OFFLINE_AUDIO_SCHEDULING_AUDIT",
+  "elf_sha256": "4c058e7d985897a3ef84f78881a98f0fff0aa9ee3d930347d158a3f0421ebbb0",
+  "stock_sha256": "a8a064a5b0e308b9cf193ebdf23d352ddff092d88db71531729ca1864a86d990",
+  "actual_setup": {
+    "serial_words_per_frame": 4,
+    "bits_per_word": 32,
+    "tx_fifo_watermark": 16,
+    "rx_fifo_watermark": 16,
+    "descriptors": [
+      {
+        "source": 1077952672,
+        "source_step": 0,
+        "attributes": 514,
+        "burst_bytes": 64,
+        "source_last": 0,
+        "destination": 536963072,
+        "destination_step": 4,
+        "iterations": 2,
+        "next": 536963776,
+        "control": 18,
+        "initial_iterations": 2
+      },
+      {
+        "source": 1077952672,
+        "source_step": 0,
+        "attributes": 514,
+        "burst_bytes": 64,
+        "source_last": 0,
+        "destination": 536963200,
+        "destination_step": 4,
+        "iterations": 2,
+        "next": 536963744,
+        "control": 18,
+        "initial_iterations": 2
+      },
+      {
+        "source": 536963328,
+        "source_step": 4,
+        "attributes": 514,
+        "burst_bytes": 64,
+        "source_last": 0,
+        "destination": 1077952544,
+        "destination_step": 0,
+        "iterations": 2,
+        "next": 536963840,
+        "control": 16,
+        "initial_iterations": 2
+      },
+      {
+        "source": 536963456,
+        "source_step": 4,
+        "attributes": 514,
+        "burst_bytes": 64,
+        "source_last": 0,
+        "destination": 1077952544,
+        "destination_step": 0,
+        "iterations": 2,
+        "next": 536963808,
+        "control": 16,
+        "initial_iterations": 2
+      }
+    ],
+    "frames_per_burst": 4,
+    "frames_per_interrupt": 8
+  },
+  "event_model_cases": [
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": 72.917,
+      "modeled_label_age_words": [
+        96
+      ],
+      "modeled_label_age_ms": [
+        0.5
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": 72.917,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 83.333,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": -5.208,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 125.0,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": -46.875,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 145.833,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": -67.708,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 156.25,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": -78.125,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 166.667,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": -88.542,
+      "modeled_label_age_words": [
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.666667
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 187.5,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": -109.375,
+      "modeled_label_age_words": [
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.666667
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 161.458,
+      "modeled_label_age_words": [
+        96
+      ],
+      "modeled_label_age_ms": [
+        0.5
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 161.458,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 83.333,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 83.333,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 125.0,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 41.667,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 145.833,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 20.833,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 156.25,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 10.417,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 166.667,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 0.0,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 15,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 187.5,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": -20.833,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": 119.792,
+      "modeled_label_age_words": [
+        96
+      ],
+      "modeled_label_age_ms": [
+        0.5
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": 119.792,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 83.333,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": 41.667,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 125.0,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": 0.0,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 145.833,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": -20.833,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 156.25,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": -31.25,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 166.667,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": -41.667,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 8,
+      "rx_watermark": 7,
+      "tx_watermark": 8,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 187.5,
+      "minimum_first_word_deadline_us": 125.0,
+      "nominal_publication_margin_us": -62.5,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": 140.625,
+      "modeled_label_age_words": [
+        96
+      ],
+      "modeled_label_age_ms": [
+        0.5
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": 140.625,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 83.333,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": 62.5,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 125.0,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": 20.833,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 145.833,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": 0.0,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 156.25,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": -10.417,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 166.667,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": -20.833,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 4,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 187.5,
+      "minimum_first_word_deadline_us": 145.833,
+      "nominal_publication_margin_us": -41.667,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 161.458,
+      "modeled_label_age_words": [
+        96
+      ],
+      "modeled_label_age_ms": [
+        0.5
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 161.458,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 83.333,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 83.333,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 125.0,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 41.667,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 145.833,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 20.833,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 156.25,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 10.417,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 166.667,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 0.0,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 4,
+      "rx_watermark": 3,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 187.5,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": -20.833,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 161.458,
+      "modeled_label_age_words": [
+        96
+      ],
+      "modeled_label_age_ms": [
+        0.5
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 161.458,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 83.333,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 83.333,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 125.0,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 41.667,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 145.833,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 20.833,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 156.25,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 10.417,
+      "modeled_label_age_words": [
+        64
+      ],
+      "modeled_label_age_ms": [
+        0.333333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 166.667,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": 0.0,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 1,
+      "rx_watermark": 0,
+      "tx_watermark": 0,
+      "rx_start_delay_words": 0,
+      "publication": "current completed block",
+      "publication_after_irq_us": 187.5,
+      "minimum_first_word_deadline_us": 166.667,
+      "nominal_publication_margin_us": -20.833,
+      "modeled_label_age_words": [
+        64,
+        128
+      ],
+      "modeled_label_age_ms": [
+        0.333333,
+        0.666667
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    }
+  ],
+  "unknown_start_phase_cases": [
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 0,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 78.125,
+      "nominal_publication_margin_us": 72.917,
+      "modeled_label_age_words": [
+        96
+      ],
+      "modeled_label_age_ms": [
+        0.5
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 1,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 72.917,
+      "nominal_publication_margin_us": 67.708,
+      "modeled_label_age_words": [
+        95
+      ],
+      "modeled_label_age_ms": [
+        0.494792
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 4,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 57.292,
+      "nominal_publication_margin_us": 52.083,
+      "modeled_label_age_words": [
+        92
+      ],
+      "modeled_label_age_ms": [
+        0.479167
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 8,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 36.458,
+      "nominal_publication_margin_us": 31.25,
+      "modeled_label_age_words": [
+        88
+      ],
+      "modeled_label_age_ms": [
+        0.458333
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 16,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 328.125,
+      "nominal_publication_margin_us": 322.917,
+      "modeled_label_age_words": [
+        80,
+        144
+      ],
+      "modeled_label_age_ms": [
+        0.416667,
+        0.75
+      ],
+      "sequence_discontinuities": 76,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 24,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 286.458,
+      "nominal_publication_margin_us": 281.25,
+      "modeled_label_age_words": [
+        72,
+        136
+      ],
+      "modeled_label_age_ms": [
+        0.375,
+        0.708333
+      ],
+      "sequence_discontinuities": 77,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    },
+    {
+      "burst_words": 16,
+      "rx_watermark": 16,
+      "tx_watermark": 16,
+      "rx_start_delay_words": 31,
+      "publication": "previous protected block",
+      "publication_after_irq_us": 5.208,
+      "minimum_first_word_deadline_us": 250.0,
+      "nominal_publication_margin_us": 244.792,
+      "modeled_label_age_words": [
+        129
+      ],
+      "modeled_label_age_ms": [
+        0.671875
+      ],
+      "sequence_discontinuities": 0,
+      "fifo_underruns": 0,
+      "fifo_overflows": 0,
+      "irq_period_words": [
+        32
+      ]
+    }
+  ],
+  "findings": [
+    "Eight-frame DSP remains fixed when only FIFO watermarks/burst sizes change.",
+    "In this synchronous model, reducing FIFO depth alone changes refill margin but not label latency.",
+    "Removing the protected block can save eight frames only if output is ready before every TX fetch.",
+    "Current direct-after-DSP output misses that deadline in longer synthetic processing cases.",
+    "Unknown RX/TX startup phase changes the predicted delay; a physical phase snapshot is required."
+  ],
+  "source_manual": "NXP IMXRT1170RM Rev 5, 58.3.6.1, pp.3476-3477: TX <= watermark; RX > watermark.",
+  "device_access": false,
+  "host_audio_access": false,
+  "physical_latency_measured": false,
+  "limits": [
+    "The modeled 0.5 ms serial-label age is NOT measured guitar-to-headphone latency.",
+    "Excludes codec/filter delay, channel-slot phase, bus service time, preemption and real start phase.",
+    "Synthetic execution times are swept inputs, not measured Cortex-M7 cycles; >= one IRQ period cannot be sustainable.",
+    "TX watermark zero is an idealized bound with no FIFO reserve at request time, not a recommended setting.",
+    "No production driver change or installable image is created."
+  ]
+}
