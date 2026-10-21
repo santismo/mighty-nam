@@ -1,0 +1,16 @@
+{
+  "status": "OFFLINE_ONLY_NOT_FOR_INSTALLATION",
+  "reports": {
+    "build.json": "d4e91356e7ef73da7ddcd14e69c6e4b4d1767e0644ebc264c3e8320c66a9d89d",
+    "arm.json": "491a720da9863f9ee146f2307975ce27df09fbc499050b11198b609fec10f240",
+    "storage.json": "cac56bbfc2296639b156582258abeb71a96c0e8111aeecd1be3bd46ca9ceacfa",
+    "startup.json": "927adf32e0b5c11dea361eeae17c89fad79f3a3d284820e4feaed8ef445db92c",
+    "planner.json": "ebe9061d90eca54887d72a0ba18013f32a9d77e5114a942421e7ded0fd745284",
+    "dsp-run.log": "e5af556cac4afe0b7096f92c826d52f405442a74b51e157ee1f71e0027365981",
+    "executed-dsp-check.txt": "62cb93f9c7058354def411a3c9c8a5e5ad0f0acdba384c5cfe65e813f465e2a5"
+  },
+  "physical_latency_measured": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false
+}

@@ -1,0 +1,10 @@
+{
+  "status": "PASS_NATIVE_SANITIZED_PLAN",
+  "result": "PASS 450560 active-chain membership/order combinations; invalid input preserves plan",
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "source_sha256": "2e611d6fdf33ed786c65f45a356a3716861b653a19188798ffeed3b9c765eeef",
+  "header_sha256": "7f585b3c00bd8095533b3905e374950fe5ef3a244a0d16efb110f4cb5a33aeb7"
+}

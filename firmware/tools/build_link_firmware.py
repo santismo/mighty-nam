@@ -28,7 +28,11 @@ p.add_argument('--adc-short-delay',action='store_true',help='NAMLNK17 startup-on
 p.add_argument('--global-buffer',action='store_true',help='NAMLNK18 global persistent buffer and playback-preserving successful saves; requires --adc-short-delay')
 p.add_argument('--driver-timing',action='store_true',help='NAMLNK19 delay/reverb bypass sleep and opt-in read-only DMA/SAI timing; requires --global-buffer')
 p.add_argument('--dma-current-prototype',action='store_true',help='OFFLINE ONLY: NAMDMP01 current-block output with experimental TX watermark eight; no release packaging')
+p.add_argument('--dma-deadline-prototype',action='store_true',help='OFFLINE ONLY: NAMDMP02 deadline guard and latched prior-block fallback; requires --dma-current-prototype')
+p.add_argument('--active-chain-prototype',action='store_true',help='OFFLINE ONLY: NAMACP01 compact active-node graph; independent of DMA trials')
 a=p.parse_args()
+if a.active_chain_prototype and (not a.driver_timing or a.dma_current_prototype):p.error('--active-chain-prototype requires --driver-timing and cannot combine with DMA trials')
+if a.dma_deadline_prototype and not a.dma_current_prototype:p.error('--dma-deadline-prototype requires --dma-current-prototype')
 if a.dma_current_prototype and not a.driver_timing:p.error('--dma-current-prototype requires --driver-timing')
 if a.driver_timing and not a.global_buffer:p.error('--driver-timing requires --global-buffer')
 if a.global_buffer and not a.adc_short_delay:p.error('--global-buffer requires --adc-short-delay')
@@ -102,6 +106,20 @@ if a.driver_timing:
  flags+=['-DMPP_DRIVER_TIMING']
  sources+=['target/link/driver_timing.cpp']
 if a.dma_current_prototype:flags+=['-DMPP_DMA_CURRENT_PROTOTYPE']
+if a.dma_deadline_prototype:
+ # Reuse space of optional per-effect profiling/one-shot diagnostics, never
+ # expand the audited regions. Whole-IRQ timing and all audio engines remain.
+ flags.remove('-DMPP_EFFECT_PROFILER')
+ flags+=['-DMPP_DMA_DEADLINE_PROTOTYPE']
+ sources.remove('target/link/effect_profiler.cpp')
+ sources.remove('target/link/driver_timing.cpp')
+ sources+=['target/link/dma_deadline.cpp']
+if a.active_chain_prototype:
+ flags.remove('-DMPP_EFFECT_PROFILER')
+ sources.remove('target/link/effect_profiler.cpp')
+ sources.remove('target/link/driver_timing.cpp')
+ flags+=['-DMPP_ACTIVE_CHAIN_PROTOTYPE']
+ sources+=['target/link/active_chain.cpp']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -113,7 +131,8 @@ if a.fx_blocks:ld=root/'target/link/fx_blocks.ld'
 if a.driver_timing:ld=root/'target/link/driver_timing.ld'
 subprocess.run([str(Path(ziglang.__path__[0])/'zig'),'cc','-target','thumb-freestanding-eabihf','-mcpu=cortex_m7',
  '-nostdlib','-Wl,--gc-sections','-Wl,--build-id=none','-Wl,-e,mpp_stock_amp_init','-Wl,-T,'+str(ld),
- *(['-Wl,-u,mpp_fast_dispatch'] if a.fast_bypass else []),
+ *(['-Wl,-u,mpp_fast_dispatch'] if a.fast_bypass and not a.active_chain_prototype else []),
+ *(['-Wl,-u,mpp_active_dispatch'] if a.active_chain_prototype else []),
  *(['-Wl,-u,mpp_link_irq','-Wl,-u,mpp_track_dwt_reset'] if a.irq_timing else []),
  *(['-Wl,-u,mpp_codec_startup_write'] if a.adc_short_delay else []),
  *objects,'-o',str(elf)],check=True)
@@ -181,6 +200,20 @@ if a.dma_current_prototype:
   requires_offline_image_opt_in=True,physical_output_deadline_verified=False,
   timer_guard_scope='Checks DSP/protection before publication; excludes final render. Whole-IRQ diagnostics still enclose all work.',
   deadline_guard='Existing GPT processing guard only; no proven TX ownership/deadline guard')
+if a.dma_deadline_prototype:
+ report.update(identity='NAMDMP02',deadline_guard='Bracketed DMA/FIFO/IRQ/counter checks; PRIMASK restored; four-word reserve and 4096-cycle transaction assumption',
+  output_pipeline='Early previous-block fallback; current staged block replaces it only if guard passes',
+  fallback='Latched one-block mode until restart; unsafe target is left untouched',
+  effect_profiler='Omitted in this prototype to fit the existing audited allocation',
+  driver_timing='Continuous guard telemetry on pages 118..126; no one-shot capture or runtime latch reset',
+  output_pipeline_latency_samples={'fast':0,'fallback':8},
+  buffer_scope='Additional output queue 0/8/24 frames; fallback adds one further eight-frame block',
+  physical_guard_budget_verified=False)
  report['linker_sha256']=hashlib.sha256(ld.read_bytes()).hexdigest()
+if a.active_chain_prototype:
+ report.update(identity='NAMACP01',status='OFFLINE_ACTIVE_CHAIN_PROTOTYPE_NOT_FOR_INSTALLATION',
+  dispatcher='Cached active-only graph; absent nodes have no callback or copy; routing gain loops skip at unity',
+  effect_profiler='Omitted to fit audited copied-code extent',driver_timing='Graph counts on pages 118..123; one-shot timing omitted',requires_offline_image_opt_in=True,
+  physical_performance_gain_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

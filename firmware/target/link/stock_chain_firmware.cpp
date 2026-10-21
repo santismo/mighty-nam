@@ -1,6 +1,9 @@
 // Exact V1.5.6 stock-effects bridge with RAM A2. NAMLNK02..06 stay silent;
 // NAMLNK07 adds explicitly armed listening. No flash or reset commands.
 #include "model_receiver.hpp"
+#ifdef MPP_DMA_DEADLINE_PROTOTYPE
+#include "dma_deadline.hpp"
+#endif
 #ifdef MPP_DRIVER_TIMING
 #include "driver_timing.hpp"
 #endif
@@ -44,7 +47,13 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_DMA_CURRENT_PROTOTYPE)
+#if defined(MPP_ACTIVE_CHAIN_PROTOTYPE)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','A','C','P','0','1'};
+#elif defined(MPP_DMA_DEADLINE_PROTOTYPE)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','D','M','P','0','2'};
+#elif defined(MPP_DMA_CURRENT_PROTOTYPE)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','D','M','P','0','1'};
 #elif defined(MPP_DRIVER_TIMING)
@@ -112,6 +121,7 @@ extern "C" BANK_TEXT void mpp_tail_resume(unsigned stage){
 // r6 = remaining stages, r4 = descriptor+8; r9/r7 and r8/r5
 // are input/output L/R. Preserve all live registers except scratch r0-r3.
 // Original pre/post routing fades and BLX callback return address remain intact.
+#ifndef MPP_ACTIVE_CHAIN_PROTOTYPE
 extern "C" BANK_TEXT __attribute__((naked)) void mpp_fast_dispatch(){
  __asm__ volatile(
 #ifdef MPP_FX_BLOCKS
@@ -236,6 +246,7 @@ extern "C" BANK_TEXT __attribute__((naked)) void mpp_fast_dispatch(){
 #endif
  );
 }
+#endif
 #else
 uint16_t mpp_bypass_hold[11];
 // Entered only from the exact V1.5.6 dispatcher patch at 0x12302.
@@ -464,20 +475,34 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
 #ifdef MPP_TUNER
  mpp_tuner_feed(rx);
 #endif
+#ifndef MPP_DMA_DEADLINE_PROTOTYPE
  for(unsigned i=0;i<32;++i)tx[i]=0;
+#endif
  ++mpp_link.callbacks;
  barrier();
- if(!mpp_link.ready||!mpp_link.running)return;
+ if(!mpp_link.ready||!mpp_link.running){
+#ifdef MPP_DMA_DEADLINE_PROTOTYPE
+  mpp_dma_prefill(tx,0);
+#endif
+  return;
+ }
  if(rd(0x400ec000)!=0x46||rd(0x400ec004)!=23||rd(0x400ec00c)!=1||
     rd(0x400ec010)!=100000||rd(0x2000e48c)!=24000000){
 #ifdef MPP_LISTENING
   mpp_listen_reset();
 #endif
-  ++mpp_link.faults;mpp_link.running=0;return;
+  ++mpp_link.faults;mpp_link.running=0;
+#ifdef MPP_DMA_DEADLINE_PROTOTYPE
+  mpp_dma_prefill(tx,0);
+#endif
+  return;
  }
  ((void(*)(void))0x11663)();
 #ifdef MPP_LISTENING
  mpp_listen_prepare();
+#ifdef MPP_DMA_DEADLINE_PROTOTYPE
+ mpp_dma_prefill(tx,mpp_listen_enabled&&!mpp_listen_warm);
+#endif
 #if defined(MPP_EARLY_OUTPUT) && !defined(MPP_DMA_CURRENT_PROTOTYPE)
  // Match stock's one-block output pipeline: its packer runs at 0x14c2e,
  // before the next chain invocation at 0x14d5c. Publish the previous protected
@@ -516,7 +541,7 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
  if(!ticks||ticks>=150||rd(0x400ec000)!=0x46){
   ++mpp_link.faults;mpp_link.running=0;
  }
-#ifdef MPP_DMA_CURRENT_PROTOTYPE
+#if defined(MPP_DMA_CURRENT_PROTOTYPE) && !defined(MPP_DMA_DEADLINE_PROTOTYPE)
  // Offline experiment only. The image builder separately changes TX's FIFO
  // watermark to eight. Existing GPT guards do NOT establish DMA ownership:
  // late publication can still race a fetch. No updater may package this ID.
@@ -526,11 +551,21 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
   mpp_driver_capture(1,(uint32_t)(uintptr_t)tx);
  }
 #endif
+#ifdef MPP_DMA_DEADLINE_PROTOTYPE
+ // Render once into private staging. Never clear or render directly into a
+ // half that DMA may already be fetching. Late blocks keep the early fallback.
+ for(unsigned i=0;i<32;++i)mpp_dma_pcm[i]=0;
+ if(mpp_link.running)mpp_listen_render(mpp_link_output,chain_right,mpp_dma_pcm);
+ mpp_dma_finish(tx,mpp_link.running);
+#endif
 #ifdef MPP_LISTENING
- // A fault on this block cancels output before the DMA half is released.
+ // Disarm after a processing fault. In the guarded experiment an already
+ // queued fallback cannot be recalled; the next safe prefill writes silence.
  if(!mpp_link.running){
   mpp_listen_reset();
+#ifndef MPP_DMA_DEADLINE_PROTOTYPE
   for(unsigned i=0;i<32;++i)tx[i]=0;
+#endif
  }
 #endif
 }

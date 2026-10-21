@@ -1,0 +1,12 @@
+{
+  "status": "OFFLINE_ONLY_NOT_FOR_INSTALLATION",
+  "reports": {
+    "build.json": "f8684941314ed6c03d23aaa68c75ca669159e21a4cb29831ed0caf60728a5e36",
+    "arm.json": "e473fe2b863b7451fee4cc25b545d7b7656954164b4f215e148607f373c34eae",
+    "model.json": "fec1a9132e39703e246eba0aa3491b91614f5fd07778855afde85a8d9ce68601",
+    "startup.json": "927adf32e0b5c11dea361eeae17c89fad79f3a3d284820e4feaed8ef445db92c"
+  },
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false
+}

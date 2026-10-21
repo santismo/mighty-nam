@@ -1,0 +1,100 @@
+{
+  "status": "PASS_OFFLINE_ROUTING_STARTUP",
+  "cases": [
+    {
+      "identity": "NAMDMP02",
+      "elf_sha256": "48e3ece20dce75ae8b8151a914350e0a5ed752679b092ea08da6afc424b3f1fd",
+      "fill": 0,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": [
+        [
+          [
+            1077952524,
+            4,
+            16
+          ],
+          [
+            1077952524,
+            4,
+            8
+          ]
+        ]
+      ]
+    },
+    {
+      "identity": "NAMDMP02",
+      "elf_sha256": "48e3ece20dce75ae8b8151a914350e0a5ed752679b092ea08da6afc424b3f1fd",
+      "fill": 165,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": [
+        [
+          [
+            1077952524,
+            4,
+            16
+          ],
+          [
+            1077952524,
+            4,
+            8
+          ]
+        ]
+      ]
+    },
+    {
+      "identity": "NAMDMP02",
+      "elf_sha256": "48e3ece20dce75ae8b8151a914350e0a5ed752679b092ea08da6afc424b3f1fd",
+      "fill": 255,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": [
+        [
+          [
+            1077952524,
+            4,
+            16
+          ],
+          [
+            1077952524,
+            4,
+            8
+          ]
+        ]
+      ]
+    },
+    {
+      "identity": "NAMACP01",
+      "elf_sha256": "3825a4bfe35bbfe19b3cf03799ad56ad7ea82c02d47ccd778d2748e9a9e1f305",
+      "fill": 0,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": []
+    },
+    {
+      "identity": "NAMACP01",
+      "elf_sha256": "3825a4bfe35bbfe19b3cf03799ad56ad7ea82c02d47ccd778d2748e9a9e1f305",
+      "fill": 165,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": []
+    },
+    {
+      "identity": "NAMACP01",
+      "elf_sha256": "3825a4bfe35bbfe19b3cf03799ad56ad7ea82c02d47ccd778d2748e9a9e1f305",
+      "fill": 255,
+      "cold_and_warm": true,
+      "reloaded": true,
+      "descriptor_bytes_unchanged": true,
+      "changed_register_writes": []
+    }
+  ],
+  "device_access": false,
+  "host_audio_access": false
+}

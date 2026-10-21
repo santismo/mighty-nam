@@ -1,0 +1,112 @@
+{
+  "status": "PASS_SPLIT_OFFLINE_ACTIVE_CHAIN_CHECKS",
+  "identity": "NAMACP01",
+  "elf_sha256": "3825a4bfe35bbfe19b3cf03799ad56ad7ea82c02d47ccd778d2748e9a9e1f305",
+  "cases": [
+    {
+      "case": "NAM",
+      "actual_effect_callbacks": [
+        3
+      ],
+      "baseline_effect_callbacks": [
+        0,
+        3,
+        10
+      ],
+      "active_instructions": 46130,
+      "baseline_instructions": 49378,
+      "instruction_reduction_percent": 6.577828182591439,
+      "tested_settled_output_bit_identical": true,
+      "NAM_reference_error_bound": 2e-05
+    },
+    {
+      "case": "NAM-Spring",
+      "actual_effect_callbacks": [
+        3,
+        8
+      ],
+      "baseline_effect_callbacks": [
+        0,
+        3,
+        8,
+        10
+      ],
+      "active_instructions": 53259,
+      "baseline_instructions": 56435,
+      "instruction_reduction_percent": 5.6277132984849825,
+      "tested_settled_output_bit_identical": true,
+      "NAM_reference_error_bound": 2e-05
+    },
+    {
+      "case": "full",
+      "actual_effect_callbacks": [
+        5,
+        1,
+        2,
+        3,
+        9,
+        4,
+        6,
+        7,
+        8
+      ],
+      "baseline_effect_callbacks": [
+        0,
+        5,
+        1,
+        2,
+        3,
+        9,
+        4,
+        6,
+        7,
+        8,
+        10
+      ],
+      "active_instructions": 91059,
+      "baseline_instructions": 93715,
+      "instruction_reduction_percent": 2.834124739902899,
+      "tested_settled_output_bit_identical": true,
+      "NAM_reference_error_bound": 2e-05
+    },
+    {
+      "case": "empty",
+      "actual_effect_callbacks": [],
+      "baseline_effect_callbacks": [
+        0,
+        3,
+        10
+      ],
+      "active_instructions": 3735,
+      "baseline_instructions": 15887,
+      "instruction_reduction_percent": 76.49021212311953,
+      "tested_settled_output_bit_identical": true,
+      "NAM_reference_error_bound": 2e-05
+    }
+  ],
+  "transition_cases": [
+    "two-block",
+    "add-full-and-FX",
+    "reorder",
+    "remove-stock",
+    "restore-reverb"
+  ],
+  "custom_removal_zero_calls": true,
+  "invalid_topology_silent": true,
+  "restart_rebuild": true,
+  "saved_membership_recalled": true,
+  "processing_frames": 8,
+  "sample_rate_hz": 48000,
+  "physical_latency_measured": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false,
+  "execution_note": "DSP, transition, custom removal, invalid topology and restart assertions completed. The original combined runner then failed because its save fixture omitted deferred foreground bank initialization. No firmware fix was needed for that fixture; corrected storage setup passed separately with the identical ELF. The maintained runner includes the correction.",
+  "executed_DSP_source_sha256": "62cb93f9c7058354def411a3c9c8a5e5ad0f0acdba384c5cfe65e813f465e2a5",
+  "corrected_test_source_sha256": "5b6ac767f29b604d8e87e4326ee45a62e203bb6fe3f5141acb6248c2ba433ab2",
+  "limits": [
+    "Emulated instruction counts are not Cortex-M7 cycles or analog latency",
+    "One permitted Fender A2 Lite fixture and bounded effect combinations",
+    "No physical installation or controller release"
+  ]
+}

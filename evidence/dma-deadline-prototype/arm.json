@@ -1,0 +1,220 @@
+{
+  "status": "PASS_OFFLINE_DMA_GUARD",
+  "identity": "NAMDMP02",
+  "elf_sha256": "48e3ece20dce75ae8b8151a914350e0a5ed752679b092ea08da6afc424b3f1fd",
+  "unit_cases": [
+    {
+      "case": "valid-0-False-0",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "valid-0-False-1",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "valid-0-True-0",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "valid-0-True-1",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "valid-1-False-0",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "valid-1-False-1",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "valid-1-True-0",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "valid-1-True-1",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "zero-prefill",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "not-in-IRQ",
+      "reason": 1,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "counter-disabled",
+      "reason": 2,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "counter-reset",
+      "reason": 2,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "elapsed-limit",
+      "reason": 2,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "cursor-already-fetched",
+      "reason": 3,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "wrong-next",
+      "reason": 3,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "wrong-citer",
+      "reason": 3,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "wrong-rx-half",
+      "reason": 4,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "wrong-rx-cursor",
+      "reason": 4,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "wrong-watermark",
+      "reason": 5,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "fifo-requesting",
+      "reason": 5,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "fifo-invalid",
+      "reason": 5,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "TX-error",
+      "reason": 5,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "RX-error",
+      "reason": 5,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "four-word-boundary-rejected",
+      "reason": 6,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "five-word-margin-accepted",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "DMA-moves-during-snapshot",
+      "reason": 7,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "snapshot-budget-exhausted",
+      "reason": 8,
+      "stores": 0,
+      "primask_restored": true
+    },
+    {
+      "case": "snapshot-budget-edge",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "post-copy-overrun-detected-not-undone",
+      "reason": 9,
+      "stores": 32,
+      "primask_restored": true
+    },
+    {
+      "case": "counter-wrap",
+      "reason": 0,
+      "stores": 32,
+      "primask_restored": true
+    }
+  ],
+  "integrated": [
+    {
+      "buffer": 8,
+      "blocks": 1394,
+      "late_current_preserves_complete_previous": true,
+      "latch_until_restart": true,
+      "DSP_continues": true
+    },
+    {
+      "buffer": 16,
+      "blocks": 1394,
+      "late_current_preserves_complete_previous": true,
+      "latch_until_restart": true,
+      "DSP_continues": true
+    },
+    {
+      "buffer": 32,
+      "blocks": 1394,
+      "late_current_preserves_complete_previous": true,
+      "latch_until_restart": true,
+      "DSP_continues": true
+    }
+  ],
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false,
+  "physical_deadline_proven": false,
+  "limitations": [
+    "Synthetic counters and stationary or injected DMA cursors, not a bus timing proof",
+    "A transaction exceeding the assumed store budget is detected after writes and cannot be undone",
+    "Fast-to-fallback transition can repeat one block; this is not a seamless latency transition",
+    "Early prefill rejection leaves the old whole half in place; future eligible callbacks retry the fallback"
+  ]
+}

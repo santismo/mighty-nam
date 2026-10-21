@@ -1,0 +1,19 @@
+{
+  "status": "PASS_CONDITIONAL_DMA_GUARD_MODEL",
+  "within_budget_safe_cases": 2816,
+  "guard_rejected_cases": 256,
+  "negative_control": {
+    "copy_cycles": 50000,
+    "first_burst_contains_mixed_blocks": true,
+    "post_copy_detection_cannot_undo": true
+  },
+  "assumptions": [
+    "32 ascending stores; snapshot <2048 cycles and whole masked transaction <4096",
+    "Observed DMA/FIFO state represents an idle request boundary; no unobserved in-flight fetch",
+    "Counter-to-serial-clock relationship remains compatible with the historical period estimate",
+    "No second IRQ interval elapses between entry and publication; coherent memory and DSB visibility"
+  ],
+  "physical_deadline_proven": false,
+  "device_access": false,
+  "host_audio_access": false
+}

@@ -7,7 +7,7 @@ from audit_reclaimed_code import audit as code_audit
 from audit_retired_audio import audit as audio_audit
 FLASH=0x30040000;BANK=0x30384000;BANK_END=0x303a0000;SOURCE=BANK_END
 
-def build(stock,elf,*,allow_dma_prototype=False):
+def build(stock,elf,*,allow_dma_prototype=False,allow_active_prototype=False):
  require(hashlib.sha256(stock).hexdigest()==STOCK_SHA,'Exact stock image required')
  code_audit(stock);retired=audio_audit(stock)
  descriptors=[struct.unpack_from('<8I',stock,0x18428+32*i) for i in range(30)]
@@ -24,10 +24,12 @@ def build(stock,elf,*,allow_dma_prototype=False):
   symbol=e.get_section_by_name('.symtab').get_symbol_by_name('mpp_probe_identity')[0]
   section=e.get_section(symbol['st_shndx']);off=symbol['st_value']-section['sh_addr']
   identity=section.data()[off:off+8].decode('ascii')
-  prototype=identity=='NAMDMP01'
-  require(not prototype or allow_dma_prototype,'NAMDMP01 is offline-only; explicit research opt-in required')
+  active_prototype=identity=='NAMACP01'
+  require(not active_prototype or allow_active_prototype,identity+' is offline-only; explicit research opt-in required')
+  prototype=identity in ('NAMDMP01','NAMDMP02')
+  require(not prototype or allow_dma_prototype,identity+' is offline-only; explicit research opt-in required')
   firmware_identity=identity
-  if prototype:identity='NAMLNK19' # Same audited layout/feature set; not a release identity.
+  if prototype or active_prototype:identity='NAMLNK19' # Same audited layout/feature set; not a release identity.
   require(identity in ('NAMLNK10','NAMLNK11','NAMLNK12','NAMLNK13','NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18','NAMLNK19'),'Unexpected preset firmware identity')
   require(not [s.name for s in syms if s.name and s['st_shndx']=='SHN_UNDEF'],'Unresolved symbols')
   for s in e.iter_sections():
@@ -61,7 +63,7 @@ def build(stock,elf,*,allow_dma_prototype=False):
  patch(0xb38a,stock[0xb38a:0xb394],bytes.fromhex('00bf')+jump('mpp_stock_preset_select'),'Stock PRESET/program-change recall and early-boot compatibility')
  patch(0xac8a,bytes.fromhex('38b58cb014462d216846'),bytes.fromhex('00bf')+jump('mpp_probe_version'),identity+' identity')
  patch(0x1f397,struct.pack('<I',0xa1d3),struct.pack('<I',symbols['mpp_probe_query']),'Bounded model/preset protocol')
- patch(0x12302,bytes.fromhex('2b464246394648461c34'),bytes.fromhex('00bf')+jump('mpp_fast_dispatch'),'Existing fast bypass')
+ if not active_prototype:patch(0x12302,bytes.fromhex('2b464246394648461c34'),bytes.fromhex('00bf')+jump('mpp_fast_dispatch'),'Existing fast bypass')
  target=symbols['mpp_track_dwt_reset'];delta=(target&~1)-(0xbe48+4)
  require(target&1 and -(1<<24)<=delta<(1<<24) and delta%2==0,'Reset branch range')
  s=(delta>>24)&1;i1=(delta>>23)&1;i2=(delta>>22)&1
@@ -74,6 +76,9 @@ def build(stock,elf,*,allow_dma_prototype=False):
   s=(delta>>24)&1;i1=(delta>>23)&1;i2=(delta>>22)&1
   branch=struct.pack('<HH',0xf000|(s<<10)|((delta>>12)&1023),0xd000|((1^(i1^s))<<13)|((1^(i2^s))<<11)|((delta>>1)&2047))
   patch(0x116fa,bytes.fromhex('fcf79bf9'),branch,'Startup-only ADC short-delay register write')
+
+ if active_prototype:
+  patch(0x122d0,bytes.fromhex('2de9fc47fff77eff'),jump('mpp_active_dispatch'),'OFFLINE ONLY: active-node dispatcher')
 
  if prototype:
   # Exact stock instruction, used only by TCR1 at 0x4040400c; RX stays 16.

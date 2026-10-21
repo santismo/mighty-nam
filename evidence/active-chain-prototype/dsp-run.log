@@ -1,0 +1,20 @@
+active NAM [3] 46130 PASS
+active NAM-Spring [3, 8] 53259 PASS
+active full [5, 1, 2, 3, 9, 4, 6, 7, 8] 91059 PASS
+active empty [] 3735 PASS
+transition two-block PASS
+transition add-full-and-FX PASS
+transition reorder PASS
+transition remove-stock PASS
+transition restore-reverb PASS
+Traceback (most recent call last):
+  File "firmware/research/test_active_chain.py", line 107, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "firmware/research/test_active_chain.py", line 98, in main
+    assert m.bank_request(2,0,body)[7]==0
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "firmware/research/test_preset_runtime.py", line 108, in bank_request
+    replies=self.ingress([message],channel,start=2045);assert len(replies)==1
+                                                       ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
