@@ -1,0 +1,13 @@
+{
+  "status": "PASS_EXACT_NAMLNK14_BLE_CHANNEL_MODEL_TRANSFER",
+  "packets": 35,
+  "model_crc": 1854512385,
+  "model_sha256": "2b1782715a1acdb8ca89f824ae9bec37e4787cc5f2abadb2de218263471aabe2",
+  "elf_sha256": "8f63f2a9191ca0f6d8e06d211515d38f1760cf728ba35e4e141005b16589523d",
+  "physical_device_access": false,
+  "audio_playback": false,
+  "preset_flash_writes": 0,
+  "limits": [
+    "ARM emulator tests stock channel 1 parser and firmware; physical BLE module and Bluefy still need user test"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "version": "0.6.0",
+  "commit": "5fb2434f0cedf08e64cc657b17251201fb5a6d85",
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "2818c3cf3f67d2f36b85e3308810b871552d74324db45e9993eecaa5e2289070"
+    },
+    {
+      "path": "style.css",
+      "sha256": "f7e1a353dedfc8b27f77f3cfbbf568b5d1bec108a7f228738ddc0e618eeeaa02"
+    },
+    {
+      "path": "src/app.js",
+      "sha256": "13ddfaa7a57b631869c8afc2a94a0e77f4e8e891fcb543f92bd7c8a59f3908c5"
+    },
+    {
+      "path": "src/editor.js",
+      "sha256": "0a6dd13824ac1eec528ecacf531e3980162c87d14a31971af4894cb5b952295f"
+    },
+    {
+      "path": "src/model.js",
+      "sha256": "778bfa74b42c8475fea76a2fa93ee1913510fbec3c6595f9bd0ac324ccbe02d0"
+    },
+    {
+      "path": "src/model-wire.js",
+      "sha256": "26889b3a87e6499e8778ccc1a7d8330f050c70aaca0b01a152286d96ae04ae43"
+    },
+    {
+      "path": "src/tone3000.js",
+      "sha256": "cf9ca3ffeed1676546147126acf5f9de842786fd4194bf1db5b69baa00a0360c"
+    },
+    {
+      "path": "src/tone-browser.js",
+      "sha256": "6901b235e5a17dd2536c0cb23a1bb3170c2246ff308aa676ffe53e0851e9485f"
+    },
+    {
+      "path": "src/commands.js",
+      "sha256": "3255448aab7b575203e0ab9cfbe5170c24481ce96f74a9405b494feb7e5ed3b8"
+    },
+    {
+      "path": "src/a2-topology.js",
+      "sha256": "bb1374cd0a8d6a77fd07d0b66c0eb7e0eafb2e959076f2df825640d41fedc781"
+    }
+  ]
+}

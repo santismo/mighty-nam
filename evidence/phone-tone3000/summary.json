@@ -1,0 +1,37 @@
+{
+  "status": "PUBLISHED_PHONE_TEST_PENDING",
+  "controller_version": "0.6.0",
+  "controller_commit": "5fb2434f0cedf08e64cc657b17251201fb5a6d85",
+  "firmware_required": "NAMLNK14",
+  "firmware_changed": false,
+  "node_tests": 63,
+  "node_tests_passed": 63,
+  "real_tone3000_checks": [
+    "OAuth PKCE official select flow with existing public client ID",
+    "Authenticated profile and bounded downloads list",
+    "Fender tone details and A2 model listing",
+    "Model download through official storage redirect",
+    "Strict A2 Lite container extraction and phone-local cache",
+    "Phone-local favorite"
+  ],
+  "browser_simulation_checks": [
+    "Two independent favorites",
+    "Offline capture selection queues a transfer",
+    "Connect loads selected capture and verifies active identity",
+    "Cabinet auto-bypass for amp+cab",
+    "Explicit save to another color with name and effects preserved",
+    "390x844 Chrome viewport: bounded capture list and accessible Close"
+  ],
+  "arm_checks": [
+    "Exact NAMLNK14 image receives JavaScript model packets on Bluetooth channel 1",
+    "Stock byte ring wrap and split frames",
+    "All 35 ARM replies accepted by JavaScript parser",
+    "Loaded CRC matches established Fender slot",
+    "DMA output silent; no preset flash operations"
+  ],
+  "physical_plug_test": "Deferred by user: I’ll test it later",
+  "usb_check": "No NUX/Mighty USB match at final read-only inventory check",
+  "audio_playback": false,
+  "host_audio_settings_changed": false,
+  "preset_writes_to_physical_plug": false
+}

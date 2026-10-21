@@ -22,17 +22,17 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
-| NAMLNK14 / Mac 0.3.6 / phone 0.5.0 | Installed locally. High / Low Cut has independent live sliders; muted USB control, full-chain and fresh preset save/recall checks passed. Listening, post-save restart and phone validation on this build remain. See [EQ trial notes](docs/high-low-cut-trial.md). |
+| NAMLNK14 / Mac 0.3.6 / phone 0.6.0 | Installed locally. High / Low Cut has independent live sliders; muted USB control, full-chain and fresh preset save/recall checks passed. The user confirmed the cut EQ works. Broader listening and post-save restart checks remain. See [EQ trial notes](docs/high-low-cut-trial.md). |
 | Mac controller 0.3.2 | Handles large CoreMIDI replies and enables Listen for verified onboard captures even without a Mac-library copy. Universal build; Apple-silicon execution is not separately verified. |
 | Mac controller 0.3.4 / NAMLNK12 | App and firmware installed locally; seven presets restored and switched successfully; quiet tuner transport passed. Adds a chromatic USB tuner and includes the NAMLNK11 preparation/profiling work. No measured latency reduction claimed. See [trial notes](docs/tuner-performance-trial.md). |
 | NAMLNK08 | Live NAM guitar listening and selected delay/reverb combinations worked on the development unit. |
 | NAMLNK10 | Physically installed. Seven captures/effects presets saved, recalled, and checked after a user power cycle. Buffer settings 8/16/32 recalled correctly. |
 | Seven presets | All seven saved records matched after restart; the user confirmed seven-color button cycling. Tested combinations had zero processing faults. This does not establish flash endurance, every effect combination, or NAMLNK10 recovery. |
-| Phone controller | GitHub Pages / Bluefy controller supports live effects and FX A/B. Initial NAMLNK13 connection and reads confirmed. TONE3000 on the phone is the next task; the looper remains a later goal. |
+| Phone controller | GitHub Pages / Bluefy 0.6.0 adds TONE3000 selection, local favorites, A2 Lite Bluetooth transfers and saving new captures to seven colors. Real browser, simulated BLE and exact ARM checks passed; user deferred the physical phone transfer. The looper remains a later goal. |
 
 This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
 
-The local 0.3.6 app includes High / Low Cut and NAMLNK14 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). TONE3000 integration terms review remains outstanding; private repository access does not resolve that review.
+The local 0.3.6 app includes High / Low Cut and NAMLNK14 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
 
 ## Install the Mac app
 
@@ -69,6 +69,8 @@ TONE3000 captures have their own creator licenses. Your account/session, persona
 
 [MIT © 2026 santismo](LICENSE) covers original NAM Plug contributions. [Third-party notices](THIRD_PARTY_NOTICES.md) preserve Mightier Amp, NeuralAmpModelerCore, Eigen, nlohmann/json, musl, and dependency licenses. NUX, Neural Amp Modeler, and TONE3000 identify interoperability targets; this is an independent project.
 
-NAMLNK13 is **installed for an experimental trial**, adding two movable FX blocks and short Bluetooth reply pages. Initial muted USB runs passed, and the user confirmed Bluefy reaches Ready with both FX blocks visible. Listening quality, calibrated deadlines and phone save/tuner checks remain outstanding. See [trial notes](docs/dual-fx-trial.md). The public [controller 0.4.1](https://santismo.github.io/nam-plug-controller/?v=0.4.1) adds a second enable/bypass control in the selected-block header and retains NAMLNK12 fallback behavior. TONE3000 on that phone controller is the next requested task, ahead of the deferred high/low-cut EQ.
+NAMLNK13 is **installed for an experimental trial**, adding two movable FX blocks and short Bluetooth reply pages. Initial muted USB runs passed, and the user confirmed Bluefy reaches Ready with both FX blocks visible. Listening quality, calibrated deadlines and phone save/tuner checks remain outstanding. See [trial notes](docs/dual-fx-trial.md). The public [controller 0.4.1](https://santismo.github.io/nam-plug-controller/?v=0.4.1) adds a second enable/bypass control in the selected-block header and retains NAMLNK12 fallback behavior. This historical controller has been superseded by 0.6.0; see the current trial notes below.
 
 NAMLNK14 adds **High / Low Cut** to the movable EQ block, with independent Off settings, live controls and saved cutoffs. Matching controllers: Mac 0.3.6 and [phone 0.5.0](https://santismo.github.io/nam-plug-controller/?v=0.5.0). It is installed on the development plug; bounded muted USB controls and preset save/recall passed. See [EQ trial notes](docs/high-low-cut-trial.md).
+
+The public [phone controller 0.6.0](https://santismo.github.io/nam-plug-controller/?v=0.6.0) now browses TONE3000, extracts A2 Lite, loads captures through the existing NAMLNK14 Bluetooth protocol and saves captures/FX to chosen colors. All 63 tests passed and real sign-in/download worked. The user will test the physical Bluefy transfer later; see [phone trial notes](docs/phone-tone3000-trial.md).
