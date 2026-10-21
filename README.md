@@ -22,6 +22,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
+| NAMLNK16 / Mac 0.3.8 / phone 0.6.3 | Firmware candidate ready for a physical processing comparison; not installed. Exact PCM, full-chain and restart tests passed. Updated Mac app installed locally. Fresh seven-color backup and silent NAMLNK15 timing baseline completed. No physical latency reduction claimed. See [NAM processing trial](docs/nam-performance-trial.md). |
 | NAMLNK15 / Mac 0.3.7 / phone 0.6.2 | Installed on the development plug. Seven presets restored and independently checked after power-off; the user confirmed seven-color button cycling. Live FX controls and compact quiet USB tuner checks passed. Physical listening latency and Bluefy tuner cadence remain unmeasured. See [responsive controls](docs/responsive-controls-trial.md). |
 | NAMLNK14 / Mac 0.3.6 / phone 0.6.0 | Installed locally. High / Low Cut has independent live sliders; muted USB control, full-chain and fresh preset save/recall checks passed. The user confirmed the cut EQ works. Broader listening and post-save restart checks remain. See [EQ trial notes](docs/high-low-cut-trial.md). |
 | Mac controller 0.3.2 | Handles large CoreMIDI replies and enables Listen for verified onboard captures even without a Mac-library copy. Universal build; Apple-silicon execution is not separately verified. |
@@ -33,7 +34,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
 
-The local 0.3.7 app includes FX A/B, High / Low Cut and NAMLNK15 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
+The local 0.3.8 app includes FX A/B, High / Low Cut and explicit NAMLNK15/16 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
 
 ## Install the Mac app
 

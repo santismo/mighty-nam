@@ -126,12 +126,22 @@ void A2Lite::process(const float* input,float* output,unsigned frames){
    // Contiguous packed weights allow one VLDMI rather than nine VLDRs.
    // VMLA is deliberately non-fused: preserve Core's rounded dot products.
    unsigned taps=k;
+#ifdef MPP_M7_POINTER_TAPS
+   // Advance byte addresses between taps; retain the same load/MAC order.
+   const float* tap_history=ring+3*col;
+   const float* history_end=ring+3*length;
+   const unsigned history_step=d*12,history_span=length*12;
+#endif
    float z0=0,z1=0,z2=0;
    __asm__ volatile(
     "1:\n"
+#ifdef MPP_M7_POINTER_TAPS
+    "vldmia %[history], {s12-s14}\n"
+#else
     "add r12, %[col], %[col], lsl #1\n"
     "add r12, %[ring], r12, lsl #2\n"
     "vldmia r12, {s12-s14}\n"
+#endif
     "vldmia %[weights]!, {s3-s11}\n"
     "vmul.f32 s15, s3, s12\n"
     "vmul.f32 s16, s4, s12\n"
@@ -145,15 +155,30 @@ void A2Lite::process(const float* input,float* output,unsigned frames){
     "vadd.f32 %[z0], %[z0], s15\n"
     "vadd.f32 %[z1], %[z1], s16\n"
     "vadd.f32 %[z2], %[z2], s17\n"
+#ifdef MPP_M7_POINTER_TAPS
+    "add %[history], %[history], %[step]\n"
+    "cmp %[history], %[end]\n"
+    "it hs\n"
+    "subhs %[history], %[history], %[span]\n"
+#else
     "add %[col], %[col], %[d]\n"
     "cmp %[col], %[length]\n"
     "it hs\n"
     "subhs %[col], %[col], %[length]\n"
+#endif
     "subs %[taps], %[taps], #1\n"
     "bne 1b\n"
+#ifdef MPP_M7_POINTER_TAPS
+    : [history] "+&r"(tap_history),[weights] "+&r"(w),[taps] "+&r"(taps),
+#else
     : [col] "+&r"(col),[weights] "+&r"(w),[taps] "+&r"(taps),
+#endif
       [z0] "+&t"(z0),[z1] "+&t"(z1),[z2] "+&t"(z2)
+#ifdef MPP_M7_POINTER_TAPS
+    : [step] "r"(history_step),[end] "r"(history_end),[span] "r"(history_span)
+#else
     : [ring] "r"(ring),[d] "r"(d),[length] "r"(length)
+#endif
     : "r12","s3","s4","s5","s6","s7","s8","s9","s10","s11",
       "s12","s13","s14","s15","s16","s17","cc","memory");
    z[0]=z0;z[1]=z1;z[2]=z2;

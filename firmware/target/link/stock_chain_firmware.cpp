@@ -38,7 +38,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_RESPONSIVE_CONTROLS)
+#if defined(MPP_M7_POINTER_TAPS)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','6'};
+#elif defined(MPP_RESPONSIVE_CONTROLS)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','1','5'};
 #elif defined(MPP_CUT_EQ)

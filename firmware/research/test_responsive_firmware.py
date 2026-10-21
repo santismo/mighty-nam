@@ -59,5 +59,5 @@ for hz in [82.4069,110,329.6276,0]:
 assert query(5)[7]==0 and query(4)[7]==1
 n.arm();assert query(3)[7]==3;n.arm(False);n.guards()
 (a.output_dir/'compact-wire.json').write_text(json.dumps(messages))
-report=dict(status='PASS_NAMLNK15_RESPONSIVE_ARM',elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),single_preset_no_reload=True,unsaved_settings_preserved=True,idle_fx_zero_dispatch=True,wake_and_fade_sleep=True,compact_tuner=rows,one_42_byte_reply_per_request=True,stale_generation_and_muted_only=True,physical_latency_measured=False,device_access=False,audio_playback=False)
+report=dict(status='PASS_'+v.plan['identity']+'_RESPONSIVE_ARM',elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),single_preset_no_reload=True,unsaved_settings_preserved=True,idle_fx_zero_dispatch=True,wake_and_fade_sleep=True,compact_tuner=rows,one_42_byte_reply_per_request=True,stale_generation_and_muted_only=True,physical_latency_measured=False,device_access=False,audio_playback=False)
 (a.output_dir/'responsive.json').write_text(json.dumps(report,indent=2)+'\n')

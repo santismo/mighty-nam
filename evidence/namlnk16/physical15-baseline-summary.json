@@ -1,0 +1,42 @@
+{
+  "status": "PASS_NAMLNK15_SILENT_MINIMAL_CHAIN_TIMING",
+  "identity": "NAMLNK15",
+  "buffer_samples": 8,
+  "cases": [
+    {
+      "case": "NAM-only",
+      "snapshots": 24,
+      "min_last_cycles": 90862,
+      "median_last_cycles": 92946.5,
+      "max_last_cycles": 95528
+    },
+    {
+      "case": "NAM-plus-Spring",
+      "snapshots": 24,
+      "min_last_cycles": 90290,
+      "median_last_cycles": 92313.0,
+      "max_last_cycles": 95145
+    },
+    {
+      "case": "NAM-after-bypassing-Spring",
+      "snapshots": 24,
+      "min_last_cycles": 90957,
+      "median_last_cycles": 93137.5,
+      "max_last_cycles": 94881
+    }
+  ],
+  "capture": "Fender A2 Lite",
+  "history": "Existing model/effect history retained; not a fresh-boot baseline",
+  "inputStimulus": "Uncontrolled quiet guitar input; no injected test signal",
+  "physical_latency_measured": false,
+  "hardware_deadline_proven": false,
+  "host_audio_access": false,
+  "Mac_Teams_audio_changed": false,
+  "preset_writes": 0,
+  "firmware_writes": 0,
+  "output_enable_commands": 0,
+  "original_settings_restored": true,
+  "final_output_muted": true,
+  "separate_fresh_seven_color_backup_completed": true,
+  "personal_models_and_backup_not_published": true
+}

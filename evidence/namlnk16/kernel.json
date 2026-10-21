@@ -1,0 +1,27 @@
+{
+  "status": "PASS_NAMLNK16_KERNEL_AND_UNCHANGED_MODULES",
+  "elf_sha256": "7d3b7475d30d0a61367b5ca1b569bd8d83116f530487bb4a89822eca76e1e0f1",
+  "matches_tested_pointer_kernel": true,
+  "active_kernel_sha256": "f76f5a955408a6f5dbcef9e0591a82e0b40fce0efdae15f1177edf1dcfe4cc8b",
+  "active_kernel_bytes": 820,
+  "unchanged_objects": [
+    "cut_eq.o",
+    "cut_eq_runtime.o",
+    "effect_profiler.o",
+    "fx_blocks.o",
+    "fx_runtime.o",
+    "irq_timing.o",
+    "listening.o",
+    "model_receiver.o",
+    "preset_bank.o",
+    "preset_runtime.o",
+    "reply_transport.o",
+    "sysex_codec.o",
+    "tuner.o"
+  ],
+  "unchanged_output_pipeline": true,
+  "codec_startup_unchanged": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "physical_latency_measured": false
+}

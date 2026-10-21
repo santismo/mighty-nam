@@ -1,0 +1,18 @@
+{
+  "version": "0.3.8+11",
+  "path": "LOCAL_APPLICATIONS/NAM Plug.app",
+  "signatureVerified": true,
+  "bundleFilesMatchCandidate": true,
+  "opened": false,
+  "previousBundlesRetained": true,
+  "preferencesUnchangedDuringReplacement": true,
+  "keychainUntouched": true,
+  "noAudioStreamsOrMacAudioSettingsChanged": true,
+  "firmwareInstalled": false,
+  "files": {
+    "Contents/MacOS/NAM Plug": "b29a131dc2624b63c5d92080f410e71962148a0922643b25169eca1984de921f",
+    "Contents/Frameworks/App.framework/Versions/A/App": "0aa74d2e5be1fcc3f227cfb15b0791ecdfda26cbd12a270e041e2046b86ca789",
+    "Contents/Frameworks/nam_device.framework/Versions/A/nam_device": "22571d834194117a4ac81ee8e8e4d12800d02ea9c3160e38c67a5d72f469593b"
+  },
+  "zipSHA256": "d4dbf5322e1b1e5e269fc1a3a06994b28c99135408fa7d2cd947844ef7df9643"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "PASS_NAMLNK16_STAGE_NEGATIVE_GATES",
+  "cases": [
+    {
+      "case": "missing-kernel",
+      "rejected": true,
+      "no_firmware_written": true
+    },
+    {
+      "case": "wrong-controller-build",
+      "rejected": true,
+      "no_firmware_written": true
+    },
+    {
+      "case": "nonidentical-PCM",
+      "rejected": true,
+      "no_firmware_written": true
+    }
+  ]
+}

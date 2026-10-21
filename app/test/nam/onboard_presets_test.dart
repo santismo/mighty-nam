@@ -245,7 +245,8 @@ void main() {
     'NAMLNK11',
     'NAMLNK12',
     'NAMLNK14',
-    'NAMLNK15'
+    'NAMLNK15',
+    'NAMLNK16'
   ]) {
     testWidgets(
         '$identity: save colored captures, button recall, reconnect and app restart',

@@ -92,7 +92,7 @@ class PresetMachine(ListeningMachine):
    u.reg_write(UC_ARM_REG_R0,result);u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR));return
   if self.phase=='probe' and pc==0xae80:
    data,n,ch=[u.reg_read(r) for r in v.R[:3]]
-   if n==326 or v.plan['identity'] in ('NAMLNK13','NAMLNK14','NAMLNK15') and n<=56:
+   if n==326 or v.plan['identity'] in ('NAMLNK13','NAMLNK14','NAMLNK15','NAMLNK16') and n<=56:
     self.messages.append((bytes(u.mem_read(data,n)),ch));u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR));return
   super().code(u,pc,size,unused)
  def service(self):self.call(0x57c0,[])

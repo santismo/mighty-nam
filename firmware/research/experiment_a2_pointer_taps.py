@@ -1,4 +1,9 @@
-"""Build a local, offline-only A2 tap-address experiment from exact source.
+"""Historical pre-NAMLNK16 experiment; run from commit 068858a.
+
+Current production builds use build_link_firmware.py --nam-pointer instead.
+This historical patcher deliberately rejects a changed baseline kernel.
+
+Build a local, offline-only A2 tap-address experiment from exact source.
 
 No production source edits, flash container, USB or audio access. The ELF keeps
 the baseline identity solely for the existing CPU harness and is NOT a release.

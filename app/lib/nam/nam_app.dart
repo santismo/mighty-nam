@@ -88,7 +88,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK12',
         'NAMLNK13',
         'NAMLNK14',
-        'NAMLNK15'
+        'NAMLNK15',
+        'NAMLNK16'
       ].contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   bool get hasExtraFx => supportsExtraFx(hardware?['identity'] as String?);
@@ -139,7 +140,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK12',
         'NAMLNK13',
         'NAMLNK14',
-        'NAMLNK15'
+        'NAMLNK15',
+        'NAMLNK16'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -157,7 +159,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK12',
         'NAMLNK13',
         'NAMLNK14',
-        'NAMLNK15'
+        'NAMLNK15',
+        'NAMLNK16'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -170,7 +173,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK12',
         'NAMLNK13',
         'NAMLNK14',
-        'NAMLNK15'
+        'NAMLNK15',
+        'NAMLNK16'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -356,7 +360,9 @@ class _NamHomeState extends State<NamHome> {
     }
     if (hasPresetBank) {
       await readOnboardBank();
-      if (!onboard.dirty[onboard.selected] && !pendingControls && !pendingModel) {
+      if (!onboard.dirty[onboard.selected] &&
+          !pendingControls &&
+          !pendingModel) {
         await readChainFromPlug();
       }
       return;
@@ -439,13 +445,13 @@ class _NamHomeState extends State<NamHome> {
     try {
       final source = selectedSource;
       if (source == null ||
-          !const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15']
+          !const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15', 'NAMLNK16']
               .contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
       }
       final muted = await device.setListening(source, false);
-      if (!const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15']
+      if (!const ['NAMLNK12', 'NAMLNK13', 'NAMLNK14', 'NAMLNK15', 'NAMLNK16']
               .contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
@@ -1388,7 +1394,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK12',
             'NAMLNK13',
             'NAMLNK14',
-            'NAMLNK15'
+            'NAMLNK15',
+            'NAMLNK16'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1479,7 +1486,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK12',
           'NAMLNK13',
           'NAMLNK14',
-          'NAMLNK15'
+          'NAMLNK15',
+          'NAMLNK16'
         ].contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 to adjust output buffering.');
@@ -1493,7 +1501,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK12',
             'NAMLNK13',
             'NAMLNK14',
-            'NAMLNK15'
+            'NAMLNK15',
+            'NAMLNK16'
           ].contains(result['identity']) ||
           (result['audioBuffer'] as Map?)?['samples'] != samples ||
           (result['listening'] as Map?)?['enabled'] != false) {
@@ -1530,7 +1539,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK12',
           'NAMLNK13',
           'NAMLNK14',
-          'NAMLNK15'
+          'NAMLNK15',
+          'NAMLNK16'
         ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;

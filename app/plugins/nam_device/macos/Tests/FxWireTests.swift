@@ -12,6 +12,9 @@ import Foundation
   }}
   var bad=c;bad[18]=2;precondition(!NamFxWire.config(bad));bad=c;bad[3]=25;precondition(!NamFxWire.config(bad))
   precondition(NamLinkWire.supportsModels("NAMLNK15"));precondition(NamListening.supports("NAMLNK15"))
+  precondition(NamLinkWire.supportsModels("NAMLNK16"));precondition(NamListening.supports("NAMLNK16"))
+  precondition(NamOutputBuffer.command(identity:"NAMLNK16",samples:8) != nil)
+  precondition(!NamLinkWire.supportsModels("NAMLNK17"));count+=4
   print("PASS native FX validation: \(count+4) checks")
  }
 }

@@ -23,7 +23,9 @@ p.add_argument('--tuner',action='store_true',help='NAMLNK12 bounded dry-input ca
 p.add_argument('--fx-blocks',action='store_true',help='NAMLNK13 two independent FX blocks and bounded BLE replies; requires tuner')
 p.add_argument('--cut-eq',action='store_true',help='NAMLNK14 High/Low Cut EQ; requires --fx-blocks')
 p.add_argument('--responsive-controls',action='store_true',help='NAMLNK15 compact phone tuner, same-preset no-op and idle FX shortcut; requires --cut-eq')
+p.add_argument('--nam-pointer',action='store_true',help='NAMLNK16 non-fused NAM tap-address optimization; requires --responsive-controls and --m7-conv')
 a=p.parse_args()
+if a.nam_pointer and not (a.responsive_controls and a.m7_conv):p.error('--nam-pointer requires --responsive-controls and --m7-conv')
 if a.responsive_controls and not a.cut_eq:p.error('--responsive-controls requires --cut-eq')
 if a.cut_eq and not a.fx_blocks:p.error('--cut-eq requires --fx-blocks')
 if a.fx_blocks and not a.tuner:p.error('--fx-blocks requires --tuner')
@@ -81,6 +83,7 @@ if a.cut_eq:
  flags+=['-DMPP_CUT_EQ']
  sources+=['target/link/cut_eq.cpp','target/link/cut_eq_runtime.cpp']
 if a.responsive_controls:flags+=['-DMPP_RESPONSIVE_CONTROLS']
+if a.nam_pointer:flags+=['-DMPP_M7_POINTER_TAPS']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -142,5 +145,7 @@ if a.cut_eq:
 if a.responsive_controls:
  report.update(identity='NAMLNK15',compact_tuner=True,same_preset_button_no_op=True,idle_fx_shortcut=True,physical_latency_improvement_verified=False)
  report['headers']={str(s.relative_to(root)):hashlib.sha256(s.read_bytes()).hexdigest() for s in sorted((root/'target').rglob('*.hpp'))}
+if a.nam_pointer:
+ report.update(identity='NAMLNK16',nam_pointer_taps=True,codec_filters='Unchanged stock settings',physical_latency_improvement_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))
