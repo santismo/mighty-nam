@@ -104,4 +104,4 @@ python3 firmware/tools/stage_active_chain_firmware.py \
   --controller-dir ../nam-plug-controller
 ```
 
-The source checkout and exact build must match the evidence, or the gate rejects packaging. Current reports are reference evidence, not permission to skip fresh tests after changes. The package contains empty preset/settings storage and requires a fresh backup and restore for a physical update. Packaging does not contact the plug. USB recording compatibility is a required next-release check, not a result established by these offline tests.
+The source checkout and exact build must match the evidence, or the gate rejects packaging. Current reports are reference evidence, not permission to skip fresh tests after changes. The package contains empty preset/settings storage and requires a backup and restore only if preserving existing presets; a clean start needs neither. Packaging does not contact the plug. USB recording compatibility is a required next-release check, not a result established by these offline tests.

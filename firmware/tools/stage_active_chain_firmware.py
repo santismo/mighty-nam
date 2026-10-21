@@ -84,7 +84,7 @@ need(not target.exists() or target.read_bytes()==packed,'Refusing to replace a d
 target.write_bytes(packed)
 report=dict(status='STAGED_NAMLNK20_EXPERIMENTAL_NOT_INSTALLED', identity='NAMLNK20', elf_sha256=digest, candidate_sha256=sha(packed), bytes=len(packed), stock_sha256=sha(stock), candidate_plan=plan, required_report_hashes=evidence,
  physical_device_tested=False, physical_real_time_verified=False, physical_Bluetooth_verified=False, physical_latency_measured=False, additional_latency_reduction_claimed=False,
- firmware_update_preserves_bank=False, requires_current_preset_backup_and_restore=True, USB_recovery_for_this_image_verified=False, full_bootloader_backup=False, general_use_ready=False,
+ firmware_update_preserves_bank=False, preserving_presets_requires_backup_and_restore=True, preset_backup_optional_if_discarding=True, USB_recovery_for_this_image_verified=False, full_bootloader_backup=False, general_use_ready=False,
  active_only_chain=True, available_stock_categories=9, custom_fx_slots=2, removed_nodes_receive_callbacks=False, removed_tail_spillover=False, per_effect_memory_reclaimed=False,
  dma_current_prototype_included=False, driver_and_codec_same_as_NAMLNK19=True, graph_status_pages=[118,123], one_shot_driver_snapshot_available=False, whole_IRQ_timing=True,
  global_buffer_persistent=True, global_buffer_default=8, global_buffer_choices=[8,16,32], normal_edits_preserve_playback=True, sample_rate_hz=48000, processing_frames=8,
