@@ -1,0 +1,99 @@
+{
+  "status": "PASS_HOST_CAPTURE_RESPONSE_PROBES",
+  "sample_rate": 48000,
+  "warmup_samples": 48000,
+  "response_samples": 4096,
+  "cases": [
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "model_sha256": "79aacb0a22d4a333bccf9efb2115b0720076e3ebcc757d78a35dc8c68f6e2a84",
+      "impulse_amplitude": 0.001,
+      "first_above_minus60dB_sample": 1,
+      "largest_excursion_sample": 21,
+      "energy_centroid_samples": 27.97286639229812,
+      "peak": 0.0011485327559057623
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "model_sha256": "79aacb0a22d4a333bccf9efb2115b0720076e3ebcc757d78a35dc8c68f6e2a84",
+      "impulse_amplitude": 0.01,
+      "first_above_minus60dB_sample": 1,
+      "largest_excursion_sample": 21,
+      "energy_centroid_samples": 28.12366973545776,
+      "peak": 0.011485256516607478
+    },
+    {
+      "model": "fender-super-reverb-lite.nam",
+      "model_sha256": "79aacb0a22d4a333bccf9efb2115b0720076e3ebcc757d78a35dc8c68f6e2a84",
+      "impulse_amplitude": 0.1,
+      "first_above_minus60dB_sample": 2,
+      "largest_excursion_sample": 21,
+      "energy_centroid_samples": 66.31841636587143,
+      "peak": 0.10266676291939802
+    },
+    {
+      "model": "marshall-lite.nam",
+      "model_sha256": "951383563d6c00f4742565facedee3294293cbd49173d1895ebeb1ce9bb0175a",
+      "impulse_amplitude": 0.001,
+      "first_above_minus60dB_sample": 0,
+      "largest_excursion_sample": 7,
+      "energy_centroid_samples": 13.125132406072888,
+      "peak": 0.0002742579272307921
+    },
+    {
+      "model": "marshall-lite.nam",
+      "model_sha256": "951383563d6c00f4742565facedee3294293cbd49173d1895ebeb1ce9bb0175a",
+      "impulse_amplitude": 0.01,
+      "first_above_minus60dB_sample": 0,
+      "largest_excursion_sample": 6,
+      "energy_centroid_samples": 10.944255771705674,
+      "peak": 0.004739786370919319
+    },
+    {
+      "model": "marshall-lite.nam",
+      "model_sha256": "951383563d6c00f4742565facedee3294293cbd49173d1895ebeb1ce9bb0175a",
+      "impulse_amplitude": 0.1,
+      "first_above_minus60dB_sample": 0,
+      "largest_excursion_sample": 6,
+      "energy_centroid_samples": 10.438893659394477,
+      "peak": 0.043606446462945314
+    },
+    {
+      "model": "be100-lite.nam",
+      "model_sha256": "3378932f8e91482aaa8712b29ac6144360187d4ffd438a170e782cd21c189e47",
+      "impulse_amplitude": 0.001,
+      "first_above_minus60dB_sample": 0,
+      "largest_excursion_sample": 8,
+      "energy_centroid_samples": 39.28014985129187,
+      "peak": 0.03514855419052765
+    },
+    {
+      "model": "be100-lite.nam",
+      "model_sha256": "3378932f8e91482aaa8712b29ac6144360187d4ffd438a170e782cd21c189e47",
+      "impulse_amplitude": 0.01,
+      "first_above_minus60dB_sample": 0,
+      "largest_excursion_sample": 13,
+      "energy_centroid_samples": 63.84043319435167,
+      "peak": 0.14782556827412918
+    },
+    {
+      "model": "be100-lite.nam",
+      "model_sha256": "3378932f8e91482aaa8712b29ac6144360187d4ffd438a170e782cd21c189e47",
+      "impulse_amplitude": 0.1,
+      "first_above_minus60dB_sample": 0,
+      "largest_excursion_sample": 13,
+      "energy_centroid_samples": 209.88492900763805,
+      "peak": 0.15658681030618027
+    }
+  ],
+  "exact_analysis_fixtures": 4,
+  "library_sha256": "6896cf509c559f6b90a1824e5e263f639507cd9a99b206e52b7d086613229cb1",
+  "device_access": false,
+  "host_audio_access": false,
+  "limits": [
+    "Official Core host reference only; no firmware audio driver, ADC/DAC or stock effects.",
+    "Relative -60 dB threshold is an analysis choice, not a perceptual or electrical onset guarantee.",
+    "Peak and centroid describe level-dependent response shape; not uniform buffering delay.",
+    "No capture modification, automatic phase correction or time advance."
+  ]
+}

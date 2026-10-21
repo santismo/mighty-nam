@@ -1,0 +1,710 @@
+{
+  "status": "COMPLETE_OFFLINE_TAIL_RESET_SCREEN",
+  "cases": [
+    {
+      "stage": 7,
+      "type": 1,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.0148550383746624,
+      "naive_frozen_wake_peak": 0.014866000972688198,
+      "reset_wake_silence_peak": 0.002500674221664667,
+      "reset_wake_after_200ms_peak": 1.401298464324817e-45,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2025c000",
+          "bytes": 1612
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 1,
+      "setting": "long",
+      "output_residual_at_200ms": 0.038054630160331726,
+      "naive_frozen_wake_peak": 0.038558509200811386,
+      "reset_wake_silence_peak": 0.0045012133195996284,
+      "reset_wake_after_200ms_peak": 4.203895392974451e-45,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2025c000",
+          "bytes": 1612
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 2,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.00919155206065625,
+      "naive_frozen_wake_peak": 0.009775955229997635,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 2,
+      "setting": "long",
+      "output_residual_at_200ms": 0.01627001166343689,
+      "naive_frozen_wake_peak": 0.01629364863038063,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 3,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.007331854663789272,
+      "naive_frozen_wake_peak": 0.008916969411075115,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 3,
+      "setting": "long",
+      "output_residual_at_200ms": 0.013812747085466981,
+      "naive_frozen_wake_peak": 0.014019669964909554,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 4,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.004650932736694813,
+      "naive_frozen_wake_peak": 0.005010210443288088,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 4,
+      "setting": "long",
+      "output_residual_at_200ms": 0.012302831746637821,
+      "naive_frozen_wake_peak": 0.012399012222886086,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 5,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.004949349910020828,
+      "naive_frozen_wake_peak": 0.007065911777317524,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2025c000",
+          "bytes": 1028
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 7,
+      "type": 5,
+      "setting": "long",
+      "output_residual_at_200ms": 0.010607767850160599,
+      "naive_frozen_wake_peak": 0.014700835570693016,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2025c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003c000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2025c000",
+          "bytes": 1028
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 1,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.0006812736392021179,
+      "naive_frozen_wake_peak": 0.0006173957954160869,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10808923840522766,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 1,
+      "setting": "long",
+      "output_residual_at_200ms": 0.018723130226135254,
+      "naive_frozen_wake_peak": 0.017319783568382263,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10865265130996704,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 2,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.0012079663574695587,
+      "naive_frozen_wake_peak": 0.0012681367807090282,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.1081218495965004,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 2,
+      "setting": "long",
+      "output_residual_at_200ms": 0.013448689132928848,
+      "naive_frozen_wake_peak": 0.02030608057975769,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10810688138008118,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 3,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.0045310333371162415,
+      "naive_frozen_wake_peak": 0.005132261198014021,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10892540961503983,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 3,
+      "setting": "long",
+      "output_residual_at_200ms": 0.018311351537704468,
+      "naive_frozen_wake_peak": 0.019461004063487053,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.11009472608566284,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 4,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.0008092150092124939,
+      "naive_frozen_wake_peak": 0.0008958237594924867,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10787113755941391,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 4,
+      "setting": "long",
+      "output_residual_at_200ms": 0.001672312617301941,
+      "naive_frozen_wake_peak": 0.0018109336961060762,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10787113755941391,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 5,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.007569709661765955,
+      "naive_frozen_wake_peak": 0.008233330212533474,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10754140466451645,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2021c000",
+          "bytes": 38400
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 5,
+      "setting": "long",
+      "output_residual_at_200ms": 0.04237970976100769,
+      "naive_frozen_wake_peak": 0.046671681106090546,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10809434205293655,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2021c000",
+          "bytes": 38400
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 6,
+      "setting": "ordinary",
+      "output_residual_at_200ms": 0.002851267345249653,
+      "naive_frozen_wake_peak": 0.0032069210428744555,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10828696936368942,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    },
+    {
+      "stage": 8,
+      "type": 6,
+      "setting": "long",
+      "output_residual_at_200ms": 0.027394716627895832,
+      "naive_frozen_wake_peak": 0.02979147620499134,
+      "reset_wake_silence_peak": 0.0,
+      "reset_wake_after_200ms_peak": 0.0,
+      "quiet_after_existing_settling": true,
+      "new_input_peak": 0.10885066539049149,
+      "foreground_memory_operations": [
+        {
+          "pc": "0x5530",
+          "destination": "0x2021c000",
+          "bytes": 262144
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x3d000",
+          "bytes": 4096
+        },
+        {
+          "pc": "0x5488",
+          "destination": "0x2003d000",
+          "bytes": 4096
+        }
+      ],
+      "actual_type_loaded": true,
+      "guards_pass": true
+    }
+  ],
+  "seconds": 452.6418734418694,
+  "all_fixtures_quiet_after_settling": true,
+  "elf_sha256": "6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2",
+  "stock_sha256": "a8a064a5b0e308b9cf193ebdf23d352ddff092d88db71531729ca1864a86d990",
+  "model_sha256": "79aacb0a22d4a333bccf9efb2115b0720076e3ebcc757d78a35dc8c68f6e2a84",
+  "device_access": false,
+  "host_audio_access": false,
+  "firmware_changed": false,
+  "limitations": [
+    "Python drives the proposed policy; no compiled dispatcher change.",
+    "Explicit hard-bypass/reset semantics: tails are discarded, not preserved spillover.",
+    "Only the listed parameter fixtures, finite input and 250 ms wake windows.",
+    "Reset clears 256 KiB and copies overlays in foreground; hardware load/clicks unmeasured.",
+    "Gate not included; no claim of fixed latency reduction or measured CPU speedup."
+  ]
+}

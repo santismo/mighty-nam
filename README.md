@@ -22,6 +22,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
+| Latency research after NAMLNK18 preparation | Offline driver/FIFO audit and compiled delay/reverb sleep prototype. Fewer instruction events after bypass; no measured headphone-latency gain or new installable build. See [research and evidence](docs/audio-driver-and-bypass-audit.md). |
 | NAMLNK18 / Mac 0.3.10 / phone 0.6.5 | Global persistent buffer and playback-preserving edits; earlier NAM hot-code/table placement restored. Offline checks passed; firmware not installed or physically measured. See [global buffer trial](docs/global-buffer-trial.md). |
 | NAMLNK17 / Mac 0.3.9 / phone 0.6.4 | Installed; converter startup readback, seven restored presets, restart/color cycling and fault-free eight-sample checks verified. CPU snapshots were about 5–6% higher than the immediate 16 baseline; cause remains under investigation. Approximate 0.292 ms converter saving is predicted, not measured. See [converter trial](docs/converter-latency-trial.md). |
 | NAMLNK16 / Mac 0.3.8 / phone 0.6.3 | Installed and verified over USB. All seven fresh-backed-up presets restored and checked after power-off; user confirmed color cycling. Quiet matched-chain runs used 4.0–4.6% fewer median IRQ cycles than 15. Mac app installed and phone controller live. Fixed audio path unchanged; no measured guitar-to-headphone latency reduction claimed. See [NAM processing trial](docs/nam-performance-trial.md). |

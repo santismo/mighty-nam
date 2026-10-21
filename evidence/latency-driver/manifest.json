@@ -1,0 +1,75 @@
+{
+  "status": "OFFLINE_RESEARCH_COMPLETE_NOT_A_RELEASE",
+  "source_commit": "0658813",
+  "sources": {
+    "firmware/research/audit_audio_scheduling.py": "3db078fd487188b5431b2a80407d352734efb8ca04cc9a9f10170f7eb632bc23",
+    "firmware/research/probe_tail_reset.py": "4a1859d0c1096deecab4d6ef2e924a7aa2f034a76efc28db45494448f3a6cd33",
+    "firmware/research/experiment_tail_sleep.py": "addc51c62c6a2ce31dd45b3a110a41fe70e3010dea305bf0dd48710abf587677",
+    "firmware/research/test_tail_sleep.py": "f0e952635aa1f12bbdf0f6612a64e80144d73ec35ccdb66d14fae2bcd8548477",
+    "firmware/research/probe_capture_response.py": "9468922ff4824996ecbc205edca13c6fc2b07b380386e111c3d71e6d19bd7370"
+  },
+  "reports": {
+    "audio-scheduling.json": "fb0fc495ac9eb2dd627741e57c32691ea15026e3c6a8dc76b02207818c6e62d0",
+    "tail-reset.json": "bb0bc4ea37d721787fb4666190da3d0afbe9931f35a021b5dcec3887aea57b62",
+    "compiled-tail-sleep.json": "0c7a7d22ef692eb3a54f8006cd7408db4560bc482559210360caaf7b49327089",
+    "capture-response.json": "814ffbe293a023df78f7caec67fac86fd8b829f7e8ad95e3b3c74a75921ae67c"
+  },
+  "prepared_NAMLNK18_image_unchanged_sha256": "23f3c3378d096c0dfc408f74b0d98286c64d753dad338b1c3f8c35d8cdec101c",
+  "baseline_elf_sha256": "6f64be2c073f8fa23bf474067b8a0d05f61ce98dc94caa8ad8aab2b3b66e08c2",
+  "experimental_elf_sha256": "75e4c747f74315b2d9095e0a0b1c0afd8a09aafebcf5574c0bb256eb88bffdc3",
+  "experimental_build_status": "OFFLINE_EXPERIMENT_NOT_INSTALLABLE",
+  "linked_regions": [
+    {
+      "name": ".banktext",
+      "start": "0x20310000",
+      "bytes": 15836,
+      "end_exclusive": "0x20313ddc"
+    },
+    {
+      "name": ".retired_audio",
+      "start": "0x14c04",
+      "bytes": 744,
+      "end_exclusive": "0x14eec"
+    },
+    {
+      "name": ".text",
+      "start": "0x1a0a4",
+      "bytes": 4816,
+      "end_exclusive": "0x1b374"
+    },
+    {
+      "name": ".ARM.exidx",
+      "start": "0x14eec",
+      "bytes": 24,
+      "end_exclusive": "0x14f04"
+    },
+    {
+      "name": ".bss",
+      "start": "0x202e4020",
+      "bytes": 175688,
+      "end_exclusive": "0x2030ee68"
+    }
+  ],
+  "nxp_manual": {
+    "name": "IMXRT1170RM Rev 5, 01/2026",
+    "sha256": "a6827535ad97effe73f5eca7bddc30a2e68c1bb74e122c7511feda4d0479fab0",
+    "pages": [
+      3476,
+      3477
+    ]
+  },
+  "nxp_driver": {
+    "url": "https://github.com/nxp-mcuxpresso/legacy-mcux-sdk/blob/main/drivers/sai/fsl_sai_edma.c",
+    "sha256": "86bd355fa07108030ad55e62f05528938201b146b0ffb210c2b361de144b08b8"
+  },
+  "device_access": false,
+  "host_audio_access": false,
+  "production_firmware_changed": false,
+  "flash_container_created": false,
+  "muting_commands_sent": false,
+  "public_controller_changed": false,
+  "physical_latency_measured": false,
+  "limitations": [
+    "Research only; no new firmware installation recommended from this evidence."
+  ]
+}
