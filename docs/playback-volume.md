@@ -20,4 +20,6 @@ Model downloads follow at most four HTTPS redirects, only for the model-download
 
 ## USB audio remains separate
 
+Update: [NAMLNK21 implements the USB path and NAM controls](usb-audio-nam-controls.md), with offline validation. It is staged, not installed; physical Logic testing remains pending. The paragraph below records the NAMLNK20 baseline.
+
 NAMLNK20 enumerates as a two-input/two-output USB audio device, but its replacement audio callback does not call the stock PCM exchange at 0xccec or the stock USB playback mix. This is a firmware-path omission, independent of the MIDI controller and master-volume controls. Logic duplex operation has not been repaired or verified by this app update. No host audio stream was opened and no firmware was flashed during these checks. NAM-specific input/output gain, tone controls and wet/dry mix also require a subsequent DSP/protocol implementation; master volume is not a substitute for those controls.

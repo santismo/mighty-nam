@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'nam_tone.dart';
 import 'catalog.dart';
 import 'extra_fx.dart';
 
@@ -47,6 +48,8 @@ class HybridRig {
   String name;
   String? modelSha256;
   int masterVolume;
+  List<int> namTone = neutralNamTone();
+  final Set<String> visibleSlots = {};
   final List<RigBlock> blocks;
   HybridRig(this.name, this.blocks, {this.modelSha256, this.masterVolume = 50});
   factory HybridRig.initial() => HybridRig(
@@ -72,14 +75,39 @@ class HybridRig {
     return config;
   }
 
-  List<RigBlock> visibleBlocks({required bool activeOnly}) =>
-      activeOnly ? blocks.where((b) => b.enabled).toList() : blocks;
+  List<RigBlock> visibleBlocks({required bool activeOnly}) => activeOnly
+      ? blocks.where((b) => b.enabled || visibleSlots.contains(b.slot)).toList()
+      : blocks;
 
   void addBlock(RigBlock block) {
     if (!blocks.contains(block)) throw ArgumentError('Unknown block');
     if (block.enabled) return;
     block.enabled = true;
+    visibleSlots.add(block.slot);
     reorder(blocks.indexOf(block), blocks.length - 1);
+  }
+
+  void bypassBlock(RigBlock block, bool enabled) {
+    visibleSlots.add(block.slot);
+    block.enabled = enabled;
+  }
+
+  void removeBlock(RigBlock block) {
+    block.enabled = false;
+    visibleSlots.remove(block.slot);
+  }
+
+  void replaceBlock(RigBlock before, RigBlock after) {
+    if (!blocks.contains(before) ||
+        !blocks.contains(after) ||
+        visibleBlocks(activeOnly: true).contains(after)) {
+      throw ArgumentError('Choose an available block');
+    }
+    final position = blocks.indexOf(before), enabled = before.enabled;
+    removeBlock(before);
+    after.enabled = enabled;
+    visibleSlots.add(after.slot);
+    reorder(blocks.indexOf(after), position);
   }
 
   void moveVisible(int oldIndex, int newIndex, {required bool activeOnly}) {
@@ -103,6 +131,8 @@ class HybridRig {
         'name': name,
         'model_sha256': modelSha256,
         'master_volume': masterVolume,
+        'nam_tone': namTone,
+        'visible_slots': visibleSlots.toList(),
         'blocks': blocks.map((b) => b.toJson()).toList(),
       });
   factory HybridRig.parse(String text) {
@@ -194,7 +224,12 @@ class HybridRig {
       blocks.insertAll(2,
           [RigBlock('fxa')..enabled = false, RigBlock('fxb')..enabled = false]);
     }
+    final tone = List<int>.from(j['nam_tone'] ?? neutralNamTone());
+    validateNamTone(tone);
     return HybridRig(j['name'], blocks,
-        modelSha256: j['model_sha256'], masterVolume: volume);
+        modelSha256: j['model_sha256'], masterVolume: volume)
+      ..namTone = tone
+      ..visibleSlots.addAll(List<String>.from(j['visible_slots'] ?? const [])
+          .where(slotNames.containsKey));
   }
 }

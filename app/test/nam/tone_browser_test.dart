@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mighty_plug_manager/nam/tone_browser.dart';
 import 'package:nam_link/nam_link.dart';
+
+void mockOfficialPicker() {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(const MethodChannel('flutter_web_auth_2'),
+          (call) async {
+    if (call.method == 'cleanUpDanglingCalls') return null;
+    final url = Uri.parse((call.arguments as Map)['url'] as String);
+    expect(url.host, 'www.tone3000.com');
+    expect(url.queryParameters['prompt'], 'select_tone');
+    expect(url.queryParameters['architecture'], '2');
+    expect(url.queryParameters['preview'], 'false');
+    return 'mighty-nam://oauth/callback?state=${url.queryParameters['state']}&tone_id=42&code=fixture';
+  });
+}
 
 // UI tests use deterministic asynchronous responses. HTTP, PKCE, session races,
 // validation and real query construction are covered by nam_link's API tests.
 class CatalogFixture extends Tone3000Client {
   CatalogFixture() : super('t3k_pub_fixture');
+  @override
+  Future<int?> complete(SelectionFlow flow, Uri callback) async {
+    expect(callback.queryParameters['state'], flow.state);
+    expect(flow.needsTone, true);
+    return 42;
+  }
+
   final calls = <Map<String, dynamic>>[];
   bool signedIn = true, rateLimited = false, invalidModel = false;
   String lastGear = 'amp', lastFormat = 'nam';
@@ -109,6 +131,40 @@ class CatalogFixture extends Tone3000Client {
 }
 
 void main() {
+  testWidgets('audition keeps browser, filters, detail and load controls open',
+      (t) async {
+    final api = CatalogFixture();
+    addTearDown(api.close);
+    var loads = 0;
+    await t.binding.setSurfaceSize(const Size(1180, 760));
+    addTearDown(() => t.binding.setSurfaceSize(null));
+    await t.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: ToneBrowser(
+                client: api,
+                signIn: () async => api,
+                officialPicker: () async => null,
+                loadToPlug: true,
+                onSelect: (capture) async {
+                  loads++;
+                }))));
+    await t.pumpAndSettle();
+    await t.tap(find.text('Test amp'));
+    await t.pumpAndSettle();
+    await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
+    await t.tap(find.byKey(const ValueKey('load-model-5')));
+    await t.pumpAndSettle();
+    expect(loads, 1);
+    expect(find.byTooltip('Close tone browser'), findsOneWidget);
+    expect(find.text('Active capture'), findsOneWidget);
+    expect(find.byKey(const ValueKey('tone-detail-42')), findsOneWidget);
+    expect(api.calls.length, 1);
+    await t.tap(find.byKey(const ValueKey('load-model-5')));
+    await t.pumpAndSettle();
+    expect(loads, 2);
+    expect(api.calls.length, 1);
+  });
+
   for (final width in [520.0, 1180.0]) {
     testWidgets(
         'capture navigation at $width px keeps selection and load action',
@@ -127,6 +183,7 @@ void main() {
         activeCaptureName: 'Current Fender',
         officialPicker: () async {
           pickerCalls++;
+          return null;
         },
       ))));
       await t.pumpAndSettle();
@@ -162,7 +219,7 @@ void main() {
             body: ToneBrowser(
                 client: api,
                 signIn: () async => api,
-                officialPicker: () async {}))));
+                officialPicker: () async => null))));
     await t.pumpAndSettle();
     expect(find.text('12,345 downloads'), findsWidgets);
     for (final entry in {
@@ -234,7 +291,7 @@ void main() {
                               child: ToneBrowser(
                                   client: api,
                                   signIn: () async => api,
-                                  officialPicker: () async {})));
+                                  officialPicker: () async => null)));
                     },
                     child: const Text('Browse'))))));
     await t.tap(find.text('Browse'));
@@ -279,7 +336,7 @@ void main() {
                   throw const FormatException(
                       'Add publishable client ID in Workspace');
                 },
-                officialPicker: () async {}))));
+                officialPicker: () async => null))));
     await t.tap(find.text('Sign in to TONE3000'));
     await t.pumpAndSettle();
     expect(find.textContaining('Add publishable client ID'), findsOneWidget);
@@ -291,7 +348,7 @@ void main() {
             body: ToneBrowser(
                 client: api,
                 signIn: () async => api,
-                officialPicker: () async {}))));
+                officialPicker: () async => null))));
     await t.pumpAndSettle();
     expect(find.textContaining('rate limit'), findsOneWidget);
     await t.ensureVisible(find.text('Browse TONE3000'));

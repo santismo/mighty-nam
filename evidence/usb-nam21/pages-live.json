@@ -1,0 +1,28 @@
+{
+  "version": "0.7.3",
+  "commit": "a2dea3cb10aa48ff8544d297cd2179d3a5ae18db",
+  "status": "LIVE_SOURCE_MATCH",
+  "files": [
+    {
+      "file": "index.html",
+      "sha256": "5535d94263dc5d557d85e6045c2f902b0c8547986f65e672cfff1363f0871155"
+    },
+    {
+      "file": "src/app.js",
+      "sha256": "42b7f145e1a4b14a6dbe92d9e3eea4d61ee2ef3bc4d6e7b586cf04b7b76848cf"
+    },
+    {
+      "file": "src/active-chain.js",
+      "sha256": "b141d5ade004461ac427c3800e7c24f7bfdfe9c51d71c0d4447128b3f710fbba"
+    },
+    {
+      "file": "src/tone-browser.js",
+      "sha256": "0f203d033abfc906188b168c5c60230ce878e7472af8751380c3e6e6c433a278"
+    },
+    {
+      "file": "src/nam-controls.js",
+      "sha256": "d3f299c622867a8de5fa71cbee300be070956dca7d23c4218757bf3aba6f3c7a"
+    }
+  ],
+  "physical_BLE_test": false
+}

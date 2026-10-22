@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:nam_link/nam_link.dart';
 
 /// A browser attached to the selected NAM block. It never plays audio or writes
-/// to a plug. Returning a model only changes the controller's selected capture.
+/// to a plug directly. Its host callback loads the selected capture while this
+/// view keeps its catalog, filters, pagination and scroll position.
 class ToneBrowser extends StatefulWidget {
   final Tone3000Client? client;
   final Future<Tone3000Client> Function() signIn;
-  final Future<void> Function() officialPicker;
+  final Future<int?> Function() officialPicker;
   final int? initialToneId;
   final bool loadToPlug;
+  final Future<void> Function(LiteModel)? onSelect;
   final String? activeCaptureName;
   const ToneBrowser(
       {super.key,
       this.client,
       this.initialToneId,
       this.loadToPlug = false,
+      this.onSelect,
       this.activeCaptureName,
       required this.signIn,
       required this.officialPicker});
@@ -28,6 +31,8 @@ class _ToneBrowserState extends State<ToneBrowser> {
       make = TextEditingController(),
       creator = TextEditingController(),
       tag = TextEditingController();
+  String? loadedCapture;
+  int? loadedModel;
   String collection = 'search',
       gear = '',
       format = 'nam',
@@ -150,30 +155,52 @@ class _ToneBrowserState extends State<ToneBrowser> {
   }
 
   Future<void> load({int nextPage = 1}) => run(() => fetch(nextPage: nextPage));
-  Future<void> openTone(Map<String, dynamic> selected) => run(() async {
-        if (selected['id'] is! int) {
-          throw const FormatException('Missing tone identity');
-        }
-        final detail = await client!.tone(selected['id']);
-        final result = detail['format'] == 'nam'
-            ? await client!.models(selected['id'])
-            : <String, dynamic>{
-                'data': <Map<String, dynamic>>[],
-                'total_pages': 1
-              };
-        final next = rows(result);
-        if (!mounted) return;
-        setState(() {
-          tone = detail;
-          models = next;
-          modelPage = 1;
-          if (detailScroll.hasClients) detailScroll.jumpTo(0);
-          modelPages = result['total_pages'] is int ? result['total_pages'] : 1;
-        });
+  Future<void> openTone(Map<String, dynamic> selected) =>
+      run(() => fetchTone(selected));
+  Future<void> fetchTone(Map<String, dynamic> selected) async {
+    if (selected['id'] is! int) {
+      throw const FormatException('Missing tone identity');
+    }
+    final detail = await client!.tone(selected['id']);
+    final result = detail['format'] == 'nam'
+        ? await client!.models(selected['id'])
+        : <String, dynamic>{'data': <Map<String, dynamic>>[], 'total_pages': 1};
+    final next = rows(result);
+    if (!mounted) return;
+    setState(() {
+      tone = detail;
+      models = next;
+      modelPage = 1;
+      if (detailScroll.hasClients) detailScroll.jumpTo(0);
+      modelPages = result['total_pages'] is int ? result['total_pages'] : 1;
+    });
+  }
+
+  Future<void> browseOfficial() => run(() async {
+        final id = await widget.officialPicker();
+        if (id != null && mounted) await fetchTone({'id': id});
       });
   Future<void> choose(Map<String, dynamic> selected) => run(() async {
         final capture = await client!.download(selected, tone!);
-        if (mounted) Navigator.pop(context, capture);
+        if (!mounted) return;
+        if (widget.onSelect == null) {
+          Navigator.pop(context, capture);
+          return;
+        }
+        setState(() => message = widget.loadToPlug
+            ? 'Loading capture onto plug…'
+            : 'Selecting capture…');
+        await widget.onSelect!(capture);
+        if (mounted) {
+          setState(() {
+            loadedCapture = capture.metadata['name']?.toString() ??
+                selected['name']?.toString();
+            loadedModel = selected['id'];
+            message = widget.loadToPlug
+                ? 'Loaded on plug. Keep browsing to try another capture.'
+                : 'Capture selected. Keep browsing.';
+          });
+        }
       });
   Widget choice(String value, String title) => ChoiceChip(
       label: Text(title),
@@ -491,9 +518,11 @@ class _ToneBrowserState extends State<ToneBrowser> {
                             trailing: FilledButton(
                                 key: ValueKey('load-model-${m['id']}'),
                                 onPressed: busy ? null : () => choose(m),
-                                child: Text(widget.loadToPlug
-                                    ? 'Load on plug'
-                                    : 'Use capture')),
+                                child: Text(loadedModel == m['id']
+                                    ? 'Active capture'
+                                    : widget.loadToPlug
+                                        ? 'Load on plug'
+                                        : 'Use capture')),
                             onTap: busy ? null : () => choose(m))),
                   if (models.isEmpty)
                     const Padding(
@@ -546,7 +575,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
               if (widget.initialToneId == null)
                 FilledButton.icon(
                     key: const ValueKey('official-tone-picker'),
-                    onPressed: busy ? null : () => run(widget.officialPicker),
+                    onPressed: busy ? null : browseOfficial,
                     icon: const Icon(Icons.search),
                     label: const Text('Browse TONE3000')),
               IconButton(
@@ -559,9 +588,9 @@ class _ToneBrowserState extends State<ToneBrowser> {
             child: Row(children: [
               Expanded(
                   child: Text(
-                      widget.activeCaptureName == null
+                      (loadedCapture ?? widget.activeCaptureName) == null
                           ? '48 kHz · A2 Lite · no audio previews'
-                          : 'Selected in NAM: ${widget.activeCaptureName}',
+                          : 'Selected in NAM: ${loadedCapture ?? widget.activeCaptureName}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

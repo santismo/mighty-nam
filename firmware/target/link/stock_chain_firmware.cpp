@@ -1,6 +1,9 @@
 // Exact V1.5.6 stock-effects bridge with RAM A2. NAMLNK02..06 stay silent;
 // NAMLNK07 adds explicitly armed listening. No flash or reset commands.
 #include "model_receiver.hpp"
+#ifdef MPP_USB_NAM_CONTROLS
+#include "nam_controls.hpp"
+#endif
 #ifdef MPP_DMA_DEADLINE_PROTOTYPE
 #include "dma_deadline.hpp"
 #endif
@@ -47,7 +50,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_ACTIVE_CHAIN_RELEASE)
+#if defined(MPP_USB_NAM_CONTROLS)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','2','1'};
+#elif defined(MPP_ACTIVE_CHAIN_RELEASE)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','2','0'};
 #elif defined(MPP_ACTIVE_CHAIN_PROTOTYPE)
@@ -463,8 +469,12 @@ extern "C" void mpp_stock_amp_process(const float* left,const float* right,float
 #endif
   for(unsigned i=0;i<8;++i){float a=left[i],b=right[i];l[i]=a;r[i]=b;}return;
  }
+#ifdef MPP_USB_NAM_CONTROLS
+ model.process(mpp_nam_input(left),l,8);mpp_nam_output(left,right,l,r);
+#else
  model.process(left,l,8);
  for(unsigned i=0;i<8;++i)r[i]=l[i];
+#endif
 }
 extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
  const uint32_t r=(uint32_t)(uintptr_t)rx,t=(uint32_t)(uintptr_t)tx;
@@ -481,6 +491,9 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
 #ifndef MPP_DMA_DEADLINE_PROTOTYPE
  for(unsigned i=0;i<32;++i)tx[i]=0;
 #endif
+ #ifdef MPP_USB_NAM_CONTROLS
+ mpp_usb_begin(mpp_link.ready&&mpp_link.running);
+ #endif
  ++mpp_link.callbacks;
  barrier();
  if(!mpp_link.ready||!mpp_link.running){
@@ -521,6 +534,9 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
  // Use the unmodified stock mono-input/master-volume wrapper and dispatcher.
  // The replacement AMP entry supplies NAM at its current movable chain slot.
  ((void(*)(const float*,float*,float*))0xe935)(x,mpp_link_output,chain_right);
+#ifdef MPP_USB_NAM_CONTROLS
+ mpp_usb_finish(mpp_link_output,chain_right);
+#endif
 #ifdef MPP_LISTENING
  // Preserve the stock global headphone-volume/mute smoothing before bounding.
  ((void(*)(float*,float*,float*,float*))0xe881)(
@@ -588,6 +604,9 @@ extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned c
  if(n<9||n>329||channel>1||p[0]!=0xf0||p[1]!=0x43||p[2]!=0x58||
     p[3]!=0x70||p[4]!=4||p[5]!=2||p[6]!='N'||p[n]!=0xf7)return;
 #ifdef MPP_FX_BLOCKS
+#ifdef MPP_USB_NAM_CONTROLS
+ if(p[7]=='G'){mpp_nam_query(p,n,channel);return;}
+#endif
  if(p[7]=='R'){mpp_reply_query(p,n,channel);return;}
  if(p[7]=='F'){mpp_fx_query(p,n,channel);return;}
 #endif

@@ -41,6 +41,9 @@ AUDIO_BODY void mpp_listen_prepare(){
  // Changes settle with NAM bypassed/read-only primed and the output muted.
  // 1200 blocks = 200 ms at the stock 48 kHz, eight-frame block size.
  for(unsigned i=1;i<99;++i){
+#ifdef MPP_USB_NAM_CONTROLS
+  if((i>=27&&i<=34)||i==84)continue;
+#endif
   uint8_t value=preset[i];
   if(value!=previous[i]){previous[i]=value;mpp_listen_warm=1200;}
  }

@@ -1,0 +1,8 @@
+{
+  "file": "NAM-Plug-0.4.3-macOS.dmg",
+  "sha256": "8c1ca0e32cce01ba17330ed0a2bb57d201e0d61386e790fabd51ccd4a00e375a",
+  "bytes": 19227294,
+  "app_version": "0.4.3",
+  "signing": "ad-hoc; not notarized",
+  "installs_firmware": false
+}

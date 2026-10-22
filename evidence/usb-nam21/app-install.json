@@ -1,0 +1,11 @@
+{
+  "version": "0.4.3",
+  "build": "18",
+  "installed_to": "/Applications/NAM Plug.app",
+  "signature_verified": true,
+  "public_TONE3000_registration_bundled": true,
+  "existing_process_restarted": false,
+  "app_launched": false,
+  "device_access": false,
+  "audio_access": false
+}

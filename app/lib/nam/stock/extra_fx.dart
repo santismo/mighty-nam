@@ -19,7 +19,7 @@ bool supportsExtraFx(String? identity) => [
       'NAMLNK17',
       'NAMLNK18',
       'NAMLNK19',
-      'NAMLNK20'
+      'NAMLNK20', 'NAMLNK21'
     ].contains(identity);
 
 class FxValue extends ValueFormatter {

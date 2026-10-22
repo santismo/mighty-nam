@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mighty_plug_manager/nam/stock/nam_tone.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +32,8 @@ class BankFixture extends UsbFixture {
           'samples': bufferSamples,
           'sampleRate': 48000,
           'processingSamples': 8,
-          'global': ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity),
+          'global': ['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21']
+              .contains(identity),
           'storageError': 0
         },
         'presetBank': {
@@ -47,7 +49,7 @@ class BankFixture extends UsbFixture {
     receiver = SimulatedPlug();
     await TransferClient(receiver).upload(models[slot]!);
     preset.setAll(0, h.sublist(128));
-    if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity)) {
+    if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21'].contains(identity)) {
       bufferSamples = ByteData.sublistView(h).getUint32(24, Endian.little);
     }
     listening = true;
@@ -58,6 +60,27 @@ class BankFixture extends UsbFixture {
     if (c.method == 'exchangeFxFrame') {
       final q = (c.arguments as Map)['frame'] as Uint8List;
       var error = 0;
+      if (q[7] == 71) {
+        expectSync(identity, 'NAMLNK21');
+        if (q[9] == 1) {
+          final crc = List.generate(5, (i) => q[14 + i] << (7 * i))
+              .fold<int>(0, (a, b) => a | b);
+          expectSync(crc, crc32(receiver.activeSlot!));
+          expectSync(q[10], active == 255 ? 127 : active);
+          preset.setRange(27, 33, q.sublist(19, 25));
+          preset[33] = 78;
+          preset[34] = 1;
+        }
+        return Uint8List.fromList([
+          ...q.take(9),
+          q[9] | 64,
+          ...q.sublist(10, 13),
+          0,
+          active == 255 ? 127 : active,
+          ...readNamTone(preset),
+          247
+        ]);
+      }
       if (q[9] == 1) {
         final model = List.generate(5, (i) => q[14 + i] << (7 * i))
             .fold<int>(0, (a, b) => a | b);
@@ -122,8 +145,8 @@ class BankFixture extends UsbFixture {
         models[slot] = catalog
             .singleWhere((m) => m.checksum == crc32(receiver.activeSlot!));
         active = slot;
-        if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity))
-          listening = false;
+        if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21']
+            .contains(identity)) listening = false;
       }
     } else if (op == 3) {
       recalls++;
@@ -139,7 +162,7 @@ class BankFixture extends UsbFixture {
     reply[14] = active;
     reply[15] = headers.keys.fold<int>(0, (a, b) => a | (1 << b));
     if (headers.containsKey(slot)) reply.setRange(16, 272, headers[slot]!);
-    if (['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity) &&
+    if (['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21'].contains(identity) &&
         headers.containsKey(slot)) {
       w.setUint32(16 + 24, bufferSamples, Endian.little);
     }
@@ -232,8 +255,12 @@ void main() {
 
   Future<void> work(
       WidgetTester t, dynamic home, Future<void> Function() job) async {
-    final task = home.perform(job);
-    await t.pumpAndSettle();
+    var complete = false;
+    final task = home.perform(job).whenComplete(() => complete = true);
+    for (var i = 0; i < 100 && !complete; i++) {
+      await t.pump(const Duration(milliseconds: 100));
+    }
+    expect(complete, true, reason: home.status);
     await task;
     await t.pumpAndSettle();
   }
@@ -248,6 +275,46 @@ void main() {
     });
     expect(home.onboard.dirty[slot], false, reason: home.status);
   }
+
+  testWidgets('21 NAM sliders apply live, retain bypass and save/recall',
+      (t) async {
+    usb.identity = 'NAMLNK21';
+    final a = capture('NAM controls', 1);
+    usb.catalog.add(a);
+    usb.seed([a], selected: a);
+    final dynamic home = await start(t);
+    await save(t, home, 0, a, 'NAM controls');
+    final saves = usb.saves, muting = usb.listenCommands.length;
+    final slider = find.byKey(const ValueKey('nam-tone-0'));
+    expect(slider, findsOneWidget);
+    t.widget<Slider>(slider).onChanged!(54);
+    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
+    expect(readNamTone(usb.preset)[0], 54, reason: home.status);
+    expect(usb.saves, saves);
+    expect(usb.listenCommands.length, muting);
+    expect(usb.listening, true);
+    await work(t, home, () async {
+      await home.saveOnboard();
+    });
+    expect(readNamTone(usb.headers[0]!.sublist(128))[0], 54);
+    await work(t, home, () async {
+      await usb.button(0);
+      await home.inspect(1);
+    });
+    expect(home.rig.namTone[0], 54);
+    expect(find.byKey(const ValueKey('add-block')), findsOneWidget);
+    await t.ensureVisible(find.byKey(const ValueKey('toggle-nam')));
+    await t.tap(find.byKey(const ValueKey('toggle-nam')));
+    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
+    expect(find.byKey(const ValueKey('block-nam')), findsOneWidget);
+    expect(usb.preset[3] & 64, 64, reason: home.status);
+    expect(t.takeException(), isNull);
+    await t.pumpWidget(const SizedBox.shrink());
+    await t.pump();
+    debugDefaultTargetPlatformOverride = null;
+  });
 
   testWidgets('buffer resume rejects a concurrent capture change', (t) async {
     usb.identity = 'NAMLNK17';
@@ -266,7 +333,7 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
-  for (final identity in ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'])
+  for (final identity in ['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21'])
     for (final playing in [false, true]) {
       testWidgets(
           '$identity global buffer preserves playback=$playing; saving resumes playback',

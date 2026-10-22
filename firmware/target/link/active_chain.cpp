@@ -6,6 +6,9 @@
 #define LOW __attribute__((section(".driver_query"),noinline))
 extern "C" void mpp_tail_resume(unsigned);
 extern "C" void mpp_fx_graph_update(unsigned);
+#ifdef MPP_USB_NAM_CONTROLS
+extern "C" void mpp_nam_reset();
+#endif
 extern "C" void mpp_fx_graph_process(unsigned,float*,float*);
 namespace {
 mpp::graph::Plan plan;
@@ -46,6 +49,9 @@ BANK void mpp_active_dispatch(){
    unsigned mask=0;for(unsigned i=0;i<plan.count;++i)mask|=1u<<plan.nodes[i];
    for(unsigned id=7;id<=8;++id)if(valid&&(mask&(1u<<id))&&!(previous_mask&(1u<<id)))mpp_tail_resume(id);
    if((mask&(1u<<4))&&!(previous_mask&(1u<<4)))mpp_cut_eq_init();
+   #ifdef MPP_USB_NAM_CONTROLS
+   mpp_nam_reset();
+   #endif
    mpp_fx_graph_update(mask);previous_mask=mask;
    for(unsigned i=0;i<24;++i)previous[i]=key[i];
    valid=1;++mpp_graph_stats[1];

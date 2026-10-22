@@ -31,7 +31,9 @@ p.add_argument('--dma-current-prototype',action='store_true',help='OFFLINE ONLY:
 p.add_argument('--dma-deadline-prototype',action='store_true',help='OFFLINE ONLY: NAMDMP02 deadline guard and latched prior-block fallback; requires --dma-current-prototype')
 p.add_argument('--active-chain-prototype',action='store_true',help='OFFLINE ONLY: NAMACP01 compact active-node graph; independent of DMA trials')
 p.add_argument('--active-chain',action='store_true',help='NAMLNK20 active-only chain test release, retaining NAMLNK19 DMA scheduling')
+p.add_argument('--usb-nam-controls',action='store_true',help='NAMLNK21 USB duplex and NAM controls; requires active chain')
 a=p.parse_args()
+if a.usb_nam_controls and not a.active_chain:p.error('--usb-nam-controls requires --active-chain')
 if a.active_chain and (a.active_chain_prototype or not a.driver_timing or a.dma_current_prototype):p.error('--active-chain requires --driver-timing and excludes research DMA/graph identities')
 active_graph=a.active_chain or a.active_chain_prototype
 if a.active_chain_prototype and (not a.driver_timing or a.dma_current_prototype):p.error('--active-chain-prototype requires --driver-timing and cannot combine with DMA trials')
@@ -124,6 +126,9 @@ if active_graph:
  flags+=['-DMPP_ACTIVE_CHAIN_PROTOTYPE']
  if a.active_chain:flags+=['-DMPP_ACTIVE_CHAIN_RELEASE']
  sources+=['target/link/active_chain.cpp']
+if a.usb_nam_controls:
+ flags+=['-DMPP_USB_NAM_CONTROLS']
+ sources+=['target/link/nam_controls.cpp','target/link/nam_controls_runtime.cpp','target/link/usb_audio.cpp']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -133,6 +138,7 @@ for source in sources:
 elf=out/'nam-link-offline.elf';ld=root/('target/link/presets.ld' if a.preset_bank else ('target/link/listening.ld' if a.listening else 'target/link/link_firmware.ld'))
 if a.fx_blocks:ld=root/'target/link/fx_blocks.ld'
 if a.driver_timing:ld=root/'target/link/driver_timing.ld'
+if a.usb_nam_controls:ld=root/'target/link/usb_nam.ld'
 subprocess.run([str(Path(ziglang.__path__[0])/'zig'),'cc','-target','thumb-freestanding-eabihf','-mcpu=cortex_m7',
  '-nostdlib','-Wl,--gc-sections','-Wl,--build-id=none','-Wl,-e,mpp_stock_amp_init','-Wl,-T,'+str(ld),
  *(['-Wl,-u,mpp_fast_dispatch'] if a.fast_bypass and not active_graph else []),
@@ -221,5 +227,7 @@ if active_graph:
   physical_performance_gain_verified=False)
 if a.active_chain:
  report.update(identity='NAMLNK20',status='EXPERIMENTAL_ACTIVE_CHAIN_TEST_BUILD',requires_offline_image_opt_in=False,active_chain=True,stock_bypass_tail_policy='Removed nodes have no callbacks; delay/reverb reset on re-add; no spillover',bypass='Compact active-only dispatcher',driver_status_pages=[118,123])
+if a.usb_nam_controls:
+ report.update(identity='NAMLNK21',status='EXPERIMENTAL_USB_NAM_CONTROL_TEST_BUILD',copied_code_source='0x303a6000',copied_code_destination='0x2030f000',usb_audio='Stock 48 kHz stereo duplex PCM; wet recording without host loopback',nam_controls='Input/output +/-24 dB; three parallel tone bands +/-12 dB; dry/wet 0..100%',physical_usb_audio_verified=False,physical_NAM_controls_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

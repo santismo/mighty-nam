@@ -1,0 +1,18 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK21",
+  "elf_sha256": "0dbdb32121d67b4ddcff8a8b7fa244608ebe80e38e4c686f78b3609035d12bff",
+  "compiled_callback_blocks": 1652,
+  "neutral_NAM_reference_peak_error": 0.0,
+  "stereo_USB_PCM_ring_roundtrip": true,
+  "class_mutes_verified": true,
+  "wet_record_excludes_host_return": true,
+  "NAM_controls_both_transports": true,
+  "seven_presets_cold_warm_button": true,
+  "removed_NAM_no_callback": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "limitations": [
+    "USB enumeration/endpoint completion/frame counter modeled",
+    "Real-time physical deadlines and Logic duplex pending installation"
+  ]
+}

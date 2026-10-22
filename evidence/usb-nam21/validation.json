@@ -1,0 +1,49 @@
+{
+  "status": "PASS_OFFLINE_AND_SIMULATED_CONTROLLERS",
+  "firmware": "NAMLNK21",
+  "elf_sha256": "0dbdb32121d67b4ddcff8a8b7fa244608ebe80e38e4c686f78b3609035d12bff",
+  "firmware_sha256": "f815628c96aca85221931089ff738c1100e01b7344b557219aafda9e430a0763",
+  "mac": "0.4.3+18",
+  "phone": "0.7.3",
+  "tests": {
+    "flutter_pass": 94,
+    "flutter_optional_skipped": 1,
+    "phone_node_pass": 112,
+    "native_stock_cases": 1689,
+    "native_tuner_cases": 921,
+    "native_FX_cases": 85,
+    "native_NAM_wire": "passed",
+    "CoreMIDI_packet_cases": 9,
+    "host_DSP_ASan_UBSan": "passed",
+    "ARM_compiled_callbacks": 1652
+  },
+  "browser_simulation": [
+    "NAM input gain and mix apply live without save/mute",
+    "capture loads and stays open marked active",
+    "bypass retains tile",
+    "change block keeps position and bypass state",
+    "Remove hides only the selected tile"
+  ],
+  "default_capture": {
+    "tone_id": 88775,
+    "title": "Fender Super Reverb 1965 - Edge of Breakup - A2",
+    "component": "A2 Lite",
+    "source": "https://www.tone3000.com/tones/fender-super-reverb-1965-edge-of-breakup-a2-88775",
+    "slot_crc32": 1854512385,
+    "redistributed": false
+  },
+  "physical_device_commands_sent": false,
+  "host_audio_stream_opened": false,
+  "firmware_flashed": false,
+  "system_or_Teams_audio_modified": false,
+  "limits": [
+    "Logic duplex and real-time hardware timing pending installation",
+    "Visible bypassed tile membership is local to each controller; audio state and parameters save on plug",
+    "Official OAuth picker returns to capture details; detail view stays open after load"
+  ],
+  "static_analysis": {
+    "errors": 0,
+    "warnings": 0,
+    "style_infos": 6
+  }
+}

@@ -9,7 +9,7 @@ import 'package:mighty_plug_manager/nam/model_library.dart';
 import 'package:mighty_plug_manager/nam/stock/rig.dart';
 import 'package:mighty_plug_manager/nam/stock/catalog.dart';
 import 'package:nam_link/nam_link.dart';
-import 'tone_browser_test.dart' show CatalogFixture;
+import 'tone_browser_test.dart' show CatalogFixture, mockOfficialPicker;
 
 void main() {
   String? library, clipboard;
@@ -20,6 +20,7 @@ void main() {
   Map? lastControls;
   var receiver = SimulatedPlug();
   setUp(() {
+    mockOfficialPicker();
     library = null;
     link = fault = chainFirmware = listening = false;
     modelMismatch = false;
@@ -260,6 +261,9 @@ void main() {
       await t.pump();
       await t.tap(find.byKey(const ValueKey('load-model-5')));
       await t.pumpAndSettle();
+      expect(find.byTooltip('Close tone browser'), findsOneWidget);
+      await t.tap(find.byTooltip('Close tone browser'));
+      await t.pumpAndSettle();
       final selected = HybridRig.parse(jsonDecode(library!)['active']);
       expect(selected.blocks.singleWhere((b) => b.slot == 'cab').enabled,
           gear == 'amp');
@@ -315,14 +319,24 @@ void main() {
     expect(find.textContaining('Sign-in is waiting'), findsNothing);
     await t.ensureVisible(find.text('Open TONE3000'));
     await t.pumpAndSettle();
+    Uri? opened;
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(const MethodChannel('flutter_web_auth_2'),
+            (call) async {
+      if (call.method != 'authenticate') return null;
+      opened = Uri.parse((call.arguments as Map)['url']);
+      return 'mighty-nam://oauth/callback?state=${opened!.queryParameters['state']}&canceled=true';
+    });
     await t.tap(find.text('Open TONE3000'));
-    // The parent shows a busy indicator until its modal browser closes.
+    // The first click opens the official catalog, without an intermediary dialog.
     await t.pump();
     await t.pump(const Duration(seconds: 1));
     expect(calls, contains('loadToneSession'));
-    expect(find.text('Sign in to TONE3000'), findsOneWidget);
+    expect(opened!.queryParameters['client_id'], 't3k_pub_bundled_test');
+    expect(opened!.queryParameters['prompt'], 'select_tone');
+    expect(find.text('Sign in to TONE3000'), findsNothing);
+    expect(find.byTooltip('Close tone browser'), findsNothing);
     expect(find.textContaining('not enabled in this build'), findsNothing);
-    await t.tap(find.byTooltip('Close tone browser'));
     await t.pumpAndSettle();
     await t.ensureVisible(find.text('Add silent test fixture'));
     await t.pumpAndSettle();
@@ -725,6 +739,9 @@ void main() {
     await t.pump();
     await t.pump(const Duration(seconds: 1));
     await t.tap(find.text('Test Lite capture'));
+    await t.pumpAndSettle();
+    expect(find.byTooltip('Close tone browser'), findsOneWidget);
+    await t.tap(find.byTooltip('Close tone browser'));
     await t.pumpAndSettle();
     expect(
         find.descendant(

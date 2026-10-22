@@ -72,7 +72,7 @@ import Foundation
         check(NamLinkWire.supportsModels("NAMLNK11"))
         check(NamLinkWire.supportsModels("NAMLNK12"))
         check(NamLinkWire.supportsModels("NAMLNK13"))
-        check(!NamLinkWire.supportsModels("NAMLNK21"))
+        check(!NamLinkWire.supportsModels("NAMLNK22"))
         check(!NamLinkWire.supportsStockChain("NAMLNK01"))
         check(NamLinkWire.supportsStockChain("NAMLNK03"))
         check(NamLinkWire.supportsModels("NAMLNK04"))
@@ -97,7 +97,7 @@ import Foundation
             check(bypass.allowed(on:"NAMLNK12"))
             check(bypass.allowed(on:"NAMLNK13"))
             check(bypass.allowed(on:"NAMLNK20"))
-            check(!bypass.allowed(on:"NAMLNK21"))
+            check(!bypass.allowed(on:"NAMLNK22"))
             check(!bypass.allowed(on:"NAMA2I01"))
             var before=preset;before[3]=21
             let messages=bypass.messages(before:before)!
@@ -113,7 +113,7 @@ import Foundation
             var bad=frame;bad[index]=128
             check(NamStockWire.preset(bad) == nil)
         }
-        for identity in ["NAMLNK01","NAMLNK06","NAMLNK21","PLUGPRO"] {
+        for identity in ["NAMLNK01","NAMLNK06","NAMLNK22","PLUGPRO"] {
             check(NamListening.arm(identity:identity,enabled:true) == nil)
             check(NamListening.arm(identity:identity,enabled:false) == nil)
         }
@@ -132,7 +132,7 @@ import Foundation
             let word = (UInt32(48000)<<16) | (1<<8) | UInt32(samples)
             check((NamOutputBuffer.decode(word) != nil) == allowed)
         }
-        for identity in ["NAMLNK08","NAMLNK21","PLUGPRO",""] {
+        for identity in ["NAMLNK08","NAMLNK22","PLUGPRO",""] {
             check(NamOutputBuffer.command(identity:identity,samples:8) == nil)
         }
         for word: UInt32 in [0,8,0xffffffff,(44100<<16)|(1<<8)|8,(48000<<16)|(3<<8)|8] {

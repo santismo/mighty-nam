@@ -49,9 +49,12 @@ class RigEditor extends StatefulWidget {
 
 class _RigEditorState extends State<RigEditor> {
   String selected = 'nam';
-  bool get compact => widget.firmwareIdentity == 'NAMLNK20';
+  bool get compact =>
+      ['NAMLNK20', 'NAMLNK21'].contains(widget.firmwareIdentity);
   Future<void> addBlock() async {
-    final available = widget.rig.blocks.where((b) => !b.enabled).toList();
+    final available = widget.rig.blocks
+        .where((b) => !widget.rig.visibleBlocks(activeOnly: true).contains(b))
+        .toList();
     final slot = await showDialog<String>(
         context: context,
         builder: (context) => AlertDialog(
@@ -75,6 +78,41 @@ class _RigEditorState extends State<RigEditor> {
       change(() {
         final block = widget.rig.blocks.singleWhere((b) => b.slot == slot);
         widget.rig.addBlock(block);
+        selected = slot;
+      });
+    }
+  }
+
+  Future<void> changeBlock(RigBlock before) async {
+    final present = widget.rig.visibleBlocks(activeOnly: true);
+    final available =
+        widget.rig.blocks.where((b) => !present.contains(b)).toList();
+    final slot = await showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+                title: const Text('Change block'),
+                content: SizedBox(
+                    width: 360,
+                    height: 340,
+                    child: ListView(children: [
+                      for (final b in available)
+                        ListTile(
+                            key: ValueKey('replace-${b.slot}'),
+                            title: Text(b.name),
+                            onTap: () => Navigator.pop(context, b.slot)),
+                      if (available.isEmpty)
+                        const Text(
+                            'All available block types are already in this chain.')
+                    ])),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Close'))
+                ]));
+    if (mounted && slot != null) {
+      change(() {
+        widget.rig.replaceBlock(
+            before, widget.rig.blocks.singleWhere((b) => b.slot == slot));
         selected = slot;
       });
     }
@@ -174,11 +212,9 @@ class _RigEditorState extends State<RigEditor> {
                                           IconButton(
                                               key: ValueKey(
                                                   'toggle-${item.slot}'),
-                                              tooltip: compact
-                                                  ? 'Remove ${item.name}'
-                                                  : item.enabled
-                                                      ? 'Turn off ${item.name}'
-                                                      : 'Turn on ${item.name}',
+                                              tooltip: item.enabled
+                                                  ? 'Turn off ${item.name}'
+                                                  : 'Turn on ${item.name}',
                                               padding: EdgeInsets.zero,
                                               constraints: const BoxConstraints(
                                                   minWidth: 30, minHeight: 30),
@@ -186,8 +222,8 @@ class _RigEditorState extends State<RigEditor> {
                                                   VisualDensity.compact,
                                               onPressed: () => change(() {
                                                     selected = item.slot;
-                                                    item.enabled =
-                                                        !item.enabled;
+                                                    widget.rig.bypassBlock(
+                                                        item, !item.enabled);
                                                   }),
                                               icon: Icon(rigIcons[item.slot],
                                                   size: 21,
@@ -238,7 +274,7 @@ class _RigEditorState extends State<RigEditor> {
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
               compact
-                  ? '${visible.length} active blocks · click a symbol to remove, select to edit, drag to reorder.'
+                  ? 'Click a symbol to bypass. Remove and Change block are below. Drag to reorder.'
                   : 'Click a symbol to turn an effect on or off. Select a block to edit. Drag to reorder.',
               style: const TextStyle(fontSize: 11, color: Colors.white38))),
       if (!compact || visible.isNotEmpty)
@@ -271,18 +307,24 @@ class _RigEditorState extends State<RigEditor> {
               if (compact)
                 TextButton.icon(
                     key: ValueKey('remove-${b.slot}'),
-                    onPressed: () => change(() => b.enabled = false),
+                    onPressed: () => change(() => widget.rig.removeBlock(b)),
                     icon: const Icon(Icons.remove_circle_outline),
-                    label: const Text('Remove'))
-              else
-                Tooltip(
-                    message:
-                        b.enabled ? 'Bypass ${b.name}' : 'Enable ${b.name}',
-                    child: Switch(
-                        key: ValueKey('bypass-${b.slot}'),
-                        value: b.enabled,
-                        onChanged: (v) => change(() => b.enabled = v))),
+                    label: const Text('Remove')),
+              Tooltip(
+                  message: b.enabled ? 'Bypass ${b.name}' : 'Enable ${b.name}',
+                  child: Switch(
+                      key: ValueKey('bypass-${b.slot}'),
+                      value: b.enabled,
+                      onChanged: (v) =>
+                          change(() => widget.rig.bypassBlock(b, v)))),
             ]),
+            if (compact)
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                      key: ValueKey('change-block-${b.slot}'),
+                      onPressed: () => changeBlock(b),
+                      child: const Text('Change block'))),
             const SizedBox(height: 22),
             if (b.slot == 'nam')
               widget.namControls

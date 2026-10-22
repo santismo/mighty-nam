@@ -10,7 +10,7 @@ import 'package:mighty_plug_manager/nam/model_library.dart';
 import 'package:mighty_plug_manager/nam/stock/rig.dart';
 import 'package:mighty_plug_manager/nam/stock/control_plan.dart';
 import 'package:nam_link/nam_link.dart';
-import 'tone_browser_test.dart' show CatalogFixture;
+import 'tone_browser_test.dart' show CatalogFixture, mockOfficialPicker;
 
 LiteModel capture(String name, double scale) {
   final record = LiteModel.fixture().toRecord(),
@@ -163,6 +163,7 @@ class UsbFixture {
 void main() {
   late UsbFixture usb;
   setUp(() {
+    mockOfficialPicker();
     debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
     usb = UsbFixture();
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -253,6 +254,9 @@ void main() {
     await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
     await t.pump();
     await t.tap(find.byKey(const ValueKey('load-model-5')));
+    await t.pumpAndSettle();
+    expect(find.byTooltip('Close tone browser'), findsOneWidget);
+    await t.tap(find.byTooltip('Close tone browser'));
     await t.pumpAndSettle();
     final saved = HybridRig.parse(jsonDecode(usb.library!)['active']);
     expect(saved.modelSha256, LiteModel.fixture().sha256Hex);

@@ -16,6 +16,7 @@ import 'rig_editor.dart';
 import 'model_library.dart';
 import 'onboard_presets.dart';
 import 'fx_client.dart';
+import 'nam_tone_client.dart';
 import 'stock/extra_fx.dart';
 import 'tuner.dart';
 import 'tuner_dialog.dart';
@@ -93,7 +94,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK17',
         'NAMLNK18',
         'NAMLNK19',
-        'NAMLNK20'
+        'NAMLNK20',
+        'NAMLNK21'
       ].contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   bool get hasExtraFx => supportsExtraFx(hardware?['identity'] as String?);
@@ -115,6 +117,7 @@ class _NamHomeState extends State<NamHome> {
   int? selectedSource;
   double? transferProgress;
   bool busy = false, favoritesOnly = false, restoring = true;
+  bool browsingCaptures = false;
   String search = '';
   String toneClientId = '', toneClientIdDraft = '';
   String status = 'Ready. Connect your plug by USB in normal mode.';
@@ -149,7 +152,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK17',
         'NAMLNK18',
         'NAMLNK19',
-        'NAMLNK20'
+        'NAMLNK20',
+        'NAMLNK21'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -172,7 +176,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK17',
         'NAMLNK18',
         'NAMLNK19',
-        'NAMLNK20'
+        'NAMLNK20',
+        'NAMLNK21'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -190,7 +195,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK17',
         'NAMLNK18',
         'NAMLNK19',
-        'NAMLNK20'
+        'NAMLNK20',
+        'NAMLNK21'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -470,7 +476,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK17',
             'NAMLNK18',
             'NAMLNK19',
-            'NAMLNK20'
+            'NAMLNK20',
+            'NAMLNK21'
           ].contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
@@ -486,7 +493,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK17',
             'NAMLNK18',
             'NAMLNK19',
-            'NAMLNK20'
+            'NAMLNK20',
+            'NAMLNK21'
           ].contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
@@ -590,23 +598,32 @@ class _NamHomeState extends State<NamHome> {
             FractionallySizedBox(heightFactor: .94, child: builder(ctx)));
   }
 
-  Future<void> openToneBrowser() async {
+  Future<void> openToneBrowser({int? initialToneId}) async {
     if (toneConfigured) await toneClient();
     if (!mounted) return;
-    final next = await captureDialog((ctx) => ToneBrowser(
-        client: api,
-        signIn: signInTone,
-        loadToPlug: canTransfer,
-        activeCaptureName: model?.metadata['name']?.toString(),
-        officialPicker: () async {
-          final capture = await officialBrowse();
-          if (ctx.mounted && capture != null) Navigator.pop(ctx, capture);
-        }));
-    if (next != null && mounted) await selectCapture(next);
-    if (mounted) setState(() {});
+    setState(() => browsingCaptures = true);
+    try {
+      final next = await captureDialog((ctx) => ToneBrowser(
+          client: api,
+          initialToneId: initialToneId,
+          signIn: signInTone,
+          loadToPlug: canTransfer,
+          onSelect: selectCapture,
+          activeCaptureName: model?.metadata['name']?.toString(),
+          officialPicker: pickOfficialTone));
+      if (next != null && mounted) await selectCapture(next);
+      if (mounted) setState(() {});
+    } finally {
+      if (mounted) setState(() => browsingCaptures = false);
+    }
   }
 
-  Future<LiteModel?> officialBrowse() async {
+  Future<void> exploreToneBrowser() async {
+    final id = await pickOfficialTone();
+    if (mounted && id != null) await openToneBrowser(initialToneId: id);
+  }
+
+  Future<int?> pickOfficialTone() async {
     final client = await toneClient();
     final redirect = kIsWeb
         ? Uri.base.resolve('auth.html')
@@ -614,16 +631,7 @@ class _NamHomeState extends State<NamHome> {
     final flow = client.select(redirect);
     final callback = await FlutterWebAuth2.authenticate(
         url: '${flow.url}', callbackUrlScheme: 'mighty-nam');
-    final id = await client.complete(flow, Uri.parse(callback));
-    if (id == null || !mounted) return null;
-    // Enter the same in-app detail view after the official picker has selected a tone.
-    return captureDialog((ctx) => ToneBrowser(
-        client: client,
-        initialToneId: id,
-        signIn: signInTone,
-        loadToPlug: canTransfer,
-        activeCaptureName: model?.metadata['name']?.toString(),
-        officialPicker: () async {}));
+    return client.complete(flow, Uri.parse(callback));
   }
 
   Future<void> importFile() async {
@@ -708,6 +716,20 @@ class _NamHomeState extends State<NamHome> {
       }
     } else if (chain.blocks.any((b) => b.extra && b.enabled)) {
       throw StateError('FX A/B require NAMLNK13 or newer.');
+    }
+    if (before['identity'] == 'NAMLNK21') {
+      final client =
+          NamToneClient((frame) => device.exchangeFxFrame(source, frame));
+      final current = await client.read();
+      if (current.join(',') != chain.namTone.join(',')) {
+        await client.write(
+            chain.namTone,
+            (before['presetBank'] as Map)['active'] as int,
+            beforeWords[5] as int);
+      }
+      if ((await client.read()).join(',') != chain.namTone.join(',')) {
+        throw StateError('NAM controls did not match the plug.');
+      }
     }
     await Future<void>.delayed(const Duration(milliseconds: 250));
     final after = await device.inspect(source);
@@ -810,6 +832,40 @@ class _NamHomeState extends State<NamHome> {
         : '${value ?? 'Local capture'}';
   }
 
+  Widget get namToneControls => Column(children: [
+        for (var i = 0; i < 6; i++)
+          Column(children: [
+            Row(children: [
+              Expanded(
+                  child: Text([
+                'Input gain',
+                'Bass',
+                'Middle',
+                'Treble',
+                'Mix',
+                'Output gain'
+              ][i])),
+              Text(i == 4
+                  ? '${rig.namTone[i]} %'
+                  : '${([
+                      0,
+                      5
+                    ].contains(i) ? (rig.namTone[i] - 48) / 2 : rig.namTone[i] - 12).toStringAsFixed(1)} dB')
+            ]),
+            Slider(
+                key: ValueKey('nam-tone-$i'),
+                value: rig.namTone[i].toDouble(),
+                min: 0,
+                max: [96, 24, 24, 24, 100, 96][i].toDouble(),
+                divisions: [96, 24, 24, 24, 100, 96][i],
+                onChanged: busy
+                    ? null
+                    : (v) {
+                        setState(() => rig.namTone[i] = v.round());
+                        edited();
+                      })
+          ])
+      ]);
   Widget get namControls =>
       Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Row(children: [
@@ -857,10 +913,11 @@ class _NamHomeState extends State<NamHome> {
                         : Icons.star_border,
                     color: mint))
         ]),
+        if (hardware?['identity'] == 'NAMLNK21') namToneControls,
         const SizedBox(height: 18),
         Wrap(spacing: 10, runSpacing: 10, children: [
           FilledButton.icon(
-              onPressed: busy ? null : () => perform(openToneBrowser),
+              onPressed: busy ? null : () => perform(exploreToneBrowser),
               icon: const Icon(Icons.travel_explore),
               label: const Text('Explore TONE3000')),
           OutlinedButton.icon(
@@ -1245,7 +1302,7 @@ class _NamHomeState extends State<NamHome> {
       const SizedBox(height: 20),
       Wrap(spacing: 10, runSpacing: 10, children: [
         FilledButton.icon(
-            onPressed: busy ? null : () => perform(openToneBrowser),
+            onPressed: busy ? null : () => perform(exploreToneBrowser),
             icon: const Icon(Icons.travel_explore),
             label: const Text('Explore TONE3000')),
         OutlinedButton.icon(
@@ -1445,7 +1502,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK17',
             'NAMLNK18',
             'NAMLNK19',
-            'NAMLNK20'
+            'NAMLNK20',
+            'NAMLNK21'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1582,7 +1640,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK17',
           'NAMLNK18',
           'NAMLNK19',
-          'NAMLNK20'
+          'NAMLNK20',
+          'NAMLNK21'
         ].contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 or newer to adjust output buffering.');
@@ -1601,7 +1660,8 @@ class _NamHomeState extends State<NamHome> {
     if (!mounted) return;
     setState(() {
       hardware = result;
-      status = ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(result['identity'])
+      status = ['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21']
+              .contains(result['identity'])
           ? '$samples samples saved globally for all seven colors, including after power-off.'
           : 'Output buffer set to $samples samples. NAMLNK18 makes this global across colors.';
     });
@@ -1620,7 +1680,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK17',
           'NAMLNK18',
           'NAMLNK19',
-          'NAMLNK20'
+          'NAMLNK20',
+          'NAMLNK21'
         ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;
@@ -1647,7 +1708,7 @@ class _NamHomeState extends State<NamHome> {
       ),
       const SizedBox(height: 10),
       Text(adjustable
-          ? (['NAMLNK18', 'NAMLNK19', 'NAMLNK20']
+          ? (['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21']
                   .contains(hardware?['identity']))
               ? 'Global setting. Saved automatically for every color and after power-off. Playback resumes if it was on.'
               : 'Confirmed on plug. Install NAMLNK18 for one saved buffer setting across all colors.'
@@ -1869,7 +1930,7 @@ class _NamHomeState extends State<NamHome> {
               'Sign in to browse tones, your favorites and downloads. This Mac remembers your session securely in Keychain.'),
           const SizedBox(height: 12),
           FilledButton.icon(
-              onPressed: busy ? null : () => perform(openToneBrowser),
+              onPressed: busy ? null : () => perform(exploreToneBrowser),
               icon: const Icon(Icons.library_music_outlined),
               label: const Text('Open TONE3000')),
           if (!toneConfigured)
@@ -1950,7 +2011,8 @@ class _NamHomeState extends State<NamHome> {
                             ? devicePage
                             : updates,
                 const SizedBox(height: 22),
-                if (busy || restoring) const LinearProgressIndicator(),
+                if ((busy && !browsingCaptures) || restoring)
+                  const LinearProgressIndicator(),
                 const SizedBox(height: 8),
                 Text(status,
                     key: const ValueKey('status'),

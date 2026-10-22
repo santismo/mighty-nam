@@ -1,5 +1,6 @@
 import 'rig.dart';
 import 'extra_fx.dart';
+import 'nam_tone.dart';
 
 /// RAM-only V1.5.6 settings. The silent NAMLNK01 audio hook runs NAM alone;
 /// the stock settings and order can be verified independently of stock DSP.
@@ -40,7 +41,8 @@ class StockControlPlan {
                     'NAMLNK17',
                     'NAMLNK18',
                     'NAMLNK19',
-                    'NAMLNK20'
+                    'NAMLNK20',
+                    'NAMLNK21'
                   ].contains(identity)
               ? 4
               : supportedTypes[slot]!;
@@ -70,6 +72,8 @@ class StockControlPlan {
         identity:
             identity); // Validate the complete response before changing UI state.
     final next = HybridRig.parse(previous.encode())..masterVolume = preset[84];
+    next.namTone =
+        identity == 'NAMLNK21' ? readNamTone(preset) : neutralNamTone();
     for (final block in next.blocks.where((b) => !b.extra)) {
       final id = stages[block.slot]!;
       block.enabled = (preset[id] & 64) == 0;

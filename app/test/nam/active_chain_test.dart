@@ -33,44 +33,69 @@ void main() {
     expect(restored.blocks.length, 11);
     expect(restored.fxConfig(), encoded.fxConfig());
   });
-  testWidgets(
-      '20 shows two nodes, removes either, adds with retained settings, and handles empty',
-      (t) async {
-    await t.binding.setSurfaceSize(const Size(1100, 1000));
-    addTearDown(() => t.binding.setSurfaceSize(null));
+  for (final identity in ['NAMLNK20', 'NAMLNK21'])
+    testWidgets(
+        '$identity shows two nodes, removes either, adds with retained settings, and handles empty',
+        (t) async {
+      await t.binding.setSurfaceSize(const Size(1100, 1000));
+      addTearDown(() => t.binding.setSurfaceSize(null));
+      final rig = HybridRig.initial();
+      for (final b in rig.blocks) {
+        b.enabled = ['nam', 'reverb'].contains(b.slot);
+      }
+      var changes = 0;
+      await t.pumpWidget(MaterialApp(
+          home: Scaffold(
+              body: SingleChildScrollView(
+                  child: RigEditor(
+                      rig: rig,
+                      firmwareIdentity: identity,
+                      namControls: const Text('Capture controls'),
+                      onChanged: () => changes++)))));
+      expect(find.byKey(const ValueKey('block-nam')), findsOneWidget);
+      expect(find.byKey(const ValueKey('block-reverb')), findsOneWidget);
+      expect(find.byKey(const ValueKey('block-drive')), findsNothing);
+      await t.tap(find.byKey(const ValueKey('remove-nam')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('block-nam')), findsNothing);
+      await t.tap(find.byKey(const ValueKey('toggle-reverb')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('block-reverb')), findsOneWidget);
+      expect(rig.blocks.singleWhere((b) => b.slot == 'reverb').enabled, false);
+      await t.tap(find.byKey(const ValueKey('remove-reverb')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('selected-controls')), findsNothing);
+      for (final slot in ['nam', 'reverb', 'fxa', 'fxb']) {
+        await t.tap(find.byKey(const ValueKey('add-block')));
+        await t.pumpAndSettle();
+        await t.scrollUntilVisible(find.byKey(ValueKey('add-$slot')), 100,
+            scrollable: find.byType(Scrollable).last);
+        await t.tap(find.byKey(ValueKey('add-$slot')));
+        await t.pumpAndSettle();
+        expect(find.byKey(ValueKey('block-$slot')), findsOneWidget);
+      }
+      expect(changes, 7);
+      expect(rig.visibleBlocks(activeOnly: true).length, 4);
+      expect(t.takeException(), isNull);
+    });
+  test(
+      'bypass presence survives local save; replace keeps position and settings',
+      () {
     final rig = HybridRig.initial();
-    for (final b in rig.blocks) {
-      b.enabled = ['nam', 'reverb'].contains(b.slot);
-    }
-    var changes = 0;
-    await t.pumpWidget(MaterialApp(
-        home: Scaffold(
-            body: SingleChildScrollView(
-                child: RigEditor(
-                    rig: rig,
-                    firmwareIdentity: 'NAMLNK20',
-                    namControls: const Text('Capture controls'),
-                    onChanged: () => changes++)))));
-    expect(find.byKey(const ValueKey('block-nam')), findsOneWidget);
-    expect(find.byKey(const ValueKey('block-reverb')), findsOneWidget);
-    expect(find.byKey(const ValueKey('block-drive')), findsNothing);
-    await t.tap(find.byKey(const ValueKey('remove-nam')));
-    await t.pumpAndSettle();
-    expect(find.byKey(const ValueKey('block-nam')), findsNothing);
-    await t.tap(find.byKey(const ValueKey('toggle-reverb')));
-    await t.pumpAndSettle();
-    expect(find.byKey(const ValueKey('selected-controls')), findsNothing);
-    for (final slot in ['nam', 'reverb', 'fxa', 'fxb']) {
-      await t.tap(find.byKey(const ValueKey('add-block')));
-      await t.pumpAndSettle();
-      await t.scrollUntilVisible(find.byKey(ValueKey('add-$slot')), 100,
-          scrollable: find.byType(Scrollable).last);
-      await t.tap(find.byKey(ValueKey('add-$slot')));
-      await t.pumpAndSettle();
-      expect(find.byKey(ValueKey('block-$slot')), findsOneWidget);
-    }
-    expect(changes, 6);
-    expect(rig.visibleBlocks(activeOnly: true).length, 4);
-    expect(t.takeException(), isNull);
+    final nam = rig.blocks.singleWhere((b) => b.slot == 'nam');
+    final drive = rig.blocks.singleWhere((b) => b.slot == 'drive');
+    final position = rig.blocks.indexOf(nam);
+    rig.bypassBlock(nam, false);
+    final copy = HybridRig.parse(rig.encode());
+    expect(copy.visibleBlocks(activeOnly: true).map((b) => b.slot),
+        contains('nam'));
+    expect(copy.blocks.singleWhere((b) => b.slot == 'nam').enabled, false);
+    rig.replaceBlock(nam, drive);
+    expect(rig.blocks.indexOf(drive), position);
+    expect(rig.visibleBlocks(activeOnly: true), contains(drive));
+    expect(rig.visibleBlocks(activeOnly: true), isNot(contains(nam)));
+    expect(drive.enabled, false);
+    rig.removeBlock(drive);
+    expect(rig.visibleBlocks(activeOnly: true), isNot(contains(drive)));
   });
 }

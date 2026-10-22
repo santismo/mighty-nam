@@ -22,7 +22,8 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
-| NAMLNK20 / Mac 0.4.0 / phone 0.7.0 | Prepared for physical testing: active-only graph with Add/Remove controls and an improved Mac TONE3000 browser. Not installed. [Trial and limits](docs/active-chain-trial.md). |
+| NAMLNK21 / Mac 0.4.3 / phone 0.7.3 | Firmware staged, not installed: USB PCM routing restored and six NAM gain/tone/mix controls added. Controllers retain bypassed blocks, separate Remove/Change block, and keep capture details open after loading. Physical Logic audio and hardware timing are pending. [Build and validation](docs/usb-audio-nam-controls.md). |
+| NAMLNK20 / Mac 0.4.1 / phone 0.7.1 | Installed on the development plug; seven Fender presets saved/verified and output left on. USB audio callback omission identified. [Playback baseline](docs/playback-volume.md). |
 | NAMLNK19 / Mac 0.3.11 / phone 0.6.6 | Delay/reverb bypass sleep and explicit one-shot driver timing. Installed; seven restored presets and global 8-sample setting survived restart. Seven chain states, 84 driver snapshots and bypass/wake checks passed without reported faults. Playback left enabled; analog latency not measured. See [test build and limits](docs/bypass-driver-timing-trial.md). |
 | Driver research after NAMLNK19 | Recorded-phase screen identifies later DMA fetch plus current-block output as a possible 0.167 ms reduction. Exact ARM tests confirm 16/32 add only 0.167/0.500 ms over 8. No new firmware or device commands. See [findings and limits](docs/driver-phase-investigation.md). |
 | NAMACP01 offline active-chain experiment | Cached list of active effects; NAM + reverb runs two effect processors. Separate from DMA changes; no app/controller release or updater file. See [active-only routing](docs/active-chain-prototype.md). |
