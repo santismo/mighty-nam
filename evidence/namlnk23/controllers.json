@@ -1,0 +1,18 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK23_CONTROLLER_COMPATIBILITY",
+  "phone_tests_passed": 123,
+  "phone_tests_skipped": 0,
+  "mac_tests_passed": 106,
+  "mac_optional_tests_skipped": 2,
+  "native_stock_wire_checks": 1715,
+  "native_FX_wire_checks": 85,
+  "native_NAM_wire": "PASS",
+  "native_transport_compiles": true,
+  "mac_analyzer_errors": 0,
+  "mac_analyzer_warnings": 0,
+  "mac_analyzer_style_info": 15,
+  "device_access": false,
+  "host_audio_access": false,
+  "installed_app_updated": false,
+  "public_phone_page_updated": false
+}

@@ -20,6 +20,8 @@ import 'nam_tone_client.dart';
 import 'stock/extra_fx.dart';
 import 'tuner.dart';
 import 'tuner_dialog.dart';
+import 'firmware_setup.dart';
+import 'starter_captures.dart';
 import 'plug_model_transport.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -87,6 +89,7 @@ class _NamHomeState extends State<NamHome> {
   final device = NamDevice();
   HybridRig rig = HybridRig.initial()..name = presetColorNames[0];
   ModelLibrary captures = ModelLibrary();
+  final starters = StarterCaptures();
   final saved = <String, String>{};
   OnboardPresets onboard = OnboardPresets();
   final plugPresets = <int, PresetSnapshot>{};
@@ -132,7 +135,6 @@ class _NamHomeState extends State<NamHome> {
   String search = '';
   String toneClientId = '', toneClientIdDraft = '';
   String status = 'Ready. Connect your plug by USB in normal mode.';
-  String? updateSummary;
   Future<void> saveWork = Future.value();
   Timer? connectionTimer, controlsTimer;
   Future<void> backgroundWork = Future.value();
@@ -1040,6 +1042,8 @@ class _NamHomeState extends State<NamHome> {
       // connection retries the whole bank rather than leaving a partial cache.
       for (var i = 0; i < 7; i++) {
         final snapshot = snapshots[i];
+        if (snapshot.occupied)
+          await starters.recognize(captures, snapshot.modelSha);
         plugPresets[i] = snapshot;
         onboard.generations[i] = snapshot.generation;
         if (!onboard.dirty[i]) {
@@ -1050,6 +1054,8 @@ class _NamHomeState extends State<NamHome> {
     }
     if (active < 7 && (first || observedPreset != active)) {
       final snapshot = await readPresetWithFx(active);
+      if (snapshot.occupied)
+        await starters.recognize(captures, snapshot.modelSha);
       plugPresets[active] = snapshot;
       onboard.selected = active;
       if (!onboard.dirty[active]) {
@@ -1950,75 +1956,36 @@ class _NamHomeState extends State<NamHome> {
     ]);
   }
 
-  Future<void> checkUpdate() async {
-    final file = await openFile(acceptedTypeGroups: const [
-      XTypeGroup(
-          label: 'mighty-nam release manifest',
-          extensions: ['json'],
-          uniformTypeIdentifiers: ['public.json'])
-    ]);
-    if (file == null) return;
-    if (await file.length() > 32768) {
-      throw const FormatException('Manifest too large');
-    }
-    final j = jsonDecode(await file.readAsString());
-    if (j is! Map ||
-        j['schema'] != 'nam-plug-release-1' ||
-        j['target'] != 'NUX-MP3' ||
-        j['firmware'] is! Map) {
-      throw const FormatException('Wrong target or release format');
-    }
-    final f = j['firmware'];
-    if (f['sha256'] is! String ||
-        !RegExp(r'^[a-f0-9]{64}$').hasMatch(f['sha256']) ||
-        f['identity'] is! String ||
-        f['bytes'] is! int) {
-      throw const FormatException('Incomplete firmware identity');
-    }
-    if (mounted) {
-      setState(() => updateSummary =
-          '${f['identity']} · ${f['bytes']} bytes\nManifest parsed. Binary verification and installation take place in the Mac updater tool.');
+  Future<void> openSetupLink(String url) async {
+    if (!await launchUrl(Uri.parse(url),
+        mode: LaunchMode.externalApplication)) {
+      throw StateError(
+          'Could not open the page. Use Settings → Firmware setup in the user guide.');
     }
   }
 
   Widget get updates =>
       Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const Text('Firmware & workspace',
+        const Text('Settings',
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600)),
         const SizedBox(height: 16),
         latencySettings,
-        card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('Silent local check', style: TextStyle(fontSize: 20)),
-          const SizedBox(height: 8),
-          const Text(
-              'A synthetic zero-output fixture checks capture storage and favorites. It is not a guitar tone.'),
-          TextButton(
-              onPressed: busy
-                  ? null
-                  : () => perform(() async {
-                        await selectCapture(LiteModel.fixture());
-                      }),
-              child: const Text('Add silent test fixture')),
-        ])),
-        card(Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const Text('mighty-nam updater', style: TextStyle(fontSize: 21)),
-          const SizedBox(height: 8),
-          const Text(
-              'Review a release manifest here. The Mac companion verifies the image, target and restore file before handing installation to the tested NUX loader.'),
-          const SizedBox(height: 12),
-          OutlinedButton.icon(
-              onPressed: busy ? null : () => perform(checkUpdate),
-              icon: const Icon(Icons.fact_check_outlined),
-              label: const Text('Review release')),
-          if (updateSummary != null)
-            Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Text(updateSummary!)),
-          const SizedBox(height: 12),
-          const Text(
-              'Model transfer and firmware flashing are separate operations. This app does not flash the plug.',
-              style: TextStyle(fontSize: 12, color: Colors.white54))
-        ])),
+        if (kDebugMode)
+          card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Text('Silent local check', style: TextStyle(fontSize: 20)),
+            const SizedBox(height: 8),
+            const Text(
+                'A synthetic zero-output fixture checks capture storage and favorites. It is not a guitar tone.'),
+            TextButton(
+                onPressed: busy
+                    ? null
+                    : () => perform(() async {
+                          await selectCapture(LiteModel.fixture());
+                        }),
+                child: const Text('Add silent test fixture')),
+          ])),
+        card(FirmwareSetupCard(
+            busy: busy, onOpen: (url) => perform(() => openSetupLink(url)))),
         card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             const Text('Powered by', style: TextStyle(fontSize: 13)),

@@ -1,0 +1,61 @@
+{
+  "status": "PASS_NAMLNK10_STOCK_STORAGE_CONTRACT",
+  "elf_sha256": "55c60715a5e9b9042d6ae2693f583d88dda709fee1859cf1ad42bce8d867f7fb",
+  "stock_sha256": "e971240a1e333003804cfd154e5ee053026254bbf09b11499e8b4968d3600752",
+  "MPU_routine": "0x73e0",
+  "copied_code_region": 7,
+  "region": {
+    "base": 540016640,
+    "attributes": 50528293,
+    "bytes": 524288,
+    "executable": true,
+    "full_access": true
+  },
+  "stock_MPU_allows_code_execution": true,
+  "real_stock_wrapper_cases": [
+    {
+      "operation": "erase",
+      "address": "0x30384000",
+      "sequence": 1
+    },
+    {
+      "operation": "erase",
+      "address": "0x3039f000",
+      "sequence": 1
+    },
+    {
+      "operation": "program",
+      "address": "0x30384000",
+      "bytes": 256
+    },
+    {
+      "operation": "program",
+      "address": "0x30385ffc",
+      "bytes": 4
+    },
+    {
+      "operation": "program",
+      "address": "0x3039fffc",
+      "bytes": 4
+    },
+    {
+      "operation": "read",
+      "address": "0x30384000",
+      "bytes": 8192
+    },
+    {
+      "operation": "read",
+      "address": "0x3039e000",
+      "bytes": 8192
+    }
+  ],
+  "error_propagation_cases": 4,
+  "fallback_LUT_sector_opcode": "0x20",
+  "flash_controller_modeled": true,
+  "device_access": false,
+  "audio_access": false,
+  "limits": [
+    "Exact stock MPU routine executed; actual cache coherency and instruction fetch still need hardware check",
+    "FlexSPI IP transfer completion and busy status modeled; physical chip identification, erase/program behavior and endurance not verified"
+  ]
+}

@@ -9,6 +9,7 @@ Original mighty-nam code and documentation: MIT, Copyright (c) 2026 santismo. Th
 | Eigen | [Eigen](https://gitlab.com/libeigen/eigen), primarily MPL-2.0, with file-level alternatives | `firmware/third_party/eigen/COPYING.*` and source headers |
 | nlohmann/json | [nlohmann/json](https://github.com/nlohmann/json), MIT | Notice in `firmware/third_party/json/json.hpp` |
 | musl math | [musl](https://git.musl-libc.org/cgit/musl/), mixed permissive source notices | `firmware/third_party/musl-math/COPYRIGHT` and individual source headers |
+| RiffSmith Clean, Bass Clean and Distorted captures | [hartmamt/riffsmith](https://github.com/hartmamt/riffsmith), MIT, Matt Hartman | `firmware/models/riffsmith/LICENSE`, pinned `provenance.json`, app `RIFFSMITH-LICENSE`, kit `RIFFSMITH-LICENSE` |
 | TONE3000 official logos | [Official brand kit](https://www.tone3000.com/api), service/trademark terms; not MIT | `app/assets/brand/NOTICE.txt`, `docs/assets/brand/NOTICE.txt` |
 | Flutter and packages | SDK/package-specific licenses | Flutter's in-app Licenses view; package revisions in `app/pubspec.lock` |
 
@@ -19,3 +20,11 @@ Exact firmware dependency revisions are in `firmware/third_party/versions.json`.
 The Mac release includes Flutter's license registry. The disk image additionally includes this notice and the project MIT license. Original stock NUX code is not included in the repository or Mac installer. Locally generated firmware containers include user-supplied proprietary stock bytes and should not be re-uploaded here.
 
 Distribution scope: the current free TONE3000 integration is described in [LEGAL.md](LEGAL.md). Keep creator attribution/license metadata with requested captures. MIT covers original code, not catalog access or redistribution of models. The public Mac preview is ad-hoc signed and not notarized; no personal developer certificate is included. For binaries containing MPL-covered Eigen code, make the corresponding covered source available as required by its license.
+
+The local firmware builder ZIP includes the original-code MIT license and
+`NAM-LICENSE` for its compiled A2 Lite implementation. Its generated recipe
+contains original/NAM-derived ELF sections and generated hook replacements;
+it does not embed the NUX file or an Eigen/musl runtime. See
+[recipe provenance](docs/builder/provenance.json) and [builder details](docs/local-builder.md).
+
+The three RiffSmith captures were downloaded directly from their creator's MIT-licensed repository, not through the TONE3000 catalog API. The recipe includes their A2 Lite weights and preset records. The Mac app includes the same model slots for identity recognition and preserves existing user libraries. Creator copyright and permission text accompany every distribution. Full upstream files are retained unchanged with pinned hashes; only the Lite component runs on the device. These alternatives are not claimed to reproduce the private captures' sound.

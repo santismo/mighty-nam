@@ -1,7 +1,7 @@
 name: mighty_plug_manager
 description: mighty-nam controller, adapted from Mightier Amp.
 publish_to: none
-version: 0.5.3+22
+version: 0.5.4+23
 environment:
   sdk: '>=3.6.0 <4.0.0'
 dependencies:
@@ -25,5 +25,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/starter-captures.json
+    - assets/RIFFSMITH-LICENSE
     - assets/brand/tone3000.png
     - assets/brand/NOTICE.txt

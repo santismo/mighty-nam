@@ -595,6 +595,10 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
 #endif
 }
 extern "C" BANK_TEXT void mpp_probe_version(const uint8_t* p,unsigned n,unsigned channel){
+#ifdef MPP_STOCK_V3
+ // The V3 receive-ring assembler includes F7 in its reported length.
+ if(n==5&&p[4]==0xf7)--n;
+#endif
  if(n!=4||channel>1||p[0]!=0xf0||p[1]!=0x43||p[2]!=0x58||p[3]||p[4]!=0xf7)return;
  uint8_t out[45]={0xf0,0x43,0x58,0x10};
 #ifdef MPP_OUTPUT_BUFFER
@@ -607,6 +611,9 @@ extern "C" BANK_TEXT void mpp_probe_version(const uint8_t* p,unsigned n,unsigned
  ((void(*)(const uint8_t*,unsigned,unsigned))0xae81)(out,45,channel);
 }
 extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned channel){
+#ifdef MPP_STOCK_V3
+ if(n>=10&&n<=330&&p[n-1]==0xf7)--n;
+#endif
  if(n<9||n>329||channel>1||p[0]!=0xf0||p[1]!=0x43||p[2]!=0x58||
     p[3]!=0x70||p[4]!=4||p[5]!=2||p[6]!='N'||p[n]!=0xf7)return;
 #ifdef MPP_FX_BLOCKS

@@ -1,0 +1,45 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK23_PITCH_CHAIN",
+  "elf_sha256": "55c60715a5e9b9042d6ae2693f583d88dda709fee1859cf1ad42bce8d867f7fb",
+  "blocks": 2501,
+  "cases": [
+    {
+      "case": "octaves",
+      "graph": [
+        4,
+        1,
+        2,
+        2,
+        0
+      ],
+      "max_NAM_reference_error": 0.0
+    },
+    {
+      "case": "opposite",
+      "graph": [
+        4,
+        1,
+        2,
+        2,
+        0
+      ],
+      "max_NAM_reference_error": 0.0
+    },
+    {
+      "case": "neutral",
+      "graph": [
+        4,
+        1,
+        2,
+        2,
+        0
+      ],
+      "max_NAM_reference_error": 0.0
+    }
+  ],
+  "peak": 0.005757209844887257,
+  "bypassed_pitch_callbacks": 0,
+  "physical_deadlines_verified": false,
+  "device_access": false,
+  "host_audio_access": false
+}

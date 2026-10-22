@@ -1,0 +1,10 @@
+{
+  "version": "0.5.4",
+  "build": "23",
+  "bundle_id": "org.namplug.controller",
+  "signature_verified": true,
+  "existing_library_unchanged": true,
+  "app_launched": false,
+  "device_access": false,
+  "host_audio_access": false
+}

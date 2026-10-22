@@ -1,0 +1,17 @@
+{
+  "status": "PASS_OFFLINE_MAC_RELEASE",
+  "app_version": "0.5.4",
+  "flutter_tests_passed": 110,
+  "flutter_tests_skipped": 3,
+  "gallery_render_tests_passed": 1,
+  "includes": [
+    "firmware setup links",
+    "MIT RiffSmith starters recognized by exact model SHA",
+    "preserved private model library"
+  ],
+  "installed_locally": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "app_launched": false,
+  "physical_starter_verification": false
+}

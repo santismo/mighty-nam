@@ -1,0 +1,87 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK23_RUNTIME",
+  "elf_sha256": "55c60715a5e9b9042d6ae2693f583d88dda709fee1859cf1ad42bce8d867f7fb",
+  "stock_sha256": "e971240a1e333003804cfd154e5ee053026254bbf09b11499e8b4968d3600752",
+  "cases": [
+    {
+      "case": "NAM only",
+      "executed_nodes": [
+        3
+      ],
+      "peak": 0.0036327275447547436,
+      "NAM_max_error": 0.0
+    },
+    {
+      "case": "NAM and Spring",
+      "executed_nodes": [
+        3,
+        8
+      ],
+      "peak": 0.0037629539147019386,
+      "NAM_max_error": 0.0
+    },
+    {
+      "case": "full stock and cut EQ",
+      "executed_nodes": [
+        5,
+        1,
+        2,
+        3,
+        9,
+        4,
+        6,
+        7,
+        8
+      ],
+      "peak": 0.0013952553272247314,
+      "NAM_max_error": 0.0
+    },
+    {
+      "case": "reordered heavy chain",
+      "executed_nodes": [
+        5,
+        3,
+        1,
+        2,
+        4,
+        9,
+        8,
+        6,
+        7
+      ],
+      "peak": 0.00464138388633728,
+      "NAM_max_error": 0.0
+    },
+    {
+      "case": "V3 Phi Delay",
+      "executed_nodes": [
+        3,
+        7
+      ],
+      "peak": 0.003159882966428995,
+      "NAM_max_error": 0.0
+    },
+    {
+      "case": "all bypassed",
+      "executed_nodes": [],
+      "peak": 0.0014448678120970726,
+      "NAM_max_error": 0.0
+    }
+  ],
+  "callbacks": 8182,
+  "V3_SysEx_F7_inclusive_and_fragmentation": true,
+  "global_buffers_restarted": [
+    32,
+    16,
+    8
+  ],
+  "stock_type_loader_cases": 64,
+  "guard_failures": 0,
+  "device_access": false,
+  "host_audio_access": false,
+  "limitations": [
+    "Timing counters, hardware peripherals, USB completion and flash are modeled",
+    "Stock effect loader sweep checks guarded switching; representative chains also settle and render",
+    "Not a physical latency or recovery proof"
+  ]
+}

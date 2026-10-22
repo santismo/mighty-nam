@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "silent": true,
+  "device_access": false,
+  "reference": "Official unmodified NAM Core v0.5.2 generic Eigen WaveNet, subclass exposes buffer sizing to start with zero history",
+  "compact_bytes": 84024,
+  "tolerance": 2e-05,
+  "models": [
+    {
+      "model": "riffsmith-clean-lite.nam",
+      "sha256": "12a8a8c3442a4baecf54c87cb724f6f999953a1c535172110a8c274dff977820",
+      "samples": 48000,
+      "seconds": 1.0,
+      "max_abs_error": 4.172325134277344e-07,
+      "rms_error": 8.086955696012932e-08,
+      "peak": 0.2822282314300537,
+      "last_half_peak": 0.0658491849899292,
+      "block_sizes": [
+        8,
+        1024
+      ],
+      "block_invariance": true,
+      "reset": true,
+      "rejected_variants": [
+        "full_channels",
+        "dilation",
+        "activation",
+        "wrong_rate",
+        "weight_nan",
+        "missing_weight",
+        "unknown_option"
+      ],
+      "combined_host_test_seconds": 0.5700076359789819
+    },
+    {
+      "model": "riffsmith-bass-clean-lite.nam",
+      "sha256": "e967b1a72e292d0bf57af78b6238540399788ae4416570c58cbab3e3e158e74c",
+      "samples": 48000,
+      "seconds": 1.0,
+      "max_abs_error": 7.152557373046875e-07,
+      "rms_error": 7.366817772119871e-08,
+      "peak": 0.6643755435943604,
+      "last_half_peak": 0.3434563875198364,
+      "block_sizes": [
+        8,
+        1024
+      ],
+      "block_invariance": true,
+      "reset": true,
+      "rejected_variants": [
+        "full_channels",
+        "dilation",
+        "activation",
+        "wrong_rate",
+        "weight_nan",
+        "missing_weight",
+        "unknown_option"
+      ],
+      "combined_host_test_seconds": 0.5991345571819693
+    },
+    {
+      "model": "riffsmith-distorted-lite.nam",
+      "sha256": "77974beaed9ef9281229a9e0ee3d3f7247ecc2ab026baefe967ba2f4c5bb4cde",
+      "samples": 48000,
+      "seconds": 1.0,
+      "max_abs_error": 1.5437602996826172e-05,
+      "rms_error": 8.40352687840351e-07,
+      "peak": 0.8492112755775452,
+      "last_half_peak": 0.6775280237197876,
+      "block_sizes": [
+        8,
+        1024
+      ],
+      "block_invariance": true,
+      "reset": true,
+      "rejected_variants": [
+        "full_channels",
+        "dilation",
+        "activation",
+        "wrong_rate",
+        "weight_nan",
+        "missing_weight",
+        "unknown_option"
+      ],
+      "combined_host_test_seconds": 0.40460163983516395
+    }
+  ],
+  "nonfinite_and_count_runtime_rejection": true
+}

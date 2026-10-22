@@ -1,0 +1,25 @@
+{
+  "schema": "mighty-nam-licensed-starters-1",
+  "upstream": "https://github.com/hartmamt/riffsmith",
+  "revision": "228b801ccc8b518d0a1fb53a8e63355a2fbd153f",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Matt Hartman",
+  "permission_statement": "https://github.com/hartmamt/riffsmith/blob/228b801ccc8b518d0a1fb53a8e63355a2fbd153f/README.md#credits-and-licenses",
+  "models": [
+    {
+      "file": "riffsmith-clean.nam",
+      "sha256": "433f93c73abfc86b1ab46adc8ec7e0eaa46a7286727708880c285c10a1642741",
+      "url": "https://github.com/hartmamt/riffsmith/blob/228b801ccc8b518d0a1fb53a8e63355a2fbd153f/public/nam/models/riffsmith-clean.nam"
+    },
+    {
+      "file": "riffsmith-bass-clean.nam",
+      "sha256": "af11453ec552c93acc9cf2de76de56b730a3cad4c18bffba9a71b9b84ca7eff6",
+      "url": "https://github.com/hartmamt/riffsmith/blob/228b801ccc8b518d0a1fb53a8e63355a2fbd153f/public/nam/models/riffsmith-bass-clean.nam"
+    },
+    {
+      "file": "riffsmith-distorted.nam",
+      "sha256": "ec52e16296f96fdd1d07d1aaa699e33e17df253f026f785f135080e1eb5db007",
+      "url": "https://github.com/hartmamt/riffsmith/blob/228b801ccc8b518d0a1fb53a8e63355a2fbd153f/public/nam/models/riffsmith-distorted.nam"
+    }
+  ]
+}

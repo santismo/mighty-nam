@@ -1,0 +1,43 @@
+mighty-nam local builder 0.3.0 — experimental NAMLNK23
+
+Extract this ZIP and open builder.html in a current desktop browser. Keep the
+other files beside it. No compiler, account or connected plug is needed.
+All build code is local; ordinary download/help links need internet access.
+If the browser blocks file-mode access, use the HTTPS page or a local web
+server. Do not disable browser security.
+
+1. Get the public NUX V3.0.5 macOS ZIP from the official product page:
+   https://nuxaudio.com/product/mightyplugpro/ (Support > Firmwares).
+2. Unzip it. Keep MP3_OR_V3.0.5.bin (Original). Install NUX Device Updater
+   from the included NUX Device Updater 2.2.1.dmg.
+3. Select MP3_OR_V3.0.5.bin in builder.html, then Build experimental firmware.
+   Save the generated firmware and report. No firmware is uploaded or flashed.
+4. Follow builder.html#install to install with the official NUX updater.
+   Wait for explicit success before restarting with POWER only.
+
+Only the exact Original file is accepted, SHA-256:
+39fa7057865f95e4c52c48544cd8284f4da606d3ac29e985e9b8938a3237467e
+ChopTones, other versions, renamed or corrupted files are rejected.
+
+Installation replaces all seven preset slots and global settings. Three
+MIT-licensed RiffSmith A2 Lite starters are included: Green Clean, Orange
+Bass Clean and Red Distorted. Four slots remain empty. Presets include the
+cabinet and run NAM only initially. Add effects in either controller.
+Mac 0.5.4 and phone 0.8.3 support NAMLNK23.
+
+The new starter bank passes offline checks; the core has limited device
+validation. Physical pitch timing, this bank's power-cycle behavior and
+Logic duplex still need testing. Experimental software; recovery and
+compatibility are not guaranteed. See LEGAL.md for distribution boundaries.
+
+This ZIP contains no NUX firmware image or updater. The image generated
+locally contains user-supplied NUX code and is not wholly MIT licensed.
+Keep generated images local unless separately authorized.
+
+Original contributions: MIT, copyright 2026 santismo.
+NAM-derived code: MIT, copyright 2023 Steven Atkinson.
+RiffSmith starter captures: MIT, copyright 2026 Matt Hartman.
+See LICENSE, NAM-LICENSE, RIFFSMITH-LICENSE and THIRD_PARTY_NOTICES.md.
+
+Guide and hosted builder: https://santismo.github.io/mighty-nam/builder.html
+Source: https://github.com/santismo/mighty-nam

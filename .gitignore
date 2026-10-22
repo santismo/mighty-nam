@@ -25,3 +25,6 @@ private/
 local-lab-records/
 *.nam
 !firmware/models/*.nam
+!firmware/models/riffsmith/riffsmith-clean.nam
+!firmware/models/riffsmith/riffsmith-bass-clean.nam
+!firmware/models/riffsmith/riffsmith-distorted.nam

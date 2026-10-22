@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "page": "overview",
+      "width": 1440,
+      "images_loaded": true,
+      "no_overflow": true,
+      "errors": []
+    },
+    {
+      "page": "overview",
+      "width": 390,
+      "images_loaded": true,
+      "no_overflow": true,
+      "errors": []
+    },
+    {
+      "mode": "hosted",
+      "sha256": "b1604529fa8792015d51126175ab140f2f8b9dae80cd83b67fe8d638bc46a0f5",
+      "requests": 7,
+      "no_external_or_upload_requests": true,
+      "errors": []
+    },
+    {
+      "mode": "file",
+      "sha256": "b1604529fa8792015d51126175ab140f2f8b9dae80cd83b67fe8d638bc46a0f5",
+      "requests": 7,
+      "no_external_or_upload_requests": true,
+      "errors": []
+    }
+  ],
+  "device_access": false,
+  "host_audio_access": false
+}

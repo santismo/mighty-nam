@@ -25,6 +25,7 @@ with tempfile.TemporaryDirectory(prefix='mighty-nam-installer-') as tmp:
  for name in ['LICENSE','THIRD_PARTY_NOTICES.md','LEGAL.md','PRIVACY.md']:
   shutil.copy2(root/name,stage/name)
  licenses=stage/'Licenses';licenses.mkdir()
+ shutil.copy2(root/'firmware/models/riffsmith/LICENSE',licenses/'RiffSmith-MIT.txt')
  shutil.copy2(root/'app/LICENSE.md',licenses/'Mightier-Amp-and-mighty-nam-MIT.txt')
  shutil.copy2(root/'app/plugins/nam_device/LICENSE',licenses/'NAM-Device-MIT.txt')
  (stage/'Install mighty-nam.txt').write_text(f'''mighty-nam {version} — Mac preview by santismo
@@ -34,7 +35,10 @@ with tempfile.TemporaryDirectory(prefix='mighty-nam-installer-') as tmp:
 3. Connect the Mighty Plug Pro by USB in normal mode.
 
 The app installer does not change the plug firmware or system audio.
-NAM device control requires compatible custom firmware; read the guide first.
+For firmware setup, open Settings > Set up firmware in the app. It links to
+the official NUX V3.0.5 files, local builder and installation guide. The public
+builder includes three MIT-licensed RiffSmith A2 Lite starter presets.
+Existing app libraries are preserved. Installing firmware replaces onboard presets.
 The app is universal Intel/Apple silicon and declares macOS 10.15 minimum.
 This preview is ad-hoc signed, not Apple notarized. If macOS blocks launch,
 first attempt to open it, then review System Settings > Privacy & Security

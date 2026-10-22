@@ -29,6 +29,12 @@ ctest --test-dir build/host --output-on-failure
 
 These run CPU/memory tests and do not play sound or change audio settings. The firmware test fixtures are upstream examples; passing them does not validate a commercial capture or device deadlines.
 
+## Local firmware builder
+
+End users can use the [browser builder](https://santismo.github.io/mighty-nam/builder.html) or offline ZIP without a compiler. [Maintainer reproduction, provenance and tests](docs/local-builder.md) cover its source-derived patch recipe and exact file checks. Builder 0.3.0 targets NAMLNK23 and the exact public V3.0.5 Original file. It includes three MIT-licensed RiffSmith starters, whose source hashes and emulated bank are validated by the exporter. Mac 0.5.4 and phone 0.8.3 support the result. Installation uses the official NUX updater. Run `node --test scripts/test_firmware_builder.cjs`; set `MIGHTY_NAM_STOCK_FILE` to your local exact stock file to enable the complete assembly and corruption tests.
+
+The current V3 build and test commands are in [local-builder.md](docs/local-builder.md#reproduce-offline). The examples below use an older stock base and are historical.
+
 ## Historical NAMLNK10 build example
 
 This is a developer path, not a one-click consumer installer. `target/link/` is the current hybrid path. `target/standalone/` and `target/hardware/` are earlier independent-backend research.
@@ -44,7 +50,7 @@ python3 firmware/tools/build_link_firmware.py build/link10 \
   --irq-timing --listening --early-output --output-buffer --preset-bank
 ```
 
-Obtain the original **MP3 V1.5.6 Original(VT)** firmware from [NUX](https://nuxaudio.com/product/mightyplugpro/). The exact package expected by this experiment has SHA-256:
+Obtain the original **MP3 V1.5.6 Original(VT)** firmware from [NUX](https://nuxaudio.com/product/mightyplugpro/). As checked 22 October 2026, the public page lists V3.0.5 instead; request the exact older version from NUX support or use an existing lawful copy. See [stock-file instructions](docs/local-builder.md#obtain-the-input). The exact package expected by this experiment has SHA-256:
 
 ```text
 95c704b6026cb26aceaae179039e994c261a93610b0c578f50634b39f4393dd6
@@ -89,7 +95,7 @@ This produces a read-only DMG containing the app, an Applications shortcut, inst
 python3 -m http.server 8765 --directory docs
 ```
 
-Edit the HTML/CSS/JS, then run `python3 scripts/check_site.py`. The chain illustration is a local teaching demo, not a device connection or live TONE3000 browser.
+Edit the HTML/CSS/JS, then run `python3 scripts/check_site.py`. Gallery images render the actual controllers with simulated connections and explicitly licensed RiffSmith presets. They do not claim hardware validation of the depicted effect combinations. The local builder and its tests are documented in [local-builder.md](docs/local-builder.md).
 
 ## NAMLNK20 active-chain candidate
 
@@ -112,6 +118,6 @@ The source checkout and exact build must match the evidence, or the gate rejects
 
 Public previews must be ad-hoc signed, including nested code, with no personal developer certificate. Keep bundle ID `org.namplug.controller` and the Keychain service unchanged for data compatibility. Changing signing identity can require a new Keychain approval or sign-in; do not disable Keychain protection. A private development build may retain its existing signing identity, but must not be uploaded as a public download. The preview is not notarized.
 
-The latest NAMLNK21 candidate and exact offline evidence are documented in [USB audio and NAM controls](docs/usb-audio-nam-controls.md). It adds `--usb-nam-controls` to the NAMLNK20 build flags. Use `stage_usb_nam_firmware.py` and fresh `test_usb_nam.py` / storage reports bound to the resulting ELF.
+The historical NAMLNK21 candidate and exact offline evidence are documented in [USB audio and NAM controls](docs/usb-audio-nam-controls.md). It adds `--usb-nam-controls` to the NAMLNK20 build flags. Use `stage_usb_nam_firmware.py` and fresh `test_usb_nam.py` / storage reports bound to the resulting ELF.
 
-The latest NAMLNK22 source and validation are in [pitch quality](docs/pitch-quality-trial.md). It adds the pitch quality path to the NAMLNK21 configuration. Do not publish locally assembled hybrid images or personal preset banks.
+The historical NAMLNK22 source and validation are in [pitch quality](docs/pitch-quality-trial.md). It adds the pitch quality path to the NAMLNK21 configuration. Do not publish locally assembled hybrid images or personal preset banks.

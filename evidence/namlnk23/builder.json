@@ -1,0 +1,15 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK23_BUILDER",
+  "tests_passed": 22,
+  "tests_skipped": 0,
+  "actual_CT_and_legacy_inputs_rejected": true,
+  "input_preserved": true,
+  "browser": "Desktop in-app browser, localhost HTTP",
+  "browser_selected_public_V3": true,
+  "browser_download_sha256": "27f99a123b94e152c33f45985b6daf4dac34c0361ea89978280c083ea20e7fdb",
+  "browser_CT_rejected": true,
+  "file_mode_tested": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "flashed": false
+}

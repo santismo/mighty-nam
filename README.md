@@ -2,7 +2,7 @@
 
 NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller. By **santismo**.
 
-[Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.3-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
+[Local firmware builder](https://santismo.github.io/mighty-nam/builder.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.4-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
 
 This repository contains the firmware experiments, Mac app, protocols and test evidence. The separate [mighty-nam-controller repository](https://github.com/santismo/mighty-nam-controller) is public and hosts the phone page.
 
@@ -10,12 +10,11 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 
 | Component | Status |
 | --- | --- |
-| Mac 0.5.3 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23 support. Not notarized. |
+| Mac 0.5.4 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23 support. Not notarized. |
 | Phone 0.8.3 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
-| NAMLNK22 | **Staged, not installed.** Improved monophonic pitch, USB audio routing repair, NAM controls and Auto Wah changes. Offline checks pass; hardware pitch timing/listening and Logic duplex checks remain. [Trial](docs/pitch-quality-trial.md). |
-| Hardware baseline | NAMLNK20 was installed on the development unit. Earlier builds demonstrated NAM listening, seven-color storage after restart, and phone live controls. These observations do not certify every new effect or timing combination. |
+| Local builder 0.3.0 / NAMLNK23 | Creates a local image from the exact public NUX V3.0.5 Original firmware. Includes three MIT-licensed RiffSmith A2 Lite starter presets. Install with the official NUX updater. [Instructions](docs/local-builder.md). |
 
-Mac 0.5.3 and phone 0.8.3 now recognize NAMLNK23. The Mac also detects the public V3 USB MIDI name, `NUX NMP-03`. On the development unit, three user-owned captures and their effects were saved and recalled with zero reported faults; the user confirmed guitar audio returned. A newly built empty bank needs a capture loaded and saved before it can play NAM. These checks do not establish Logic duplex operation or physical reboot persistence for NAMLNK23. [Controller evidence](evidence/controllers-0.5.3/summary.json).
+The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
 
 ## What you can do
 
@@ -32,11 +31,18 @@ Mac 0.5.3 and phone 0.8.3 now recognize NAMLNK23. The Mac also detects the publi
 
 On Mac, install the preview into Applications and connect the plug over a data-capable USB cable in normal mode. The installer does not flash firmware. On iPhone, open the [controller](https://santismo.github.io/mighty-nam-controller/) in Bluefy and tap Connect. Use one controller at a time. Controls apply live; **Save to plug** makes preset edits survive power-off. The buffer is saved globally on compatible firmware.
 
-Firmware installation is a separate, experimental step using an exact locally built image and the official NUX updater. The current local NAMLNK22 image was assembled with the owner's seven Mac-saved presets; it is not a redistributable factory bank. Updates replace onboard storage unless a specific build says otherwise. There is no complete bootloader backup or guarantee of recovery from arbitrary firmware damage.
+1. Get the public **V3.0.5 macOS ZIP** from [NUX](https://nuxaudio.com/product/mightyplugpro/) under Support → Firmwares. It includes **MP3_OR_V3.0.5.bin** and **NUX Device Updater 2.2.1.dmg**.
+2. Open the [local builder](https://santismo.github.io/mighty-nam/builder.html), select that Original file, and save the generated firmware and report. No compiler, firmware upload or connected plug is needed.
+3. Follow the [installation guide](https://santismo.github.io/mighty-nam/builder.html#install) to install your generated image with the official NUX updater in blinking-blue mode. Wait for success, then restart with POWER only.
+4. Connect the Mac or phone controller in normal mode. Green = RiffSmith Clean, Orange = RiffSmith Bass Clean, Red = RiffSmith Distorted. The other four colors are empty. Add effects and save your own A2 Lite captures into any color.
+
+Installation replaces all onboard presets and global settings. Preserve anything you need first. The public builder does not incorporate the maintainer's private captures. Installing the Mac app alone preserves existing libraries and does not flash the plug.
+
+The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.3.0-preview.1/mighty-nam-local-builder-0.3.0.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
 
 ## Source, licenses and privacy
 
-[MIT © 2026 santismo](LICENSE) applies to original project code. Retained third-party licenses still apply: see [notices](THIRD_PARTY_NOTICES.md). NUX firmware, bootloader, hardware design and creator captures are not licensed by this project. The current firmware is a stock-based hybrid, not a fully open replacement operating system or open hardware.
+[MIT © 2026 santismo](LICENSE) applies to original project code. Retained third-party licenses still apply: see [notices](THIRD_PARTY_NOTICES.md). NUX firmware, bootloader and hardware design are not licensed by this project. The three RiffSmith starter captures retain their creator’s MIT license and attribution; other captures retain their individual terms. The current firmware is a stock-based hybrid, not a fully open replacement operating system or open hardware.
 
 [Legal and distribution notes](LEGAL.md) explain license scope, external service terms and remaining review items. [Privacy](PRIVACY.md) describes local presets, credentials and direct service connections. No claim of manufacturer endorsement, legal clearance or guaranteed hardware recovery is made.
 
@@ -49,4 +55,4 @@ Firmware installation is a separate, experimental step using an exact locally bu
 | `docs/` | Guide source; public GitHub Pages guide |
 | `tools/`, `scripts/`, `examples/` | Validation, packaging and extension examples |
 
-Historical results stay scoped to their original build. See the [latest trial](docs/pitch-quality-trial.md), [USB/NAM changes](docs/usb-audio-nam-controls.md), and [latency investigation](docs/driver-phase-investigation.md). The standalone looper remains planned.
+Historical results stay scoped to their original build. See the [builder details](docs/local-builder.md), [USB/NAM changes](docs/usb-audio-nam-controls.md), and [latency investigation](docs/driver-phase-investigation.md). The standalone looper remains planned.

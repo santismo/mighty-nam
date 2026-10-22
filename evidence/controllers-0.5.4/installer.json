@@ -1,0 +1,8 @@
+{
+  "file": "mighty-nam-0.5.4-macOS.dmg",
+  "sha256": "77b0dd66927d60690b3f128b1784b6d45c5f54ceeecdfbf45b16207eedcd6e6f",
+  "bytes": 19184984,
+  "app_version": "0.5.4",
+  "signing": "ad-hoc; no personal signing certificate; not notarized",
+  "installs_firmware": false
+}
