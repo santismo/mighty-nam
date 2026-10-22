@@ -1,6 +1,6 @@
 # Local firmware builder
 
-Builder **0.3.0** creates experimental **NAMLNK23** from the publicly downloadable **NUX V3.0.5 Original** file. The public starter variant has offline validation; NAMLNK23 core has limited physical validation documented on the [Status page](status.html). These packaging tests do not access a device or play audio.
+Builder **0.3.0** creates experimental **NAMLNK23** from **`MP3_OR_V3.0.5.bin`**, the publicly downloadable **NUX Mighty Plug Pro V3.0.5 Original** file. This exact input is required; the builder verifies its checksum. The public starter variant has offline validation; NAMLNK23 core has limited physical validation documented on the [Status page](status.html). These packaging tests do not access a device or play audio.
 
 ## Obtain the input
 

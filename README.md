@@ -12,7 +12,7 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 | --- | --- |
 | Mac 0.5.4 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23 support. Not notarized. |
 | Phone 0.8.3 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
-| Local builder 0.3.0 / NAMLNK23 | Creates a local image from the exact public NUX V3.0.5 Original firmware. Includes three MIT-licensed RiffSmith A2 Lite starter presets. Install with the official NUX updater. [Instructions](docs/local-builder.md). |
+| Local builder 0.3.0 / NAMLNK23 | Requires `MP3_OR_V3.0.5.bin`, the exact public NUX Mighty Plug Pro V3.0.5 Original firmware, to create a local image. Includes three MIT-licensed RiffSmith A2 Lite starter presets. Install with the official NUX updater. [Instructions](docs/local-builder.md). |
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
 
@@ -32,7 +32,7 @@ The public builder variant passes offline cold-boot, preset-button and audio acc
 On Mac, install the preview into Applications and connect the plug over a data-capable USB cable in normal mode. The installer does not flash firmware. On iPhone, open the [controller](https://santismo.github.io/mighty-nam-controller/) in Bluefy and tap Connect. Use one controller at a time. Controls apply live; **Save to plug** makes preset edits survive power-off. The buffer is saved globally on compatible firmware.
 
 1. Get the public **V3.0.5 macOS ZIP** from [NUX](https://nuxaudio.com/product/mightyplugpro/) under Support → Firmwares. It includes **MP3_OR_V3.0.5.bin** and **NUX Device Updater 2.2.1.dmg**.
-2. Open the [local builder](https://santismo.github.io/mighty-nam/builder.html), select that Original file, and save the generated firmware and report. No compiler, firmware upload or connected plug is needed.
+2. Open the [local builder](https://santismo.github.io/mighty-nam/builder.html), select **MP3_OR_V3.0.5.bin**, and save the generated firmware and report. No compiler, firmware upload or connected plug is needed.
 3. Follow the [installation guide](https://santismo.github.io/mighty-nam/builder.html#install) to install your generated image with the official NUX updater in blinking-blue mode. Wait for success, then restart with POWER only.
 4. Connect the Mac or phone controller in normal mode. Green = RiffSmith Clean, Orange = RiffSmith Bass Clean, Red = RiffSmith Distorted. The other four colors are empty. Add effects and save your own A2 Lite captures into any color.
 
