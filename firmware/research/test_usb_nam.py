@@ -41,7 +41,7 @@ class UsbMachine(ActiveMachine):
 def main():
  p=argparse.ArgumentParser()
  for n in ['payload','elf','model','library','output']:p.add_argument(n,type=Path)
- p.add_argument('--seed-bank',type=Path);p.add_argument('--pitch-prototype',action='store_true');a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf,allow_pitch_prototype=a.pitch_prototype);assert bundle[2]['identity']==('NAMPIT01' if a.pitch_prototype else 'NAMLNK21')
+ p.add_argument('--seed-bank',type=Path);p.add_argument('--pitch-prototype',action='store_true');p.add_argument('--pitch-release',action='store_true');a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf,allow_pitch_prototype=a.pitch_prototype);assert bundle[2]['identity']==('NAMPIT01' if a.pitch_prototype else 'NAMLNK22' if a.pitch_release else 'NAMLNK21')
  v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
  m=UsbMachine(boundary_oracle=Engine(library(str(a.library)),a.model));m.service();m.upload(model_slot(a.model),101);m.initialize_usb()
  # Execute both original stock PCM ring paths, retaining stereo separation.

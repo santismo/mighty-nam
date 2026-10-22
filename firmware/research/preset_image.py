@@ -25,14 +25,14 @@ def build(stock,elf,*,allow_dma_prototype=False,allow_active_prototype=False,all
   section=e.get_section(symbol['st_shndx']);off=symbol['st_value']-section['sh_addr']
   identity=section.data()[off:off+8].decode('ascii')
   active_prototype=identity=='NAMACP01'
-  active_graph=identity in ('NAMACP01','NAMLNK20','NAMLNK21','NAMPIT01')
+  active_graph=identity in ('NAMACP01','NAMLNK20','NAMLNK21','NAMLNK22','NAMPIT01')
   require(identity!='NAMPIT01' or allow_pitch_prototype,identity+' is offline-only; explicit research opt-in required')
   require(not active_prototype or allow_active_prototype,identity+' is offline-only; explicit research opt-in required')
   prototype=identity in ('NAMDMP01','NAMDMP02')
   require(not prototype or allow_dma_prototype,identity+' is offline-only; explicit research opt-in required')
   firmware_identity=identity
-  source=0x303a6000 if identity in ('NAMLNK21','NAMPIT01') else SOURCE
-  code_base=0x2030f000 if identity in ('NAMLNK21','NAMPIT01') else (0x20310000 if identity not in ('NAMLNK10','NAMLNK11','NAMLNK12') else 0x20308000)
+  source=0x303a6000 if identity in ('NAMLNK21','NAMLNK22','NAMPIT01') else SOURCE
+  code_base=0x2030f000 if identity in ('NAMLNK21','NAMLNK22','NAMPIT01') else (0x20310000 if identity not in ('NAMLNK10','NAMLNK11','NAMLNK12') else 0x20308000)
   if prototype or active_graph:identity='NAMLNK19' # Same audited layout/feature set; not a release identity.
   require(identity in ('NAMLNK10','NAMLNK11','NAMLNK12','NAMLNK13','NAMLNK14','NAMLNK15','NAMLNK16','NAMLNK17','NAMLNK18','NAMLNK19'),'Unexpected preset firmware identity')
   require(not [s.name for s in syms if s.name and s['st_shndx']=='SHN_UNDEF'],'Unresolved symbols')

@@ -33,7 +33,7 @@ void main() {
     expect(restored.blocks.length, 11);
     expect(restored.fxConfig(), encoded.fxConfig());
   });
-  for (final identity in ['NAMLNK20', 'NAMLNK21'])
+  for (final identity in ['NAMLNK20', 'NAMLNK21', 'NAMLNK22'])
     testWidgets(
         '$identity shows two nodes, removes either, adds with retained settings, and handles empty',
         (t) async {

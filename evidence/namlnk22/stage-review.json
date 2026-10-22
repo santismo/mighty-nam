@@ -1,0 +1,371 @@
+{
+  "status": "STAGED_NAMLNK22_NOT_INSTALLED",
+  "identity": "NAMLNK22",
+  "elf_sha256": "58c550cd0778b6f9a1d0fb0546cc72e5245dc05ef40c30df55db3c50fd57acc3",
+  "candidate_sha256": "e8e50d55ef3eda951722cf66eb0a4ec29bfbede21ffb5e79238bde5e6ec70855",
+  "bytes": 14439215,
+  "candidate_plan": {
+    "identity": "NAMLNK22",
+    "mode": "IN_MEMORY_OFFLINE_ONLY",
+    "elf_regions": [
+      {
+        "name": ".banktext",
+        "start": "0x2030f000",
+        "end_exclusive": "0x20313f1c",
+        "bytes": 20252,
+        "load_address": "0x303a6000"
+      },
+      {
+        "name": ".retired_audio",
+        "start": "0x14c04",
+        "end_exclusive": "0x14ce8",
+        "bytes": 228
+      },
+      {
+        "name": ".text",
+        "start": "0x1a0a4",
+        "end_exclusive": "0x1b3a6",
+        "bytes": 4866
+      },
+      {
+        "name": ".ARM.exidx",
+        "start": "0x14ce8",
+        "end_exclusive": "0x14d00",
+        "bytes": 24
+      },
+      {
+        "name": ".bss",
+        "start": "0x202e4020",
+        "end_exclusive": "0x2030ecf4",
+        "bytes": 175316
+      }
+    ],
+    "patches": [
+      {
+        "offset": "0x5578",
+        "original": "2de9fe4f80469246",
+        "replacement": "dff800f075ad0100",
+        "reason": "mpp_stock_amp_process"
+      },
+      {
+        "offset": "0x5778",
+        "original": "80b501200c490870",
+        "replacement": "dff800f0c1ac0100",
+        "reason": "mpp_stock_amp_init"
+      },
+      {
+        "offset": "0x14bfc",
+        "original": "2de9fe4f05460e46",
+        "replacement": "dff800f0f9ad0100",
+        "reason": "mpp_probe_audio"
+      },
+      {
+        "offset": "0x57c0",
+        "original": "80b5fff792ffbde8",
+        "replacement": "dff800f085303120",
+        "reason": "Replace retired AMP background service with deferred preset recall"
+      },
+      {
+        "offset": "0xb38a",
+        "original": "072800db704738b5714b",
+        "replacement": "00bfdff800f0a9af0100",
+        "reason": "Stock PRESET/program-change recall and early-boot compatibility"
+      },
+      {
+        "offset": "0xac8a",
+        "original": "38b58cb014462d216846",
+        "replacement": "00bfdff800f085f03020",
+        "reason": "NAMLNK19 identity"
+      },
+      {
+        "offset": "0x1f397",
+        "original": "d3a10000",
+        "replacement": "05f13020",
+        "reason": "Bounded model/preset protocol"
+      },
+      {
+        "offset": "0xbe48",
+        "original": "75603368",
+        "replacement": "08f042ff",
+        "reason": "Existing counter-reset tracking"
+      },
+      {
+        "offset": "0x205a8",
+        "original": "951d0100",
+        "replacement": "edaf0100",
+        "reason": "Existing IRQ wrapper"
+      },
+      {
+        "offset": "0x116fa",
+        "original": "fcf79bf9",
+        "replacement": "09f0edfd",
+        "reason": "Startup-only ADC short-delay register write"
+      },
+      {
+        "offset": "0x122d0",
+        "original": "2de9fc47fff77eff",
+        "replacement": "dff800f0b5f53020",
+        "reason": "Active-node dispatcher"
+      }
+    ],
+    "stock_sha256": "a8a064a5b0e308b9cf193ebdf23d352ddff092d88db71531729ca1864a86d990",
+    "elf_sha256": "58c550cd0778b6f9a1d0fb0546cc72e5245dc05ef40c30df55db3c50fd57acc3",
+    "candidate_sha256": "ddf84ef0e450d7be4af19b7f7100e57715308468cfeaa26ac1296438df9e7947",
+    "retired_audio_audit": {
+      "status": "PASS_BOUNDED_RETIRED_AUDIO_BODY_AUDIT",
+      "stock_sha256": "a8a064a5b0e308b9cf193ebdf23d352ddff092d88db71531729ca1864a86d990",
+      "start": "0x14c04",
+      "end_exclusive": "0x14f08",
+      "bytes": 772,
+      "region_sha256": "d253afae451d0179cf2c52dd454e6bccbf63c0da8347185e85723eb8ddc496d3",
+      "reachable_instructions": 269,
+      "shared_literals_preserved": [
+        "0x14fd4",
+        "0x1508c",
+        "0x15090",
+        "0x15094",
+        "0x1509c",
+        "0x150a0",
+        "0x150b4",
+        "0x150b8",
+        "0x150bc",
+        "0x150c0",
+        "0x150c4",
+        "0x150c8",
+        "0x150cc",
+        "0x150d0"
+      ],
+      "direct_calls": [
+        "0x3720",
+        "0x375a",
+        "0x3774",
+        "0x37aa",
+        "0x37e8",
+        "0x3966",
+        "0x398c",
+        "0x3abc",
+        "0x5530",
+        "0xbb54",
+        "0xc350",
+        "0xc500",
+        "0xccec",
+        "0xe880",
+        "0xe934",
+        "0x11662",
+        "0x11670",
+        "0x1488c",
+        "0x14914",
+        "0x14970",
+        "0x14a40",
+        "0x14b80",
+        "0x14f08",
+        "0x14fd8",
+        "0x15028",
+        "0x15638",
+        "0x16a58",
+        "0x16b48"
+      ],
+      "retirement_dependency": "0x14bfc must redirect to mpp_probe_audio before this body is replaced",
+      "limits": [
+        "No exhaustive computed-reference proof",
+        "No physical timing or recovery proof"
+      ]
+    },
+    "preset_ownership": {
+      "owners": [
+        12
+      ],
+      "base": "0x30384000",
+      "end": "0x303a0000",
+      "copies": 2,
+      "slots": 7,
+      "record_bytes": 8192
+    },
+    "copied_code": {
+      "source": "0x303a6000",
+      "destination": "0x2030f000",
+      "bytes": 20252
+    },
+    "changed_spans": [
+      [
+        3563520,
+        3583772
+      ],
+      [
+        84996,
+        85224
+      ],
+      [
+        106660,
+        111526
+      ],
+      [
+        85224,
+        85248
+      ],
+      [
+        3424256,
+        3538944
+      ],
+      [
+        3555328,
+        3563520
+      ],
+      [
+        21880,
+        21888
+      ],
+      [
+        22392,
+        22400
+      ],
+      [
+        84988,
+        84996
+      ],
+      [
+        22464,
+        22472
+      ],
+      [
+        45962,
+        45972
+      ],
+      [
+        44170,
+        44180
+      ],
+      [
+        127895,
+        127899
+      ],
+      [
+        48712,
+        48716
+      ],
+      [
+        132520,
+        132524
+      ],
+      [
+        71418,
+        71422
+      ],
+      [
+        74448,
+        74456
+      ]
+    ],
+    "physical_storage_driver_verified": false,
+    "physical_button_verified": false,
+    "physical_RAM_code_execution_verified": false,
+    "original_vector_table_preserved": true,
+    "device_access": false,
+    "flash_container_created": false
+  },
+  "evidence": {
+    "arm": "7e05c1a22ceb8abd454cc7fd5c1fde9e50d849eed3ae28ea3148cdcafca0995c",
+    "storage": "1e50bf44200d14b7367800d4e4a6ec96056fa6dada4336b6abb929ad48778894",
+    "pitch": "61f7b49495b9ddd24bb60d5bfaab39d824c35b40adbfd8f66b19f6715a3152ae",
+    "chain": "e238c6d2f7b1a357d9d6a66b8924fe98fbecaa698f0807a3a61f4a6d1452ede5",
+    "quality": "4c84eefc35a6560b0b2f976a69498d0e1562788ab9f9f419ab3daf36876886fe"
+  },
+  "source_bank_sha256": "d6b3cf08bd32813a850357dbfbba3f93d255b2be4d12e8f78cec69bd21a66b49",
+  "firmware_updates_preserve_user_presets": false,
+  "physical_Logic_duplex_verified": false,
+  "physical_real_time_verified": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "firmware_flashing": false,
+  "controllers": {
+    "mac": "0.5.1+20",
+    "phone": "0.8.1"
+  },
+  "mac_presets": [
+    {
+      "slot": 0,
+      "model_crc": 2441978756,
+      "model_sha256": "75fe97bbd006e3b18bd58403a6d271eed0750ede685f6edd0777b3039d291ab8",
+      "play_on_boot": true,
+      "buffer": 8,
+      "active_nodes": [
+        3,
+        8
+      ],
+      "master_volume": 62
+    },
+    {
+      "slot": 1,
+      "model_crc": 3861572413,
+      "model_sha256": "15b834af777c6b073ed87ac672ddaf848cbecac88d02df15fff5ab99b7418263",
+      "play_on_boot": true,
+      "buffer": 8,
+      "active_nodes": [
+        3
+      ],
+      "master_volume": 49
+    },
+    {
+      "slot": 2,
+      "model_crc": 430367946,
+      "model_sha256": "743c52196230771ebbbd721eedd2d055d68ffd7e924302534d1c645e9fec3cf3",
+      "play_on_boot": true,
+      "buffer": 8,
+      "active_nodes": [
+        3,
+        5,
+        8
+      ],
+      "master_volume": 37
+    },
+    {
+      "slot": 3,
+      "model_crc": 1854512385,
+      "model_sha256": "2b1782715a1acdb8ca89f824ae9bec37e4787cc5f2abadb2de218263471aabe2",
+      "play_on_boot": true,
+      "buffer": 8,
+      "active_nodes": [
+        3,
+        8
+      ],
+      "master_volume": 37
+    },
+    {
+      "slot": 4,
+      "model_crc": 1854512385,
+      "model_sha256": "2b1782715a1acdb8ca89f824ae9bec37e4787cc5f2abadb2de218263471aabe2",
+      "play_on_boot": true,
+      "buffer": 8,
+      "active_nodes": [
+        3,
+        8
+      ],
+      "master_volume": 37
+    },
+    {
+      "slot": 5,
+      "model_crc": 1854512385,
+      "model_sha256": "2b1782715a1acdb8ca89f824ae9bec37e4787cc5f2abadb2de218263471aabe2",
+      "play_on_boot": true,
+      "buffer": 8,
+      "active_nodes": [
+        3,
+        8
+      ],
+      "master_volume": 37
+    },
+    {
+      "slot": 6,
+      "model_crc": 1854512385,
+      "model_sha256": "2b1782715a1acdb8ca89f824ae9bec37e4787cc5f2abadb2de218263471aabe2",
+      "play_on_boot": true,
+      "buffer": 8,
+      "active_nodes": [
+        3,
+        8
+      ],
+      "master_volume": 37
+    }
+  ],
+  "mac_preset_review_sha256": "0aca3bcd4a5e4b97daf027af1c1eaa114934fef21e5a76a4b4db8056e313c1f9"
+}

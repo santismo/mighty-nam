@@ -52,7 +52,8 @@ class UsbFixture {
   Map<String, dynamic> status() => {
         'identity': identity,
         if (identity == 'NAMLNK09' ||
-            ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity))
+            ['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21', 'NAMLNK22']
+                .contains(identity))
           'audioBuffer': {
             'samples': bufferSamples,
             'sampleRate': 48000,
@@ -106,8 +107,8 @@ class UsbFixture {
     if (c.method == 'setOutputBuffer') {
       bufferSamples = a['samples'] as int;
       bufferCommands.add(bufferSamples);
-      if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20'].contains(identity))
-        listening = false;
+      if (!['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21', 'NAMLNK22']
+          .contains(identity)) listening = false;
       return status();
     }
     if (c.method == 'readStockControls') {

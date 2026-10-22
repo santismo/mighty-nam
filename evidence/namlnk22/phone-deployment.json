@@ -1,0 +1,22 @@
+{
+  "status": "PASS_PUBLIC_CONTROLLER_0_8_1",
+  "commit": "3d7a820d7469f909fffc6de262a49d7ec0f0ce22",
+  "files": [
+    {
+      "file": "index.html",
+      "sha256": "82b1c37a428e463f7e7405be5d4401241b7219ccb55a42bdda13b449d2549992",
+      "matches_source": true
+    },
+    {
+      "file": "src/app.js",
+      "sha256": "0d6c18639f5078bc735796af70293caca66b201b1ac63e32a61ab6d0cfe927bf",
+      "matches_source": true
+    },
+    {
+      "file": "src/protocol.js",
+      "sha256": "f75b8fa1765aec98fd3d2b02085e17676c0d3fb1d30fa3410d08ee4225fe18e9",
+      "matches_source": true
+    }
+  ],
+  "device_access": false
+}

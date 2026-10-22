@@ -50,7 +50,10 @@ struct LinkStatus {
 volatile LinkStatus mpp_link;
 unsigned mpp_hybrid_ready;
 #ifdef MPP_FAST_BYPASS
-#if defined(MPP_PITCH_QUALITY_PROTOTYPE)
+#if defined(MPP_PITCH_QUALITY_RELEASE)
+__attribute__((section(".banktext.constants")))
+extern const uint8_t mpp_probe_identity[8]={'N','A','M','L','N','K','2','2'};
+#elif defined(MPP_PITCH_QUALITY_PROTOTYPE)
 __attribute__((section(".banktext.constants")))
 extern const uint8_t mpp_probe_identity[8]={'N','A','M','P','I','T','0','1'};
 #elif defined(MPP_USB_NAM_CONTROLS)

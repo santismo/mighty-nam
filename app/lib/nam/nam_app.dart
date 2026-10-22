@@ -104,7 +104,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK18',
         'NAMLNK19',
         'NAMLNK20',
-        'NAMLNK21'
+        'NAMLNK21',
+        'NAMLNK22'
       ].contains(hardware?['identity']) &&
       hardware?['presetBank'] is Map;
   bool get hasExtraFx => supportsExtraFx(hardware?['identity'] as String?);
@@ -162,7 +163,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK18',
         'NAMLNK19',
         'NAMLNK20',
-        'NAMLNK21'
+        'NAMLNK21',
+        'NAMLNK22'
       ].contains(hardware?['identity']) &&
       hardware?['modelTransfer'] == true;
   bool get hasStockChain =>
@@ -186,7 +188,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK18',
         'NAMLNK19',
         'NAMLNK20',
-        'NAMLNK21'
+        'NAMLNK21',
+        'NAMLNK22'
       ].contains(hardware?['identity']) &&
       hardware?['stockChain'] == true;
   bool get hasListening =>
@@ -205,7 +208,8 @@ class _NamHomeState extends State<NamHome> {
         'NAMLNK18',
         'NAMLNK19',
         'NAMLNK20',
-        'NAMLNK21'
+        'NAMLNK21',
+        'NAMLNK22'
       ].contains(hardware?['identity']) &&
       hardware?['listeningSupported'] == true;
   bool get listening => (hardware?['listening'] as Map?)?['enabled'] == true;
@@ -486,7 +490,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK18',
             'NAMLNK19',
             'NAMLNK20',
-            'NAMLNK21'
+            'NAMLNK21',
+            'NAMLNK22'
           ].contains(hardware?['identity'])) {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
@@ -503,7 +508,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK18',
             'NAMLNK19',
             'NAMLNK20',
-            'NAMLNK21'
+            'NAMLNK21',
+            'NAMLNK22'
           ].contains(muted['identity']) ||
           (muted['listening'] as Map?)?['enabled'] != false) {
         throw const FormatException(
@@ -766,7 +772,7 @@ class _NamHomeState extends State<NamHome> {
     } else if (chain.blocks.any((b) => b.extra && b.enabled)) {
       throw StateError('FX A/B require NAMLNK13 or newer.');
     }
-    if (before['identity'] == 'NAMLNK21') {
+    if (['NAMLNK21', 'NAMLNK22'].contains(before['identity'])) {
       final client =
           NamToneClient((frame) => device.exchangeFxFrame(source, frame));
       final current = await client.read();
@@ -964,7 +970,8 @@ class _NamHomeState extends State<NamHome> {
                         : Icons.star_border,
                     color: mint))
         ]),
-        if (hardware?['identity'] == 'NAMLNK21') namToneControls,
+        if (['NAMLNK21', 'NAMLNK22'].contains(hardware?['identity']))
+          namToneControls,
         const SizedBox(height: 18),
         Wrap(spacing: 10, runSpacing: 10, children: [
           FilledButton.icon(
@@ -1548,7 +1555,8 @@ class _NamHomeState extends State<NamHome> {
             'NAMLNK18',
             'NAMLNK19',
             'NAMLNK20',
-            'NAMLNK21'
+            'NAMLNK21',
+            'NAMLNK22'
           ].contains(result['identity']) ||
           words?.length != 12 ||
           words![4] != 0 ||
@@ -1686,7 +1694,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK18',
           'NAMLNK19',
           'NAMLNK20',
-          'NAMLNK21'
+          'NAMLNK21',
+          'NAMLNK22'
         ].contains(hardware?['identity']) ||
         !const [8, 16, 32].contains(samples)) {
       throw StateError('Connect NAMLNK09 or newer to adjust output buffering.');
@@ -1705,7 +1714,7 @@ class _NamHomeState extends State<NamHome> {
     if (!mounted) return;
     setState(() {
       hardware = result;
-      status = ['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21']
+      status = ['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21', 'NAMLNK22']
               .contains(result['identity'])
           ? '$samples samples saved globally for all seven colors, including after power-off.'
           : 'Output buffer set to $samples samples. NAMLNK18 makes this global across colors.';
@@ -1726,7 +1735,8 @@ class _NamHomeState extends State<NamHome> {
           'NAMLNK18',
           'NAMLNK19',
           'NAMLNK20',
-          'NAMLNK21'
+          'NAMLNK21',
+          'NAMLNK22'
         ].contains(hardware?['identity']) &&
         hardware?['audioBuffer'] is Map &&
         selectedSource != null;
@@ -1753,7 +1763,7 @@ class _NamHomeState extends State<NamHome> {
       ),
       const SizedBox(height: 10),
       Text(adjustable
-          ? (['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21']
+          ? (['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21', 'NAMLNK22']
                   .contains(hardware?['identity']))
               ? 'Global setting. Saved automatically for every color and after power-off. Playback resumes if it was on.'
               : 'Confirmed on plug. Install NAMLNK18 for one saved buffer setting across all colors.'
@@ -1794,7 +1804,7 @@ class _NamHomeState extends State<NamHome> {
                     setState(() => rig.masterVolume = value.round());
                     edited();
                   }),
-        if (hardware?['identity'] == 'NAMLNK21') ...[
+        if (['NAMLNK21', 'NAMLNK22'].contains(hardware?['identity'])) ...[
           const SizedBox(height: 12),
           Row(children: [
             const Text('USB recording gain'),

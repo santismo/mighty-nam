@@ -12,13 +12,15 @@ from preset_image import build
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for name in ['payload','baseline','prototype','host_libraries','output']:p.add_argument(name,type=Path)
- a=p.parse_args();stock=a.payload.read_bytes();rows=[];plans={}
- try:build(stock,a.prototype)
- except ValueError as e:assert 'offline-only' in str(e)
- else:raise AssertionError('Research image accepted without explicit opt-in')
+ p.add_argument('--pitch-release',action='store_true');a=p.parse_args();stock=a.payload.read_bytes();rows=[];plans={}
+ if a.pitch_release:assert build(stock,a.prototype)[2]['identity']=='NAMLNK22'
+ else:
+  try:build(stock,a.prototype)
+  except ValueError as e:assert 'offline-only' in str(e)
+  else:raise AssertionError('Research image accepted without explicit opt-in')
  for role,path in [('baseline',a.baseline),('prototype',a.prototype)]:
   bundle=build(stock,path,allow_pitch_prototype=role=='prototype');plans[role]=bundle[2]
-  assert bundle[2]['identity']==('NAMLNK21' if role=='baseline' else 'NAMPIT01')
+  assert bundle[2]['identity']==('NAMLNK21' if role=='baseline' else 'NAMLNK22' if a.pitch_release else 'NAMPIT01')
   v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=path
   lib=ctypes.CDLL(str((a.host_libraries/(role+'.dylib')).resolve()))
   ptr=ctypes.POINTER(ctypes.c_float);lib.pitch_quality_run.argtypes=[ptr,ptr,ctypes.c_uint,ctypes.POINTER(ctypes.c_uint8)]
@@ -45,7 +47,7 @@ def main():
   layout[role]=dict(code_bytes=regions['.banktext']['bytes'],state_bytes=regions['.bss']['bytes'],code_free_bytes=0x20314000-int(regions['.banktext']['end_exclusive'],16),state_free_bytes=0x2030f000-int(regions['.bss']['end_exclusive'],16))
   assert layout[role]['code_free_bytes']>=0 and layout[role]['state_free_bytes']>=0
  assert plans['baseline']['copied_code']['destination']==plans['prototype']['copied_code']['destination']=='0x2030f000'
- report=dict(status='PASS_OFFLINE_PITCH_ARM',cases=rows,layout=layout,ordinary_packaging_rejects_prototype=True,
+ report=dict(status='PASS_OFFLINE_PITCH_ARM',cases=rows,layout=layout,ordinary_packaging_rejects_prototype=not a.pitch_release,pitch_release=a.pitch_release,
   elf_sha256={r:hashlib.sha256(p.read_bytes()).hexdigest() for r,p in [('baseline',a.baseline),('prototype',a.prototype)]},
   source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),device_access=False,host_audio_access=False,flash_container_created=False,
   limitations=['Instruction events are not M7 cycles or a hardware deadline measurement','Three bounded monophonic traces','Host comparison uses the same algorithm; independent spectral checks are separate'])

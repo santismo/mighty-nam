@@ -22,6 +22,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
+| NAMLNK22 / Mac 0.5.1 / phone 0.8.1 | Improved pitch trial staged with all seven user-selected Mac-saved presets and captures. Offline combined-chain, USB/NAM, controller and packaged-preset checks pass. Mac app installed without launch; hardware timing and listening remain pending. [Trial and evidence](docs/pitch-quality-trial.md). |
 | NAMLNK21 / Mac 0.5.0 / phone 0.8.0 | Firmware staged, not installed: USB PCM routing, NAM tone controls, separate USB recording gain, and a more resonant Auto Wah. Mac official capture browsing stays open; both controllers support exact color selection and retain bypassed blocks. Physical Logic audio and hardware timing are pending. [Build and validation](docs/usb-audio-nam-controls.md). |
 | NAMPIT01 pitch research | Offline only: finer period tracking, compensation during bends, and upshift anti-alias filtering. Synthetic quality improves; physical cost and listening remain unverified. NAMLNK21 is unchanged. [Results and reproduction](docs/pitch-quality-prototype.md). |
 | NAMLNK20 / Mac 0.4.1 / phone 0.7.1 | Installed on the development plug; seven Fender presets saved/verified and output left on. USB audio callback omission identified. [Playback baseline](docs/playback-volume.md). |

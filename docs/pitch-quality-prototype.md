@@ -1,5 +1,7 @@
 # Pitch/octave quality prototype — NAMPIT01
 
+Follow-up: the same DSP is now packaged as the [NAMLNK22 hardware trial](pitch-quality-trial.md), with matching controllers and the user's Mac-saved presets. The research snapshot below records the original offline experiment; physical timing and listening are still pending.
+
 2026-10-22. This is an **offline research build**, not an installable release.
 Nothing was sent to the plug. Its playback state, the Mac audio configuration,
 and Teams were untouched. No audio was played, presets backed up, or flash

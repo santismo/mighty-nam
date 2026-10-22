@@ -1,0 +1,61 @@
+{
+  "status": "PASS_NAMLNK22_PACKAGED_MAC_PRESETS",
+  "candidate_sha256": "e8e50d55ef3eda951722cf66eb0a4ec29bfbede21ffb5e79238bde5e6ec70855",
+  "app_version": "0.5.1+20",
+  "presets": [
+    {
+      "color": 0,
+      "capture_matches": true,
+      "effects_match": true,
+      "extra_fx_match": true,
+      "dual_copies_valid": true
+    },
+    {
+      "color": 1,
+      "capture_matches": true,
+      "effects_match": true,
+      "extra_fx_match": true,
+      "dual_copies_valid": true
+    },
+    {
+      "color": 2,
+      "capture_matches": true,
+      "effects_match": true,
+      "extra_fx_match": true,
+      "dual_copies_valid": true
+    },
+    {
+      "color": 3,
+      "capture_matches": true,
+      "effects_match": true,
+      "extra_fx_match": true,
+      "dual_copies_valid": true
+    },
+    {
+      "color": 4,
+      "capture_matches": true,
+      "effects_match": true,
+      "extra_fx_match": true,
+      "dual_copies_valid": true
+    },
+    {
+      "color": 5,
+      "capture_matches": true,
+      "effects_match": true,
+      "extra_fx_match": true,
+      "dual_copies_valid": true
+    },
+    {
+      "color": 6,
+      "capture_matches": true,
+      "effects_match": true,
+      "extra_fx_match": true,
+      "dual_copies_valid": true
+    }
+  ],
+  "mac_library_unchanged": true,
+  "captures_used": 4,
+  "installed_firmware": false,
+  "device_access": false,
+  "host_audio_access": false
+}
