@@ -1,5 +1,5 @@
 name: nam_device
-description: Native Mac and iPhone MIDI diagnostics for NAM Plug. No audio streams or flash writes.
+description: Native Mac and iPhone MIDI diagnostics for mighty-nam. No audio streams or flash writes.
 version: 0.1.0
 publish_to: none
 environment:

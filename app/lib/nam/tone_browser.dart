@@ -33,7 +33,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
       tag = TextEditingController();
   String? loadedCapture;
   int? loadedModel;
-  String collection = 'search',
+  String collection = 'trending',
       gear = '',
       format = 'nam',
       sort = 'trending',
@@ -133,12 +133,18 @@ class _ToneBrowserState extends State<ToneBrowser> {
             page: nextPage);
     final next = rows(response)
         .where((t) =>
+            (query.text.trim().isEmpty ||
+                '${t['title']}'
+                    .toLowerCase()
+                    .contains(query.text.trim().toLowerCase())) &&
             t['format'] == format &&
             (format != 'nam' ||
                 t['a2_models_count'] == null ||
                 (t['a2_models_count'] is num && t['a2_models_count'] > 0)))
         .toList();
-    final count = response['total_pages'];
+    final count = ['trending', 'latest'].contains(collection)
+        ? 1
+        : response['total_pages'];
     if (count is! int || count < 0) {
       throw const FormatException('Unexpected page count');
     }
@@ -288,7 +294,9 @@ class _ToneBrowserState extends State<ToneBrowser> {
             SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [
-                  choice('search', 'Explore'),
+                  choice('trending', 'Trending'),
+                  const SizedBox(width: 7),
+                  choice('latest', 'Latest'),
                   const SizedBox(width: 7),
                   choice('favorited', 'Favorites'),
                   const SizedBox(width: 7),
@@ -302,11 +310,11 @@ class _ToneBrowserState extends State<ToneBrowser> {
                 enabled: !busy,
                 onSubmitted: (_) => load(),
                 decoration: InputDecoration(
-                    labelText: 'Search tones',
-                    hintText: 'Amp, tone or capture name',
+                    labelText: 'Filter this page',
+                    hintText: 'For the full catalog, use Browse TONE3000',
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: IconButton(
-                        tooltip: 'Search catalog',
+                        tooltip: 'Filter page',
                         onPressed: busy ? null : () => load(),
                         icon: const Icon(Icons.arrow_forward)))),
             const SizedBox(height: 12),
@@ -350,71 +358,8 @@ class _ToneBrowserState extends State<ToneBrowser> {
                               setState(() => format = v!);
                               load();
                             })),
-              if (collection == 'search')
-                SizedBox(
-                    width: 160,
-                    child: DropdownButtonFormField<String>(
-                        key: const ValueKey('tone-sort'),
-                        isExpanded: true,
-                        value: sort,
-                        decoration: const InputDecoration(labelText: 'Order'),
-                        items: const [
-                          DropdownMenuItem(
-                              value: 'trending', child: Text('Trending')),
-                          DropdownMenuItem(
-                              value: 'best-match', child: Text('Best match')),
-                          DropdownMenuItem(
-                              value: 'newest', child: Text('Newest')),
-                          DropdownMenuItem(
-                              value: 'downloads-all-time',
-                              child: Text('Most downloaded'))
-                        ],
-                        onChanged: busy
-                            ? null
-                            : (v) {
-                                setState(() => sort = v!);
-                                load();
-                              })),
             ]),
-            if (collection == 'search') ...[
-              Wrap(spacing: 8, children: [
-                if (format == 'nam')
-                  const Chip(label: Text('A2 Lite · 48 kHz')),
-                FilterChip(
-                    label: const Text('Verified creators'),
-                    selected: verified,
-                    onSelected: busy
-                        ? null
-                        : (v) {
-                            setState(() => verified = v);
-                            load();
-                          })
-              ]),
-              ExpansionTile(
-                  key: const PageStorageKey('tone-more-filters'),
-                  title: const Text('Make, creator & tag'),
-                  tilePadding: EdgeInsets.zero,
-                  children: [
-                    for (final field in [
-                      (make, 'Exact make / model'),
-                      (creator, 'Creator username'),
-                      (tag, 'Tag')
-                    ])
-                      Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: TextField(
-                              controller: field.$1,
-                              enabled: !busy,
-                              onSubmitted: (_) => load(),
-                              decoration:
-                                  InputDecoration(labelText: field.$2))),
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                            onPressed: busy ? null : () => load(),
-                            child: const Text('Apply filters')))
-                  ]),
-            ],
+            const Chip(label: Text('A2 Lite · 48 kHz')),
             if ((client?.connected ?? false) && tones.isEmpty && !busy)
               const Padding(
                   padding: EdgeInsets.symmetric(vertical: 22),
@@ -562,13 +507,22 @@ class _ToneBrowserState extends State<ToneBrowser> {
                             if (tones.isEmpty) load();
                           },
                     icon: const Icon(Icons.arrow_back)),
-              const Expanded(
+              Expanded(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                    Text('TONE3000',
-                        style: TextStyle(
-                            fontSize: 23, fontWeight: FontWeight.w600)),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Powered by',
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 2),
+                          Image.asset('assets/brand/tone3000.png',
+                              width: 100,
+                              height: 24,
+                              fit: BoxFit.contain,
+                              semanticLabel: 'TONE3000'),
+                        ]),
                     Text('Choose a capture for NAM',
                         style: TextStyle(fontSize: 12, color: Colors.white60))
                   ])),

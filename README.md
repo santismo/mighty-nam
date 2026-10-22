@@ -1,96 +1,50 @@
 # mighty-nam
 
-**Neural Amp Modeler on a NUX Mighty Plug Pro. An open controller, firmware experiments, and a documented path from guitar to headphones.**
+NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller. By **santismo**.
 
-By [santismo](https://github.com/santismo). Original project code is MIT licensed; upstream notices are retained.
+[Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.2-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
 
-[Guide source](docs/guide.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.0-preview.1) · [Roadmap](ROADMAP.md) · [Build from source](DEVELOPMENT.md)
+This repository contains the firmware experiments, Mac app, protocols and test evidence. The separate [mighty-nam-controller repository](https://github.com/santismo/mighty-nam-controller) is public and hosts the phone page.
 
-The repository is private and GitHub Pages is disabled. The guide source remains available here.
+## Current version
 
-## What it does
-
-- Runs compatible **48 kHz NAM A2 Lite** captures on the plug.
-- Provides a Mac editor with a movable signal chain, block bypass, and controls below the selected block.
-- Browses TONE3000 after sign-in; selecting a compatible capture makes it the active NAM capture. Favorites stay in your Mac library.
-- Retains the stock gate, compressor, drive, cabinet, EQ, modulation, delay, and reverb. Full amp-and-cab captures automatically bypass the separate cabinet block.
-- Adds a chromatic tuner in the Mac app with NAMLNK12, using dry-input snapshots over USB MIDI. Quiet transport checks passed; real-guitar tuning checks remain.
-- Includes experimental seven-color onboard presets: capture, effects, order, settings, and name per color; NAMLNK18 makes output buffering global.
-- Exposes 8 / 16 / 32-sample output staging at 48 kHz in the new firmware. This does not change the processing block or increase CPU capacity.
-
-## Current state — read before updating
-
-| Component | State |
+| Component | Status |
 | --- | --- |
-| NAMLNK22 / Mac 0.5.1 / phone 0.8.1 | Improved pitch trial staged with all seven user-selected Mac-saved presets and captures. Offline combined-chain, USB/NAM, controller and packaged-preset checks pass. Mac app installed without launch; hardware timing and listening remain pending. [Trial and evidence](docs/pitch-quality-trial.md). |
-| NAMLNK21 / Mac 0.5.0 / phone 0.8.0 | Firmware staged, not installed: USB PCM routing, NAM tone controls, separate USB recording gain, and a more resonant Auto Wah. Mac official capture browsing stays open; both controllers support exact color selection and retain bypassed blocks. Physical Logic audio and hardware timing are pending. [Build and validation](docs/usb-audio-nam-controls.md). |
-| NAMPIT01 pitch research | Offline only: finer period tracking, compensation during bends, and upshift anti-alias filtering. Synthetic quality improves; physical cost and listening remain unverified. NAMLNK21 is unchanged. [Results and reproduction](docs/pitch-quality-prototype.md). |
-| NAMLNK20 / Mac 0.4.1 / phone 0.7.1 | Installed on the development plug; seven Fender presets saved/verified and output left on. USB audio callback omission identified. [Playback baseline](docs/playback-volume.md). |
-| NAMLNK19 / Mac 0.3.11 / phone 0.6.6 | Delay/reverb bypass sleep and explicit one-shot driver timing. Installed; seven restored presets and global 8-sample setting survived restart. Seven chain states, 84 driver snapshots and bypass/wake checks passed without reported faults. Playback left enabled; analog latency not measured. See [test build and limits](docs/bypass-driver-timing-trial.md). |
-| Driver research after NAMLNK19 | Recorded-phase screen identifies later DMA fetch plus current-block output as a possible 0.167 ms reduction. Exact ARM tests confirm 16/32 add only 0.167/0.500 ms over 8. No new firmware or device commands. See [findings and limits](docs/driver-phase-investigation.md). |
-| NAMACP01 offline active-chain experiment | Cached list of active effects; NAM + reverb runs two effect processors. Separate from DMA changes; no app/controller release or updater file. See [active-only routing](docs/active-chain-prototype.md). |
-| NAMDMP02 offline DMA guard | Early previous-block prefill, guarded current publication and latched fallback. Synthetic timing tests only; hardware budget unproven. See [guard and limitations](docs/dma-deadline-prototype.md). |
-| NAMDMP01 offline DMA experiment | Current-block publication plus a later TX refill. Separate research identity, rejected by release packaging; no updater file or physical installation. See [prototype and validation limits](docs/dma-current-prototype.md). |
-| Latency research after NAMLNK18 preparation | Offline driver/FIFO audit and compiled delay/reverb sleep prototype. Fewer instruction events after bypass; no measured headphone-latency gain; integrated test build documented above. See [research and evidence](docs/audio-driver-and-bypass-audit.md). |
-| NAMLNK18 / Mac 0.3.10 / phone 0.6.5 | Global persistent buffer and playback-preserving edits; earlier NAM hot-code/table placement restored. Offline checks passed; firmware not installed or physically measured. See [global buffer trial](docs/global-buffer-trial.md). |
-| NAMLNK17 / Mac 0.3.9 / phone 0.6.4 | Installed; converter startup readback, seven restored presets, restart/color cycling and fault-free eight-sample checks verified. CPU snapshots were about 5–6% higher than the immediate 16 baseline; cause remains under investigation. Approximate 0.292 ms converter saving is predicted, not measured. See [converter trial](docs/converter-latency-trial.md). |
-| NAMLNK16 / Mac 0.3.8 / phone 0.6.3 | Installed and verified over USB. All seven fresh-backed-up presets restored and checked after power-off; user confirmed color cycling. Quiet matched-chain runs used 4.0–4.6% fewer median IRQ cycles than 15. Mac app installed and phone controller live. Fixed audio path unchanged; no measured guitar-to-headphone latency reduction claimed. See [NAM processing trial](docs/nam-performance-trial.md). |
-| NAMLNK15 / Mac 0.3.7 / phone 0.6.2 | Installed on the development plug. Seven presets restored and independently checked after power-off; the user confirmed seven-color button cycling. Live FX controls and compact quiet USB tuner checks passed. Physical listening latency and Bluefy tuner cadence remain unmeasured. See [responsive controls](docs/responsive-controls-trial.md). |
-| NAMLNK14 / Mac 0.3.6 / phone 0.6.0 | Installed locally. High / Low Cut has independent live sliders; muted USB control, full-chain and fresh preset save/recall checks passed. The user confirmed the cut EQ works. Broader listening and post-save restart checks remain. See [EQ trial notes](docs/high-low-cut-trial.md). |
-| Mac controller 0.3.2 | Handles large CoreMIDI replies and enables Listen for verified onboard captures even without a Mac-library copy. Universal build; Apple-silicon execution is not separately verified. |
-| Mac controller 0.3.4 / NAMLNK12 | App and firmware installed locally; seven presets restored and switched successfully; quiet tuner transport passed. Adds a chromatic USB tuner and includes the NAMLNK11 preparation/profiling work. No measured latency reduction claimed. See [trial notes](docs/tuner-performance-trial.md). |
-| NAMLNK08 | Live NAM guitar listening and selected delay/reverb combinations worked on the development unit. |
-| NAMLNK10 | Physically installed. Seven captures/effects presets saved, recalled, and checked after a user power cycle. Buffer settings 8/16/32 recalled correctly. |
-| Seven presets | All seven saved records matched after restart; the user confirmed seven-color button cycling. Tested combinations had zero processing faults. This does not establish flash endurance, every effect combination, or NAMLNK10 recovery. |
-| Phone controller | GitHub Pages / Bluefy 0.6.0 adds TONE3000 selection, local favorites, A2 Lite Bluetooth transfers and saving new captures to seven colors. Real browser, simulated BLE and exact ARM checks passed; user deferred the physical phone transfer. The looper remains a later goal. |
+| Mac 0.5.2 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK22 support. Not notarized. |
+| Phone 0.8.2 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
+| NAMLNK22 | **Staged, not installed.** Improved monophonic pitch, USB audio routing repair, NAM controls and Auto Wah changes. Offline checks pass; hardware pitch timing/listening and Logic duplex checks remain. [Trial](docs/pitch-quality-trial.md). |
+| Hardware baseline | NAMLNK20 was installed on the development unit. Earlier builds demonstrated NAM listening, seven-color storage after restart, and phone live controls. These observations do not certify every new effect or timing combination. |
 
-This is an experimental, stock-based hybrid. Our source is open; NUX's firmware, bootloader, and proprietary DSP are not ours to license and are not distributed here. This does not make the physical hardware open source. Bring your own exact stock firmware for local firmware construction.
+## What you can do
 
-The local 0.3.11 app includes FX A/B, High / Low Cut and explicit NAMLNK15/16/17/18/19 support, plus the prior preset, listening and tuner features; the hosted 0.3.0 installer is older. The older release asset has not been replaced. See [physical preset results](evidence/10-physical-persistence-summary.json). The phone 0.6.0 integration follows the official free picker/bounded-feed workflow; separate Mac-app and distribution terms review remains outstanding. Private repository access does not resolve that review.
+- Load compatible **48 kHz A2 Lite** captures. An A2 container is accepted only when its Lite component validates; full A2 is not supported.
+- Add, move, change, bypass or remove blocks. Bypass keeps the tile/settings; removed or bypassed processors do not run in the active chain.
+- Use stock gate, compressor, drive, cabinet, EQ, modulation, delay and reverb, plus **FX A** and **FX B** with Pitch, Auto Wah, Chorus, Flanger, Phaser, Tremolo and Vibrato. Pitch is −12 to +12 semitones; High / Low Cut has independent cutoffs.
+- Save a capture and effects into each of seven colors. Recall any color in either controller or cycle occupied slots using PRESET.
+- Set a global **8 / 16 / 32-sample** output buffer on NAMLNK18+. This is output staging, not measured end-to-end latency or extra processing capacity.
+- Browse TONE3000, make the selected compatible capture active after confirmed transfer, and keep favorites. Full amp-and-cab captures bypass the separate cabinet block.
 
-## Install the Mac app
+**Powered by [TONE3000](https://www.tone3000.com).** Captures belong to their creators. The integration uses user-authenticated requests; source repositories and Mac installers contain no catalog captures.
 
-1. Download `NAM-Plug-0.3.0-macOS.dmg` from the preview release.
-2. Open it and drag **mighty-nam** to **Applications**.
-3. Launch mighty-nam. This preview is development signed, not Apple notarized; see [installation help](docs/guide.html#install).
-4. Connect the Mighty Plug Pro by a data-capable USB cable in normal mode. The app requires a compatible custom firmware for NAM control; installing the Mac app alone does not install that firmware.
+## Use it
 
-The app installer does not flash the device or change system audio. Start hardware checks with headphones unplugged, then use the plug's headphones at low volume for listening.
+On Mac, install the preview into Applications and connect the plug over a data-capable USB cable in normal mode. The installer does not flash firmware. On iPhone, open the [controller](https://santismo.github.io/mighty-nam-controller/) in Bluefy and tap Connect. Use one controller at a time. Controls apply live; **Save to plug** makes preset edits survive power-off. The buffer is saved globally on compatible firmware.
 
-## Firmware and captures
+Firmware installation is a separate, experimental step using an exact locally built image and the official NUX updater. The current local NAMLNK22 image was assembled with the owner's seven Mac-saved presets; it is not a redistributable factory bank. Updates replace onboard storage unless a specific build says otherwise. There is no complete bootloader backup or guarantee of recovery from arbitrary firmware damage.
 
-There is no bundled NUX image and no one-click flasher. The exact NAMLNK10 candidate can be built locally from original project source, recorded validation evidence, and the exact user-supplied stock package. [Developer steps](DEVELOPMENT.md#firmware-candidate) preserve the existing checks; the official NUX updater performs the actual update.
+## Source, licenses and privacy
 
-The bootloader has not been fully backed up. Restore with stock firmware depends on the updater remaining reachable. NAMLNK10 has not yet demonstrated recovery. Reinstalling this candidate clears its onboard preset bank; keep captures and presets in the Mac library.
+[MIT © 2026 santismo](LICENSE) applies to original project code. Retained third-party licenses still apply: see [notices](THIRD_PARTY_NOTICES.md). NUX firmware, bootloader, hardware design and creator captures are not licensed by this project. The current firmware is a stock-based hybrid, not a fully open replacement operating system or open hardware.
 
-TONE3000 captures have their own creator licenses. Your account/session, personal library, and downloaded captures are never part of this repository. The included `.nam` files are upstream test fixtures, not a playable capture bundle.
+[Legal and distribution notes](LEGAL.md) explain license scope, external service terms and remaining review items. [Privacy](PRIVACY.md) describes local presets, credentials and direct service connections. No claim of manufacturer endorsement, legal clearance or guaranteed hardware recovery is made.
 
-## Repository map
-
-| Path | Contents |
+| Folder | Contents |
 | --- | --- |
-| `app/` | Flutter Mac controller, TONE3000 client, native CoreMIDI bridge, tests |
-| `firmware/target/` | A2 Lite processing, device hooks, startup/audio prototypes, onboard bank |
-| `firmware/research/` | Reverse-engineering tools and bounded ARM emulation tests |
-| `firmware/tools/` | Local builds, container inspection, and checked candidate packaging |
-| `spec/` | Wire formats, control mappings, persistence formats |
-| `evidence/` | Recorded test results; distinguishes simulation from physical results |
-| `docs/` | GitHub Pages site; plain HTML, CSS, and JavaScript |
-| `scripts/` | Offline checks, site validation, reproducible installer packaging |
-| `tools/`, `examples/` | Release-file verifier, historical hardware trials, custom-effect examples |
+| `app/` | Flutter Mac editor and native CoreMIDI/TONE3000 integration |
+| `firmware/` | Original DSP, hooks, local image tools and upstream notices |
+| `spec/` | Protocols and persistence formats |
+| `evidence/` | Build-specific offline and physical results |
+| `docs/` | Guide source; public GitHub Pages guide |
+| `tools/`, `scripts/`, `examples/` | Validation, packaging and extension examples |
 
-## License and credits
-
-[MIT © 2026 santismo](LICENSE) covers original mighty-nam contributions. [Third-party notices](THIRD_PARTY_NOTICES.md) preserve Mightier Amp, NeuralAmpModelerCore, Eigen, nlohmann/json, musl, and dependency licenses. NUX, Neural Amp Modeler, and TONE3000 identify interoperability targets; this is an independent project.
-
-NAMLNK13 is **installed for an experimental trial**, adding two movable FX blocks and short Bluetooth reply pages. Initial muted USB runs passed, and the user confirmed Bluefy reaches Ready with both FX blocks visible. Listening quality, calibrated deadlines and phone save/tuner checks remain outstanding. See [trial notes](docs/dual-fx-trial.md). The public [controller 0.4.1](https://santismo.github.io/nam-plug-controller/?v=0.4.1) adds a second enable/bypass control in the selected-block header and retains NAMLNK12 fallback behavior. This historical controller has been superseded by 0.6.0; see the current trial notes below.
-
-NAMLNK14 adds **High / Low Cut** to the movable EQ block, with independent Off settings, live controls and saved cutoffs. Matching controllers: Mac 0.3.6 and [phone 0.5.0](https://santismo.github.io/nam-plug-controller/?v=0.5.0). It is installed on the development plug; bounded muted USB controls and preset save/recall passed. See [EQ trial notes](docs/high-low-cut-trial.md).
-
-The public [phone controller 0.6.0](https://santismo.github.io/nam-plug-controller/?v=0.6.0) now browses TONE3000, extracts A2 Lite, loads captures through the existing NAMLNK14 Bluetooth protocol and saves captures/FX to chosen colors. All 63 tests passed and real sign-in/download worked. The user will test the physical Bluefy transfer later; see [phone trial notes](docs/phone-tone3000-trial.md).
-
-Phone controller 0.6.1 adds automatic tuning, confirmed/saved buffer values and standalone startup-output defaults. See [phone fixes and validation](docs/phone-tuner-buffer-startup.md). No NAMLNK14 firmware update is required; the reported physical latency difference remains under investigation.
-
-Mac 0.3.7, phone 0.6.2 and the installed NAMLNK15 trial address extra-block editing, the single-saved-color pause, idle FX work and tuner transport overhead. Seven restored presets survived a physical restart, and the user confirmed button cycling through every color. Standalone playback was observed on at startup; the final USB check explicitly muted current output. See [scope, evidence and physical limitations](docs/responsive-controls-trial.md).
-
-The [minimal-chain investigation](docs/latency-workload.md) compares NAMLNK10/12/15, measures retained work after bypassing effects, and tests an isolated NAM optimization. It reduces simulated instruction events by 3.79% for NAM alone and 3.33% with Spring, with identical tested output. A separate converter-filter option has a datasheet-predicted 0.292 ms benefit. NAMLNK16 subsequently shipped the NAM processing optimization and was verified on the plug. The separate [NAMLNK17 converter trial](docs/converter-latency-trial.md) is installed with verified startup readback and preset persistence; neither result establishes measured guitar-to-headphone latency.
+Historical results stay scoped to their original build. See the [latest trial](docs/pitch-quality-trial.md), [USB/NAM changes](docs/usb-audio-nam-controls.md), and [latency investigation](docs/driver-phase-investigation.md). The standalone looper remains planned.

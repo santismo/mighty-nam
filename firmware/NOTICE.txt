@@ -1,8 +1,7 @@
-NAM Plug firmware research. Original contributions: MIT, Copyright (c) 2026 santismo.
+mighty-nam firmware research. Original contributions: MIT, Copyright (c) 2026 santismo.
 Vendored licenses remain applicable; see ../THIRD_PARTY_NOTICES.md and third_party/.
 
-Current device path is a stock-based hybrid replacing AMP processing with A2 Lite.
-Stock firmware is not included. NAMLNK08 listening has been exercised on the
-single development unit; NAMLNK10 onboard persistence is offline-tested only.
-Historical target/*/hardware-status.json reports are scoped to their named build.
-The standalone startup/audio backend is research, not a ready independent OS.
+The current device path is a stock-based hybrid replacing AMP processing with A2 Lite.
+Stock firmware and downloaded captures are not distributed. A locally assembled image
+is not wholly MIT licensed. NAMLNK22 is staged for a hardware trial; its evidence is
+offline unless explicitly labeled physical. The standalone backend remains research.

@@ -28,7 +28,7 @@ http.Response token([String suffix = '']) => http.Response(
 Future<void> login(Tone3000Client c) async {
   final f = c.authorize(Uri.parse('mighty-nam://oauth/callback'));
   expect(f.needsTone, false);
-  expect(f.url.queryParameters.containsKey('prompt'), false);
+  expect(f.url.queryParameters['prompt'], 'select_tone');
   await c.complete(
       f,
       f.redirect
@@ -147,54 +147,36 @@ void main() {
     expect(c.connected, false);
     c.close();
   });
-  test(
-      'search vs personal collections encode supported filters and A2 detail queries',
+  test('free integration only requests bounded feeds and personal lists',
       () async {
     final urls = <Uri>[];
     final c = Tone3000Client('t3k_pub_test', httpClient: MockClient((r) async {
       if (r.url.path.endsWith('/token')) return token();
       urls.add(r.url);
-      return http.Response('{"data":[],"total_pages":0}', 200);
+      return http.Response('{"data":[],"total_pages":1}', 200);
     }));
     await login(c);
-    await c.catalog(
-        query: ' plexi ',
-        gear: 'amp',
-        sort: 'best-match',
-        make: 'Marshall',
-        creator: 'creator',
-        tag: 'rock',
-        verified: true,
-        page: 2);
-    expect(urls.last.path, '/api/v1/tones/search');
-    expect(urls.last.queryParameters, containsPair('architecture', '2'));
-    expect(urls.last.queryParameters, containsPair('sizes', 'lite'));
-    expect(urls.last.queryParameters, containsPair('query', 'plexi'));
-    expect(urls.last.queryParameters, containsPair('gears', 'amp'));
-    expect(urls.last.queryParameters, containsPair('verified', 'true'));
-    await c.catalog(gear: 'cab', format: 'ir', sort: 'downloads-all-time');
-    expect(urls.last.queryParameters, {
-      'page': '1',
-      'page_size': '20',
-      'format': 'ir',
-      'gears': 'cab',
-      'sort': 'downloads-all-time',
-    });
-    for (final gear in ['amp-cab', 'pedal', 'cab']) {
-      await c.catalog(gear: gear);
-      expect(urls.last.queryParameters, containsPair('gears', gear));
-      expect(urls.last.queryParameters, containsPair('format', 'nam'));
-      expect(urls.last.queryParameters, containsPair('architecture', '2'));
-    }
-    final beforeInvalid = urls.length;
-    await expectLater(c.catalog(format: 'unsupported'), throwsArgumentError);
-    expect(urls.length, beforeInvalid);
-    for (final collection in ['favorited', 'downloaded', 'created']) {
-      await c.catalog(collection: collection, gear: 'amp', query: 'test');
+    for (final collection in [
+      'trending',
+      'latest',
+      'favorited',
+      'downloaded',
+      'created'
+    ]) {
+      await c.catalog(
+          collection: collection, gear: 'amp', query: 'local filter');
       expect(urls.last.path, '/api/v1/tones/$collection');
-      expect(urls.last.queryParameters,
-          {'page': '1', 'page_size': '20', 'query': 'test', 'gear': 'amp'});
+      expect(urls.last.queryParameters.containsKey('query'), false);
+      expect(urls.last.queryParameters.containsKey('page'),
+          !['trending', 'latest'].contains(collection));
     }
+    final count = urls.length;
+    await expectLater(c.catalog(collection: 'search'), throwsArgumentError);
+    await expectLater(
+        c.catalog(collection: 'latest', page: 2), throwsArgumentError);
+    await expectLater(
+        c.catalog(collection: 'created', page: 101), throwsArgumentError);
+    expect(urls.length, count);
     await c.tone(42);
     expect(urls.last.queryParameters, {'architecture': '2'});
     c.close();

@@ -1,4 +1,4 @@
-NAM Plug onboard presets v1 — NAMLNK10 experimental
+mighty-nam onboard presets v1 — NAMLNK10 experimental
 
 Seven fixed positions, matching the Mighty Plug Pro/Mightier Amp Pro mapping:
 1 Green, 2 Orange, 3 Red, 4 Blue, 5 Cyan, 6 Pink, 7 Lilac.

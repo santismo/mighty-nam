@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name = 'nam_device'
   s.version = '0.1.0'
-  s.summary = 'NAM Plug MIDI controller transport'
+  s.summary = 'mighty-nam MIDI controller transport'
   s.description = 'Read-only identified diagnostics over system USB or Bluetooth MIDI.'
-  s.homepage = 'https://example.invalid/nam-plug'
+  s.homepage = 'https://github.com/santismo/mighty-nam'
   s.license = { :type => 'MIT', :file => '../LICENSE' }
-  s.author = { 'NAM Plug contributors' => '' }
+  s.author = { 'mighty-nam contributors' => '' }
   s.source = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'

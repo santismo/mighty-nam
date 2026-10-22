@@ -29,7 +29,7 @@ ctest --test-dir build/host --output-on-failure
 
 These run CPU/memory tests and do not play sound or change audio settings. The firmware test fixtures are upstream examples; passing them does not validate a commercial capture or device deadlines.
 
-## Firmware candidate
+## Historical NAMLNK10 build example
 
 This is a developer path, not a one-click consumer installer. `target/link/` is the current hybrid path. `target/standalone/` and `target/hardware/` are earlier independent-backend research.
 
@@ -70,18 +70,20 @@ Install only as an experimental hardware trial with the official NUX updater. [D
 
 ## Mac installer
 
-After a release build, package the app without modifying its contents:
+Build in a neutral temporary path, strip local/debug symbols, then sign ad hoc and package. This keeps local account paths and personal certificates out of the download:
 
 ```sh
+python3 scripts/build_public_macos.py --flutter flutter \
+  --config app/config/tone3000.json --output build/public/mighty-nam.app
 python3 scripts/package_macos.py \
-  'app/build/macos/Build/Products/Release/mighty-nam.app' build/releases
+  'build/public/mighty-nam.app' build/releases
 ```
 
-This produces a read-only DMG containing the app, an Applications shortcut, installation help, and notices. It verifies the existing signature and generates a SHA-256 manifest. Developer ID signing and notarization are separate release steps; the current preview is development signed and unnotarized.
+This produces a read-only DMG containing the app, an Applications shortcut, installation help, and notices. It verifies the existing signature and generates a SHA-256 manifest. Developer ID signing and notarization are separate release steps; the public preview is ad-hoc signed and unnotarized. The packaging gate rejects personal signing certificates.
 
 ## Website
 
-`docs/` is a dependency-free static site kept in the private source repository; Pages is disabled here. The separate phone controller repository is public. No analytics, cookies, fonts, or scripts from third-party CDNs. Serve it locally with:
+`docs/` is a dependency-free static site published at https://santismo.github.io/mighty-nam/. Both source repositories are public. No analytics, cookies, fonts, or scripts from third-party CDNs. Serve it locally with:
 
 ```sh
 python3 -m http.server 8765 --directory docs
@@ -91,7 +93,7 @@ Edit the HTML/CSS/JS, then run `python3 scripts/check_site.py`. The chain illust
 
 ## NAMLNK20 active-chain candidate
 
-The current experimental release uses the same feature flags through NAMLNK19 plus `--active-chain` (not `--active-chain-prototype` or either DMA prototype). See [trial behavior and limits](docs/active-chain-trial.md) and [exact evidence](evidence/namlnk20/README.md).
+This NAMLNK20 reference uses the same feature flags through NAMLNK19 plus `--active-chain` (not `--active-chain-prototype` or either DMA prototype). See [trial behavior and limits](docs/active-chain-trial.md) and [exact evidence](evidence/namlnk20/README.md).
 
 ```sh
 python3 firmware/tools/build_link_firmware.py build/link20 \
@@ -101,13 +103,15 @@ python3 firmware/tools/build_link_firmware.py build/link20 \
   --nam-pointer --adc-short-delay --global-buffer --driver-timing --active-chain
 python3 firmware/tools/stage_active_chain_firmware.py \
   'private/MP3_V1.5.6_Original(VT).bin' build/link20 evidence/namlnk20 build/candidate20 \
-  --controller-dir ../nam-plug-controller
+  --controller-dir ../mighty-nam-controller
 ```
 
 The source checkout and exact build must match the evidence, or the gate rejects packaging. Current reports are reference evidence, not permission to skip fresh tests after changes. The package contains empty preset/settings storage and requires a backup and restore only if preserving existing presets; a clean start needs neither. Packaging does not contact the plug. USB recording compatibility is a required next-release check, not a result established by these offline tests.
 
 ## Current controller signing
 
-Sign the release consistently with the same Apple Development identity before packaging. Keep bundle ID `org.namplug.controller` and the Keychain service unchanged. This preserves session access across builds; moving from an old ad-hoc build may require one Keychain approval. Do not disable Keychain protection. The preview is not notarized.
+Public previews must be ad-hoc signed, including nested code, with no personal developer certificate. Keep bundle ID `org.namplug.controller` and the Keychain service unchanged for data compatibility. Changing signing identity can require a new Keychain approval or sign-in; do not disable Keychain protection. A private development build may retain its existing signing identity, but must not be uploaded as a public download. The preview is not notarized.
 
 The latest NAMLNK21 candidate and exact offline evidence are documented in [USB audio and NAM controls](docs/usb-audio-nam-controls.md). It adds `--usb-nam-controls` to the NAMLNK20 build flags. Use `stage_usb_nam_firmware.py` and fresh `test_usb_nam.py` / storage reports bound to the resulting ELF.
+
+The latest NAMLNK22 source and validation are in [pitch quality](docs/pitch-quality-trial.md). It adds the pitch quality path to the NAMLNK21 configuration. Do not publish locally assembled hybrid images or personal preset banks.

@@ -2,7 +2,7 @@
 
 NAMLNK13 adds two independent movable FX slots to the existing nine-block chain. FX A and FX B each offer Pitch (−12…+12 semitones), Auto Wah, Chorus, Flanger, Phaser, Tremolo and Vibrato. Both can run together. They default to bypassed, after gate/compression in the default stock order. The original stock modulation block remains.
 
-Use [controller 0.4.1](https://santismo.github.io/nam-plug-controller/?v=0.4.1) in Bluefy for the two FX editors. Tap the symbol for bypass, the block name for controls below, and the arrows to move it. The Enabled / Bypassed button in the selected block controls toggles the same block. Changes apply live; Save to plug persists the pair with the active color's capture, effects and buffer. The Mac 0.3.5+8 compatibility update supports NAMLNK13 USB capture loading and existing controls; its chain editor still displays the nine stock blocks.
+Use [controller 0.4.1](https://santismo.github.io/mighty-nam-controller/?v=0.4.1) in Bluefy for the two FX editors. Tap the symbol for bypass, the block name for controls below, and the arrows to move it. The Enabled / Bypassed button in the selected block controls toggles the same block. Changes apply live; Save to plug persists the pair with the active color's capture, effects and buffer. The Mac 0.3.5+8 compatibility update supports NAMLNK13 USB capture loading and existing controls; its chain editor still displays the nine stock blocks.
 
 ## Scope and limits
 

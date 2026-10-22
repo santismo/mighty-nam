@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""NAM Plug release verification. No erase, flash, reset or playback commands.
+"""mighty-nam release verification. No erase, flash, reset or playback commands.
 
 A manifest's hashes detect mismatched bytes; they are not an author signature.
 Use releases and manifests from a source you trust. The factory USB writer is

@@ -17,4 +17,4 @@ The buffer control shows the last confirmed device setting and the color's saved
 
 The user's reported extra listening latency is still unresolved. The supplied 0.6.0 report contains saved-bank reads after live settings scrolled out, so it cannot identify the active buffer/effects at the time. New reports retain that information. No physical plug was visible over USB this turn. No firmware was flashed, no physical presets were rewritten and no audio was played. Mac/Teams volume was untouched. A physical phone tuner check, current-chain report and listening comparison remain needed; offline execution cannot establish real-time deadlines or acoustic latency.
 
-No firmware update is needed for these controller fixes on NAMLNK14. The production page is https://santismo.github.io/nam-plug-controller/?v=0.6.1 .
+No firmware update is needed for these controller fixes on NAMLNK14. The production page is https://santismo.github.io/mighty-nam-controller/?v=0.6.1 .

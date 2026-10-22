@@ -1997,7 +1997,15 @@ class _NamHomeState extends State<NamHome> {
               style: TextStyle(fontSize: 12, color: Colors.white54))
         ])),
         card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('TONE3000 connection', style: TextStyle(fontSize: 20)),
+          Row(children: [
+            const Text('Powered by', style: TextStyle(fontSize: 13)),
+            const SizedBox(width: 8),
+            Image.asset('assets/brand/tone3000.png',
+                width: 110,
+                height: 28,
+                fit: BoxFit.contain,
+                semanticLabel: 'TONE3000'),
+          ]),
           const SizedBox(height: 8),
           const Text(
               'Sign in to browse tones, your favorites and downloads. This Mac remembers your session securely in Keychain.'),

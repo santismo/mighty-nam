@@ -1,6 +1,6 @@
 TONE3000 app registration
 
-tone3000.json contains only NAM Plug's publishable application identifier.
+tone3000.json contains only mighty-nam's publishable application identifier.
 It is safe to include in the app. It is not an account access token or secret.
 
 Build the Mac app with:

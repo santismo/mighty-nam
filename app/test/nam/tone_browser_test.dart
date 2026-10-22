@@ -45,7 +45,7 @@ class CatalogFixture extends Tone3000Client {
 
   @override
   Future<Map<String, dynamic>> catalog(
-      {String collection = 'search',
+      {String collection = 'trending',
       String query = '',
       String gear = '',
       String format = 'nam',
@@ -198,7 +198,8 @@ void main() {
       expect(find.text('Load on plug'), findsOneWidget);
       expect(find.textContaining('Current Fender'), findsOneWidget);
       if (width > 820)
-        expect(find.widgetWithText(TextField, 'Search tones'), findsOneWidget);
+        expect(
+            find.widgetWithText(TextField, 'Filter this page'), findsOneWidget);
       await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
       await t.pump();
       expect(t.takeException(), isNull);
@@ -255,15 +256,14 @@ void main() {
     await t.pumpAndSettle();
     expect(api.calls.last['gear'], 'cab');
     expect(api.calls.last['format'], 'nam');
-    await t.tap(find.byKey(const ValueKey('tone-sort')));
+    expect(find.byKey(const ValueKey('tone-sort')), findsNothing);
+    await t.tap(find.text('Latest'));
     await t.pumpAndSettle();
-    await t.tap(find.text('Most downloaded').last);
-    await t.pumpAndSettle();
-    expect(api.calls.last['sort'], 'downloads-all-time');
+    expect(api.calls.last['collection'], 'latest');
     api.downloads = null;
     await t.enterText(
-        find.widgetWithText(TextField, 'Search tones'), 'missing count');
-    await t.tap(find.byTooltip('Search catalog'));
+        find.widgetWithText(TextField, 'Filter this page'), 'Test');
+    await t.tap(find.byTooltip('Filter page'));
     await t.pumpAndSettle();
     expect(find.text('Downloads unavailable'), findsOneWidget);
     expect(find.text('0 downloads'), findsNothing);
@@ -272,7 +272,7 @@ void main() {
   });
 
   testWidgets(
-      'catalog search, favorites, pages, detail and validated capture return',
+      'bounded feeds, local filter, favorites, pages and validated capture return',
       (t) async {
     final api = CatalogFixture();
     addTearDown(api.close);
@@ -298,10 +298,11 @@ void main() {
     await t.tap(find.text('Browse'));
     await t.pumpAndSettle();
     expect(find.text('Test amp'), findsOneWidget);
-    await t.enterText(find.widgetWithText(TextField, 'Search tones'), 'plexi');
-    await t.tap(find.byTooltip('Search catalog'));
+    await t.enterText(
+        find.widgetWithText(TextField, 'Filter this page'), 'Test');
+    await t.tap(find.byTooltip('Filter page'));
     await t.pumpAndSettle();
-    expect(api.calls.last['query'], 'plexi');
+    expect(api.calls.last['query'], 'Test');
     await t.tap(find.text('Favorites'));
     await t.pumpAndSettle();
     expect(api.calls.last['collection'], 'favorited');

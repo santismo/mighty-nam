@@ -174,7 +174,7 @@ class Tone3000Client {
           'code_challenge': challenge,
           'code_challenge_method': 'S256',
           'state': state,
-          if (selectTone) 'prompt': 'select_tone',
+          'prompt': 'select_tone',
           'architecture': '2',
           'format': 'nam',
           'preview': 'false',
@@ -375,7 +375,7 @@ class Tone3000Client {
   }
 
   Future<Map<String, dynamic>> catalog(
-      {String collection = 'search',
+      {String collection = 'trending',
       String query = '',
       String gear = '',
       String format = 'nam',
@@ -386,9 +386,10 @@ class Tone3000Client {
       String creator = '',
       String tag = '',
       int page = 1}) async {
-    if (!['search', 'favorited', 'downloaded', 'created']
+    if (!['trending', 'latest', 'favorited', 'downloaded', 'created']
             .contains(collection) ||
         page < 1 ||
+        page > 100 ||
         !['nam', 'ir'].contains(format) ||
         ![
           '',
@@ -399,31 +400,19 @@ class Tone3000Client {
           'cab',
           'space',
           'experimental'
-        ].contains(gear) ||
-        !['best-match', 'trending', 'newest', 'oldest', 'downloads-all-time']
-            .contains(sort)) {
-      throw ArgumentError('Invalid catalog filters');
+        ].contains(gear)) {
+      throw ArgumentError(
+          'Use the official TONE3000 picker for catalog search');
     }
+    final bounded = collection == 'trending' || collection == 'latest';
+    if (bounded && page != 1)
+      throw ArgumentError('Discovery feeds are bounded');
     final q = <String, String>{
-      'page': '$page',
-      'page_size': '20',
-      if (query.trim().isNotEmpty) 'query': query.trim()
+      if (!bounded) 'page': '$page',
+      if (!bounded) 'page_size': '20',
+      if (gear.isNotEmpty && collection != 'latest') 'gear': gear,
     };
-    if (collection == 'search') {
-      q.addAll({
-        'format': format,
-        if (format == 'nam') 'architecture': '2',
-        'sort': sort,
-        if (format == 'nam' && liteOnly) 'sizes': 'lite',
-        if (gear.isNotEmpty) 'gears': gear,
-        if (verified) 'verified': 'true',
-        if (make.trim().isNotEmpty) 'makes': make.trim(),
-        if (creator.trim().isNotEmpty) 'creators': creator.trim(),
-        if (tag.trim().isNotEmpty) 'tags': tag.trim()
-      });
-    } else if (gear.isNotEmpty) {
-      q['gear'] = gear;
-    }
+
     return _object(await _get(
         origin.replace(path: '/api/v1/tones/$collection', queryParameters: q)));
   }

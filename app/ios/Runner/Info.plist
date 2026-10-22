@@ -44,7 +44,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>NAM Plug</string>
+	<string>mighty-nam</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -114,7 +114,7 @@
 				<string>mighty-nam</string>
 			</array>
 			<key>CFBundleURLName</key>
-			<string>NAM Plug OAuth</string>
+			<string>mighty-nam OAuth</string>
 		</dict>
 	</array>
 </dict>

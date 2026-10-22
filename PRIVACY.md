@@ -1,0 +1,10 @@
+# mighty-nam privacy
+
+The project has no account server, analytics or advertising. It does not upload your preset library to the maintainer. The website and controllers do not record microphone audio or play previews automatically.
+
+- **Mac:** presets, favorites and downloaded captures stay in the app's local container. TONE3000 access/refresh tokens use macOS Keychain; its picker keeps website cookies in WebKit. Sign out to remove the stored API session. Website cookies and downloaded captures are separate and may remain until their browser/app data is cleared.
+- **Phone:** captures, favorites and chain-view preferences use this browser's local storage. Tokens remain in memory; the temporary OAuth verifier/state uses session storage and is removed after return. Clear site data to remove the phone library. This does not erase presets already saved on the plug.
+- **Connections:** GitHub Pages serves the website and receives ordinary HTTP request data. TONE3000 receives sign-in, account and user-requested model requests directly; image hosts receive image requests. Bluetooth/USB sends commands and captures to the device you select. Bluetooth permission remains under the browser/OS controls.
+- **Reports:** connection details stay local unless you choose to copy or submit them. Remove account data, device identifiers, captures and tokens before filing a public issue. Do not post secrets in GitHub issues.
+
+Third parties have their own policies: [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement), [TONE3000](https://www.tone3000.com/privacy), [Bluefy](https://pnnsoft.com/documents/bluefy-privacy-policy.pdf), and Apple. A signed-in service may show your own account name; the shared project brand is mighty-nam, by santismo.

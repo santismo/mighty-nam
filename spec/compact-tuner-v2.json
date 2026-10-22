@@ -1,5 +1,5 @@
 {
-  "name": "NAM Plug compact pitch readings",
+  "name": "mighty-nam compact pitch readings",
   "firmware": "NAMLNK15",
   "request_prefix": [240, 67, 88, 112, 4, 2, 78, 85, 1],
   "request_suffix": ["operation", 0, "nonce low 7", "nonce high 7", 247],

@@ -27,7 +27,7 @@ public final class NamMidi {
     }
     private func setup() throws {
         if client != 0 { return }
-        guard MIDIClientCreateWithBlock("NAM Plug control" as CFString, &client, nil) == noErr else { throw Failure.message("MIDI is unavailable") }
+        guard MIDIClientCreateWithBlock("mighty-nam control" as CFString, &client, nil) == noErr else { throw Failure.message("MIDI is unavailable") }
         guard MIDIOutputPortCreate(client, "Status requests" as CFString, &output) == noErr else { throw Failure.message("MIDI output unavailable") }
         let status = MIDIInputPortCreateWithBlock(client, "Status replies" as CFString, &input) { [weak self] list, _ in
             var chunks: [[UInt8]] = []

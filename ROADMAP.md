@@ -1,44 +1,27 @@
-# Roadmap
+# mighty-nam roadmap
 
-## Next firmware requirement — USB recording
+Updated 22 October 2026. Roadmap entries describe work still needed, not promised capability.
 
-Keep Mighty Plug Pro usable as a USB recording interface for Logic Pro and other Core Audio DAWs, alongside standalone headphone playback and controller MIDI. NAMLNK20 retains the existing USB driver, but this is not a verified recording guarantee. Before the next firmware release: audit USB audio descriptors and channel routing; identify dry versus processed recording channels; verify enumeration after restart/reconnect, clean sustained 48 kHz capture, no repeated/dropped blocks, and recording with NAM + reverb while USB MIDI controls remain active. Record input in a dedicated silent test session with software monitoring disabled; do not change the system output, Teams device or volume. Coordinate physical audio testing separately.
+## Next hardware trial
 
-## Phone TONE3000 follow-up
+- Install NAMLNK22 only when requested. Its local image includes the owner's seven Mac-saved presets; no factory capture bank is distributed.
+- Verify pitch/octave listening and sustained deadlines with both FX blocks, NAM, reverb and active USB audio. Test attacks, bends, neutral shifts and bypass transitions.
+- Verify Logic Pro stereo input/output, recording gain and host-return isolation at 48 kHz. The repair passes offline PCM checks; physical duplex remains pending.
+- Confirm seven colors, captures and effect settings survive power-off on this exact build.
+- Measure actual analog guitar-to-headphone latency. Instruction counts and output-buffer values are not that measurement. The DMA deadline prototype is still excluded.
 
-Bring TONE3000 sign-in, capture browsing and favorites, compatible A2 Lite selection, and verified model transfer to the GitHub Pages controller used in Bluefy. Selecting a capture should make it the active NAM model after a successful transfer; saving it into a colored onboard preset remains explicit. Investigate browser authentication and bounded Bluetooth transfer before promising direct-to-plug loading. Requested as the next feature after the High / Low Cut EQ addition; not implemented in NAMLNK14.
+## Phone and Mac follow-up
 
-## Further goals
+Phone control, TONE3000 browsing, A2 Lite transfer, live edits, tuner and seven-color saving are implemented. Continue physical iPhone transfer/reconnect and tuner cadence checks. Keep the official picker open while auditioning captures and preserve creator/license metadata. Full A2 is not supported. A native iPhone app is not currently planned for the immediate milestone.
 
-### Standalone looper
+## Standalone looper
 
-Hold PRESET while already powered on to arm a loop; start recording at a guitar-input threshold, retain a short pre-roll so the first note is not clipped, and tap PRESET to finish and start playback. Provide clear LED feedback, stop/resume, and an exit gesture that restores preset selection. Keep the power-on updater gesture intact.
+Hold PRESET while powered on to arm, start recording at an input threshold, then tap to finish and repeat. Preserve the updater's power-on gesture. Audit memory and CPU budget first, then implement temporary loops with pre-roll, LED feedback and a clear exit. Duration, overdubbing and permanent storage are undecided; no looper is implemented yet.
 
-First milestone: audit usable RAM and time a bounded record/playback engine alongside NAM and stock effects. Start with a temporary loop lost at power-off. Maximum loop length, compression, overdubbing, and permanent recording storage are undecided. No looper is implemented in the current release.
+## Longer term
 
-### Phone control — iPhone first
-
-Bring capture browsing, favorites, chain editing, and colored preset management to iPhone. Determine which Bluetooth services can carry custom NAM commands and model transfers, and investigate wired MIDI support. Desktop CoreMIDI and shared protocol code are a starting point; they do not establish iPhone compatibility or Bluetooth model transfer.
-
-First milestone: validate discovery, authentication, a bounded status/control exchange, and a model transfer on real iPhone hardware. No release date or App Store delivery is promised.
-
-## Hardware validation before calling onboard presets ready
-
-- Install and identify NAMLNK10, verify empty-bank mute.
-- Save multiple distinct captures and effects, check independent readback.
-- Power off, close the Mac app, restart and verify standalone recall.
-- Exercise all seven button/LED colors, wrap and empty-slot skipping.
-- Check timing under heavy effects, repeated switching, USB, and updater return.
-
-## Further development
-
-- Improve CPU headroom and quantify actual end-to-end guitar latency.
-- Preserve/export/restore the onboard bank across firmware updates.
-- Additional custom effects and an independently bootable firmware backend.
-- A guided updater only after its recovery contract is demonstrated.
-
-Roadmap entries describe intent, not existing capability. Contributions should include test evidence and distinguish hardware observations from simulation.
-
-## High / Low Cut EQ — NAMLNK14 installed for testing
-
-The user explicitly moved this ahead of TONE3000. The EQ addition passed offline release checks and bounded muted USB hardware checks, including preset save/recall; see [trial notes](docs/high-low-cut-trial.md). Listening, post-save power-off persistence and NAMLNK14 phone checks remain. TONE3000 on the phone controller remains the next requested feature after this addition.
+- More processing headroom and measured latency improvements without losing USB recording.
+- A dependable preset export/restore path across firmware updates.
+- Further pitch and Auto Wah quality work based on physical listening.
+- Independent startup/audio drivers and an updater with a demonstrated recovery contract.
+- Distribution review: third-party notices/source availability, TONE3000 design requirements and any permission needed for wider product release. Do not distribute stock firmware or creator captures in installers.

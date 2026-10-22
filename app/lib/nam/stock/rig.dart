@@ -150,7 +150,7 @@ class HybridRig {
         (j['model_sha256'] != null &&
             (j['model_sha256'] is! String ||
                 !RegExp(r'^[a-f0-9]{64}$').hasMatch(j['model_sha256'])))) {
-      throw const FormatException('Invalid NAM Plug chain');
+      throw const FormatException('Invalid mighty-nam chain');
     }
     final volume = j['master_volume'] ?? 50;
     if (volume is! int || volume < 0 || volume > 100) {

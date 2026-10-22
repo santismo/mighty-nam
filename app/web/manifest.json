@@ -1,6 +1,6 @@
 {
-  "name": "NAM Plug",
-  "short_name": "NAM Plug",
+  "name": "mighty-nam",
+  "short_name": "mighty-nam",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#212121",

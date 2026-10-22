@@ -66,7 +66,7 @@ scores or measurements of this device's analog latency.
 The universal Mac app is installed in Applications without launching it. Its
 stable development signature and bundle identity are preserved; the installer
 passes disk-image verification but is not notarized. The public
-[phone controller](https://santismo.github.io/nam-plug-controller/?v=0.8.1)
+[phone controller](https://santismo.github.io/mighty-nam-controller/?v=0.8.1)
 recognizes NAMLNK22, including both FX blocks, NAM controls, recording gain,
 direct color selection and global buffering. Unknown firmware remains gated.
 

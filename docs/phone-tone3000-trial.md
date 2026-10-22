@@ -1,6 +1,6 @@
 # TONE3000 phone controller trial
 
-Controller **0.6.0** is published at https://santismo.github.io/nam-plug-controller/?v=0.6.0 (commit `5fb2434f0cedf08e64cc657b17251201fb5a6d85`). It uses the existing **NAMLNK14** RAM model protocol. No firmware change, physical preset write, host audio stream or system audio setting change was made for this release.
+Controller **0.6.0** is published at https://santismo.github.io/mighty-nam-controller/?v=0.6.0 (commit `5fb2434f0cedf08e64cc657b17251201fb5a6d85`). It uses the existing **NAMLNK14** RAM model protocol. No firmware change, physical preset write, host audio stream or system audio setting change was made for this release.
 
 ## Using it
 
