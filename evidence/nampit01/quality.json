@@ -1,0 +1,1693 @@
+{
+  "status": "PASS_OFFLINE_PITCH_QUALITY",
+  "summary": {
+    "steady": {
+      "cases": 84,
+      "baseline_median": -54.82614862867517,
+      "prototype_median": -55.40707246145364,
+      "baseline_worst": -8.157041872179322,
+      "prototype_worst": -35.44435776438262,
+      "improved": 63,
+      "worst_regression": 3.0585840439718908
+    },
+    "vibrato": {
+      "cases": 12,
+      "baseline_median": 2.3037187255965934,
+      "prototype_median": 1.0259522414410973,
+      "baseline_worst": 22.16066807327808,
+      "prototype_worst": 10.47955816994156,
+      "improved": 8,
+      "worst_regression": 0.48815460943771316
+    }
+  },
+  "cases": [
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -54.899264368641596
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -55.52684843632753
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -57.036677134220035
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -56.540442671921795
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -56.316806136189555
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -56.312257897450486
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -67.45380092842828
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -62.79432317390403
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -54.82689524695577
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -55.46724166181054
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -63.017565376019746
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -60.02133671625578
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -63.92489697907992
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -54.86187074258972
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -57.21722458599464
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -55.06751868453634
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -67.38312557734793
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -57.63903420289669
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -55.3792644033815
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -54.20401545120722
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -55.18251353972144
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -53.58295304724802
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -55.239973056976766
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -52.706380600819564
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -57.25171732779192
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -50.473071120492925
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -67.65497963173726
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -53.26943629187585
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -54.82540201039457
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -51.493205260375625
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -55.18853370427272
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -50.922975167545914
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -55.262744856219335
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -50.00593037926965
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -83.11345741267738
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -48.048782894218775
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -54.77490923363054
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -45.748445912453455
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -63.12893288994309
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -47.28798575599541
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -70.21811781404944
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -48.107739212211165
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -77.1352757342618
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -48.19567826500748
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -56.99308294811121
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -46.10561534574639
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -67.91086436653973
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -29.324073247845718
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -54.855014914253466
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -26.06656064116907
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -69.51076844670558
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -31.653099557959358
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -57.286898253293174
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -43.44936064961146
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -54.77294013771343
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -43.21132879772417
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -54.751431006527156
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -26.079127832378116
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -54.19794068789908
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -19.268941407663654
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -57.821810372775495
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -12.3286873094262
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -56.414413970624906
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -16.341270807430732
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -54.73867506674182
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -29.26052482499167
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -62.29964666814972
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -25.942576447976656
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -56.514408692528335
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -13.072832651217706
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -52.22476329671455
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -8.157041872179322
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -53.976739025472355
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -14.321461655217762
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -55.879579459725825
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -18.393277294403234
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -62.998420301331976
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -37.532249930370135
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -61.47527900123005
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -36.6156443654208
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -57.578876743793415
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -14.763407605949455
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -52.26029737897353
+    },
+    {
+      "variant": "baseline",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -9.174544108406533
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": -12,
+      "rms_cents": 22.16066807327808,
+      "p95_cents": 34.95495401050173,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": -2,
+      "rms_cents": 6.279565760528795,
+      "p95_cents": 10.69889102278133,
+      "alignment_samples": 32
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": 2,
+      "rms_cents": 4.2977612931280404,
+      "p95_cents": 7.879529278809855,
+      "alignment_samples": 256
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": 12,
+      "rms_cents": 1.5625620756947864,
+      "p95_cents": 3.497851998030518,
+      "alignment_samples": 712
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": -12,
+      "rms_cents": 15.698957373527236,
+      "p95_cents": 23.466523292261634,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": -2,
+      "rms_cents": 2.917696166075742,
+      "p95_cents": 5.04855684215828,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": 2,
+      "rms_cents": 1.0305244440184613,
+      "p95_cents": 1.5831893687090997,
+      "alignment_samples": 152
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": 12,
+      "rms_cents": 0.8856511957506171,
+      "p95_cents": 1.4752293396249085,
+      "alignment_samples": 536
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": -12,
+      "rms_cents": 13.236400640677418,
+      "p95_cents": 19.75357917935002,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": -2,
+      "rms_cents": 1.6897412851174445,
+      "p95_cents": 2.430450185360799,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": 2,
+      "rms_cents": 0.21817880458480052,
+      "p95_cents": 0.3409267354136827,
+      "alignment_samples": 120
+    },
+    {
+      "variant": "baseline",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": 12,
+      "rms_cents": 1.145604607284645,
+      "p95_cents": 1.9224016387389167,
+      "alignment_samples": 456
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -54.89438147110961
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -55.440426626498585
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -57.02136632134312
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -56.661256015764714
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -56.30136291851347
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -56.25475067333313
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -67.9288951482851
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -62.72541109961631
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -54.8106143586641
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -55.404470435263164
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -63.11809051573616
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 65.4064,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -60.279256740910554
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -63.683807993510804
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -60.699583463331535
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -57.3009077395562
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -56.97305235299599
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -67.77783666226755
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -62.70923254243782
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -55.40967448764412
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -55.77837483547267
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -55.173207776155586
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -55.60782800268505
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -55.22523925265417
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 82.4069,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -55.65629092892255
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -57.214753792877666
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -56.74094350888481
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -67.5334986658632
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -60.59886327179072
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -54.826590729929805
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -55.068051720701035
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -55.177574270848694
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -55.37673436880671
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -55.234779990861924
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -55.388445860232636
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -88.86631260587932
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 110,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -66.30762132659652
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -54.8236053680222
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -50.08217987069362
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -62.83356846749879
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -51.77021642753602
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -71.7134607855871
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -54.05141831354099
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -78.70950537570275
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -53.23685898875034
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -57.25545606104141
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -50.25858642096161
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -86.9472263654486
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 196,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -48.96022254495772
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -55.25528740782855
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -49.132300273925544
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -81.21604979949254
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -47.3012580690223
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -57.25468111945317
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -46.661626428247686
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -54.82042103798093
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -46.582387746079725
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -55.110195545839595
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -46.96362529309515
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -54.96728015369661
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 329.6276,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -41.89875659170809
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -57.46035636668707
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -36.54442447634466
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -67.8443715753792
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -37.83232953369064
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -54.61358801640148
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -36.98583703420344
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -67.6005696550983
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -37.69624011042276
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -58.7173615715039
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -39.888043822850676
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -61.00049115720019
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 659.255,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -37.73057774364908
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -12,
+      "bright": false,
+      "spill_db": -63.931332233082124
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -12,
+      "bright": true,
+      "spill_db": -39.364468439417124
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -7,
+      "bright": false,
+      "spill_db": -54.520740654194775
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -7,
+      "bright": true,
+      "spill_db": -38.85990277620483
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -2,
+      "bright": false,
+      "spill_db": -65.74757544527537
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": -2,
+      "bright": true,
+      "spill_db": -38.927904413322054
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 2,
+      "bright": false,
+      "spill_db": -58.41669495725816
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 2,
+      "bright": true,
+      "spill_db": -41.695709963875245
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 7,
+      "bright": false,
+      "spill_db": -60.485347433929405
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 7,
+      "bright": true,
+      "spill_db": -40.76168295441094
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 12,
+      "bright": false,
+      "spill_db": -65.06437835359644
+    },
+    {
+      "variant": "prototype",
+      "case": "steady",
+      "hz": 880,
+      "semitones": 12,
+      "bright": true,
+      "spill_db": -35.44435776438262
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": -12,
+      "rms_cents": 6.1955740971900175,
+      "p95_cents": 10.464658893471148,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": -2,
+      "rms_cents": 0.6985790001582035,
+      "p95_cents": 1.4065028692669908,
+      "alignment_samples": 512
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": 2,
+      "rms_cents": 0.7932224448304822,
+      "p95_cents": 1.3700066986590183,
+      "alignment_samples": 688
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 82.4069,
+      "semitones": 12,
+      "rms_cents": 2.0507166851324996,
+      "p95_cents": 3.701482095995348,
+      "alignment_samples": 1008
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": -12,
+      "rms_cents": 8.784210012955814,
+      "p95_cents": 13.492276657473967,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": -2,
+      "rms_cents": 0.6297222700082706,
+      "p95_cents": 1.2436740569608356,
+      "alignment_samples": 168
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": 2,
+      "rms_cents": 0.475530192514548,
+      "p95_cents": 0.8087817400008702,
+      "alignment_samples": 344
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 196,
+      "semitones": 12,
+      "rms_cents": 1.3623897701967327,
+      "p95_cents": 2.147052865193645,
+      "alignment_samples": 664
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": -12,
+      "rms_cents": 10.47955816994156,
+      "p95_cents": 15.187137424799847,
+      "alignment_samples": 0
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": -2,
+      "rms_cents": 0.5321138833508169,
+      "p95_cents": 0.9131694597679159,
+      "alignment_samples": 32
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": 2,
+      "rms_cents": 0.3994193994615913,
+      "p95_cents": 0.5677700191323782,
+      "alignment_samples": 208
+    },
+    {
+      "variant": "prototype",
+      "case": "vibrato",
+      "hz": 440,
+      "semitones": 12,
+      "rms_cents": 1.2586820380517125,
+      "p95_cents": 1.7519271842615987,
+      "alignment_samples": 528
+    }
+  ],
+  "transients": [
+    {
+      "variant": "baseline",
+      "shift": -12,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.031017206609249115
+    },
+    {
+      "variant": "prototype",
+      "shift": -12,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.29982906579971313
+    },
+    {
+      "variant": "baseline",
+      "shift": -7,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.03175093233585358
+    },
+    {
+      "variant": "prototype",
+      "shift": -7,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.2996613681316376
+    },
+    {
+      "variant": "baseline",
+      "shift": -2,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.13089483976364136
+    },
+    {
+      "variant": "prototype",
+      "shift": -2,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.03833833336830139
+    },
+    {
+      "variant": "baseline",
+      "shift": 0,
+      "peak": 0.24120961129665375,
+      "largest_step": 0.06833641976118088
+    },
+    {
+      "variant": "prototype",
+      "shift": 0,
+      "peak": 0.24120961129665375,
+      "largest_step": 0.06833641976118088
+    },
+    {
+      "variant": "baseline",
+      "shift": 2,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.091487817466259
+    },
+    {
+      "variant": "prototype",
+      "shift": 2,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.27843230962753296
+    },
+    {
+      "variant": "baseline",
+      "shift": 7,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.19453871250152588
+    },
+    {
+      "variant": "prototype",
+      "shift": 7,
+      "peak": 0.24079203605651855,
+      "largest_step": 0.08683215081691742
+    },
+    {
+      "variant": "baseline",
+      "shift": 12,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.15810392796993256
+    },
+    {
+      "variant": "prototype",
+      "shift": 12,
+      "peak": 0.24016240239143372,
+      "largest_step": 0.07944576442241669
+    }
+  ],
+  "engine_bytes": {
+    "baseline": 16488,
+    "prototype": 16524
+  },
+  "non_pitch_modes_exact": true,
+  "stereo_isolated": true,
+  "rapid_switches_bounded": true,
+  "dry_and_zero_shift_preserved": true,
+  "source_sha256": {
+    "target/link/fx_blocks.cpp": "39ddfade4d506cba510fc1bbb0c37868db6a8b8ecb0832141dd8684a43b73bd2",
+    "target/link/fx_blocks.hpp": "be4968891e39bb4c5a78795425166ea666014d7a53c0e1ef3e98f8930fb34cd4",
+    "research/pitch_quality_host.cpp": "37c2fba681955b2f642f7156c1a3cff533090122ec1564dadf2b44f7da72091a",
+    "research/test_pitch_quality.py": "86f309ca2feefe42ad0e82eee132db4e39031ec47b28fed0dbc588d2003c3b83"
+  },
+  "device_access": false,
+  "audio_playback": false,
+  "limitations": [
+    "Synthetic monophonic quality metrics, not listening scores",
+    "Chord quality not established",
+    "Transitions checked for finite/bounded output, not perceptual smoothness",
+    "Time alignment is not physical latency"
+  ]
+}

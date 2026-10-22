@@ -32,7 +32,9 @@ p.add_argument('--dma-deadline-prototype',action='store_true',help='OFFLINE ONLY
 p.add_argument('--active-chain-prototype',action='store_true',help='OFFLINE ONLY: NAMACP01 compact active-node graph; independent of DMA trials')
 p.add_argument('--active-chain',action='store_true',help='NAMLNK20 active-only chain test release, retaining NAMLNK19 DMA scheduling')
 p.add_argument('--usb-nam-controls',action='store_true',help='NAMLNK21 USB duplex and NAM controls; requires active chain')
+p.add_argument('--pitch-quality-prototype',action='store_true',help='OFFLINE ONLY: NAMPIT01 pitch-period refinement and upshift anti-aliasing; requires USB NAM controls')
 a=p.parse_args()
+if a.pitch_quality_prototype and not a.usb_nam_controls:p.error('--pitch-quality-prototype requires --usb-nam-controls')
 if a.usb_nam_controls and not a.active_chain:p.error('--usb-nam-controls requires --active-chain')
 if a.active_chain and (a.active_chain_prototype or not a.driver_timing or a.dma_current_prototype):p.error('--active-chain requires --driver-timing and excludes research DMA/graph identities')
 active_graph=a.active_chain or a.active_chain_prototype
@@ -129,6 +131,7 @@ if active_graph:
 if a.usb_nam_controls:
  flags+=['-DMPP_USB_NAM_CONTROLS']
  sources+=['target/link/nam_controls.cpp','target/link/nam_controls_runtime.cpp','target/link/usb_audio.cpp']
+if a.pitch_quality_prototype:flags+=['-DMPP_PITCH_QUALITY_PROTOTYPE']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
@@ -229,5 +232,7 @@ if a.active_chain:
  report.update(identity='NAMLNK20',status='EXPERIMENTAL_ACTIVE_CHAIN_TEST_BUILD',requires_offline_image_opt_in=False,active_chain=True,stock_bypass_tail_policy='Removed nodes have no callbacks; delay/reverb reset on re-add; no spillover',bypass='Compact active-only dispatcher',driver_status_pages=[118,123])
 if a.usb_nam_controls:
  report.update(identity='NAMLNK21',status='EXPERIMENTAL_USB_NAM_CONTROL_TEST_BUILD',copied_code_source='0x303a6000',copied_code_destination='0x2030f000',usb_audio='Stock 48 kHz stereo duplex PCM; wet recording without host loopback',nam_controls='Input/output +/-24 dB; three parallel tone bands +/-12 dB; dry/wet 0..100%',physical_usb_audio_verified=False,physical_NAM_controls_verified=False)
+if a.pitch_quality_prototype:
+ report.update(identity='NAMPIT01',status='OFFLINE_PITCH_PROTOTYPE_NOT_FOR_INSTALLATION',requires_offline_image_opt_in=True,pitch_quality='Five-lag fine period refinement, moving-window phase compensation, fourth-order upshift anti-alias filter',physical_pitch_quality_verified=False,physical_pitch_deadline_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

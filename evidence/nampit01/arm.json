@@ -1,0 +1,99 @@
+{
+  "status": "PASS_OFFLINE_PITCH_ARM",
+  "cases": [
+    {
+      "variant": "baseline",
+      "hz": 110,
+      "semitones": -12,
+      "blocks": 1024,
+      "profiled_blocks": 256,
+      "host_max_error": 0,
+      "instruction_events_min": 5816,
+      "instruction_events_max": 5889,
+      "instruction_events_mean": 5834.62890625
+    },
+    {
+      "variant": "baseline",
+      "hz": 110,
+      "semitones": 12,
+      "blocks": 1024,
+      "profiled_blocks": 256,
+      "host_max_error": 0,
+      "instruction_events_min": 5816,
+      "instruction_events_max": 5889,
+      "instruction_events_mean": 5836.265625
+    },
+    {
+      "variant": "baseline",
+      "hz": 880,
+      "semitones": 12,
+      "blocks": 1024,
+      "profiled_blocks": 256,
+      "host_max_error": 0,
+      "instruction_events_min": 5816,
+      "instruction_events_max": 5886,
+      "instruction_events_mean": 5832.9375
+    },
+    {
+      "variant": "prototype",
+      "hz": 110,
+      "semitones": -12,
+      "blocks": 1024,
+      "profiled_blocks": 256,
+      "host_max_error": 0,
+      "instruction_events_min": 5756,
+      "instruction_events_max": 5861,
+      "instruction_events_mean": 5796.1328125
+    },
+    {
+      "variant": "prototype",
+      "hz": 110,
+      "semitones": 12,
+      "blocks": 1024,
+      "profiled_blocks": 256,
+      "host_max_error": 0,
+      "instruction_events_min": 6330,
+      "instruction_events_max": 6439,
+      "instruction_events_mean": 6373.57421875
+    },
+    {
+      "variant": "prototype",
+      "hz": 880,
+      "semitones": 12,
+      "blocks": 1024,
+      "profiled_blocks": 256,
+      "host_max_error": 0,
+      "instruction_events_min": 6330,
+      "instruction_events_max": 6412,
+      "instruction_events_mean": 6368.66015625
+    }
+  ],
+  "layout": {
+    "baseline": {
+      "code_bytes": 18872,
+      "state_bytes": 175244,
+      "code_free_bytes": 1608,
+      "state_free_bytes": 852
+    },
+    "prototype": {
+      "code_bytes": 20252,
+      "state_bytes": 175316,
+      "code_free_bytes": 228,
+      "state_free_bytes": 780
+    }
+  },
+  "ordinary_packaging_rejects_prototype": true,
+  "elf_sha256": {
+    "baseline": "a08029df182d9f509b4dc965f1ef294e713a5e590e76c410326ce7b4240587fa",
+    "prototype": "f995b2597f8b0ce3c99a2fabab053babe827bd37697742714c77d50f0d3ddfe5"
+  },
+  "source_sha256": "3633ec22d0af036167bf557194732f614fe99b6c2ca3012cd62ef13c8097b83a",
+  "device_access": false,
+  "host_audio_access": false,
+  "flash_container_created": false,
+  "limitations": [
+    "Instruction events are not M7 cycles or a hardware deadline measurement",
+    "Three bounded monophonic traces",
+    "Host comparison uses the same algorithm; independent spectral checks are separate"
+  ]
+}

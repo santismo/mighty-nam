@@ -8,6 +8,10 @@ bool valid(const uint8_t*);
 void defaults(uint8_t*);
 struct Engine {
  float delay[2][delay_size], allpass[2][4], feedback[2];
+#ifdef MPP_PITCH_QUALITY_PROTOTYPE
+ // Five one-sample lag refinements reuse the ring; no extra audio buffer.
+ float fine_difference[5];unsigned fine_center,fine_count,fine_anchor,filter_active;
+#endif
  float phase, pitch_phase, envelope, wet, ratio;
  float pitch_window,target_window,yin_sum,yin_previous,yin_before;unsigned yin_lag;
  unsigned write, filled, previous_mode, previous_position, previous_enabled;

@@ -41,7 +41,7 @@ class UsbMachine(ActiveMachine):
 def main():
  p=argparse.ArgumentParser()
  for n in ['payload','elf','model','library','output']:p.add_argument(n,type=Path)
- p.add_argument('--seed-bank',type=Path);a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf);assert bundle[2]['identity']=='NAMLNK21'
+ p.add_argument('--seed-bank',type=Path);p.add_argument('--pitch-prototype',action='store_true');a=p.parse_args();bundle=build(a.payload.read_bytes(),a.elf,allow_pitch_prototype=a.pitch_prototype);assert bundle[2]['identity']==('NAMPIT01' if a.pitch_prototype else 'NAMLNK21')
  v.configure(a.payload,True,candidate_bundle=bundle);v.elf_path=a.elf
  m=UsbMachine(boundary_oracle=Engine(library(str(a.library)),a.model));m.service();m.upload(model_slot(a.model),101);m.initialize_usb()
  # Execute both original stock PCM ring paths, retaining stereo separation.
@@ -117,6 +117,6 @@ def main():
   for color in range(7):
    m.call(0xb38a,[color]);m.service();m.ng([48,12,12,12,100,48]);m.nv(48);fx=bytes(m.u.mem_read(m.preset,128));body=struct.pack('<4I',zlib.crc32(slot),zlib.crc32(fx),1,8)+hashlib.sha256(slot).digest()+b'Fender A2 Lite'.ljust(64,b'\0');assert m.bank_request(2,color,body,nonce=200+color)[7]==0
   a.seed_bank.write_bytes(bytes(m.u.mem_read(BANK,BANK_END-BANK)))
- report=dict(status='PASS_OFFLINE_NAMLNK21',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),compiled_callback_blocks=1652,neutral_NAM_reference_peak_error=m.max_boundary_error,stereo_USB_PCM_ring_roundtrip=True,class_mutes_verified=True,wet_record_excludes_host_return=True,USB_record_gain_guarded_and_persistent=True,USB_record_gain_headphone_independent=True,NAM_controls_both_transports=True,seven_presets_cold_warm_button=True,removed_NAM_no_callback=True,device_access=False,host_audio_access=False,limitations=['USB enumeration/endpoint completion/frame counter modeled','Real-time physical deadlines and Logic duplex pending installation'])
+ report=dict(status='PASS_OFFLINE_'+bundle[2]['identity'],elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),compiled_callback_blocks=1652,neutral_NAM_reference_peak_error=m.max_boundary_error,stereo_USB_PCM_ring_roundtrip=True,class_mutes_verified=True,wet_record_excludes_host_return=True,USB_record_gain_guarded_and_persistent=True,USB_record_gain_headphone_independent=True,NAM_controls_both_transports=True,seven_presets_cold_warm_button=True,removed_NAM_no_callback=True,device_access=False,host_audio_access=False,limitations=['USB enumeration/endpoint completion/frame counter modeled','Real-time physical deadlines and Logic duplex pending installation'])
  a.output.write_text(json.dumps(report,indent=2)+'\n');print(report['status'],flush=True)
 if __name__=='__main__':main()

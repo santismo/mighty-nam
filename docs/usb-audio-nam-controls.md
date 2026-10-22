@@ -55,6 +55,10 @@ Auto Wah now uses a compressed envelope-to-frequency response spanning 180–360
 
 A pitch prototype tried fixed-frame pitch detection, cubic interpolation and smoother grain crossfades. Across 30 synthetic harmonic cases it improved the nonharmonic-energy measurement in only 9 and regressed in others. It is **not included** in this candidate. The [measurement](../evidence/mighty-nam-0.5/pitch-prototype.json) and [experimental diff](../evidence/mighty-nam-0.5/pitch-prototype.patch) are retained for further work. The current pitch algorithm remains monophonic and has not been declared fixed.
 
+The later [NAMPIT01 experiment](pitch-quality-prototype.md) improves offline
+results with fine period refinement, phase compensation and upshift filtering.
+It is separately gated and also **not included in the staged NAMLNK21 file**.
+
 ## Controller validation
 
 The full Mac suite passed 95 cases (one optional ARM-file fixture skipped), the separate API package passed 42, and the phone suite passed 115. A further native-browser widget regression checks two selections without reopening the picker or creating an intermediate dialog. Swift NG/NV validators, sanitized FX extremes/switching, and isolated Auto Wah response pass. The universal Mac app is installed without launch and has an Apple Development signature; the installer is verified but not notarized. Source remains private at `santismo/mighty-nam`; the separate public phone repository and redirect URL remain `santismo/nam-plug-controller`.

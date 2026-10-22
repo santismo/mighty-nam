@@ -1,0 +1,17 @@
+{
+  "status": "PASS_OFFLINE_PITCH_HOST_SANITIZERS",
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "tests": [
+    "test_fx_blocks.cpp",
+    "test_fx_pitch_range.cpp"
+  ],
+  "pitch_cases": 137,
+  "max_error_cents": 0.8473282548536576,
+  "default_elf_unchanged": "a08029df182d9f509b4dc965f1ef294e713a5e590e76c410326ce7b4240587fa",
+  "staged_firmware_unchanged_sha256": "777b93ad49f41446843dca11e14481353117d6a13d1c26881db1dcabc362a4a7",
+  "device_access": false,
+  "audio_playback": false
+}
