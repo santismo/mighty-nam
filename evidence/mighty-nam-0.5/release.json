@@ -1,0 +1,10 @@
+{
+  "repository": "santismo/mighty-nam",
+  "private": true,
+  "tag": "v0.5.0-preview.1",
+  "app": "mighty-nam 0.5.0+19",
+  "phone_repository": "santismo/nam-plug-controller",
+  "phone_version": "0.8.0",
+  "phone_commit": "ea67b93a62e5665cc00c0ec128dd41b25fe87f77",
+  "firmware_installed": false
+}

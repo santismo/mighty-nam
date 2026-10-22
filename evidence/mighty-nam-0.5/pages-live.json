@@ -1,0 +1,9 @@
+{
+  "version": "0.8.0",
+  "matches_local": {
+    "index.html": "395da0f90545077eaf1f64a053344e209dd2cf95af67c828f14143148dd2b6d5",
+    "src/app.js": "c492026b0430e05907c319d5f3e66a8fd3b2d9a89e388283be0dcf0cbc417770",
+    "src/usb-record.js": "e86838f35d0c175dea70bab858e060f8459390017170785aabd21526c49063f0",
+    "style.css": "eb1dcee45fcd8b23a45ad0029ca977f875374516b896350a392e3b7037fb7fe6"
+  }
+}
