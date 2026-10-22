@@ -66,7 +66,7 @@ This checks the stock package, ELF-bound results, memory placement, image header
 
 Recorded evidence is not fresh verification. Modified source needs new checks, including `research/test_preset_runtime.py`, `test_preset_storage_contract.py`, and controller/native interoperability tests. Some historical tools need local stock payloads, prior reports, and separately licensed model inputs. They are retained as research tools, not an automatic fully reproducible hardware certification pipeline.
 
-Install only as an experimental hardware trial with the official NUX updater. [Device instructions and recovery limits](https://santismo.github.io/nam-plug/guide.html#firmware). Installing or reinstalling this candidate empties the onboard bank. No full bootloader backup exists.
+Install only as an experimental hardware trial with the official NUX updater. [Device instructions and recovery limits](https://github.com/santismo/mighty-nam/blob/main/docs/guide.html). Installing or reinstalling this candidate empties the onboard bank. No full bootloader backup exists.
 
 ## Mac installer
 
@@ -74,14 +74,14 @@ After a release build, package the app without modifying its contents:
 
 ```sh
 python3 scripts/package_macos.py \
-  'app/build/macos/Build/Products/Release/NAM Plug.app' build/releases
+  'app/build/macos/Build/Products/Release/mighty-nam.app' build/releases
 ```
 
-This produces a read-only DMG containing the app, an Applications shortcut, installation help, and notices. It verifies the existing signature and generates a SHA-256 manifest. Developer ID signing and notarization are separate release steps; the current preview is ad-hoc signed and unnotarized.
+This produces a read-only DMG containing the app, an Applications shortcut, installation help, and notices. It verifies the existing signature and generates a SHA-256 manifest. Developer ID signing and notarization are separate release steps; the current preview is development signed and unnotarized.
 
 ## Website
 
-`docs/` is a dependency-free static site published by GitHub Pages from `main:/docs`. No analytics, cookies, fonts, or scripts from third-party CDNs. Serve it locally with:
+`docs/` is a dependency-free static site kept in the private source repository; Pages is disabled here. The separate phone controller repository is public. No analytics, cookies, fonts, or scripts from third-party CDNs. Serve it locally with:
 
 ```sh
 python3 -m http.server 8765 --directory docs
@@ -105,3 +105,9 @@ python3 firmware/tools/stage_active_chain_firmware.py \
 ```
 
 The source checkout and exact build must match the evidence, or the gate rejects packaging. Current reports are reference evidence, not permission to skip fresh tests after changes. The package contains empty preset/settings storage and requires a backup and restore only if preserving existing presets; a clean start needs neither. Packaging does not contact the plug. USB recording compatibility is a required next-release check, not a result established by these offline tests.
+
+## Current controller signing
+
+Sign the release consistently with the same Apple Development identity before packaging. Keep bundle ID `org.namplug.controller` and the Keychain service unchanged. This preserves session access across builds; moving from an old ad-hoc build may require one Keychain approval. Do not disable Keychain protection. The preview is not notarized.
+
+The latest NAMLNK21 candidate and exact offline evidence are documented in [USB audio and NAM controls](docs/usb-audio-nam-controls.md). It adds `--usb-nam-controls` to the NAMLNK20 build flags. Use `stage_usb_nam_firmware.py` and fresh `test_usb_nam.py` / storage reports bound to the resulting ELF.

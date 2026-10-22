@@ -60,6 +60,28 @@ class BankFixture extends UsbFixture {
     if (c.method == 'exchangeFxFrame') {
       final q = (c.arguments as Map)['frame'] as Uint8List;
       var error = 0;
+      if (q[7] == 86) {
+        if (q[9] == 1) {
+          final crc = List.generate(5, (i) => q[14 + i] << (7 * i))
+              .fold<int>(0, (a, b) => a | b);
+          expectSync(crc, crc32(receiver.activeSlot!));
+          expectSync(q[10], active == 255 ? 127 : active);
+          final controls = readNamTone(preset);
+          preset.setRange(27, 33, controls);
+          preset[33] = 78;
+          preset[34] = 2;
+          preset[35] = q[19];
+        }
+        return Uint8List.fromList([
+          ...q.take(9),
+          q[9] | 64,
+          ...q.sublist(10, 13),
+          0,
+          active == 255 ? 127 : active,
+          preset[33] == 78 && preset[34] == 2 ? preset[35] : 48,
+          247
+        ]);
+      }
       if (q[7] == 71) {
         expectSync(identity, 'NAMLNK21');
         if (q[9] == 1) {
@@ -69,7 +91,7 @@ class BankFixture extends UsbFixture {
           expectSync(q[10], active == 255 ? 127 : active);
           preset.setRange(27, 33, q.sublist(19, 25));
           preset[33] = 78;
-          preset[34] = 1;
+          if (preset[34] != 2) preset[34] = 1;
         }
         return Uint8List.fromList([
           ...q.take(9),
@@ -275,6 +297,47 @@ void main() {
     });
     expect(home.onboard.dirty[slot], false, reason: home.status);
   }
+
+  testWidgets(
+      'direct color selection jumps to saved slot and USB gain stays independent',
+      (t) async {
+    usb.identity = 'NAMLNK21';
+    final a = capture('Green', 1), b = capture('Pink', .5);
+    usb.catalog.addAll([a, b]);
+    usb.seed([a, b], selected: a);
+    final dynamic home = await start(t);
+    await save(t, home, 0, a, 'Green');
+    await save(t, home, 5, b, 'Pink');
+    for (final slot in [0, 5, 0, 5]) {
+      await t.ensureVisible(find.byKey(ValueKey('preset-color-$slot')));
+      await t.tap(find.byKey(ValueKey('preset-color-$slot')));
+      for (var i = 0; i < 40; i++) {
+        await t.pump(const Duration(milliseconds: 100));
+        if (!home.busy) break;
+      }
+      await t.pumpAndSettle();
+      expect(usb.active, slot);
+      expect(home.onboard.selected, slot);
+      expect(
+          crc32(usb.receiver.activeSlot!), slot == 0 ? a.checksum : b.checksum);
+    }
+    final master = usb.preset[84], muting = usb.listenCommands.length;
+    t
+        .widget<Slider>(find.byKey(const ValueKey('usb-record-gain')))
+        .onChanged!(60);
+    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
+    expect(usb.preset[35], 60);
+    expect(usb.preset[84], master);
+    expect(usb.listenCommands.length, muting);
+    await work(t, home, () async {
+      await home.saveOnboard();
+    });
+    expect(usb.headers[5]![128 + 35], 60);
+    await t.pumpWidget(const SizedBox.shrink());
+    await t.pump();
+    debugDefaultTargetPlatformOverride = null;
+  });
 
   testWidgets('21 NAM sliders apply live, retain bypass and save/recall',
       (t) async {

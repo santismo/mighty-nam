@@ -34,7 +34,7 @@ void Engine::process(const uint8_t* c,float* l,float* r,unsigned count){
  if(!c[1]&&wet==0)return;
  static const float ratios[25]={.5f,.529731547f,.561231024f,.594603558f,.629960525f,.667419927f,.707106781f,.749153538f,.793700526f,.840896415f,.890898718f,.943874313f,1,1.05946309f,1.12246205f,1.18920712f,1.25992105f,1.33483985f,1.41421356f,1.49830708f,1.58740105f,1.68179283f,1.78179744f,1.88774863f,2};
  const float target=c[1]?c[4]*.01f:0,depth=c[6]*.01f,rate=(.05f+7.95f*c[5]*.01f)/48000;
- const float fb=c[7]*.007f,sense=.5f+c[8]*.075f,damping=1.4f-c[9]*.011f;
+ const float fb=c[7]*.007f;
  for(unsigned i=0;i<count;++i){
   float input[2]={l[i],r[i]},out[2]={input[0],input[1]};
   if(!__builtin_isfinite(input[0])||!__builtin_isfinite(input[1])){reset();l[i]=r[i]=0;continue;}
@@ -65,8 +65,13 @@ void Engine::process(const uint8_t* c,float* l,float* r,unsigned count){
    const float w=1-absf(2*pitch_phase-1);
    for(unsigned ch=0;ch<2;++ch)out[ch]=w*tap(*this,ch,16+pitch_window*pitch_phase)+(1-w)*tap(*this,ch,16+pitch_window*second);
   }else if(mode==2){
-   const float frequency=250+2750*clamp(envelope*sense,0,1),x=frequency*(3.141592654f/48000),g=x/(1-.3333333f*x*x),den=1/(1+g*(g+damping));
-   for(unsigned ch=0;ch<2;++ch){float v3=input[ch]-allpass[ch][1],v1=(allpass[ch][0]+g*v3)*den,v2=allpass[ch][1]+g*v1;allpass[ch][0]=2*v1-allpass[ch][0];allpass[ch][1]=2*v2-allpass[ch][1];out[ch]=v1*damping;}
+   // A wider envelope response and resonant, normalized band-pass sweep.
+   // Rational compression gives quiet notes useful movement without hard
+   // pinning louder attacks at the top of the sweep.
+   const float drive=envelope*(.5f+.0062f*c[8]*c[8]);
+   const float frequency=180+3420*drive/(1+drive),q=1/(1+.06f*c[9]);
+   const float x=frequency*(3.141592654f/48000),g=x/(1-.3333333f*x*x),den=1/(1+g*(g+q));
+   for(unsigned ch=0;ch<2;++ch){float v3=input[ch]-allpass[ch][1],v1=(allpass[ch][0]+g*v3)*den,v2=allpass[ch][1]+g*v1;allpass[ch][0]=2*v1-allpass[ch][0];allpass[ch][1]=2*v2-allpass[ch][1];out[ch]=v1*q;}
   }else if(mode==3||mode==4||mode==7){
    for(unsigned ch=0;ch<2;++ch){float mod=modulation;if(ch&&mode==3){float p=phase+.25f;if(p>=1)p-=1;mod=wave(p);}
     float distance=mode==4?3+(1+mod)*depth*90:mode==3?600+mod*depth*470:350+mod*depth*320;

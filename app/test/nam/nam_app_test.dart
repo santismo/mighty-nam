@@ -13,6 +13,9 @@ import 'tone_browser_test.dart' show CatalogFixture, mockOfficialPicker;
 
 void main() {
   String? library, clipboard;
+  Uri? nativeOpened;
+  bool cancelNative = false;
+  final nextNativeSelections = <int>[];
   final calls = <String>[];
   var link = false, fault = false, chainFirmware = false, listening = false;
   var modelMismatch = false;
@@ -22,6 +25,9 @@ void main() {
   setUp(() {
     mockOfficialPicker();
     library = null;
+    nativeOpened = null;
+    cancelNative = false;
+    nextNativeSelections.clear();
     link = fault = chainFirmware = listening = false;
     modelMismatch = false;
     lastControls = null;
@@ -33,6 +39,19 @@ void main() {
         .setMockMethodCallHandler(const MethodChannel('nam_plug/device'),
             (call) async {
       calls.add(call.method);
+      if (call.method == 'openToneBrowser') {
+        final u = Uri.parse(call.arguments as String);
+        nativeOpened = u;
+        if (cancelNative)
+          return 'mighty-nam://oauth/callback?state=${u.queryParameters['state']}&canceled=true';
+        return 'mighty-nam://oauth/callback?state=${u.queryParameters['state']}&tone_id=42&code=fixture';
+      }
+      if (call.method == 'nextToneSelection') {
+        if (nextNativeSelections.isEmpty) return null;
+        return 'mighty-nam://oauth/callback?state=${nativeOpened!.queryParameters['state']}&tone_id=${nextNativeSelections.removeAt(0)}&code=next-fixture';
+      }
+      if (call.method == 'toneBrowserStatus') return null;
+
       if (call.method == 'loadLibrary') return library;
       if (call.method == 'saveLibrary') {
         library = call.arguments as String;
@@ -175,10 +194,7 @@ void main() {
       expect((lastControls!['order'] as List).toSet(),
           {1, 2, 3, 4, 5, 6, 7, 8, 9});
       final text = (t.state(find.byType(NamHome)) as dynamic).status as String;
-      expect(
-          text,
-          contains(
-              stockChain ? 'full chain is configured' : 'not processing yet'));
+      expect(text, equals('Applied'));
       debugDefaultTargetPlatformOverride = null;
     });
   }
@@ -250,19 +266,8 @@ void main() {
       await t.tap(find.text('Signal chain'));
       await t.pumpAndSettle();
       await t.tap(find.text('Explore TONE3000'));
-      // The parent remains busy while its modal is open.
-      await t.pump();
-      await t.pump(const Duration(seconds: 1));
-      await t.ensureVisible(find.text('Test amp'));
-      await t.tap(find.text('Test amp'));
-      await t.pump();
-      await t.pump(const Duration(seconds: 1));
-      await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
-      await t.pump();
-      await t.tap(find.byKey(const ValueKey('load-model-5')));
       await t.pumpAndSettle();
-      expect(find.byTooltip('Close tone browser'), findsOneWidget);
-      await t.tap(find.byTooltip('Close tone browser'));
+      expect(find.byTooltip('Close tone browser'), findsNothing);
       await t.pumpAndSettle();
       final selected = HybridRig.parse(jsonDecode(library!)['active']);
       expect(selected.blocks.singleWhere((b) => b.slot == 'cab').enabled,
@@ -277,6 +282,26 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
     });
   }
+  testWidgets(
+      'native catalog accepts another selection without reopening or intermediate dialog',
+      (t) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
+    await t.binding.setSurfaceSize(const Size(1120, 1100));
+    addTearDown(() => t.binding.setSurfaceSize(null));
+    nextNativeSelections.add(43);
+    final api = CatalogFixture();
+    await t.pumpWidget(NamLabApp(autoConnect: false, toneApi: api));
+    await t.pumpAndSettle();
+    await t.tap(find.text('Explore TONE3000'));
+    await t.pumpAndSettle();
+    expect(api.modelRequests, 2);
+    expect(calls.where((c) => c == 'openToneBrowser').length, 1);
+    expect(calls.where((c) => c == 'nextToneSelection').length, 2);
+    expect(find.byType(Dialog), findsNothing);
+    expect(library, isNotNull);
+    expect(t.takeException(), isNull);
+    debugDefaultTargetPlatformOverride = null;
+  });
   testWidgets('rejected timing is not presented as a valid performance result',
       (t) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
@@ -320,6 +345,7 @@ void main() {
     await t.ensureVisible(find.text('Open TONE3000'));
     await t.pumpAndSettle();
     Uri? opened;
+    cancelNative = true;
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(const MethodChannel('flutter_web_auth_2'),
             (call) async {
@@ -332,8 +358,8 @@ void main() {
     await t.pump();
     await t.pump(const Duration(seconds: 1));
     expect(calls, contains('loadToneSession'));
-    expect(opened!.queryParameters['client_id'], 't3k_pub_bundled_test');
-    expect(opened!.queryParameters['prompt'], 'select_tone');
+    expect(nativeOpened!.queryParameters['client_id'], 't3k_pub_bundled_test');
+    expect(nativeOpened!.queryParameters['prompt'], 'select_tone');
     expect(find.text('Sign in to TONE3000'), findsNothing);
     expect(find.byTooltip('Close tone browser'), findsNothing);
     expect(find.textContaining('not enabled in this build'), findsNothing);
@@ -619,7 +645,7 @@ void main() {
     await t.pumpAndSettle();
     await t.tap(find.text('MIGHTY PLUG PRO USB'));
     await t.pumpAndSettle();
-    expect(find.text('Connected · status only'), findsOneWidget);
+    expect(find.byTooltip('Connected'), findsOneWidget);
     expect(calls, ['loadLibrary', 'devices', 'inspect']);
     expect(t.takeException(), isNull);
     debugDefaultTargetPlatformOverride = null;
@@ -660,7 +686,7 @@ void main() {
       await t.pumpAndSettle();
       await t.tap(find.text('MIGHTY PLUG PRO USB'));
       await t.pumpAndSettle();
-      expect(find.text('Connected · silent'), findsOneWidget);
+      expect(find.byTooltip('Connected'), findsOneWidget);
       await t.tap(find.text('Signal chain'));
       await t.pumpAndSettle();
       await t.tap(find.byKey(const ValueKey('send-model')));
@@ -733,15 +759,8 @@ void main() {
     await t.tap(find.byKey(const ValueKey('block-nam')));
     await t.pumpAndSettle();
     await t.tap(find.text('Explore TONE3000'));
-    await t.pump();
-    await t.pump(const Duration(seconds: 1));
-    await t.tap(find.text('Test amp'));
-    await t.pump();
-    await t.pump(const Duration(seconds: 1));
-    await t.tap(find.text('Test Lite capture'));
     await t.pumpAndSettle();
-    expect(find.byTooltip('Close tone browser'), findsOneWidget);
-    await t.tap(find.byTooltip('Close tone browser'));
+    expect(find.byTooltip('Close tone browser'), findsNothing);
     await t.pumpAndSettle();
     expect(
         find.descendant(

@@ -1,10 +1,10 @@
-# NAM Plug
+# mighty-nam
 
 **Neural Amp Modeler on a NUX Mighty Plug Pro. An open controller, firmware experiments, and a documented path from guitar to headphones.**
 
 By [santismo](https://github.com/santismo). Original project code is MIT licensed; upstream notices are retained.
 
-[Guide source](docs/guide.html) · [Mac installer](https://github.com/santismo/nam-plug/releases/tag/v0.3.0-preview.1) · [Roadmap](ROADMAP.md) · [Build from source](DEVELOPMENT.md)
+[Guide source](docs/guide.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.0-preview.1) · [Roadmap](ROADMAP.md) · [Build from source](DEVELOPMENT.md)
 
 The repository is private and GitHub Pages is disabled. The guide source remains available here.
 
@@ -22,7 +22,7 @@ The repository is private and GitHub Pages is disabled. The guide source remains
 
 | Component | State |
 | --- | --- |
-| NAMLNK21 / Mac 0.4.3 / phone 0.7.3 | Firmware staged, not installed: USB PCM routing restored and six NAM gain/tone/mix controls added. Controllers retain bypassed blocks, separate Remove/Change block, and keep capture details open after loading. Physical Logic audio and hardware timing are pending. [Build and validation](docs/usb-audio-nam-controls.md). |
+| NAMLNK21 / Mac 0.5.0 / phone 0.8.0 | Firmware staged, not installed: USB PCM routing, NAM tone controls, separate USB recording gain, and a more resonant Auto Wah. Mac official capture browsing stays open; both controllers support exact color selection and retain bypassed blocks. Physical Logic audio and hardware timing are pending. [Build and validation](docs/usb-audio-nam-controls.md). |
 | NAMLNK20 / Mac 0.4.1 / phone 0.7.1 | Installed on the development plug; seven Fender presets saved/verified and output left on. USB audio callback omission identified. [Playback baseline](docs/playback-volume.md). |
 | NAMLNK19 / Mac 0.3.11 / phone 0.6.6 | Delay/reverb bypass sleep and explicit one-shot driver timing. Installed; seven restored presets and global 8-sample setting survived restart. Seven chain states, 84 driver snapshots and bypass/wake checks passed without reported faults. Playback left enabled; analog latency not measured. See [test build and limits](docs/bypass-driver-timing-trial.md). |
 | Driver research after NAMLNK19 | Recorded-phase screen identifies later DMA fetch plus current-block output as a possible 0.167 ms reduction. Exact ARM tests confirm 16/32 add only 0.167/0.500 ms over 8. No new firmware or device commands. See [findings and limits](docs/driver-phase-investigation.md). |
@@ -49,8 +49,8 @@ The local 0.3.11 app includes FX A/B, High / Low Cut and explicit NAMLNK15/16/17
 ## Install the Mac app
 
 1. Download `NAM-Plug-0.3.0-macOS.dmg` from the preview release.
-2. Open it and drag **NAM Plug** to **Applications**.
-3. Launch NAM Plug. This preview is ad-hoc signed, not Apple notarized; see [installation help](docs/guide.html#install).
+2. Open it and drag **mighty-nam** to **Applications**.
+3. Launch mighty-nam. This preview is development signed, not Apple notarized; see [installation help](docs/guide.html#install).
 4. Connect the Mighty Plug Pro by a data-capable USB cable in normal mode. The app requires a compatible custom firmware for NAM control; installing the Mac app alone does not install that firmware.
 
 The app installer does not flash the device or change system audio. Start hardware checks with headphones unplugged, then use the plug's headphones at low volume for listening.
@@ -79,7 +79,7 @@ TONE3000 captures have their own creator licenses. Your account/session, persona
 
 ## License and credits
 
-[MIT © 2026 santismo](LICENSE) covers original NAM Plug contributions. [Third-party notices](THIRD_PARTY_NOTICES.md) preserve Mightier Amp, NeuralAmpModelerCore, Eigen, nlohmann/json, musl, and dependency licenses. NUX, Neural Amp Modeler, and TONE3000 identify interoperability targets; this is an independent project.
+[MIT © 2026 santismo](LICENSE) covers original mighty-nam contributions. [Third-party notices](THIRD_PARTY_NOTICES.md) preserve Mightier Amp, NeuralAmpModelerCore, Eigen, nlohmann/json, musl, and dependency licenses. NUX, Neural Amp Modeler, and TONE3000 identify interoperability targets; this is an independent project.
 
 NAMLNK13 is **installed for an experimental trial**, adding two movable FX blocks and short Bluetooth reply pages. Initial muted USB runs passed, and the user confirmed Bluefy reaches Ready with both FX blocks visible. Listening quality, calibrated deadlines and phone save/tuner checks remain outstanding. See [trial notes](docs/dual-fx-trial.md). The public [controller 0.4.1](https://santismo.github.io/nam-plug-controller/?v=0.4.1) adds a second enable/bypass control in the selected-block header and retains NAMLNK12 fallback behavior. This historical controller has been superseded by 0.6.0; see the current trial notes below.
 

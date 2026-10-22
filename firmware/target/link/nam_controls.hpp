@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 namespace mpp::tone {
+float gain(unsigned);unsigned record(const uint8_t*);
 void defaults(uint8_t*);bool valid(const uint8_t*);void decode(const uint8_t*,uint8_t*);
 struct Engine {
  float low,high,gain[6],input[8];bool ready;

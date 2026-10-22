@@ -26,6 +26,7 @@ class CatalogFixture extends Tone3000Client {
   Future<int?> complete(SelectionFlow flow, Uri callback) async {
     expect(callback.queryParameters['state'], flow.state);
     expect(flow.needsTone, true);
+    flow.consumed = true;
     return 42;
   }
 

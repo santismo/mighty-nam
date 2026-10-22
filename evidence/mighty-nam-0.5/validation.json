@@ -1,0 +1,18 @@
+{
+  "mac_tests": 95,
+  "mac_optional_skips": 1,
+  "api_tests": 42,
+  "phone_tests": 115,
+  "native_wire_tests": "PASS",
+  "address_undefined_sanitizers": "PASS FX extremes, switching, Auto Wah response",
+  "mac_build": "0.5.0+19 universal",
+  "app_installed": true,
+  "app_launched": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "flashed": false,
+  "live_TONE3000_repeated_selection_verified": false,
+  "physical_Logic_verified": false,
+  "additional_repeated_native_browser_test": "PASS two selections, one window, no intermediate dialog",
+  "analysis": "No analyzer errors or warnings; 11 brace-style info notices"
+}

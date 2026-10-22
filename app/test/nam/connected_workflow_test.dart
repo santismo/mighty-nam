@@ -80,6 +80,13 @@ class UsbFixture {
         'audioStreamOpened': false,
       };
   Future<dynamic> call(MethodCall c) async {
+    if (c.method == 'openToneBrowser') {
+      final u = Uri.parse(c.arguments as String);
+      return 'mighty-nam://oauth/callback?state=${u.queryParameters['state']}&tone_id=42&code=fixture';
+    }
+    if (c.method == 'nextToneSelection' || c.method == 'toneBrowserStatus')
+      return null;
+
     if (c.method == 'loadLibrary') return library;
     if (c.method == 'saveLibrary') {
       library = c.arguments as String;
@@ -243,20 +250,10 @@ void main() {
     final api = CatalogFixture()..captureGear = 'amp-cab';
     usb.preset[3] |= 64; // New selection must enable a previously bypassed NAM.
     await start(t, api: api);
-    expect(find.text('Connected · muted'), findsOneWidget);
+    expect(find.byTooltip('Connected'), findsOneWidget);
     await t.tap(find.text('Explore TONE3000'));
-    await t.pump();
-    await t.pump(const Duration(seconds: 1));
-    await t.ensureVisible(find.text('Test amp'));
-    await t.tap(find.text('Test amp'));
-    await t.pump();
-    await t.pump(const Duration(seconds: 1));
-    await t.ensureVisible(find.byKey(const ValueKey('load-model-5')));
-    await t.pump();
-    await t.tap(find.byKey(const ValueKey('load-model-5')));
     await t.pumpAndSettle();
-    expect(find.byTooltip('Close tone browser'), findsOneWidget);
-    await t.tap(find.byTooltip('Close tone browser'));
+    expect(find.byTooltip('Close tone browser'), findsNothing);
     await t.pumpAndSettle();
     final saved = HybridRig.parse(jsonDecode(usb.library!)['active']);
     expect(saved.modelSha256, LiteModel.fixture().sha256Hex);
@@ -387,7 +384,7 @@ void main() {
     await start(t);
     usb.connected = false;
     await tick(t);
-    expect(find.text('Not connected'), findsOneWidget);
+    expect(find.byTooltip('Disconnected'), findsOneWidget);
     expect(find.text('Loaded on plug'), findsNothing);
     expect(HybridRig.parse(jsonDecode(usb.library!)['active']).modelSha256,
         a.sha256Hex);

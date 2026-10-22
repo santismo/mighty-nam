@@ -23,8 +23,8 @@ import 'tuner_dialog.dart';
 import 'plug_model_transport.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const ink = Color(0xff17191c),
-    panel = Color(0xff202327),
+const ink = Color(0xff050505),
+    panel = Color(0xff0c0c0c),
     mint = Color(0xff8ebcef);
 
 class NamLabApp extends StatelessWidget {
@@ -40,7 +40,7 @@ class NamLabApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'NAM Plug',
+      title: 'mighty-nam',
       theme: ThemeData(
         brightness: Brightness.dark,
         useMaterial3: true,
@@ -51,7 +51,16 @@ class NamLabApp extends StatelessWidget {
             color: panel,
             elevation: 0,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)))),
+                side: BorderSide(color: Color(0xff292929)),
+                borderRadius: BorderRadius.all(Radius.circular(3)))),
+        sliderTheme: const SliderThemeData(
+            trackHeight: 2,
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5)),
+        dividerColor: const Color(0xff292929),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3)))),
         inputDecorationTheme: const InputDecorationTheme(
             border: OutlineInputBorder(), filled: true),
       ),
@@ -537,7 +546,7 @@ class _NamHomeState extends State<NamHome> {
   Future<Tone3000Client> toneClient() async {
     if (!toneConfigured) {
       throw const FormatException(
-          'TONE3000 sign-in is not enabled in this build yet. NAM Plug needs its one-time app registration. Your saved captures are available offline.');
+          'TONE3000 sign-in is not enabled in this build yet. mighty-nam needs its one-time app registration. Your saved captures are available offline.');
     }
     api ??= Tone3000Client(toneClientId.trim(),
         sessionStore: NativeToneSessionStore());
@@ -570,8 +579,7 @@ class _NamHomeState extends State<NamHome> {
       if (captureIncludesCabinet(next)) {
         rig.blocks.singleWhere((b) => b.slot == 'cab').enabled = false;
       }
-      status =
-          'Selected ${next.metadata['name'] ?? 'A2 Lite'}. Saved on this Mac.${canTransfer ? ' Loading it onto the plug.' : ' Connect the plug to load it.'}';
+      status = '${next.metadata['name'] ?? 'A2 Lite'} selected';
     });
     await persist();
     if (canTransfer) await sendModel();
@@ -619,8 +627,49 @@ class _NamHomeState extends State<NamHome> {
   }
 
   Future<void> exploreToneBrowser() async {
-    final id = await pickOfficialTone();
-    if (mounted && id != null) await openToneBrowser(initialToneId: id);
+    final client = await toneClient();
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.macOS) {
+      final id = await pickOfficialTone();
+      if (mounted && id != null) await loadOfficialTone(client, id);
+      return;
+    }
+    final flow = client.select(Uri.parse('mighty-nam://oauth/callback'));
+    const channel = NativeToneSessionStore.channel;
+    setState(() => browsingCaptures = true);
+    try {
+      var callback =
+          await channel.invokeMethod<String>('openToneBrowser', '${flow.url}');
+      var authenticated = false;
+      while (mounted && callback != null) {
+        try {
+          final uri = Uri.parse(callback);
+          final id = authenticated
+              ? client.selectionFromBrowser(flow, uri)
+              : await client.complete(flow, uri);
+          authenticated = client.connected;
+          if (id == null) break;
+          await channel.invokeMethod<void>(
+              'toneBrowserStatus', 'Loading A2 Lite…');
+          await loadOfficialTone(client, id);
+          await channel.invokeMethod<void>('toneBrowserStatus',
+              'Loaded · ${model?.metadata['name'] ?? 'A2 Lite'}');
+        } catch (error) {
+          final text = error is ToneApiException || error is FormatException
+              ? '$error'
+              : 'Could not load capture. Try another selection.';
+          if (mounted) setState(() => status = text);
+          await channel.invokeMethod<void>('toneBrowserStatus', text);
+        }
+        callback = await channel.invokeMethod<String>('nextToneSelection');
+      }
+    } finally {
+      if (mounted) setState(() => browsingCaptures = false);
+    }
+  }
+
+  Future<void> loadOfficialTone(Tone3000Client client, int id) async {
+    final next = await client.downloadSelectedLite(id);
+    if (mounted) await selectCapture(next);
   }
 
   Future<int?> pickOfficialTone() async {
@@ -682,7 +731,7 @@ class _NamHomeState extends State<NamHome> {
     pendingControls = false;
     final source = selectedSource;
     if (!canTransfer || source == null) {
-      throw StateError('Connect supported NAM Plug firmware first.');
+      throw StateError('Connect supported mighty-nam firmware first.');
     }
     final chain = HybridRig.parse(rig.encode());
     final plan = StockControlPlan.fromRig(chain,
@@ -730,6 +779,14 @@ class _NamHomeState extends State<NamHome> {
       if ((await client.read()).join(',') != chain.namTone.join(',')) {
         throw StateError('NAM controls did not match the plug.');
       }
+      final recording =
+          UsbRecordClient((frame) => device.exchangeFxFrame(source, frame));
+      if ((await recording.read()).single != chain.usbRecordGain) {
+        await recording.write(
+            [chain.usbRecordGain],
+            (before['presetBank'] as Map)['active'] as int,
+            beforeWords[5] as int);
+      }
     }
     await Future<void>.delayed(const Duration(milliseconds: 250));
     final after = await device.inspect(source);
@@ -748,13 +805,7 @@ class _NamHomeState extends State<NamHome> {
     if (mounted) {
       setState(() {
         hardware = after;
-        final processing = hasListening
-            ? 'The full chain is configured. ${listening ? 'Listening resumes after the change settles.' : 'Playback resumes after a capture is loaded.'}'
-            : hasStockChain
-                ? 'The full chain is configured; output stays silent.'
-                : 'Stock effects are not processing yet; output stays silent.';
-        status =
-            'Effect choices, controls and order verified on the plug. $processing';
+        status = 'Applied';
       });
     }
   }
@@ -795,7 +846,7 @@ class _NamHomeState extends State<NamHome> {
   Future<void> importPreset() async {
     final file = await openFile(acceptedTypeGroups: const [
       XTypeGroup(
-          label: 'NAM Plug chain',
+          label: 'mighty-nam chain',
           extensions: ['json'],
           uniformTypeIdentifiers: ['public.json'])
     ]);
@@ -1021,9 +1072,7 @@ class _NamHomeState extends State<NamHome> {
       pendingModel = false;
     });
     await persist();
-    if (hasPresetBank &&
-        plugPresets[slot]?.occupied == true &&
-        !onboard.dirty[slot]) {
+    if (hasPresetBank && plugPresets[slot]?.occupied == true) {
       final recalled = await presetClient.recall(slot);
       if (recalled.active != slot) {
         throw StateError('Preset selection was not confirmed.');
@@ -1031,6 +1080,13 @@ class _NamHomeState extends State<NamHome> {
       hardware = await device.inspect(selectedSource!);
       observedPreset = null;
       await readOnboardBank();
+      if (onboard.dirty[slot]) {
+        if (model != null) {
+          await sendModel();
+        } else {
+          await sendStockControls();
+        }
+      }
     } else {
       if (mounted) {
         setState(() => status =
@@ -1205,11 +1261,6 @@ class _NamHomeState extends State<NamHome> {
                   icon: const Icon(Icons.save_outlined),
                   label: Text(
                       'Save ${presetColorNames[onboard.selected]} to plug')),
-              Text(
-                  hasPresetBank
-                      ? 'Save keeps this capture and effects after power off.'
-                      : 'Edit seven color presets here. Saving onboard requires NAMLNK10.',
-                  style: const TextStyle(color: Colors.white60, fontSize: 12))
             ])
       ]);
 
@@ -1229,12 +1280,6 @@ class _NamHomeState extends State<NamHome> {
         const SizedBox(height: 8),
         Text(rig.name == 'My NAM rig' ? 'Untitled chain' : rig.name,
             style: const TextStyle(color: Colors.white60)),
-        if (canTransfer)
-          const Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Text(
-                  'Connected · effect controls and block order update the plug automatically',
-                  style: TextStyle(color: Colors.white60, fontSize: 12))),
         if (hasStockChain) ...[
           const SizedBox(height: 18),
           masterVolumeControl,
@@ -1392,7 +1437,7 @@ class _NamHomeState extends State<NamHome> {
   Future<void> scan() async {
     if (!native) {
       setState(() => status =
-          'Open NAM Plug for Mac to connect over USB. This browser shows the editor and library.');
+          'Open mighty-nam for Mac to connect over USB. This browser shows the editor and library.');
       return;
     }
     final found = await device.devices();
@@ -1470,7 +1515,7 @@ class _NamHomeState extends State<NamHome> {
     }
     setState(() {
       transferProgress = 0;
-      status = 'Sending capture. Output remains silent.';
+      status = 'Loading capture…';
     });
     try {
       if (hasListening) await device.setListening(source, false);
@@ -1749,8 +1794,26 @@ class _NamHomeState extends State<NamHome> {
                     setState(() => rig.masterVolume = value.round());
                     edited();
                   }),
-        const Text('Plug output · saved with this preset',
-            style: TextStyle(color: Colors.white60, fontSize: 12)),
+        if (hardware?['identity'] == 'NAMLNK21') ...[
+          const SizedBox(height: 12),
+          Row(children: [
+            const Text('USB recording gain'),
+            const Spacer(),
+            Text('${((rig.usbRecordGain - 48) / 2).toStringAsFixed(1)} dB')
+          ]),
+          Slider(
+              key: const ValueKey('usb-record-gain'),
+              value: rig.usbRecordGain.toDouble(),
+              min: 0,
+              max: 96,
+              divisions: 96,
+              onChanged: busy
+                  ? null
+                  : (value) {
+                      setState(() => rig.usbRecordGain = value.round());
+                      edited();
+                    }),
+        ],
       ]);
 
   Widget get devicePage {
@@ -1857,7 +1920,7 @@ class _NamHomeState extends State<NamHome> {
   Future<void> checkUpdate() async {
     final file = await openFile(acceptedTypeGroups: const [
       XTypeGroup(
-          label: 'NAM Plug release manifest',
+          label: 'mighty-nam release manifest',
           extensions: ['json'],
           uniformTypeIdentifiers: ['public.json'])
     ]);
@@ -1905,7 +1968,7 @@ class _NamHomeState extends State<NamHome> {
               child: const Text('Add silent test fixture')),
         ])),
         card(Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const Text('NAM Plug updater', style: TextStyle(fontSize: 21)),
+          const Text('mighty-nam updater', style: TextStyle(fontSize: 21)),
           const SizedBox(height: 8),
           const Text(
               'Review a release manifest here. The Mac companion verifies the image, target and restore file before handing installation to the tested NUX loader.'),
@@ -1937,7 +2000,7 @@ class _NamHomeState extends State<NamHome> {
             const Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: Text(
-                    'Sign-in is waiting for NAM Plug’s one-time app registration.',
+                    'Sign-in is waiting for mighty-nam’s one-time app registration.',
                     style: TextStyle(color: Colors.white60))),
           if (!bundledToneConnection)
             ExpansionTile(
@@ -2026,7 +2089,7 @@ class _NamHomeState extends State<NamHome> {
             appBar: AppBar(
                 backgroundColor: ink,
                 surfaceTintColor: Colors.transparent,
-                title: const Text('NAM Plug',
+                title: const Text('mighty-nam',
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                 actions: [
@@ -2038,23 +2101,17 @@ class _NamHomeState extends State<NamHome> {
                       icon: const Icon(Icons.graphic_eq, size: 18),
                       label: const Text('Tuner')),
                   const SizedBox(width: 18),
-                  const Icon(Icons.volume_off_outlined,
-                      size: 16, color: Colors.white54),
                   Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 24),
-                      child: Center(
-                          child: Text(
-                              hardware?['compatible'] == true
-                                  ? canTransfer
-                                      ? (hasListening
-                                          ? (listening
-                                              ? 'Plug listening enabled'
-                                              : 'Connected · muted')
-                                          : 'Connected · silent')
-                                      : 'Connected · status only'
-                                  : 'Not connected',
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.white60))))
+                      padding: const EdgeInsets.only(right: 24),
+                      child: Tooltip(
+                          message: hardware?['compatible'] == true
+                              ? 'Connected'
+                              : 'Disconnected',
+                          child: Icon(Icons.circle,
+                              size: 7,
+                              color: hardware?['compatible'] == true
+                                  ? const Color(0xff7ce4bd)
+                                  : Colors.white30)))
                 ]),
             body: desktop
                 ? Row(children: [

@@ -310,3 +310,15 @@ public enum NamToneWire {
   guard request(q),m.count==22,Array(m.prefix(9))==prefix,m.last==247,m.dropFirst().dropLast().allSatisfy({$0<128}),m[9]==q[9]|64,Array(m[10...12])==Array(q[10...12]),m[13]<=2,[0,1,2,3,4,5,6,127].contains(m[14]),config(Array(m[15..<21])) else{return nil};return m
  }
 }
+
+public enum NamRecordWire {
+ static let prefix:[UInt8]=[240,67,88,112,4,2,78,86,1]
+ static func config(_ c:[UInt8])->Bool {c.count==1 && c[0]<=96}
+ static func request(_ q:[UInt8])->Bool {
+  guard [14,21].contains(q.count),Array(q.prefix(9))==prefix,q.last==247,q.dropFirst().dropLast().allSatisfy({$0<128}),q[9]<=1,[0,1,2,3,4,5,6,127].contains(q[10]),q[11]|q[12] != 0 else{return false}
+  return q[9]==0 ? q.count==14 : q.count==21 && q[13]==0 && q[18]<16 && config(Array(q[19..<20]))
+ }
+ static func reply(_ m:[UInt8],to q:[UInt8])->[UInt8]? {
+  guard request(q),m.count==17,Array(m.prefix(9))==prefix,m.last==247,m.dropFirst().dropLast().allSatisfy({$0<128}),m[9]==q[9]|64,Array(m[10...12])==Array(q[10...12]),m[13]<=2,[0,1,2,3,4,5,6,127].contains(m[14]),config(Array(m[15..<16])) else{return nil};return m
+ }
+}

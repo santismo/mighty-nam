@@ -605,7 +605,7 @@ extern "C" BANK_TEXT void mpp_probe_query(const uint8_t* p,unsigned n,unsigned c
     p[3]!=0x70||p[4]!=4||p[5]!=2||p[6]!='N'||p[n]!=0xf7)return;
 #ifdef MPP_FX_BLOCKS
 #ifdef MPP_USB_NAM_CONTROLS
- if(p[7]=='G'){mpp_nam_query(p,n,channel);return;}
+ if(p[7]=='G'||p[7]=='V'){mpp_nam_query(p,n,channel);return;}
 #endif
  if(p[7]=='R'){mpp_reply_query(p,n,channel);return;}
  if(p[7]=='F'){mpp_fx_query(p,n,channel);return;}

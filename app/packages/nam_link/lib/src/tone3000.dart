@@ -94,6 +94,50 @@ class Tone3000Client {
     }
   }
 
+  /// Later selections are data from the same trusted native browser, not a
+  /// second authorization. Never exchange/reuse a consumed OAuth code.
+  int? selectionFromBrowser(SelectionFlow flow, Uri callback) {
+    if (!connected ||
+        !flow.consumed ||
+        callback.replace(query: '', fragment: '') !=
+            flow.redirect.replace(query: '', fragment: '') ||
+        callback.hasFragment ||
+        callback.queryParametersAll.values.any((v) => v.length != 1) ||
+        callback.queryParameters['state'] != flow.state ||
+        callback.queryParameters.containsKey('error')) {
+      throw ToneApiException('Unexpected capture selection');
+    }
+    if (callback.queryParameters['canceled'] == 'true') return null;
+    final id = int.tryParse(callback.queryParameters['tone_id'] ?? '');
+    if (id == null || id <= 0) throw ToneApiException('No tone selected');
+    return id;
+  }
+
+  Future<LiteModel> downloadSelectedLite(int id) async {
+    final detail = await tone(id);
+    if (detail['format'] != 'nam')
+      throw const FormatException('Choose an A2 Lite capture');
+    for (var page = 1; page <= 4; page++) {
+      final result = await models(id, page: page);
+      final data = result['data'];
+      if (data is! List || data.length > 100)
+        throw const FormatException('Unexpected model list');
+      for (final row in data) {
+        if (row is! Map<String, dynamic>)
+          throw const FormatException('Unexpected model');
+        try {
+          return await download(row, detail);
+        } on FormatException {
+          /* A2 containers may lack the supported Lite variant. */
+        }
+      }
+      if (page >= (result['total_pages'] is int ? result['total_pages'] : 1))
+        break;
+    }
+    throw const FormatException(
+        'No compatible 48 kHz A2 Lite model in this tone');
+  }
+
   Future<void> signOut() {
     _epoch++;
     _session = null;

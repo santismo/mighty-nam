@@ -14,9 +14,12 @@ extern "C" void mpp_usb_begin(bool running){
  ((void(*)())0x14915)(); // Stock USB playback gain/limiter.
 }
 extern "C" void mpp_usb_finish(float* l,float* r){
+ static float smoothed;static bool ready;
+ const float target=mpp::tone::gain(mpp::tone::record(*(const uint8_t**)0x20005ad0));
+ if(!ready){smoothed=target;ready=true;}else smoothed+=(target-smoothed)*.0625f;
  auto* record=(float*)0x20015a10;const auto* play=(const float*)0x20015b10;
  for(unsigned i=0;i<8;++i){
-  float a=l[i]*.625f,b=r[i]*.625f;
+  float a=l[i]*(.625f*smoothed),b=r[i]*(.625f*smoothed);
   // Recording is pre-headphone volume and excludes host return (no loopback).
   record[i]=__builtin_isfinite(a)?(a>.875f?.875f:a<-.875f?-.875f:a):0;
   record[8+i]=__builtin_isfinite(b)?(b>.875f?.875f:b<-.875f?-.875f:b):0;

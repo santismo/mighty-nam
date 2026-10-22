@@ -191,14 +191,14 @@ class _RigEditorState extends State<RigEditor> {
                               child: InkWell(
                                 onTap: () =>
                                     setState(() => selected = item.slot),
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(3),
                                 child: Container(
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: selected == item.slot
-                                          ? const Color(0xff2b3036)
-                                          : const Color(0xff202327),
-                                      borderRadius: BorderRadius.circular(6),
+                                          ? const Color(0xff101010)
+                                          : const Color(0xff080808),
+                                      borderRadius: BorderRadius.circular(3),
                                       border: Border.all(
                                           color: selected == item.slot
                                               ? c
@@ -282,7 +282,7 @@ class _RigEditorState extends State<RigEditor> {
           key: const ValueKey('selected-controls'),
           padding: const EdgeInsets.all(22),
           decoration: BoxDecoration(
-              color: const Color(0xff202327),
+              color: const Color(0xff080808),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: color.withValues(alpha: .25))),
           child:

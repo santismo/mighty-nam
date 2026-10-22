@@ -1,7 +1,7 @@
 name: mighty_plug_manager
-description: NAM Plug controller, adapted from Mightier Amp.
+description: mighty-nam controller, adapted from Mightier Amp.
 publish_to: none
-version: 0.4.3+18
+version: 0.5.0+19
 environment:
   sdk: '>=3.6.0 <4.0.0'
 dependencies:

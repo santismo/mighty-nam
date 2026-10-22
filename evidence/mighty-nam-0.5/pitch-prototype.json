@@ -1,0 +1,482 @@
+[
+  {
+    "variant": "before",
+    "hz": 82.4069,
+    "semitones": -12,
+    "nonharmonic_db": -63.49122165400614,
+    "finite": true,
+    "peak": 0.13666343688964844
+  },
+  {
+    "variant": "before",
+    "hz": 82.4069,
+    "semitones": -7,
+    "nonharmonic_db": -57.14779534950527,
+    "finite": true,
+    "peak": 0.13666275143623352
+  },
+  {
+    "variant": "before",
+    "hz": 82.4069,
+    "semitones": -2,
+    "nonharmonic_db": -66.91171424964989,
+    "finite": true,
+    "peak": 0.13666309416294098
+  },
+  {
+    "variant": "before",
+    "hz": 82.4069,
+    "semitones": 2,
+    "nonharmonic_db": -55.46266574300462,
+    "finite": true,
+    "peak": 0.13666191697120667
+  },
+  {
+    "variant": "before",
+    "hz": 82.4069,
+    "semitones": 7,
+    "nonharmonic_db": -55.269606618181555,
+    "finite": true,
+    "peak": 0.13666264712810516
+  },
+  {
+    "variant": "before",
+    "hz": 82.4069,
+    "semitones": 12,
+    "nonharmonic_db": -55.332556985432234,
+    "finite": true,
+    "peak": 0.13666217029094696
+  },
+  {
+    "variant": "before",
+    "hz": 110,
+    "semitones": -12,
+    "nonharmonic_db": -57.17631471571217,
+    "finite": true,
+    "peak": 0.13666130602359772
+  },
+  {
+    "variant": "before",
+    "hz": 110,
+    "semitones": -7,
+    "nonharmonic_db": -67.1279291151243,
+    "finite": true,
+    "peak": 0.13666227459907532
+  },
+  {
+    "variant": "before",
+    "hz": 110,
+    "semitones": -2,
+    "nonharmonic_db": -54.910903115236984,
+    "finite": true,
+    "peak": 0.13666342198848724
+  },
+  {
+    "variant": "before",
+    "hz": 110,
+    "semitones": 2,
+    "nonharmonic_db": -55.27497512654896,
+    "finite": true,
+    "peak": 0.1366620808839798
+  },
+  {
+    "variant": "before",
+    "hz": 110,
+    "semitones": 7,
+    "nonharmonic_db": -55.34706378052479,
+    "finite": true,
+    "peak": 0.1366630494594574
+  },
+  {
+    "variant": "before",
+    "hz": 110,
+    "semitones": 12,
+    "nonharmonic_db": -84.04785525721664,
+    "finite": true,
+    "peak": 0.13666146993637085
+  },
+  {
+    "variant": "before",
+    "hz": 196,
+    "semitones": -12,
+    "nonharmonic_db": -54.81656886216769,
+    "finite": true,
+    "peak": 0.13666202127933502
+  },
+  {
+    "variant": "before",
+    "hz": 196,
+    "semitones": -7,
+    "nonharmonic_db": -62.89709392701414,
+    "finite": true,
+    "peak": 0.13666018843650818
+  },
+  {
+    "variant": "before",
+    "hz": 196,
+    "semitones": -2,
+    "nonharmonic_db": -69.32835068923822,
+    "finite": true,
+    "peak": 0.13666245341300964
+  },
+  {
+    "variant": "before",
+    "hz": 196,
+    "semitones": 2,
+    "nonharmonic_db": -74.84573954269433,
+    "finite": true,
+    "peak": 0.13666093349456787
+  },
+  {
+    "variant": "before",
+    "hz": 196,
+    "semitones": 7,
+    "nonharmonic_db": -56.806905857973746,
+    "finite": true,
+    "peak": 0.13666211068630219
+  },
+  {
+    "variant": "before",
+    "hz": 196,
+    "semitones": 12,
+    "nonharmonic_db": -65.61570008704825,
+    "finite": true,
+    "peak": 0.1366610825061798
+  },
+  {
+    "variant": "before",
+    "hz": 329.6276,
+    "semitones": -12,
+    "nonharmonic_db": -54.86436794115513,
+    "finite": true,
+    "peak": 0.13664855062961578
+  },
+  {
+    "variant": "before",
+    "hz": 329.6276,
+    "semitones": -7,
+    "nonharmonic_db": -68.33235686969347,
+    "finite": true,
+    "peak": 0.1366596668958664
+  },
+  {
+    "variant": "before",
+    "hz": 329.6276,
+    "semitones": -2,
+    "nonharmonic_db": -57.16000411710784,
+    "finite": true,
+    "peak": 0.13665230572223663
+  },
+  {
+    "variant": "before",
+    "hz": 329.6276,
+    "semitones": 2,
+    "nonharmonic_db": -54.8360889138479,
+    "finite": true,
+    "peak": 0.1366548389196396
+  },
+  {
+    "variant": "before",
+    "hz": 329.6276,
+    "semitones": 7,
+    "nonharmonic_db": -54.76531909934455,
+    "finite": true,
+    "peak": 0.13665169477462769
+  },
+  {
+    "variant": "before",
+    "hz": 329.6276,
+    "semitones": 12,
+    "nonharmonic_db": -54.063811931564274,
+    "finite": true,
+    "peak": 0.13664807379245758
+  },
+  {
+    "variant": "before",
+    "hz": 659.255,
+    "semitones": -12,
+    "nonharmonic_db": -56.77247567947114,
+    "finite": true,
+    "peak": 0.13657210767269135
+  },
+  {
+    "variant": "before",
+    "hz": 659.255,
+    "semitones": -7,
+    "nonharmonic_db": -55.99441551790824,
+    "finite": true,
+    "peak": 0.13659217953681946
+  },
+  {
+    "variant": "before",
+    "hz": 659.255,
+    "semitones": -2,
+    "nonharmonic_db": -54.70864937426683,
+    "finite": true,
+    "peak": 0.13663868606090546
+  },
+  {
+    "variant": "before",
+    "hz": 659.255,
+    "semitones": 2,
+    "nonharmonic_db": -61.23819456910189,
+    "finite": true,
+    "peak": 0.1366390734910965
+  },
+  {
+    "variant": "before",
+    "hz": 659.255,
+    "semitones": 7,
+    "nonharmonic_db": -55.68900270523693,
+    "finite": true,
+    "peak": 0.13664403557777405
+  },
+  {
+    "variant": "before",
+    "hz": 659.255,
+    "semitones": 12,
+    "nonharmonic_db": -52.06521194432283,
+    "finite": true,
+    "peak": 0.13664881885051727
+  },
+  {
+    "variant": "prototype",
+    "hz": 82.4069,
+    "semitones": -12,
+    "nonharmonic_db": -63.48703901351839,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 82.4069,
+    "semitones": -7,
+    "nonharmonic_db": -57.13834917806178,
+    "finite": true,
+    "peak": 0.13666391372680664
+  },
+  {
+    "variant": "prototype",
+    "hz": 82.4069,
+    "semitones": -2,
+    "nonharmonic_db": -66.89919605553104,
+    "finite": true,
+    "peak": 0.13666388392448425
+  },
+  {
+    "variant": "prototype",
+    "hz": 82.4069,
+    "semitones": 2,
+    "nonharmonic_db": -55.46229932358428,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 82.4069,
+    "semitones": 7,
+    "nonharmonic_db": -55.27192684338707,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 82.4069,
+    "semitones": 12,
+    "nonharmonic_db": -55.3304982399399,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 110,
+    "semitones": -12,
+    "nonharmonic_db": -57.1990189586717,
+    "finite": true,
+    "peak": 0.13666391372680664
+  },
+  {
+    "variant": "prototype",
+    "hz": 110,
+    "semitones": -7,
+    "nonharmonic_db": -67.11660544885243,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 110,
+    "semitones": -2,
+    "nonharmonic_db": -54.90817661531945,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 110,
+    "semitones": 2,
+    "nonharmonic_db": -55.27629274279552,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 110,
+    "semitones": 7,
+    "nonharmonic_db": -55.34507215139479,
+    "finite": true,
+    "peak": 0.13666391372680664
+  },
+  {
+    "variant": "prototype",
+    "hz": 110,
+    "semitones": 12,
+    "nonharmonic_db": -82.11296934993365,
+    "finite": true,
+    "peak": 0.13666389882564545
+  },
+  {
+    "variant": "prototype",
+    "hz": 196,
+    "semitones": -12,
+    "nonharmonic_db": -54.82411297484657,
+    "finite": true,
+    "peak": 0.136664018034935
+  },
+  {
+    "variant": "prototype",
+    "hz": 196,
+    "semitones": -7,
+    "nonharmonic_db": -62.19180836625715,
+    "finite": true,
+    "peak": 0.1366640031337738
+  },
+  {
+    "variant": "prototype",
+    "hz": 196,
+    "semitones": -2,
+    "nonharmonic_db": -69.67743200363948,
+    "finite": true,
+    "peak": 0.1366639882326126
+  },
+  {
+    "variant": "prototype",
+    "hz": 196,
+    "semitones": 2,
+    "nonharmonic_db": -73.4670841626783,
+    "finite": true,
+    "peak": 0.1366639882326126
+  },
+  {
+    "variant": "prototype",
+    "hz": 196,
+    "semitones": 7,
+    "nonharmonic_db": -56.759960986417006,
+    "finite": true,
+    "peak": 0.1366640031337738
+  },
+  {
+    "variant": "prototype",
+    "hz": 196,
+    "semitones": 12,
+    "nonharmonic_db": -65.77366742580463,
+    "finite": true,
+    "peak": 0.1366639882326126
+  },
+  {
+    "variant": "prototype",
+    "hz": 329.6276,
+    "semitones": -12,
+    "nonharmonic_db": -54.85026832848526,
+    "finite": true,
+    "peak": 0.13666431605815887
+  },
+  {
+    "variant": "prototype",
+    "hz": 329.6276,
+    "semitones": -7,
+    "nonharmonic_db": -68.38021525100223,
+    "finite": true,
+    "peak": 0.1366642713546753
+  },
+  {
+    "variant": "prototype",
+    "hz": 329.6276,
+    "semitones": -2,
+    "nonharmonic_db": -57.143793465776525,
+    "finite": true,
+    "peak": 0.13666436076164246
+  },
+  {
+    "variant": "prototype",
+    "hz": 329.6276,
+    "semitones": 2,
+    "nonharmonic_db": -54.822829252601714,
+    "finite": true,
+    "peak": 0.13666445016860962
+  },
+  {
+    "variant": "prototype",
+    "hz": 329.6276,
+    "semitones": 7,
+    "nonharmonic_db": -54.7675452360177,
+    "finite": true,
+    "peak": 0.13666443526744843
+  },
+  {
+    "variant": "prototype",
+    "hz": 329.6276,
+    "semitones": 12,
+    "nonharmonic_db": -54.065245111333375,
+    "finite": true,
+    "peak": 0.13666440546512604
+  },
+  {
+    "variant": "prototype",
+    "hz": 659.255,
+    "semitones": -12,
+    "nonharmonic_db": -56.17403964884175,
+    "finite": true,
+    "peak": 0.136667862534523
+  },
+  {
+    "variant": "prototype",
+    "hz": 659.255,
+    "semitones": -7,
+    "nonharmonic_db": -54.479375512147115,
+    "finite": true,
+    "peak": 0.13666725158691406
+  },
+  {
+    "variant": "prototype",
+    "hz": 659.255,
+    "semitones": -2,
+    "nonharmonic_db": -53.94582006409956,
+    "finite": true,
+    "peak": 0.13666826486587524
+  },
+  {
+    "variant": "prototype",
+    "hz": 659.255,
+    "semitones": 2,
+    "nonharmonic_db": -58.43354091337058,
+    "finite": true,
+    "peak": 0.1366679072380066
+  },
+  {
+    "variant": "prototype",
+    "hz": 659.255,
+    "semitones": 7,
+    "nonharmonic_db": -54.810538064816924,
+    "finite": true,
+    "peak": 0.13666607439517975
+  },
+  {
+    "variant": "prototype",
+    "hz": 659.255,
+    "semitones": 12,
+    "nonharmonic_db": -51.48059923489015,
+    "finite": true,
+    "peak": 0.13666720688343048
+  }
+]

@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = NAM Plug
+PRODUCT_NAME = mighty-nam
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = org.namplug.controller
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = NAM Plug contributors; Mightier Amp © Dian Iliev, MIT.
+PRODUCT_COPYRIGHT = mighty-nam contributors; Mightier Amp © Dian Iliev, MIT.

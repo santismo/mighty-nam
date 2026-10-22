@@ -36,6 +36,33 @@ Future<void> login(Tone3000Client c) async {
 }
 
 void main() {
+  test('persistent browser selections do not reuse OAuth codes', () async {
+    var exchanges = 0;
+    final client =
+        Tone3000Client('t3k_pub_test', httpClient: MockClient((r) async {
+      exchanges++;
+      return token();
+    }));
+    final flow = client.select(Uri.parse('mighty-nam://oauth/callback'));
+    Uri selection(int id) => flow.redirect.replace(queryParameters: {
+          'state': flow.state,
+          'code': 'fixture',
+          'tone_id': '$id'
+        });
+    expect(await client.complete(flow, selection(42)), 42);
+    expect(client.selectionFromBrowser(flow, selection(43)), 43);
+    expect(exchanges, 1);
+    expect(
+        () => client.selectionFromBrowser(
+            flow,
+            selection(44)
+                .replace(queryParameters: {'state': 'wrong', 'tone_id': '44'})),
+        throwsA(isA<ToneApiException>()));
+    await expectLater(
+        client.complete(flow, selection(44)), throwsA(isA<ToneApiException>()));
+    client.close();
+  });
+
   test(
       'standard sign-in stores session, restores after closing, then removes on logout',
       () async {

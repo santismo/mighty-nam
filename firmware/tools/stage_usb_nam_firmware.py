@@ -17,7 +17,7 @@ evidence={}
 for name,status in [('arm','PASS_OFFLINE_NAMLNK21'),('storage','PASS_NAMLNK10_STOCK_STORAGE_CONTRACT')]:
  file=a.reports/(name+'.json');r=json.loads(file.read_text());need(r['status']==status and r['elf_sha256']==digest,'Mismatched '+name);evidence[name]=sha(file.read_bytes())
  if name=='arm':
-  for k in ['stereo_USB_PCM_ring_roundtrip','class_mutes_verified','wet_record_excludes_host_return','NAM_controls_both_transports','seven_presets_cold_warm_button','removed_NAM_no_callback']:need(r[k],k)
+  for k in ['stereo_USB_PCM_ring_roundtrip','class_mutes_verified','wet_record_excludes_host_return','NAM_controls_both_transports','seven_presets_cold_warm_button','removed_NAM_no_callback','USB_record_gain_guarded_and_persistent','USB_record_gain_headphone_independent']:need(r[k],k)
   need(r['neutral_NAM_reference_peak_error']<2e-5 and r['compiled_callback_blocks']>=1652,'DSP regression')
 stock=a.stock_package.read_bytes();need(sha(stock)=='95c704b6026cb26aceaae179039e994c261a93610b0c578f50634b39f4393dd6','Exact V1.5.6 package required')
 original=Container(stock);need(original.rebuild_same_length(original.payload)==stock,'Stock roundtrip')
@@ -33,7 +33,7 @@ if a.seed_bank:
   model=r[256:7772]+b'\xff'*(8192-7516)
   need(word(r,16)==zlib.crc32(model) and word(model,0)==0x3241504d and word(model,8)==48000 and word(model,12)==1871 and word(model,20)==zlib.crc32(model[32:7516]),'Invalid A2 Lite')
   need(r[32:64].hex()==sha(model),'Factory capture SHA mismatch')
-  need(word(r,20)==1 and word(r,24)==8 and r[155:163]==bytes([48,12,12,12,100,48,78,1]),'Factory output/buffer/NAM controls')
+  need(word(r,20)==1 and word(r,24)==8 and r[155:163]==bytes([48,12,12,12,100,48,78,2]) and r[163]==48,'Factory output/buffer/NAM controls')
   need([j for j in range(1,10) if not r[128+j]&64]==[3,8] and r[128+84]==37,'Factory two-block chain')
   for c in [0,1]:normalized[(i*2+c)*8192:(i*2+c+1)*8192]=r
   seed_summary.append(dict(slot=i,model_crc=word(r,16),model_sha256=r[32:64].hex(),play_on_boot=True,buffer=8,active_nodes=[3,8],master_volume=37))
@@ -45,7 +45,7 @@ need(payload[:0x400]==original.payload[:0x400] and payload[0x11d94:0x11dd8]==ori
 need(payload[0x303a4000-FLASH:0x303a6000-FLASH]==b'\xff'*8192,'Global settings overlap')
 out=a.output_dir;out.mkdir(parents=True,exist_ok=True);target=out/'NAMLNK21-usb-audio-nam-controls-test.bin'
 need(not target.exists() or target.read_bytes()==packed,'Different staged file already exists');target.write_bytes(packed)
-report=dict(status='STAGED_NAMLNK21_NOT_INSTALLED',identity='NAMLNK21',elf_sha256=digest,candidate_sha256=sha(packed),bytes=len(packed),candidate_plan=plan,evidence=evidence,factory_presets=seed_summary,source_bank_sha256=sha(a.seed_bank.read_bytes()) if a.seed_bank else None,firmware_updates_preserve_user_presets=False,physical_Logic_duplex_verified=False,physical_real_time_verified=False,device_access=False,host_audio_access=False,firmware_flashing=False,controllers=dict(mac='0.4.3+18',phone='0.7.3'))
+report=dict(status='STAGED_NAMLNK21_NOT_INSTALLED',identity='NAMLNK21',elf_sha256=digest,candidate_sha256=sha(packed),bytes=len(packed),candidate_plan=plan,evidence=evidence,factory_presets=seed_summary,source_bank_sha256=sha(a.seed_bank.read_bytes()) if a.seed_bank else None,firmware_updates_preserve_user_presets=False,physical_Logic_duplex_verified=False,physical_real_time_verified=False,device_access=False,host_audio_access=False,firmware_flashing=False,controllers=dict(mac='0.5.0+19',phone='0.8.0'))
 (out/'NAMLNK21-review.json').write_text(json.dumps(report,indent=2)+'\n')
 manifest=dict(schema='nam-plug-release-1',target='NUX-MP3',firmware=dict(identity='NAMLNK21',sha256=sha(packed),bytes=len(packed)),restore=dict(sha256=sha(stock),bytes=len(stock)),loader=dict(vid=0x9527,pid=0xc157,identifier='20220615'),mode='experimental-usb-audio-nam-controls')
 (out/'NAMLNK21-release.json').write_text(json.dumps(manifest,indent=2)+'\n');print(json.dumps({k:report[k] for k in ['status','candidate_sha256','bytes']}))

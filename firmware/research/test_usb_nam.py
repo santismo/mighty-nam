@@ -23,6 +23,12 @@ class UsbMachine(ActiveMachine):
   self.u.mem_write(0x2000dac8+0x54,b'\1\0\1')
   self.put(0x2000dac8+0x58,0);self.put(0x2000dac8+0x5c,512);self.put(0x2000dac8+0x60,0)
   self.u.mem_write(0x2000b028,struct.pack('<16i',*[q for i in range(8) for q in [int(l[i]*2**31),int(r[i]*2**31)]]))
+ def nv(self,value=None,channel=0,crc=None):
+  active=self.page(25)[1]&255;model=self.words()[5] if crc is None else crc
+  q=[240,67,88,112,4,2,78,86,1,int(value is not None),127 if active==255 else active,14,2]
+  if value is not None:q += [0]+[(model>>(7*i))&127 for i in range(5)]+[value]
+  q += [247];rows=self.ingress([bytes(q)],channel);assert len(rows)==1 and rows[0][1]==channel
+  r=rows[0][0];assert len(r)==17 and r[9]==(q[9]|64);return r
  def ng(self,config=None,channel=0,crc=None,slot=None):
   active=self.page(25)[1]&255;slot=active if slot is None else slot
   model=self.words()[5] if crc is None else crc
@@ -74,6 +80,21 @@ def main():
   assert m.ng([127,12,12,12,100,48],channel)[13]==2
  assert m.words()[5]==modelcrc and m.get(v.sym['mpp_listen_warm'])==0
  after=bytes(m.u.mem_read(m.preset,128));assert all(before[i]==after[i] for i in range(128) if not 27<=i<=34)
+ # Independent USB record gain never changes headphone samples or host return.
+ assert m.nv()[15]==48
+ for transport in [0,1]:
+  assert m.nv(60,transport)[13]==0
+  assert m.nv(60,transport,crc=modelcrc^1)[13]==2
+  assert m.nv(127,transport)[13]==2
+ for _ in range(250):
+  m.floats(addr,left);m.floats(addr+32,right);m.call(v.sym['mpp_usb_finish'],[addr,addr+32])
+ assert max(abs(x-y*.625*10**(.3)) for x,y in zip(m.read(0x20015a10)+m.read(0x20015a30),left+right))<2e-6
+ assert max(abs(x-(y+.048)) for x,y in zip(m.read(addr),left))<1e-7
+ m.nv(96)
+ for _ in range(250):
+  m.floats(addr,[.9]*8);m.floats(addr+32,[-.9]*8);m.call(v.sym['mpp_usb_finish'],[addr,addr+32])
+ assert m.read(0x20015a10)==[.875]*8 and m.read(0x20015a30)==[-.875]*8
+ m.nv(48)
  m.boundary_oracle=None
  for i in range(1450,1650):m.process(i,input_block(i));assert m.get(v.sym['mpp_listen_warm'])==0
  # Removed NAM has no callback and ignores all its tone/gain settings.
@@ -81,6 +102,7 @@ def main():
  m.u.mem_write(m.preset,bytes(settings));m.ng([48,12,12,12,100,48]);
  slot=model_slot(a.model);saved=[]
  for color in range(7):
+  assert m.nv(48+color)[13]==0
   desired=[48+color,12,12,12,100,48];assert m.ng(desired)[13]==0
   fx=bytes(m.u.mem_read(m.preset,128));body=struct.pack('<4I',zlib.crc32(slot),zlib.crc32(fx),1,8)+hashlib.sha256(slot).digest()+b'Fender A2 Lite'.ljust(64,b'\0')
   assert m.bank_request(2,color,body,channel=color%2,nonce=100+color)[7]==0;saved.append(fx)
@@ -93,8 +115,8 @@ def main():
  if a.seed_bank:
   # Optional private factory bank uses neutral controls in every color. No model bytes in reports.
   for color in range(7):
-   m.call(0xb38a,[color]);m.service();m.ng([48,12,12,12,100,48]);fx=bytes(m.u.mem_read(m.preset,128));body=struct.pack('<4I',zlib.crc32(slot),zlib.crc32(fx),1,8)+hashlib.sha256(slot).digest()+b'Fender A2 Lite'.ljust(64,b'\0');assert m.bank_request(2,color,body,nonce=200+color)[7]==0
+   m.call(0xb38a,[color]);m.service();m.ng([48,12,12,12,100,48]);m.nv(48);fx=bytes(m.u.mem_read(m.preset,128));body=struct.pack('<4I',zlib.crc32(slot),zlib.crc32(fx),1,8)+hashlib.sha256(slot).digest()+b'Fender A2 Lite'.ljust(64,b'\0');assert m.bank_request(2,color,body,nonce=200+color)[7]==0
   a.seed_bank.write_bytes(bytes(m.u.mem_read(BANK,BANK_END-BANK)))
- report=dict(status='PASS_OFFLINE_NAMLNK21',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),compiled_callback_blocks=1652,neutral_NAM_reference_peak_error=m.max_boundary_error,stereo_USB_PCM_ring_roundtrip=True,class_mutes_verified=True,wet_record_excludes_host_return=True,NAM_controls_both_transports=True,seven_presets_cold_warm_button=True,removed_NAM_no_callback=True,device_access=False,host_audio_access=False,limitations=['USB enumeration/endpoint completion/frame counter modeled','Real-time physical deadlines and Logic duplex pending installation'])
+ report=dict(status='PASS_OFFLINE_NAMLNK21',elf_sha256=hashlib.sha256(a.elf.read_bytes()).hexdigest(),compiled_callback_blocks=1652,neutral_NAM_reference_peak_error=m.max_boundary_error,stereo_USB_PCM_ring_roundtrip=True,class_mutes_verified=True,wet_record_excludes_host_return=True,USB_record_gain_guarded_and_persistent=True,USB_record_gain_headphone_independent=True,NAM_controls_both_transports=True,seven_presets_cold_warm_button=True,removed_NAM_no_callback=True,device_access=False,host_audio_access=False,limitations=['USB enumeration/endpoint completion/frame counter modeled','Real-time physical deadlines and Logic duplex pending installation'])
  a.output.write_text(json.dumps(report,indent=2)+'\n');print(report['status'],flush=True)
 if __name__=='__main__':main()

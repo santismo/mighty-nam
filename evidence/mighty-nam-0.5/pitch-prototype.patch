@@ -1,0 +1,35 @@
+--- before/fx_blocks.cpp
++++ prototype/fx_blocks.cpp
+@@ -27,6 +27,11 @@
+  const float a=e.delay[ch][(e.write-whole)&2047],b=e.delay[ch][(e.write-whole-1)&2047];
+  return a+(b-a)*fraction;
+ }
++static float pitchTap(const Engine& e,unsigned ch,float distance){
++ const unsigned k=(unsigned)distance;if(k<1||k+2>=e.filled)return 0;
++ float t=distance-k,a=e.delay[ch][(e.write-k+1)&2047],b=e.delay[ch][(e.write-k)&2047],c=e.delay[ch][(e.write-k-1)&2047],d=e.delay[ch][(e.write-k-2)&2047];
++ return b+.5f*t*(c-a+t*(2*a-5*b+4*c-d+t*(3*(b-c)+d-a)));
++}
+ void Engine::process(const uint8_t* c,float* l,float* r,unsigned count){
+  const unsigned mode=c[0];
+  if(mode!=previous_mode||c[2]!=previous_position||(c[1]&&!previous_enabled))reset();
+@@ -49,7 +54,8 @@
+    // Monophonic pitch-synchronous grains. Two small YIN lag checks per
+    // eight-frame call bound the IRQ work; no full pitch scan in one callback.
+    if(filled>=1472&&(i&3)==0){
+-    float difference=0;for(unsigned j=0;j<160;++j){float d=delay[0][(write-j*4)&2047]-delay[0][(write-(j+yin_lag)*4)&2047];difference+=d*d;}
++    if(yin_lag==1)for(unsigned j=0;j<344;++j)yin_frame[j]=delay[0][(write-j*4)&2047];
++    float difference=0;for(unsigned j=0;j<160;++j){float d=yin_frame[j]-yin_frame[j+yin_lag];difference+=d*d;}
+     yin_sum+=difference;float value=yin_sum>1e-12f?difference*yin_lag/yin_sum:1;
+     if(yin_lag>12&&yin_previous<.12f&&yin_previous<yin_before&&value>=yin_previous){
+      float denominator=yin_before-2*yin_previous+value;
+@@ -62,8 +68,8 @@
+    pitch_phase+=(1-ratio)/pitch_window;
+    if(pitch_phase<0)pitch_phase+=1;if(pitch_phase>=1)pitch_phase-=1;
+    float second=pitch_phase+.5f;if(second>=1)second-=1;
+-   const float w=1-absf(2*pitch_phase-1);
+-   for(unsigned ch=0;ch<2;++ch)out[ch]=w*tap(*this,ch,16+pitch_window*pitch_phase)+(1-w)*tap(*this,ch,16+pitch_window*second);
++   float wp=pitch_phase+.25f;if(wp>=1)wp-=1;const float w=.5f+.5f*wave(wp);
++   for(unsigned ch=0;ch<2;++ch)out[ch]=w*pitchTap(*this,ch,16+pitch_window*pitch_phase)+(1-w)*pitchTap(*this,ch,16+pitch_window*second);
+   }else if(mode==2){
+    const float frequency=250+2750*clamp(envelope*sense,0,1),x=frequency*(3.141592654f/48000),g=x/(1-.3333333f*x*x),den=1/(1+g*(g+damping));
+    for(unsigned ch=0;ch<2;++ch){float v3=input[ch]-allpass[ch][1],v1=(allpass[ch][0]+g*v3)*den,v2=allpass[ch][1]+g*v1;allpass[ch][0]=2*v1-allpass[ch][0];allpass[ch][1]=2*v2-allpass[ch][1];out[ch]=v1*damping;}

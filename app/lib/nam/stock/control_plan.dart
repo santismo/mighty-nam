@@ -72,6 +72,12 @@ class StockControlPlan {
         identity:
             identity); // Validate the complete response before changing UI state.
     final next = HybridRig.parse(previous.encode())..masterVolume = preset[84];
+    next.usbRecordGain = identity == 'NAMLNK21' &&
+            preset[33] == 78 &&
+            preset[34] == 2 &&
+            preset[35] <= 96
+        ? preset[35]
+        : 48;
     next.namTone =
         identity == 'NAMLNK21' ? readNamTone(preset) : neutralNamTone();
     for (final block in next.blocks.where((b) => !b.extra)) {

@@ -95,7 +95,7 @@ public final class NamMidi {
         start(id, model:nil, preset:request, completion:completion)
     }
     public func fx(_ id:Int, request:[UInt8], completion:@escaping(Result<[String:Any],Error>)->Void) {
-        guard NamFxWire.request(request) || NamToneWire.request(request) else {completion(.failure(Failure.message("Invalid FX request")));return}
+        guard NamFxWire.request(request) || NamToneWire.request(request) || NamRecordWire.request(request) else {completion(.failure(Failure.message("Invalid FX request")));return}
         start(id,model:nil,fx:request,completion:completion)
     }
     public func tuner(_ id: Int, operation: Int, page: Int, nonce: Int, completion: @escaping (Result<[String:Any],Error>)->Void) {
@@ -185,7 +185,7 @@ public final class NamMidi {
                   Array(message[36..<44]) == Array("PLUGPRO\0".utf8) else { return }
             version = String(bytes: message[4..<12], encoding: .ascii) ?? ""
             if let fx = pendingFx {
-                if NamToneWire.request(fx) && version != "NAMLNK21" {finish(.failure(Failure.message("NAM controls require NAMLNK21.")));return}
+                if (NamToneWire.request(fx) || NamRecordWire.request(fx)) && version != "NAMLNK21" {finish(.failure(Failure.message("NAM controls require NAMLNK21.")));return}
                 guard ["NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21"].contains(version) else {finish(.failure(Failure.message("FX A/B require NAMLNK13 or newer. No FX command sent.")));return}
                 page = -11;request(fx);return
             }
@@ -226,7 +226,7 @@ public final class NamMidi {
             page = 0
             if ["NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21"].contains(version) { pageCount = 27 }
         } else if page == -11 {
-            guard let pending=pendingFx,let raw=(NamToneWire.request(pending) ? NamToneWire.reply(message,to:pending) : NamFxWire.reply(message,to:pending)) else {return}
+            guard let pending=pendingFx,let raw=(NamRecordWire.request(pending) ? NamRecordWire.reply(message,to:pending) : NamToneWire.request(pending) ? NamToneWire.reply(message,to:pending) : NamFxWire.reply(message,to:pending)) else {return}
             finish(.success(["frame":raw]));return
         } else if page == -10 {
             guard let pending = pendingTuner, let raw = NamTunerWire.reply(message,to:pending) else { return }

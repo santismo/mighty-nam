@@ -48,6 +48,7 @@ class HybridRig {
   String name;
   String? modelSha256;
   int masterVolume;
+  int usbRecordGain = 48;
   List<int> namTone = neutralNamTone();
   final Set<String> visibleSlots = {};
   final List<RigBlock> blocks;
@@ -131,6 +132,7 @@ class HybridRig {
         'name': name,
         'model_sha256': modelSha256,
         'master_volume': masterVolume,
+        'usb_record_gain': usbRecordGain,
         'nam_tone': namTone,
         'visible_slots': visibleSlots.toList(),
         'blocks': blocks.map((b) => b.toJson()).toList(),
@@ -154,6 +156,9 @@ class HybridRig {
     if (volume is! int || volume < 0 || volume > 100) {
       throw const FormatException('Invalid master volume');
     }
+    final recording = j['usb_record_gain'] ?? 48;
+    if (recording is! int || recording < 0 || recording > 96)
+      throw const FormatException('Invalid USB recording gain');
     final seen = <String>{}, blocks = <RigBlock>[];
     for (final item in j['blocks']) {
       if (item is! Map ||
@@ -228,6 +233,7 @@ class HybridRig {
     validateNamTone(tone);
     return HybridRig(j['name'], blocks,
         modelSha256: j['model_sha256'], masterVolume: volume)
+      ..usbRecordGain = recording
       ..namTone = tone
       ..visibleSlots.addAll(List<String>.from(j['visible_slots'] ?? const [])
           .where(slotNames.containsKey));
