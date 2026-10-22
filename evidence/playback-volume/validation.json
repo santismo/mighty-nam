@@ -1,0 +1,23 @@
+{
+  "status": "PASS_CONTROLLER_PLAYBACK_VOLUME",
+  "mac": "0.4.1+16",
+  "phone": "0.7.1",
+  "firmware": "NAMLNK20",
+  "firmwareFlashed": false,
+  "hostAudioStreamsOpened": 0,
+  "systemAudioChanged": false,
+  "macTestsPassed": 85,
+  "macOptionalTestSkipped": 1,
+  "apiTestsPassed": 22,
+  "nativeWireAssertions": 1689,
+  "phoneTestsPassed": 108,
+  "modelPayloadPublished": false,
+  "physicalPresetSeedStatus": "PASS_NAMLNK20_SEVEN_FENDER_PRESETS",
+  "physicalMasterVolume": "physical-master-volume.json",
+  "limitations": [
+    "No post-seed power-cycle test in this turn",
+    "Physical iPhone volume/tuner return requires user verification",
+    "Live-account model download not re-run; redirect behavior tested using fixture HTTP responses",
+    "USB PCM/Logic and NAM tone-shaping controls require firmware work"
+  ]
+}

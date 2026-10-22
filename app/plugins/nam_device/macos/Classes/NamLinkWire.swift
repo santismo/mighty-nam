@@ -141,6 +141,7 @@ public enum NamStockWire {
         (13...16,15),(17...22,20),(31...42,36),(43...46,49),
         (47...52,54),(53...60,61),(61...64,70),(65...70,75)]
     static func presetIndex(_ cc: Int) -> Int? {
+        if cc == 73 { return 84 }
         if heads[cc] != nil { return cc }
         for (range,base) in groups where range.contains(cc) { return base+cc-range.lowerBound }
         return nil

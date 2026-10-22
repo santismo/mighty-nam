@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mighty_plug_manager/nam/nam_app.dart';
 import 'connected_workflow_test.dart' show UsbFixture;
+import 'package:nam_link/nam_link.dart';
 import 'tuner_test.dart' show Fixture;
 
 void main() {
@@ -16,6 +17,7 @@ void main() {
       final usb = UsbFixture()
         ..identity = identity
         ..listening = true;
+      await TransferClient(usb.receiver).upload(LiteModel.fixture());
       final tuner = Fixture();
       var refusedMute = false;
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -57,8 +59,8 @@ void main() {
         await t.pump(const Duration(milliseconds: 220));
         await t.pumpAndSettle();
         expect(tuner.stops, 1);
-        expect(usb.listenCommands, [false]);
-        expect(usb.listening, false);
+        expect(usb.listenCommands, [false, true]);
+        expect(usb.listening, true);
         expect(usb.transfers, 0);
         expect(usb.applies, 0);
         final starts = tuner.starts;

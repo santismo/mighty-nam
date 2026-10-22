@@ -388,7 +388,7 @@ class _NamHomeState extends State<NamHome> {
         model != null &&
         words?.length == 12 &&
         words![5] == 0) {
-      await sendModel(); // A power cycle clears RAM. Reload muted, never resume listening automatically.
+      await sendModel(); // Reload the selected RAM capture; successful validation resumes playback.
     } else if (hasStockChain && !pendingControls && !pendingModel) {
       await readChainFromPlug();
     }
@@ -475,6 +475,7 @@ class _NamHomeState extends State<NamHome> {
         throw const FormatException(
             'The tuner needs NAMLNK12. Connect the plug after installing the tuner firmware.');
       }
+      final beforeTuning = await device.inspect(source);
       final muted = await device.setListening(source, false);
       if (!const [
             'NAMLNK12',
@@ -500,9 +501,17 @@ class _NamHomeState extends State<NamHome> {
               client: TunerClient((op, page, nonce) =>
                   device.tunerFrame(source, op, page, nonce))));
       if (!mounted) return;
-      hardware = await device.inspect(source);
-      setState(() => status = failure ??
-          'Tuner closed. Plug muted; press Listen on plug to resume.');
+      final afterTuning = await device.inspect(source);
+      if (afterTuning['identity'] != beforeTuning['identity'] ||
+          (afterTuning['words'] as List)[5] !=
+              (beforeTuning['words'] as List)[5] ||
+          (afterTuning['presetBank'] as Map?)?['active'] !=
+              (beforeTuning['presetBank'] as Map?)?['active']) {
+        throw const FormatException(
+            'The plug changed while tuning. Reconnect before playing.');
+      }
+      hardware = await preservePlayback(source, true, afterTuning);
+      setState(() => status = failure ?? 'Tuner closed. Playback resumed.');
     } catch (error) {
       if (mounted) {
         final message = error is FormatException
@@ -718,7 +727,7 @@ class _NamHomeState extends State<NamHome> {
       setState(() {
         hardware = after;
         final processing = hasListening
-            ? 'The full chain is configured. ${listening ? 'Listening resumes after the change settles.' : 'Ready for listening when you enable it.'}'
+            ? 'The full chain is configured. ${listening ? 'Listening resumes after the change settles.' : 'Playback resumes after a capture is loaded.'}'
             : hasStockChain
                 ? 'The full chain is configured; output stays silent.'
                 : 'Stock effects are not processing yet; output stays silent.';
@@ -980,8 +989,6 @@ class _NamHomeState extends State<NamHome> {
     }
     final slot = onboard.selected, capture = model!;
     final source = selectedSource!;
-    final before = await device.inspect(source);
-    final wasPlaying = (before['listening'] as Map?)?['enabled'] == true;
     await sendModel(); // Muted upload, followed by verified complete effect plan.
     final snapshot = await device.readStockControls(selectedSource!);
     final effects = List<int>.from(snapshot['preset'] as List);
@@ -1008,8 +1015,8 @@ class _NamHomeState extends State<NamHome> {
       throw StateError(
           'Saved preset readback did not match. Your Mac copy is retained.');
     }
-    hardware = await preservePlayback(
-        source, wasPlaying, await device.inspect(source));
+    hardware =
+        await preservePlayback(source, true, await device.inspect(source));
     onboard.slots[slot] = HybridRig.parse(rig.encode());
     onboard.dirty[slot] = false;
     onboard.generations[slot] = saved.generation;
@@ -1171,15 +1178,9 @@ class _NamHomeState extends State<NamHome> {
               child: Text(
                   'Connected · effect controls and block order update the plug automatically',
                   style: TextStyle(color: Colors.white60, fontSize: 12))),
-        if (hasListening) ...[
+        if (hasStockChain) ...[
           const SizedBox(height: 18),
-          Row(children: [
-            listeningButton,
-            const SizedBox(width: 12),
-            const Expanded(
-                child: Text('Reduced starting level · headphones on the plug',
-                    style: TextStyle(color: Colors.white60, fontSize: 12)))
-          ])
+          masterVolumeControl,
         ],
         const SizedBox(height: 26),
         RigEditor(
@@ -1407,7 +1408,9 @@ class _NamHomeState extends State<NamHome> {
     }
     await persist();
     final before = await device.inspect(source);
-    final wasPlaying = (before['listening'] as Map?)?['enabled'] == true;
+    if (before['identity'] != hardware?['identity']) {
+      throw StateError('Firmware changed. Reconnect the plug.');
+    }
     setState(() {
       transferProgress = 0;
       status = 'Sending capture. Output remains silent.';
@@ -1471,8 +1474,8 @@ class _NamHomeState extends State<NamHome> {
       if (!mounted) return;
       pendingModel = false;
       if (hasListening) {
-        hardware = await preservePlayback(
-            source, wasPlaying, await device.inspect(source));
+        hardware =
+            await preservePlayback(source, true, await device.inspect(source));
       }
       setState(() => status = hasListening
           ? '${capture.metadata['name'] ?? 'A2 Lite'} is loaded. ${listening ? 'Playback resumed on the plug.' : 'Plug output remains muted.'}'
@@ -1527,8 +1530,8 @@ class _NamHomeState extends State<NamHome> {
     });
   }
 
-  // Resume only the playback intent observed immediately before a verified operation.
-  // Merely connecting, refreshing, or failing an operation never enables output.
+  // Resume playback after a verified load/save or tuner return, or preserve the
+  // state around a live edit. Read-only polling never changes output state.
   Future<Map<String, dynamic>> preservePlayback(
       int source, bool wasPlaying, Map<String, dynamic> after) async {
     if ((after['listening'] as Map?)?['enabled'] == wasPlaying) return after;
@@ -1663,35 +1666,31 @@ class _NamHomeState extends State<NamHome> {
     ]));
   }
 
-  Widget get listeningButton => FilledButton.icon(
-      key: const ValueKey('plug-listening'),
-      onPressed: busy || (!listening && !loadedAndHealthy)
-          ? null
-          : () => perform(() => setListening(!listening)),
-      icon: Icon(listening ? Icons.volume_off_outlined : Icons.headphones),
-      label: Text(listening ? 'Mute plug' : 'Listen on plug'));
-
-  Widget get listeningControls =>
-      card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Wrap(
-            spacing: 12,
-            runSpacing: 10,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              listeningButton,
-              Text(listening
-                  ? 'Listening enabled · reduced starting level'
-                  : 'Plug output muted'),
-            ]),
-        const SizedBox(height: 10),
-        const Text(
-            'Connect headphones to the plug and start with its volume low. Loading a capture stops listening.',
+  Widget get masterVolumeControl =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          const Icon(Icons.volume_up_outlined, size: 20),
+          const SizedBox(width: 8),
+          const Text('Master volume'),
+          const Spacer(),
+          Text('${rig.masterVolume} %'),
+        ]),
+        Slider(
+            key: const ValueKey('master-volume'),
+            value: rig.masterVolume.toDouble(),
+            min: 0,
+            max: 100,
+            divisions: 100,
+            label: '${rig.masterVolume} %',
+            onChanged: busy || !hasStockChain
+                ? null
+                : (value) {
+                    setState(() => rig.masterVolume = value.round());
+                    edited();
+                  }),
+        const Text('Plug output · saved with this preset',
             style: TextStyle(color: Colors.white60, fontSize: 12)),
-        const SizedBox(height: 6),
-        const Text(
-            'Experimental: demanding effect combinations may mute the plug and require a restart.',
-            style: TextStyle(color: Colors.white60, fontSize: 12)),
-      ]));
+      ]);
 
   Widget get devicePage {
     final words = (hardware?['words'] as List?) ?? [];
@@ -1776,7 +1775,7 @@ class _NamHomeState extends State<NamHome> {
                 style: TextStyle(color: Colors.white60))
           ]
         ])),
-      if (hasListening) listeningControls,
+      if (hasStockChain) card(masterVolumeControl),
       if (!hasListening)
         card(const Column(
             crossAxisAlignment: CrossAxisAlignment.start,

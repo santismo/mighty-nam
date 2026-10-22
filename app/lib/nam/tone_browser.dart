@@ -33,7 +33,8 @@ class _ToneBrowserState extends State<ToneBrowser> {
       format = 'nam',
       sort = 'trending',
       message = '';
-  bool liteOnly = true, verified = false, busy = false;
+  static const liteOnly = true;
+  bool verified = false, busy = false;
   int page = 1, pages = 1, modelPage = 1, modelPages = 1;
   List<Map<String, dynamic>> tones = [], models = [];
   Map<String, dynamic>? tone;
@@ -351,15 +352,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
             if (collection == 'search') ...[
               Wrap(spacing: 8, children: [
                 if (format == 'nam')
-                  FilterChip(
-                      label: const Text('Lite models'),
-                      selected: liteOnly,
-                      onSelected: busy
-                          ? null
-                          : (v) {
-                              setState(() => liteOnly = v);
-                              load();
-                            }),
+                  const Chip(label: Text('A2 Lite · 48 kHz')),
                 FilterChip(
                     label: const Text('Verified creators'),
                     selected: verified,
@@ -487,7 +480,7 @@ class _ToneBrowserState extends State<ToneBrowser> {
                 if (tone!['format'] == 'nam') ...[
                   const Text('Choose a model', style: TextStyle(fontSize: 20)),
                   const Text(
-                      'A2 is the architecture; Lite compatibility is checked from the actual model. A larger capture will not replace your current model.',
+                      'Only A2 Lite at 48 kHz can load. Multi-size A2 captures use their Lite model; incompatible files leave your current capture unchanged.',
                       style: TextStyle(fontSize: 12, color: Colors.white60)),
                   for (final m in models)
                     Card(

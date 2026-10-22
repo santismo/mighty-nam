@@ -192,12 +192,14 @@ void main() {
     await expectLater(pending, throwsA(isA<ToneApiException>()));
     expect(c.connected, isFalse);
   });
-  test('foreign download URL never receives bearer, and redirects fail closed',
+  test('foreign initial URL rejected, redirected loop stops without bearer',
       () async {
     var gets = 0;
     final c = Tone3000Client(key, httpClient: MockClient((r) async {
       if (r.url.path.endsWith('/token')) return token();
       gets++;
+      if (r.url.host == 'untrusted.example')
+        expect(r.headers['Authorization'], isNull);
       return http.Response('', 302,
           headers: {'location': 'https://untrusted.example/model'});
     }));
@@ -214,7 +216,100 @@ void main() {
     model['model_url'] = 'https://www.tone3000.com/api/v1/models/9/download';
     await expectLater(
         c.download(model, tone), throwsA(isA<ToneApiException>()));
+    expect(gets, 2);
+  });
+  test(
+      'signed download redirects strip credentials and validate actual Lite bytes',
+      () async {
+    final seen = <http.Request>[];
+    final c = Tone3000Client(key, httpClient: MockClient((r) async {
+      if (r.url.path.endsWith('/token')) return token();
+      seen.add(r);
+      if (seen.length == 1)
+        return http.Response('', 302, headers: {
+          'location': 'https://storage.example/model?signature=private'
+        });
+      if (seen.length == 2)
+        return http.Response('', 307,
+            headers: {'location': 'https://www.tone3000.com/final-model'});
+      return http.Response(
+          jsonEncode({
+            'architecture': 'WaveNet',
+            'version': '0.7.0',
+            'sample_rate': 48000,
+            'config': {...liteTopology(), 'head_scale': 1},
+            'weights': List.filled(1871, 0.0)..[1870] = 1.0,
+          }),
+          200);
+    }));
+    await connect(c);
+    final model = await c.download({
+      'id': 9,
+      'tone_id': 42,
+      'architecture_version': 2,
+      'model_url': 'https://www.tone3000.com/api/v1/models/9/download'
+    }, {
+      'id': 42,
+      'format': 'nam'
+    });
+    expect(validSlot(model.slot), isTrue);
+    expect(seen, hasLength(3));
+    expect(seen.first.headers['Authorization'], 'Bearer access');
+    for (final request in seen.skip(1))
+      expect(request.headers['Authorization'], isNull);
+    expect(seen.every((r) => !r.followRedirects), isTrue);
+  });
+  for (final location in [
+    'http://storage.example/a',
+    'https://user:secret@storage.example/a',
+    'https://storage.example:444/a',
+    'https://storage.example/a#secret',
+    ''
+  ]) {
+    test('unsafe download redirect rejected: $location', () async {
+      var gets = 0;
+      final c = Tone3000Client(key, httpClient: MockClient((r) async {
+        if (r.url.path.endsWith('/token')) return token();
+        gets++;
+        return http.Response('', 302, headers: {'location': location});
+      }));
+      await connect(c);
+      await expectLater(
+          c.download({
+            'tone_id': 42,
+            'architecture_version': 2,
+            'model_url': 'https://www.tone3000.com/api/v1/models/9/download'
+          }, {
+            'id': 42,
+            'format': 'nam'
+          }),
+          throwsA(isA<ToneApiException>()));
+      expect(gets, 1);
+    });
+  }
+  test('redirect limit and non-download API redirects remain bounded',
+      () async {
+    var gets = 0;
+    final c = Tone3000Client(key, httpClient: MockClient((r) async {
+      if (r.url.path.endsWith('/token')) return token();
+      gets++;
+      return http.Response('', 302,
+          headers: {'location': 'https://storage.example/$gets'});
+    }));
+    await connect(c);
+    await expectLater(c.tone(42), throwsA(isA<ToneApiException>()));
     expect(gets, 1);
+    await expectLater(
+        c.download({
+          'tone_id': 42,
+          'architecture_version': 2,
+          'model_url': 'https://www.tone3000.com/api/v1/models/9/download'
+        }, {
+          'id': 42,
+          'format': 'nam'
+        }),
+        throwsA(isA<ToneApiException>()));
+    expect(gets, 6);
   });
   test('rate-limit does not spin or discard session', () async {
     var gets = 0;

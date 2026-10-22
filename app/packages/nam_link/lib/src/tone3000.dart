@@ -181,30 +181,66 @@ class Tone3000Client {
   Future<http.Response> _send(Uri uri,
       {Map<String, String> headers = const {},
       Map<String, String>? form,
-      int limit = 1024 * 1024}) async {
+      int limit = 1024 * 1024,
+      bool modelDownload = false}) async {
     if (uri.origin != origin.origin ||
         uri.userInfo.isNotEmpty ||
-        uri.hasFragment)
+        uri.hasFragment) {
       throw ToneApiException('Untrusted model download address');
-    final request = http.Request(form == null ? 'GET' : 'POST', uri)
-      ..followRedirects = false;
-    request.headers.addAll(headers);
-    if (form != null) request.bodyFields = form;
-    final response =
-        await httpClient.send(request).timeout(const Duration(seconds: 20));
-    if (response.contentLength != null && response.contentLength! > limit) {
-      await response.stream.listen((_) {}).cancel();
-      throw ToneApiException('Response exceeds size limit');
     }
-    final bytes = BytesBuilder();
-    await for (final chunk
-        in response.stream.timeout(const Duration(seconds: 20))) {
-      if (bytes.length + chunk.length > limit)
+    if (modelDownload &&
+        (form != null ||
+            !RegExp(r'^/api/v1/models/[1-9][0-9]*/download(?:/[^/]+)?$')
+                .hasMatch(uri.path))) {
+      throw ToneApiException('Invalid model download route');
+    }
+    var target = uri;
+    var sentHeaders = Map<String, String>.from(headers);
+    final visited = <Uri>{};
+    for (var hop = 0;; hop++) {
+      if (!visited.add(target))
+        throw ToneApiException('Model download redirect loop');
+      final request = http.Request(form == null ? 'GET' : 'POST', target)
+        ..followRedirects = false;
+      request.headers.addAll(sentHeaders);
+      if (form != null) request.bodyFields = form;
+      final response =
+          await httpClient.send(request).timeout(const Duration(seconds: 20));
+      if (modelDownload &&
+          [301, 302, 303, 307, 308].contains(response.statusCode)) {
+        await response.stream.listen((_) {}).cancel();
+        final location = response.headers['location'];
+        if (hop >= 4 || location == null || location.isEmpty) {
+          throw ToneApiException('Invalid model download redirect');
+        }
+        final next = target.resolve(location);
+        if (next.scheme != 'https' ||
+            next.host.isEmpty ||
+            next.userInfo.isNotEmpty ||
+            next.hasFragment ||
+            next.port != 443) {
+          throw ToneApiException('Untrusted model download redirect');
+        }
+        // Signed storage URLs need no account credentials. Never forward the
+        // bearer token across origins, including redirects back to the API.
+        if (next.origin != target.origin) sentHeaders = {};
+        target = next;
+        continue;
+      }
+      if (response.contentLength != null && response.contentLength! > limit) {
+        await response.stream.listen((_) {}).cancel();
         throw ToneApiException('Response exceeds size limit');
-      bytes.add(chunk);
+      }
+      final bytes = BytesBuilder();
+      await for (final chunk
+          in response.stream.timeout(const Duration(seconds: 20))) {
+        if (bytes.length + chunk.length > limit)
+          throw ToneApiException('Response exceeds size limit');
+        bytes.add(chunk);
+      }
+      return http.Response.bytes(bytes.takeBytes(), response.statusCode,
+          headers: response.headers);
     }
-    return http.Response.bytes(bytes.takeBytes(), response.statusCode,
-        headers: response.headers);
   }
 
   Map<String, dynamic> _object(http.Response r) {
@@ -271,20 +307,24 @@ class Tone3000Client {
     }
   }
 
-  Future<http.Response> _get(Uri uri, {int limit = 1024 * 1024}) async {
+  Future<http.Response> _get(Uri uri,
+      {int limit = 1024 * 1024, bool modelDownload = false}) async {
     if (_session == null) throw ToneApiException('Connect TONE3000 first');
     if (!_session!.expires.isAfter(now().add(const Duration(seconds: 60))))
       await _refresh();
     if (_session == null) throw ToneApiException('Reconnect TONE3000');
     final sentToken = _session!.access;
     var response = await _send(uri,
-        headers: {'Authorization': 'Bearer $sentToken'}, limit: limit);
+        headers: {'Authorization': 'Bearer $sentToken'},
+        limit: limit,
+        modelDownload: modelDownload);
     if (response.statusCode == 401) {
       if (_session?.access == sentToken) await _refresh();
       if (_session == null) throw ToneApiException('Reconnect TONE3000');
       response = await _send(uri,
           headers: {'Authorization': 'Bearer ${_session!.access}'},
-          limit: limit);
+          limit: limit,
+          modelDownload: modelDownload);
       if (response.statusCode == 401) disconnect();
     }
     return response;
@@ -369,7 +409,8 @@ class Tone3000Client {
       throw ToneApiException('Select a NAM A2 model from this tone');
     }
     final url = Uri.parse(model['model_url'] as String);
-    final r = await _get(url, limit: LiteModel.maxJsonBytes);
+    final r =
+        await _get(url, limit: LiteModel.maxJsonBytes, modelDownload: true);
     if (r.statusCode != 200)
       throw ToneApiException('Model download failed', r.statusCode);
     return LiteModel.parse(r.bodyBytes, provenance: {

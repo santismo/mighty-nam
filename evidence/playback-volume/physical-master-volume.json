@@ -1,0 +1,24 @@
+{
+  "audioStreamsOpened" : 0,
+  "cases" : [
+    {
+      "captureCRC" : 1854512385,
+      "controlsVerified" : true,
+      "faults" : 0,
+      "level" : 32,
+      "outputOn" : true
+    },
+    {
+      "captureCRC" : 1854512385,
+      "controlsVerified" : true,
+      "faults" : 0,
+      "level" : 37,
+      "outputOn" : true
+    }
+  ],
+  "explicitMuteCommands" : 0,
+  "firmwareWrites" : 0,
+  "originalLevelRestored" : true,
+  "presetSaves" : 0,
+  "status" : "PASS_NAMLNK20_MASTER_VOLUME"
+}

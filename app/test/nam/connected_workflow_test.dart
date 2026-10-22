@@ -213,7 +213,7 @@ void main() {
     await t.pumpAndSettle();
     await work;
     expect(usb.bufferCommands, [32, 8]);
-    expect(usb.listenCommands.where((v) => v), hasLength(2));
+    expect(usb.listenCommands.where((v) => v), hasLength(3));
     await t.pumpWidget(const SizedBox.shrink());
     await t.pump();
     debugDefaultTargetPlatformOverride = null;
@@ -260,7 +260,7 @@ void main() {
     expect(usb.preset[3] & 64, 0);
     expect(usb.preset[9] & 64, 64);
     expect(find.text('Loaded on plug'), findsOneWidget);
-    expect(usb.listenCommands, isNot(contains(true)));
+    expect(usb.listening, true);
     await t.tap(find.byKey(const ValueKey('favorite-loaded-model')));
     await t.pumpAndSettle();
     expect(
@@ -298,8 +298,7 @@ void main() {
     usb.generation = 0;
     await tick(t);
     expect(crc32(usb.receiver.activeSlot!), b.checksum);
-    expect(usb.listening, false);
-    expect(usb.listenCommands, isNot(contains(true)));
+    expect(usb.listening, true);
     await t.pumpWidget(const SizedBox.shrink());
     await t.pump();
     debugDefaultTargetPlatformOverride = null;
@@ -321,7 +320,7 @@ void main() {
     await t.pumpAndSettle();
     final saved = HybridRig.parse(jsonDecode(usb.library!)['active']);
     expect(usb.preset.sublist(90, 99), StockControlPlan.fromRig(saved).order);
-    expect(usb.listenCommands, isNot(contains(true)));
+    expect(usb.listening, true);
     await t.pumpWidget(const SizedBox.shrink());
     await t.pump();
     debugDefaultTargetPlatformOverride = null;
@@ -365,6 +364,7 @@ void main() {
     await tick(t);
     await tick(t);
     expect(usb.transfers, count);
+    expect(usb.listening, false);
     expect(usb.listenCommands, isNot(contains(true)));
     usb.failTransfer = false;
     await t.tap(find.byKey(const ValueKey('send-model')));

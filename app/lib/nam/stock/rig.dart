@@ -46,8 +46,9 @@ class RigBlock {
 class HybridRig {
   String name;
   String? modelSha256;
+  int masterVolume;
   final List<RigBlock> blocks;
-  HybridRig(this.name, this.blocks, {this.modelSha256});
+  HybridRig(this.name, this.blocks, {this.modelSha256, this.masterVolume = 50});
   factory HybridRig.initial() => HybridRig(
       'Untitled chain',
       slotNames.keys
@@ -101,6 +102,7 @@ class HybridRig {
         'schema': 'nam-plug-hybrid-rig-1',
         'name': name,
         'model_sha256': modelSha256,
+        'master_volume': masterVolume,
         'blocks': blocks.map((b) => b.toJson()).toList(),
       });
   factory HybridRig.parse(String text) {
@@ -117,6 +119,10 @@ class HybridRig {
             (j['model_sha256'] is! String ||
                 !RegExp(r'^[a-f0-9]{64}$').hasMatch(j['model_sha256'])))) {
       throw const FormatException('Invalid NAM Plug chain');
+    }
+    final volume = j['master_volume'] ?? 50;
+    if (volume is! int || volume < 0 || volume > 100) {
+      throw const FormatException('Invalid master volume');
     }
     final seen = <String>{}, blocks = <RigBlock>[];
     for (final item in j['blocks']) {
@@ -188,6 +194,7 @@ class HybridRig {
       blocks.insertAll(2,
           [RigBlock('fxa')..enabled = false, RigBlock('fxb')..enabled = false]);
     }
-    return HybridRig(j['name'], blocks, modelSha256: j['model_sha256']);
+    return HybridRig(j['name'], blocks,
+        modelSha256: j['model_sha256'], masterVolume: volume);
   }
 }

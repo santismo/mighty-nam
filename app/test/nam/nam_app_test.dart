@@ -45,16 +45,17 @@ void main() {
       if (call.method == 'exchangeModelFrame') {
         listening = false;
         modelMismatch = false;
-        expect(link, true);
-        expect((call.arguments as Map)['source'], 1);
+        expectSync(link, true);
+        expectSync((call.arguments as Map)['source'], 1);
         return receiver.exchange((call.arguments as Map)['frame'] as Uint8List);
       }
       if (call.method == 'inspect' || call.method == 'setListening') {
         if (call.method == 'setListening') {
-          expect(['NAMLNK07', 'NAMLNK08', 'NAMLNK09'], contains(chainIdentity));
+          expectSync(
+              ['NAMLNK07', 'NAMLNK08', 'NAMLNK09'], contains(chainIdentity));
           if ((call.arguments as Map)["enabled"] == true) {
-            expect(fault, false);
-            expect(receiver.activeSlot, isNotNull);
+            expectSync(fault, false);
+            expectSync(receiver.activeSlot, isNotNull);
           }
           listening = (call.arguments as Map)['enabled'] as bool;
         }
@@ -102,14 +103,14 @@ void main() {
       }
       if (call.method == 'applyStockControls') {
         lastControls = call.arguments as Map;
-        expect(lastControls!['source'], 1);
+        expectSync(lastControls!['source'], 1);
         return {'controlsVerified': true, 'stockChain': chainFirmware};
       }
       if (call.method == 'setCabinetBypassed') {
-        expect((call.arguments as Map)['source'], 1);
-        expect((call.arguments as Map)['bypassed'], true);
-        expect(receiver.activeSlot, isNotNull);
-        expect(listening, false);
+        expectSync((call.arguments as Map)['source'], 1);
+        expectSync((call.arguments as Map)['bypassed'], true);
+        expectSync(receiver.activeSlot, isNotNull);
+        expectSync(listening, false);
         return {'controlsVerified': true};
       }
       return null;
@@ -180,86 +181,50 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
     });
   }
-  for (final listenIdentity in ['NAMLNK07', 'NAMLNK08', 'NAMLNK09']) {
+  for (final identity in ['NAMLNK07', 'NAMLNK08', 'NAMLNK09']) {
     testWidgets(
-        'listening requires explicit first click and verified model reload resumes: $listenIdentity',
+        'validated captures play automatically, master replaces mute UI: $identity',
         (t) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
       link = chainFirmware = true;
-      chainIdentity = listenIdentity;
+      chainIdentity = identity;
       await t.binding.setSurfaceSize(const Size(1120, 1100));
       addTearDown(() => t.binding.setSurfaceSize(null));
       final capture = LiteModel.fixture();
-      final rig = HybridRig.initial()..modelSha256 = capture.sha256Hex;
       library = jsonEncode({
         'schema': 'nam-plug-library-2',
-        'active': rig.encode(),
+        'active':
+            (HybridRig.initial()..modelSha256 = capture.sha256Hex).encode(),
         'presets': {},
         'models': (ModelLibrary()..add(capture)).toJson(),
         'tone_client_id': ''
       });
       await t.pumpWidget(const NamLabApp(autoConnect: false));
       await t.pumpAndSettle();
-      await t.tap(find.text('Plug'));
+      final dynamic home = t.state(find.byType(NamHome));
+      await home.scan();
+      await home.inspect(1);
       await t.pumpAndSettle();
-      await t.tap(find.text('Find plug'));
+      final upload = home.perform(home.sendModel);
       await t.pumpAndSettle();
-      await t.tap(find.text('MIGHTY PLUG PRO USB'));
+      await upload;
+      expect(listening, true, reason: home.status);
+      expect(find.text('Listen on plug'), findsNothing);
+      expect(find.text('Mute plug'), findsNothing);
+      final slider =
+          t.widget<Slider>(find.byKey(const ValueKey('master-volume')));
+      expect(slider.onChanged, isNotNull);
+      slider.onChanged!(25);
+      await t.pump(const Duration(milliseconds: 300));
       await t.pumpAndSettle();
-      await t.tap(find.text('Signal chain'));
-      await t.pumpAndSettle();
-      expect(
-          t
-              .widget<FilledButton>(
-                  find.byKey(const ValueKey('plug-listening')))
-              .onPressed,
-          isNull);
-      await t.tap(find.byKey(const ValueKey('send-model')));
-      await t.pumpAndSettle();
-      expect(listening, false);
-      expect(find.text('Loaded on plug'), findsOneWidget);
-      // A connected, healthy plug can still hold a different capture.
-      modelMismatch = true;
-      await t.tap(find.text('Plug'));
-      await t.pumpAndSettle();
-      await t.tap(find.text('MIGHTY PLUG PRO USB'));
-      await t.pumpAndSettle();
-      await t.tap(find.text('Signal chain'));
-      await t.pumpAndSettle();
-      expect(find.text('Selected on this Mac'), findsOneWidget);
-      expect(
-          t
-              .widget<FilledButton>(
-                  find.byKey(const ValueKey('plug-listening')))
-              .onPressed,
-          isNull);
-      await t.tap(find.byKey(const ValueKey('send-model')));
-      await t.pumpAndSettle();
-      expect(find.text('Loaded on plug'), findsOneWidget);
-      expect(find.text('Listen on plug'), findsOneWidget);
-      await t.tap(find.byKey(const ValueKey('plug-listening')));
-      await t.pumpAndSettle();
+      expect((lastControls!['controls'] as List), contains(equals([73, 25])));
       expect(listening, true);
-      expect(find.text('Mute plug'), findsOneWidget);
-      await t.ensureVisible(find.byKey(const ValueKey('send-stock-controls')));
-      await t.ensureVisible(find.byKey(const ValueKey('send-stock-controls')));
+      final retry = home.perform(home.sendModel);
       await t.pumpAndSettle();
-      await t.tap(find.byKey(const ValueKey('send-stock-controls')));
-      await t.pumpAndSettle();
-      expect(listening, true);
-      await t.ensureVisible(find.byKey(const ValueKey('plug-listening')));
-      await t.tap(find.byKey(const ValueKey('plug-listening')));
-      await t.pumpAndSettle();
-      expect(listening, false);
-      await t.tap(find.byKey(const ValueKey('plug-listening')));
-      await t.pumpAndSettle();
-      expect(listening, true);
-      await t.ensureVisible(find.byKey(const ValueKey('send-model')));
-      await t.tap(find.byKey(const ValueKey('send-model')));
-      await t.pumpAndSettle();
-      expect(listening, true);
-      expect(find.text('Mute plug'), findsOneWidget);
-      expect(t.takeException(), isNull);
+      await retry;
+      expect(listening, true, reason: home.status);
+      await t.pumpWidget(const SizedBox.shrink());
+      await t.pump();
       debugDefaultTargetPlatformOverride = null;
     });
   }
@@ -302,7 +267,7 @@ void main() {
       expect(calls.where((c) => c == 'setCabinetBypassed').length,
           gear == 'amp-cab' ? 1 : 0);
       expect(lastControls!['namEnabled'], true);
-      expect(listening, false);
+      expect(listening, true);
       expect(find.text('Loaded on plug'), findsOneWidget);
       expect(t.takeException(), isNull);
       debugDefaultTargetPlatformOverride = null;

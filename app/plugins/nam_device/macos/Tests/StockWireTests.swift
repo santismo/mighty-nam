@@ -10,6 +10,17 @@ import Foundation
         var preset = [UInt8](repeating:0,count:128)
         for (at,value) in plan.expected { preset[at] = value }
         check(plan.matches(preset))
+        for level in [0, 37, 100] {
+            let volume = NamStockWire.Plan(controls:controls+[[73,level]],order:order)!
+            check(volume.expected[84] == UInt8(level))
+            var changed=preset;changed[84]=UInt8(level)
+            check(volume.matches(changed))
+            changed[84] ^= 1
+            check(!volume.matches(changed))
+        }
+        for level in [-1,101,127,128] {
+            check(NamStockWire.Plan(controls:controls+[[73,level]],order:order) == nil)
+        }
         for bypassed in [true,false] {
             let cab = NamStockWire.Plan(cabinetBypassed:bypassed)
             check(!cab.allowed(on:"NAMLNK01"))

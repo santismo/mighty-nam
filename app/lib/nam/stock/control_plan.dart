@@ -55,6 +55,7 @@ class StockControlPlan {
     [65, 70, 75]
   ];
   static int? presetIndex(int cc) {
+    if (cc == 73) return 84;
     if (supportedTypes.keys.any((slot) => stages[slot] == cc)) return cc;
     for (final range in ranges) {
       if (cc >= range[0] && cc <= range[1]) return range[2] + cc - range[0];
@@ -68,7 +69,7 @@ class StockControlPlan {
     StockControlPlan.fromSnapshot(preset,
         identity:
             identity); // Validate the complete response before changing UI state.
-    final next = HybridRig.parse(previous.encode());
+    final next = HybridRig.parse(previous.encode())..masterVolume = preset[84];
     for (final block in next.blocks.where((b) => !b.extra)) {
       final id = stages[block.slot]!;
       block.enabled = (preset[id] & 64) == 0;
@@ -121,7 +122,9 @@ class StockControlPlan {
   factory StockControlPlan.fromRig(HybridRig rig, {String? identity}) {
     // Check stored values before translating into physical writes.
     final checked = HybridRig.parse(rig.encode());
-    final controls = <List<int>>[];
+    final controls = <List<int>>[
+      [73, checked.masterVolume]
+    ];
     for (final block
         in checked.blocks.where((b) => b.slot != 'nam' && !b.extra)) {
       final effect = block.effect!;
@@ -152,7 +155,10 @@ class StockControlPlan {
     if (preset.length != 128 || preset.any((v) => v < 0 || v > 127)) {
       throw const FormatException('Invalid stock control snapshot');
     }
-    final controls = <List<int>>[];
+    if (preset[84] > 100) throw const FormatException('Invalid master volume');
+    final controls = <List<int>>[
+      [73, preset[84]]
+    ];
     for (final slot in supportedTypes.keys) {
       final id = stages[slot]!, value = preset[stages[slot]!];
       if ((value & 63) < 1 || (value & 63) > maximumType(slot, identity)) {

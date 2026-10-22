@@ -268,7 +268,8 @@ void main() {
 
   for (final identity in ['NAMLNK18', 'NAMLNK19', 'NAMLNK20'])
     for (final playing in [false, true]) {
-      testWidgets('$identity global buffer and save preserve playback=$playing',
+      testWidgets(
+          '$identity global buffer preserves playback=$playing; saving resumes playback',
           (t) async {
         usb.identity = identity;
         final a = capture('Fender', 1);
@@ -290,11 +291,11 @@ void main() {
         expect(usb.bufferSamples, 16);
         usb.listening = playing;
         await work(t, home, () => home.saveOnboard());
-        expect(usb.listening, playing);
+        expect(usb.listening, true);
         expect(home.onboard.dirty[0], false, reason: home.status);
         expect(home.hardware['audioBuffer']['samples'], 16);
         await work(t, home, () => home.setOutputBuffer(8));
-        expect(usb.listening, playing);
+        expect(usb.listening, true);
         expect(usb.bufferSamples, 8);
         expect(t.takeException(), isNull);
         await t.pumpWidget(const SizedBox.shrink());
@@ -346,7 +347,7 @@ void main() {
       expect(usb.models[0]!.sha256Hex, a.sha256Hex);
       expect(usb.models[3]!.sha256Hex, b.sha256Hex);
       expect(usb.saves, 2);
-      expect(usb.listening, false);
+      expect(usb.listening, true);
       if (supportsExtraFx(identity)) {
         expect(usb.savedFx[3]![0], 3);
         expect(usb.savedFx[3]![1], 1);
@@ -397,7 +398,7 @@ void main() {
   }
 
   testWidgets(
-      'listen and mute a saved onboard capture missing from the Mac library',
+      'master volume edits a saved onboard capture missing from the Mac library',
       (t) async {
     final a = capture('Fender on plug', .7);
     usb.catalog.add(a);
@@ -414,16 +415,15 @@ void main() {
     expect(find.text('A2 Lite · 48 kHz · Stored on plug'), findsOneWidget);
     expect(find.text('Loaded on plug'), findsOneWidget);
     final uploads = usb.transfers, saves = usb.saves;
-    final listen = find.byKey(const ValueKey('plug-listening'));
-    await t.ensureVisible(listen);
-    expect(t.widget<FilledButton>(listen).onPressed, isNotNull);
-    await t.tap(listen);
+    final volume = find.byKey(const ValueKey('master-volume'));
+    await t.ensureVisible(volume);
+    expect(t.widget<Slider>(volume).onChanged, isNotNull);
+    t.widget<Slider>(volume).onChanged!(27);
+    await t.pump(const Duration(milliseconds: 300));
     await t.pumpAndSettle();
-    expect(usb.listening, true, reason: home.status);
-    expect(find.text('Mute plug'), findsOneWidget);
-    await t.tap(listen);
-    await t.pumpAndSettle();
-    expect(usb.listening, false);
+    expect(usb.preset[84], 27, reason: home.status);
+    expect(find.text('Mute plug'), findsNothing);
+    expect(find.text('Listen on plug'), findsNothing);
     expect(usb.transfers, uploads);
     expect(usb.saves, saves);
     expect(home.captures.captures, isEmpty);
@@ -433,7 +433,7 @@ void main() {
     home.rig.modelSha256 = capture('Different unsent draft', .8).sha256Hex;
     await work(t, home, () async => home.persist());
     expect(home.loadedAndHealthy, false);
-    expect(t.widget<FilledButton>(listen).onPressed, isNull);
+    await expectLater(home.setListening(true), throwsStateError);
     await t.pumpWidget(const SizedBox.shrink());
     await t.pump();
     debugDefaultTargetPlatformOverride = null;
@@ -449,11 +449,8 @@ void main() {
     await client.save(2, a, usb.preset, 'Red Fender', 8);
     usb.seed([]);
     final home = await start(t);
-    final listen = find.byKey(const ValueKey('plug-listening'));
     usb.beforeListen = () async => TransferClient(usb.receiver).upload(b);
-    await t.ensureVisible(listen);
-    await t.tap(listen);
-    await t.pumpAndSettle();
+    await work(t, home, () => home.setListening(true));
     expect(usb.listenCommands, [true, false]);
     expect(usb.listening, false);
     expect(home.status, contains('capture changed'));
@@ -464,8 +461,7 @@ void main() {
     };
     await work(t, home, home.refreshConnection);
     expect(home.loadedAndHealthy, true);
-    await t.tap(listen);
-    await t.pumpAndSettle();
+    await work(t, home, () => home.setListening(true));
     expect(usb.listenCommands, [true, false, true, false]);
     expect(usb.listening, false);
     expect(home.loadedAndHealthy, false);

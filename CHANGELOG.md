@@ -1,5 +1,9 @@
 # Changelog
 
+## Mac 0.4.1 / phone 0.7.1 — playback and master volume
+
+Replace manual Listen/Mute controls with a live per-preset master volume. Verified capture loads and tuner return resume playback; failed transfers and faults remain guarded. Saved presets play after startup. Fix bounded HTTPS model-download redirects without forwarding API authorization to external storage; keep the browser restricted to actual A2 Lite / 48 kHz payloads. No firmware update is required for these controls. See [validation notes](docs/playback-volume.md).
+
 ## NAMLNK18 / Mac 0.3.10 / phone 0.6.5 — prepared global-buffer trial
 
 Persist one output-buffer choice for every color, defaulting to 8 samples. Ordinary successful edits preserve playback intent, and captures/effects are not rewritten when the global buffer changes. Restore exact NAMLNK16 NAM hot-code and constant-table placement while retaining the 17 converter setting. Firmware, controller and simulated-browser checks passed; this version has not been flashed or physically timed. See [trial notes](docs/global-buffer-trial.md).

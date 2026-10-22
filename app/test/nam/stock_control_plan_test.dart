@@ -55,8 +55,10 @@ void main() {
           expect(plan.controls.map((p) => p[0]).toSet().length,
               plan.controls.length);
           expect(
-              plan.controls.any(
-                  (p) => p[0] == 3 || (p[0] >= 23 && p[0] <= 30) || p[0] >= 71),
+              plan.controls.any((p) =>
+                  p[0] == 3 ||
+                  (p[0] >= 23 && p[0] <= 30) ||
+                  (p[0] >= 71 && p[0] != 73)),
               false);
           final preset = List<int>.filled(128, 0);
           for (final p in plan.controls) {
