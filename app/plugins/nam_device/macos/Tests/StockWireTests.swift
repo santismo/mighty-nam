@@ -3,6 +3,12 @@ import Foundation
     static func main() {
         var checks = 0
         func check(_ value: Bool, line: UInt = #line) { precondition(value, "check at line \(line)"); checks += 1 }
+        for name in ["MIGHTY PLUG PRO USB", "Mighty Plug Pro", "NUX NMP-03"] {
+            check(NamLinkWire.isPlugName(name))
+        }
+        for name in ["NUX NMP-02", "NUX", "Mighty Plug", "", "Other NUX NMP-03"] {
+            check(!NamLinkWire.isPlugName(name))
+        }
         var controls = NamStockWire.heads.keys.sorted().map { [$0, 65] }
         for (range,_) in NamStockWire.groups { for cc in range { controls.append([cc,50]) } }
         let order = [5,1,2,3,9,4,6,7,8]
@@ -72,7 +78,15 @@ import Foundation
         check(NamLinkWire.supportsModels("NAMLNK11"))
         check(NamLinkWire.supportsModels("NAMLNK12"))
         check(NamLinkWire.supportsModels("NAMLNK13"))
-        check(!NamLinkWire.supportsModels("NAMLNK23"))
+        check(!NamLinkWire.supportsModels("NAMLNK24"))
+        check(NamLinkWire.supportsModels("NAMLNK23"))
+        check(NamLinkWire.supportsStockChain("NAMLNK23"))
+        check(NamCodecStatus.statusPage(index:26,identity:"NAMLNK23") == 117)
+        for samples in [8,16,32] {
+            check(NamOutputBuffer.command(identity:"NAMLNK23",samples:samples) != nil)
+            check(NamOutputBuffer.decode((48000<<16)|(2<<8)|UInt32(samples),identity:"NAMLNK23") != nil)
+            check(NamOutputBuffer.decode((48000<<16)|(1<<8)|UInt32(samples),identity:"NAMLNK23") == nil)
+        }
         check(!NamLinkWire.supportsStockChain("NAMLNK01"))
         check(NamLinkWire.supportsStockChain("NAMLNK03"))
         check(NamLinkWire.supportsModels("NAMLNK04"))
@@ -97,7 +111,8 @@ import Foundation
             check(bypass.allowed(on:"NAMLNK12"))
             check(bypass.allowed(on:"NAMLNK13"))
             check(bypass.allowed(on:"NAMLNK20"))
-            check(!bypass.allowed(on:"NAMLNK23"))
+            check(bypass.allowed(on:"NAMLNK23"))
+            check(!bypass.allowed(on:"NAMLNK24"))
             check(!bypass.allowed(on:"NAMA2I01"))
             var before=preset;before[3]=21
             let messages=bypass.messages(before:before)!
@@ -113,11 +128,11 @@ import Foundation
             var bad=frame;bad[index]=128
             check(NamStockWire.preset(bad) == nil)
         }
-        for identity in ["NAMLNK01","NAMLNK06","NAMLNK23","PLUGPRO"] {
+        for identity in ["NAMLNK01","NAMLNK06","NAMLNK24","PLUGPRO"] {
             check(NamListening.arm(identity:identity,enabled:true) == nil)
             check(NamListening.arm(identity:identity,enabled:false) == nil)
         }
-        for identity in ["NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22"] { for enabled in [true,false] {
+        for identity in ["NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"] { for enabled in [true,false] {
             let command=NamListening.arm(identity:identity,enabled:enabled)!
             check(command.count == 20 && command[8] == (enabled ? 1 : 0))
             check(command[18] == 23)
@@ -132,7 +147,7 @@ import Foundation
             let word = (UInt32(48000)<<16) | (1<<8) | UInt32(samples)
             check((NamOutputBuffer.decode(word) != nil) == allowed)
         }
-        for identity in ["NAMLNK08","NAMLNK23","PLUGPRO",""] {
+        for identity in ["NAMLNK08","NAMLNK24","PLUGPRO",""] {
             check(NamOutputBuffer.command(identity:identity,samples:8) == nil)
         }
         for word: UInt32 in [0,8,0xffffffff,(44100<<16)|(1<<8)|8,(48000<<16)|(3<<8)|8] {

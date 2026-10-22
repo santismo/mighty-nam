@@ -20,10 +20,11 @@ void main() {
       final rig = bank.slots[color];
       final model = models.captures[rig.modelSha256];
       expect(model, isNotNull, reason: 'Missing capture for color $color');
-      final plan = StockControlPlan.fromRig(rig, identity: 'NAMLNK22');
+      final plan = StockControlPlan.fromRig(rig, identity: 'NAMLNK23');
       rows.add({
         'color': color,
         'name': rig.name,
+        'controls': plan.controls,
         'model': model!.toRecord(),
         'effects': {
           for (final cc in plan.controls)

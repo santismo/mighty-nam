@@ -1,0 +1,43 @@
+{
+  "status": "PASS_CONTROLLERS_AND_USB_RESTORE",
+  "mac_version": "0.5.3+22",
+  "phone_version": "0.8.3",
+  "firmware_identity": "NAMLNK23",
+  "usb_name": "NUX NMP-03",
+  "validation": {
+    "mac_widgets_previous_full_suite_passed": 106,
+    "mac_startup_playback_tests_passed": 2,
+    "native_wire_checks_passed": 1723,
+    "native_extra_fx_checks_passed": 85,
+    "phone_tests_passed": 123,
+    "local_preset_export_passed": true,
+    "offline_cold_boot_and_nonadjacent_recall_passed": true,
+    "physical_capture_transfers": 3,
+    "physical_preset_save_and_exact_readback": 3,
+    "physical_preset_recalls": 3,
+    "physical_faults": 0,
+    "global_output_buffer_samples": 8,
+    "sample_rate_hz": 48000,
+    "output_enabled_at_end": true,
+    "physical_power_cycle_tested": false,
+    "audible_output_confirmed": true,
+    "logic_duplex_verified": false,
+    "ble_hardware_tested": false
+  },
+  "privacy": {
+    "creator_captures_in_release": false,
+    "personal_presets_in_release": false,
+    "account_tokens_in_release": false
+  },
+  "actions": {
+    "firmware_updates": 0,
+    "explicit_mute_commands": 0,
+    "host_audio_streams_opened": 0,
+    "system_audio_changed": false
+  },
+  "notes": [
+    "Public V3 image starts with no NAM capture or saved colors. Three user-owned presets were restored locally; their content and names are not included here.",
+    "USB endpoint discovery now accepts the exact NUX NMP-03 name; custom commands still require a supported firmware identity.",
+    "The user confirmed guitar audio returned after restoring presets. Physical reboot persistence, BLE hardware behavior and Logic duplex audio were not retested in this run."
+  ]
+}

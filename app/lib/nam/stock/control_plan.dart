@@ -43,7 +43,8 @@ class StockControlPlan {
                     'NAMLNK19',
                     'NAMLNK20',
                     'NAMLNK21',
-                    'NAMLNK22'
+                    'NAMLNK22',
+                    'NAMLNK23'
                   ].contains(identity)
               ? 4
               : supportedTypes[slot]!;
@@ -73,13 +74,14 @@ class StockControlPlan {
         identity:
             identity); // Validate the complete response before changing UI state.
     final next = HybridRig.parse(previous.encode())..masterVolume = preset[84];
-    next.usbRecordGain = ['NAMLNK21', 'NAMLNK22'].contains(identity) &&
-            preset[33] == 78 &&
-            preset[34] == 2 &&
-            preset[35] <= 96
-        ? preset[35]
-        : 48;
-    next.namTone = ['NAMLNK21', 'NAMLNK22'].contains(identity)
+    next.usbRecordGain =
+        ['NAMLNK21', 'NAMLNK22', 'NAMLNK23'].contains(identity) &&
+                preset[33] == 78 &&
+                preset[34] == 2 &&
+                preset[35] <= 96
+            ? preset[35]
+            : 48;
+    next.namTone = ['NAMLNK21', 'NAMLNK22', 'NAMLNK23'].contains(identity)
         ? readNamTone(preset)
         : neutralNamTone();
     for (final block in next.blocks.where((b) => !b.extra)) {

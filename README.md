@@ -2,7 +2,7 @@
 
 NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller. By **santismo**.
 
-[Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.2-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
+[Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.3-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
 
 This repository contains the firmware experiments, Mac app, protocols and test evidence. The separate [mighty-nam-controller repository](https://github.com/santismo/mighty-nam-controller) is public and hosts the phone page.
 
@@ -10,10 +10,12 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 
 | Component | Status |
 | --- | --- |
-| Mac 0.5.2 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK22 support. Not notarized. |
-| Phone 0.8.2 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
+| Mac 0.5.3 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23 support. Not notarized. |
+| Phone 0.8.3 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
 | NAMLNK22 | **Staged, not installed.** Improved monophonic pitch, USB audio routing repair, NAM controls and Auto Wah changes. Offline checks pass; hardware pitch timing/listening and Logic duplex checks remain. [Trial](docs/pitch-quality-trial.md). |
 | Hardware baseline | NAMLNK20 was installed on the development unit. Earlier builds demonstrated NAM listening, seven-color storage after restart, and phone live controls. These observations do not certify every new effect or timing combination. |
+
+Mac 0.5.3 and phone 0.8.3 now recognize NAMLNK23. The Mac also detects the public V3 USB MIDI name, `NUX NMP-03`. On the development unit, three user-owned captures and their effects were saved and recalled with zero reported faults; the user confirmed guitar audio returned. A newly built empty bank needs a capture loaded and saved before it can play NAM. These checks do not establish Logic duplex operation or physical reboot persistence for NAMLNK23. [Controller evidence](evidence/controllers-0.5.3/summary.json).
 
 ## What you can do
 
