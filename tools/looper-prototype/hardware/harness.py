@@ -1,5 +1,5 @@
 """Extend the established CPU harness for the new startup area; no physical I/O."""
-import hashlib,struct,sys
+import hashlib,struct,sys,json,os
 from pathlib import Path
 from elftools.elf.elffile import ELFFile
 from unicorn import UC_HOOK_CODE,UC_HOOK_MEM_WRITE,UC_PROT_ALL
@@ -7,11 +7,14 @@ from unicorn.arm_const import UC_ARM_REG_PC
 from capstone import Cs,CS_ARCH_ARM,CS_MODE_THUMB,CS_MODE_MCLASS
 
 def setup(baseline,payload,output,reference=False):
+    identity=json.loads((output/'build/build.json').read_text())['identity']
+    assert identity in ['NAMLNK25','NAMLNK26']
+    schema=1 if identity=='NAMLNK25' else 2
     # Identity allowlists only; no weakened state/transport/write assertions.
-    path=output/'harness';path.mkdir(parents=True,exist_ok=True)
+    path=output/'harness'/str(os.getpid());path.mkdir(parents=True,exist_ok=True)
     original=(baseline/'generated/research/test_preset_runtime.py').read_text()
-    changed=original.replace("'NAMLNK24',","'NAMLNK24','NAMLNK25',")
-    assert changed.count("'NAMLNK25'")==3
+    changed=original.replace("'NAMLNK24',",f"'NAMLNK24','{identity}',")
+    assert changed.count(f"'{identity}'")==3
     (path/'test_preset_runtime.py').write_text(changed)
     chain=(baseline/'generated/research/test_link_stock_chain.py').read_text()
     assert chain.count('  self.u.mem_map(0x20240000,0x80000)')==1
@@ -22,7 +25,7 @@ def setup(baseline,payload,output,reference=False):
     from image import build
     from preset_image import build as original_build
     base=baseline/'build/nam-link-offline.elf';overlay=output/'build/loop-startup-test.elf'
-    v.configure(payload,True,candidate_bundle=original_build(payload.read_bytes(),base) if reference else build(payload.read_bytes(),base,overlay));v.elf_path=base
+    v.configure(payload,True,candidate_bundle=original_build(payload.read_bytes(),base) if reference else build(payload.read_bytes(),base,overlay,identity));v.elf_path=base
     with overlay.open('rb') as f:
         e=ELFFile(f);symbols={s.name:s['st_value'] for s in e.get_section_by_name('.symtab').iter_symbols() if s.name}
         functions=[(s['st_value']&~1,s['st_size']) for s in e.get_section_by_name('.symtab').iter_symbols() if s['st_info']['type']=='STT_FUNC']
@@ -45,7 +48,7 @@ def setup(baseline,payload,output,reference=False):
             super().boot(*args,**kwargs)
             if not reference:
                 self.loop_boot_count+=1
-                assert self.diag()[:7]==[0x4c4f5031,1,2,0,0,371316,2],self.diag()
+                assert self.diag()[:7]==[0x4c4f5031,schema,2,0,0,371316,2],self.diag()
                 assert self.loop_state(3)==0
         def code(self,u,pc,n,user):
             if not reference and self.phase=='boot':
@@ -54,6 +57,19 @@ def setup(baseline,payload,output,reference=False):
             return super().code(u,pc,n,user)
         def arm_loop(self,name,*args):
             self.call(symbols[name],list(args));return self.u.reg_read(v.R[0])
+        def button(self):
+            if identity=='NAMLNK25':return super().button()
+            # Exact scanner and patched dispatcher; synthetic elapsed time is
+            # only for gesture debounce, never evidence of physical deadlines.
+            for down,count in [(False,40),(True,80),(False,80)]:
+                for _ in range(count):
+                    self.put(0x40c60000,0xffffffff & ~(128 if down else 0))
+                    self.put(0x40c5c000,0xffffffff);self.put(0x40c68000,0xffffffff)
+                    self.run(0x9dd4);self.run(0xa05e)
+                    at=v.sym['mpp_link']+12;self.put(at,(self.get(at)+6)&0xffffffff)
+                    self.arm_loop('mpp_loop_buttons_tick')
+            self.service()
+            return self.u.mem_read(self.get(0x20014970)+2,1)[0]
         def diag(self):return list(struct.unpack('<40I',self.u.mem_read(symbols['mpp_loop_diag'],160)))
         def loop_state(self,key):return self.arm_loop('mpp_loop_state',key)
         def loop_request(self,op=0,arg=0,channel=0,nonce=73):

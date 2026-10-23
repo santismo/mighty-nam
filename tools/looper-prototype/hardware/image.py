@@ -7,7 +7,8 @@ from build_test import BASELINE_SHA
 FLASH=0x30040000
 sha=lambda b:hashlib.sha256(b).hexdigest()
 
-def build(stock, baseline, overlay):
+def build(stock, baseline, overlay, identity='NAMLNK25'):
+    if identity not in ['NAMLNK25','NAMLNK26']:raise ValueError('Unsupported looper identity')
     from preset_image import build as base_build
     if sha(baseline.read_bytes())!=BASELINE_SHA:raise ValueError('Unsupported baseline')
     original,base,plan=base_build(stock,baseline)
@@ -42,6 +43,8 @@ def build(stock, baseline, overlay):
         target=new[name];assert target&1
         patch(at,(b'\x00\xbf' if at%4 else b'')+bytes.fromhex('dff800f0')+struct.pack('<I',target),name)
     for at,name in [(0x581a,'mpp_loop_startup'),(0xe19c,'mpp_loop_probe_audio'),(0x5868,'mpp_loop_service')]:jump(at,name)
+    if identity=='NAMLNK26':
+        for at,name in [(0xa05e,'mpp_loop_buttons'),(0x60ec,'mpp_loop_color')]:jump(at,name)
     patch(0x21243,struct.pack('<I',new['mpp_loop_query']),'Looper diagnostic command; standard commands delegate')
     patch(0x229b0,struct.pack('<I',new['mpp_loop_irq']),'Whole IRQ cycle observation')
     for old,target in [('_ZN12_GLOBAL__N_14readEPvjPhj','mpp_loop_read'),
@@ -50,7 +53,7 @@ def build(stock, baseline, overlay):
         address=base[old]&~1;assert 0x2030f000<=address<0x20314000
         jump(0x303a6000-FLASH+address-0x2030f000,target)
     identity_at=0x303a6000-FLASH+base['mpp_probe_identity']-0x2030f000
-    assert out[identity_at:identity_at+8]==b'NAMLNK24';patch(identity_at,b'NAMLNK25','Diagnostic firmware identity')
+    assert out[identity_at:identity_at+8]==b'NAMLNK24';patch(identity_at,identity.encode(),'Diagnostic firmware identity')
     symbols.update({k:v for k,v in new.items() if k not in symbols or k.startswith(("mpp_loop_","__loop_"))})
     # The emulator's startup trace uses this name for the stock entry's target.
     symbols['mpp_stock_amp_init']=new['mpp_loop_startup']
@@ -59,8 +62,8 @@ def build(stock, baseline, overlay):
     assert out[0x364000:0x366000]==original[0x364000:0x366000]
     assert len(out)==len(stock)
     assert all(any(a<=i<b for a,b in allowed) for i,(x,y) in enumerate(zip(original,out)) if x!=y)
-    plan.update(identity='NAMLNK25',mode='LOOPER_RAM_TIMING_TEST_ONLY',baseline_elf_sha256=BASELINE_SHA,
+    plan.update(identity=identity,mode='LOOPER_RAM_TIMING_TEST_ONLY',baseline_elf_sha256=BASELINE_SHA,
         elf_sha256=sha(overlay.read_bytes()),candidate_sha256=sha(out),elf_regions=plan['elf_regions']+rows,
         loop_patches=patches,loop_changed_spans=allowed,startup_copy_implemented=True,
-        physical_button_looper_hooks=False,physical_RAM_safe_proven=False)
+        physical_button_looper_hooks=identity=='NAMLNK26',physical_RAM_safe_proven=False)
     return bytes(out),symbols,plan

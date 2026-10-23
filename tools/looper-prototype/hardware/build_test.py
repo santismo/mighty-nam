@@ -9,7 +9,7 @@ BASELINE_SHA = '13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d
 ROOT = Path(__file__).resolve().parent
 sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 
-def build(baseline, output):
+def build(baseline, output, variant=None):
     baseline=baseline.resolve(); output=output.resolve(); output.mkdir(parents=True,exist_ok=True)
     elf=baseline/'build/nam-link-offline.elf'
     if sha(elf)!=BASELINE_SHA: raise ValueError('Exact NAMLNK24 baseline required')
@@ -63,15 +63,17 @@ unsigned mpp_loop_apply(unsigned cmd) {
     }''')
     core=core.replace('    if(!audio || audio->store.failed || mpp_link.faults)return;',
         '    if(!audio || !mpp_loop_allowed() || control.loop!=Loop::playing || audio->store.failed || mpp_link.faults)return;')
+    if variant: core=variant.transform_core(core)
     (output/'core.cpp').write_text(core)
     flags=['--target=arm-none-eabi','-mcpu=cortex-m7','-mthumb','-mfpu=vfpv3-d16','-mfloat-abi=hard','-std=c++17','-O2',
         '-ffreestanding','-fno-builtin','-ffp-contract=off','-fno-exceptions','-fno-rtti','-fno-unwind-tables','-fno-asynchronous-unwind-tables','-Wall','-Wextra','-Werror']
     defines=[x for x in json.loads((baseline/'build/build.json').read_text())['compiler_flags'] if x.startswith('-D')]
     assert '-DMPP_EARLY_OUTPUT' in defines and not any(x.startswith('-DMPP_DMA_') for x in defines)
     objects=[]
-    for src in [output/'core.cpp',output/'audio.cpp',ROOT/'diagnostics.cpp',ROOT/'startup.cpp']:
+    for src in [output/'core.cpp',output/'audio.cpp',variant.diagnostics if variant else ROOT/'diagnostics.cpp',ROOT/'startup.cpp',*(variant.extra_sources if variant else [])]:
         obj=output/(src.stem+'.o')
-        subprocess.run(['clang++',*flags,*defines,'-I'+str(ROOT.parent),'-I'+str(baseline/'generated/target/link'),'-c',str(src),'-o',str(obj)],check=True);objects.append(obj)
+        extra=variant.file_flags(src) if variant else []
+        subprocess.run(['clang++',*flags,*extra,*defines,'-I'+str(ROOT.parent),'-I'+str(baseline/'generated/target/link'),'-c',str(src),'-o',str(obj)],check=True);objects.append(obj)
     aliases={k:v for k,v in symbols.items() if k.startswith('mpp_')}
     aliases['chain_right']=symbols['_ZL11chain_right']
     for name,base in [('init','stock_amp_init'),('service','bank_service'),('irq','link_irq'),('query','probe_query')]:aliases['mpp_base_'+name]=symbols['mpp_'+base]
@@ -82,8 +84,10 @@ unsigned mpp_loop_apply(unsigned cmd) {
         e=ELFFile(f);assert not [s.name for s in e.get_section_by_name('.symtab').iter_symbols() if s.name and s['st_shndx']=='SHN_UNDEF']
         regions=[dict(name=s.name,start=hex(s['sh_addr']),bytes=s['sh_size'],end=hex(s['sh_addr']+s['sh_size'])) for s in e.iter_sections() if s['sh_flags']&2 and s['sh_size']]
     sources=list(ROOT.glob('*.cpp'))+list(ROOT.glob('*.hpp'))+[ROOT/'test.ld',Path(__file__)]+list(ROOT.parent.glob('*.hpp'))+[ROOT.parent/'continuity.cpp',ROOT.parent/'build_continuity.py']
-    report=dict(status='BUILT_OFFLINE_STARTUP_TEST',identity='NAMLNK25',baseline_sha256=sha(elf),sha256=sha(target),regions=regions,
+    if variant: sources+=list(variant.sources)
+    report=dict(status='BUILT_OFFLINE_STARTUP_TEST',identity=variant.identity if variant else 'NAMLNK25',baseline_sha256=sha(elf),sha256=sha(target),regions=regions,
         source_hashes={str(p.relative_to(ROOT.parent)):sha(p) for p in sorted(sources)},compiler_flags=flags+defines,
+        per_file_flags={src:variant.file_flags(Path(src)) for src in ['core.cpp','audio.cpp','diagnostics.cpp','startup.cpp']} if variant else {},
         flash_container_created=False,physical_RAM_safe_proven=False,device_access=False)
     (output/'build.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(regions,indent=2))
 

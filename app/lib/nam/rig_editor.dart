@@ -55,7 +55,8 @@ class _RigEditorState extends State<RigEditor> {
         'NAMLNK22',
         'NAMLNK23',
         'NAMLNK24',
-        'NAMLNK25'
+        'NAMLNK25',
+        'NAMLNK26'
       ].contains(widget.firmwareIdentity);
   Future<void> addBlock() async {
     final available = widget.rig.blocks

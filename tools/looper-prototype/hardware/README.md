@@ -1,5 +1,9 @@
 # NAMLNK25 startup, RAM and timing trial
 
+The follow-on [NAMLNK26 layers trial](../layers/README.md) adds phone controls,
+merged overdubs, optional 60-second storage and physical button/LED adapters.
+This page documents the earlier NAMLNK25 build.
+
 This is a **local diagnostic build**, not a public firmware release or a finished
 looper. Nothing in the offline build or tests opens a device or an audio stream.
 The ordinary public builder still produces its existing version.

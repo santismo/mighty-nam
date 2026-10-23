@@ -8,7 +8,7 @@ enum class Loop : uint8_t { empty, armed, recording, playing, paused, stopped };
 enum Event : uint32_t {
     select_preset=1, direction_changed=2, view_changed=4, arm=8,
     start_record=16, finish_record=32, play=64, pause=128, stop=256,
-    cancel_arm=512, request_shutdown=1024
+    cancel_arm=512, request_shutdown=1024, clear_loop=2048
 };
 struct Button {
     bool candidate=false, stable=false, released=false, held=false;
@@ -30,6 +30,11 @@ struct Controls {
     static uint32_t elapsed(uint32_t now,uint32_t then) { return now-then; }
     bool has_loop() const { return frames && loop!=Loop::recording; }
     uint32_t take_events() { auto value=events; events=0; return value; }
+    void clear() { frames=0;loop=Loop::empty;events|=clear_loop; }
+    // Presentation only. The runtime GPIO/LED adapter must preserve preset color.
+    bool preset_led_on(uint32_t now) const {
+        return loop!=Loop::armed || (now%500)<250;
+    }
     void advance_preset() {
         for(int i=1;i<=7;++i) {
             unsigned next=(int(color)+7+direction*i)%7;
@@ -115,6 +120,7 @@ struct Controls {
             b.held=true;
             if(is_power) { pending_power=second_power=false; events|=request_shutdown; }
             else if(mode==Mode::presets) { direction=-direction; events|=direction_changed; }
+            else clear(); // One press-and-hold; release must not arm a new loop.
         }
     }
     void update(uint32_t now,bool preset_down,bool power_down) {

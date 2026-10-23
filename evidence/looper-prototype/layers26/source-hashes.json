@@ -1,0 +1,14 @@
+{
+  "layers/session.hpp": "3bb2f410516c8023032d8a7fcf2e7c1df376a3d1d57ed470e5437fde7d2f7eb1",
+  "layers/overdub_store.hpp": "0b2281520d331f4a4d65e4df8114c6d9a582f5f2a169bed4dd5cd4f056c08a49",
+  "layers/test_layers.cpp": "ed4f61d3dbf9ce053dac9ef19a7de6d783aa7baf60f144911d84eb999ff7f336",
+  "layers/test_long.cpp": "11395f0f4a6321b4f781195e1e2c82e47d7d902ad106039ce4578d41d4e7925c",
+  "compressed_audio.hpp": "ef2b82fdb049e499d49564965129e806e04884fd95469adae0159ee681cf7804",
+  "loop_filter.hpp": "ce4ae17535630e1692df85301f8ad5be64d0c124a277f0b1ff7470b280e6a461",
+  "ima_adpcm.hpp": "5de64f735064080a661486270b1b8a4bffa18cdc64b94f1867d3ff8a2761e74a",
+  "layout.hpp": "cc6c1ceee59bea7e3676a408c8996ebca03b7aabffaeed9f150e141478b3e15d",
+  "audio.hpp": "ebae2d6a0d782aeb3457a4487c1f7c4cd336fe627e9fd149663ec321cee3a50b",
+  "controls.hpp": "d7e6319c0588251155f2a87f2cae6841266117b19ab240eb8c8ebfdca574975d",
+  "../../firmware/target/a2/a2_lite.hpp": "95108d5a43cb3b41f7a917414926444b4b4b97a08edbabe85b8b19b6958e3afb",
+  "../../firmware/target/a2/a2_lite.cpp": "d914db04b1b8b334633a620bf6724ff7d72ff49757023853f68f66c5c9c4c66b"
+}

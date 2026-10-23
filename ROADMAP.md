@@ -1,6 +1,6 @@
 # mighty-nam roadmap
 
-Updated 22 October 2026. Research entries are not released capabilities.
+Updated 23 October 2026. Research entries are not released capabilities.
 
 ## Current baseline
 
@@ -21,15 +21,15 @@ See [Bluetooth evidence and limits](docs/bluetooth-audio.md).
 
 ## Standalone looper and buttons
 
-The [offline control model](docs/looper-research.md) implements the requested gestures:
-double POWER to enter; PRESET to arm threshold recording, finish, pause and resume;
-single POWER to switch between loop and preset controls without stopping playback;
-double POWER to stop and exit. Holding PRESET reverses normal preset cycling.
-
-Next establish safe loop memory, protect playback across preset reloads, verify button
-hooks and preserve long-POWER shutdown and the startup updater gesture. Duration,
-compression, replacement/clear controls, overdubbing and persistence remain undecided.
-No recorder, playback mixer or looper firmware is released.
+NAMLNK25 recorded and played a 30-second loop on the development plug; the owner
+confirmed continuous playback with its original sound through three preset colors.
+The [NAMLNK26 layers trial](tools/looper-prototype/layers/README.md) adds merged
+layers across preset changes, phone transport/threshold/level, optional 60 seconds
+at 12 kHz, armed LED blinking, hold-PRESET clear, direction reversal and POWER
+mode gestures. New features have offline coverage; physical deadlines, gesture
+behavior, 60-second fidelity and overdub listening remain the next trial.
+The public builder does not yet include the looper. Recording is RAM-only, with
+no undo or storage after power-off; playback currently feeds headphones only.
 
 ## Controller and longer-term work
 

@@ -1,0 +1,8 @@
+{
+  "status": "PASS_OFFLINE_LAYERS",
+  "partial_layer_cases": 3484,
+  "storage_bytes": 371316,
+  "session_host_bytes": 1624,
+  "device_access": false,
+  "host_audio_access": false
+}

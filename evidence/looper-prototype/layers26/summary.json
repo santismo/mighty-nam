@@ -1,0 +1,37 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK26_LAYERS",
+  "firmware": "NAMLNK26",
+  "elf_sha256": "daeadc3eaf5ce73be687b84a1de2b2bbf5a13d651a59f710225ea7996dedc990",
+  "mac_app": "0.5.7",
+  "phone_controller": "0.8.6",
+  "phone_protocol_tests": 138,
+  "flutter_tests": 132,
+  "flutter_fixture_only_skips": 3,
+  "swift_stock_wire_checks": 1754,
+  "swift_fx_checks": 85,
+  "swift_nam_wire_passed": true,
+  "browser_fixture_checks": [
+    "threshold readback",
+    "loop level readback",
+    "60-second selection",
+    "arm",
+    "finish",
+    "overdub",
+    "select Orange while layering",
+    "close/reopen preserves loop",
+    "pause/resume",
+    "clear retains settings"
+  ],
+  "physical_looper26_verified": false,
+  "flashed": false,
+  "device_access": false,
+  "auto_mute_sent": false,
+  "host_audio_access": false,
+  "limitations": [
+    "NAMLNK25 listening result does not establish NAMLNK26 deadlines or physical gestures.",
+    "60 seconds stores mono audio at 12 kHz; live guitar remains 48 kHz.",
+    "Layers merge destructively into ADPCM; no undo or recording after power-off.",
+    "Loop goes to headphones; USB recording remains the existing guitar feed.",
+    "Public builder remains NAMLNK23 r2. Personal update image is local only."
+  ]
+}

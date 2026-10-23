@@ -3,7 +3,7 @@ import 'package:mighty_plug_manager/nam/stock/rig.dart';
 import 'package:mighty_plug_manager/nam/stock/control_plan.dart';
 
 void main() {
-  for (final identity in ['NAMLNK24', 'NAMLNK25']) {
+  for (final identity in ['NAMLNK24', 'NAMLNK25', 'NAMLNK26']) {
     test(
         'Touch Wah type and parameters survive Mac storage and $identity readback',
         () {

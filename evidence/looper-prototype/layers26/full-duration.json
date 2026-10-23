@@ -1,0 +1,10 @@
+{
+  "status": "PASS_FULL_DURATION_NAM_LAYERS",
+  "callbacks": 1620000,
+  "nam_model_changes": 52,
+  "committed_layer_blocks": 5419,
+  "loop_storage_bytes": 371316,
+  "host_audio_access": false,
+  "device_access": false,
+  "physical_timing_proven": false
+}

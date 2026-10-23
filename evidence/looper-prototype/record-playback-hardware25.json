@@ -1,0 +1,40 @@
+{
+  "status": "PASS_PHYSICAL_30_SECOND_RECORD_PLAYBACK_PRESET_TRIAL",
+  "date": "2026-10-23",
+  "firmware": "NAMLNK25",
+  "stored_sample_rate_hz": 24000,
+  "stored_samples": 720000,
+  "recorded_seconds": 30.0,
+  "live_sample_rate_hz": 48000,
+  "buffer_samples": 8,
+  "threshold_arm_observed": true,
+  "automatic_capacity_finish": true,
+  "recorded_samples_unchanged_during_preset_reads": true,
+  "playback_active_during_every_preset_read": true,
+  "observed_colors": [
+    0,
+    1,
+    2
+  ],
+  "preset_flash_read_calls_during_observation": 12,
+  "loop_fault_bits": 0,
+  "sai_error_bits": 0,
+  "guitar_faults": 0,
+  "recording_max_irq_cycles": 101669,
+  "playback_max_irq_cycles": 105395,
+  "minimum_observed_irq_start_interval_cycles": 156441,
+  "physical_worst_case_deadline_proven": false,
+  "user_listening_report": "Loop sounds correct and continues through preset changes",
+  "test_loop_stopped": true,
+  "recording_retained_in_ram": true,
+  "guitar_output_enabled": true,
+  "flash_writes_during_trial": 0,
+  "mute_or_output_commands": 0,
+  "host_audio_streams": 0,
+  "limits": [
+    "One development unit and current three presets.",
+    "No analog latency or independent captured-output continuity measurement.",
+    "No sustained exhaustive RAM ownership proof or heavy-effects worst-case deadline guarantee.",
+    "New physical looper button mapping remains pending."
+  ]
+}

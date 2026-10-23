@@ -31,7 +31,7 @@ class StockControlPlan {
     'reverb': 6,
   };
   static int maximumType(String slot, String? identity) =>
-      slot == 'drive' && ['NAMLNK24', 'NAMLNK25'].contains(identity)
+      slot == 'drive' && ['NAMLNK24', 'NAMLNK25', 'NAMLNK26'].contains(identity)
           ? 14
           : ['fxa', 'fxb'].contains(slot)
               ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
@@ -48,7 +48,8 @@ class StockControlPlan {
                         'NAMLNK22',
                         'NAMLNK23',
                         'NAMLNK24',
-                        'NAMLNK25'
+                        'NAMLNK25',
+                        'NAMLNK26'
                       ].contains(identity)
                   ? 4
                   : supportedTypes[slot]!;
@@ -83,15 +84,22 @@ class StockControlPlan {
               'NAMLNK22',
               'NAMLNK23',
               'NAMLNK24',
-              'NAMLNK25'
+              'NAMLNK25',
+              'NAMLNK26'
             ].contains(identity) &&
             preset[33] == 78 &&
             preset[34] == 2 &&
             preset[35] <= 96
         ? preset[35]
         : 48;
-    next.namTone = ['NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24', 'NAMLNK25']
-            .contains(identity)
+    next.namTone = [
+      'NAMLNK21',
+      'NAMLNK22',
+      'NAMLNK23',
+      'NAMLNK24',
+      'NAMLNK25',
+      'NAMLNK26'
+    ].contains(identity)
         ? readNamTone(preset)
         : neutralNamTone();
     for (final block in next.blocks.where((b) => !b.extra)) {

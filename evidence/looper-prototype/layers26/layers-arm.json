@@ -1,0 +1,26 @@
+{
+  "status": "PASS_OFFLINE_ARM_LAYERS",
+  "elf_sha256": "daeadc3eaf5ce73be687b84a1de2b2bbf5a13d651a59f710225ea7996dedc990",
+  "max_executed_instructions_per_case": {
+    "idle_NAM_spring": 57013,
+    "record_60s_mode": 72583,
+    "play_60s_mode": 68065,
+    "overdub_60s_mode": 78044,
+    "paused_partial_commit": 62490,
+    "resume": 68060,
+    "overdub_30s_mode": 72548
+  },
+  "callback_frames": 8,
+  "live_sample_rate": 48000,
+  "stored_rates": [
+    24000,
+    12000
+  ],
+  "settings_readback": true,
+  "clear_while_overdubbing": true,
+  "guard_fault_guitar_unchanged": true,
+  "physical_deadlines_proven": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "flashed": false
+}

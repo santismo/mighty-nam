@@ -39,7 +39,8 @@ void main() {
     'NAMLNK22',
     'NAMLNK23',
     'NAMLNK24',
-    'NAMLNK25'
+    'NAMLNK25',
+    'NAMLNK26'
   ])
     testWidgets(
         '$identity shows two nodes, removes either, adds with retained settings, and handles empty',

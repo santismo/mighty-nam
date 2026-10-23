@@ -60,7 +60,8 @@ class UsbFixture {
               'NAMLNK22',
               'NAMLNK23',
               'NAMLNK24',
-              'NAMLNK25'
+              'NAMLNK25',
+              'NAMLNK26'
             ].contains(identity))
           'audioBuffer': {
             'samples': bufferSamples,
@@ -123,7 +124,8 @@ class UsbFixture {
         'NAMLNK22',
         'NAMLNK23',
         'NAMLNK24',
-        'NAMLNK25'
+        'NAMLNK25',
+        'NAMLNK26'
       ].contains(identity)) listening = false;
       return status();
     }
