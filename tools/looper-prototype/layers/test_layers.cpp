@@ -16,12 +16,15 @@ static void partial_layers(unsigned length,unsigned start,unsigned finish,bool p
     // Independent block transcode oracle: preserve the encoded prefix, then
     // rewrite the entire suffix, including original samples after overdub ends.
     const unsigned first=start/256*256,last=(finish-1)/256*256;
+    Ima encoder;
     for(unsigned b=first;b<=last;b+=256) {
         const auto* original=old.data()+16+b/256*132;
         auto* target=expected.data()+16+b/256*132;
-        Ima decoder,encoder;
+        Ima decoder;
         unsigned v=original[0]|(unsigned(original[1])<<8);
-        decoder.predictor=v>=32768?int(v)-65536:int(v);decoder.index=original[2];encoder=decoder;
+        decoder.predictor=v>=32768?int(v)-65536:int(v);decoder.index=original[2];
+        if(b==first)encoder=decoder;
+        else {unsigned seed=uint16_t(encoder.predictor);target[0]=uint8_t(seed);target[1]=uint8_t(seed>>8);target[2]=uint8_t(encoder.index);}
         for(unsigned i=b;i<length && i<b+256;++i) {
             unsigned j=i-b,p=original[4+j/2],n=j&1?p&15:p>>4;
             int sample=decoder.decode(n);
@@ -47,6 +50,13 @@ static void partial_layers(unsigned length,unsigned start,unsigned finish,bool p
     for(unsigned i=0;i<16;++i)assert(memory[i]==0xa5 && memory[memory.size()-1-i]==0xa5);
 }
 static void controls() {
+    // Remote arming followed by a short physical tap; no second debounce.
+    for(Mode mode:{Mode::presets,Mode::looper}) {
+        Controls c;c.mode=mode;c.loop=Loop::recording;c.frames=12000;
+        c.update_debounced(0,false,false);c.update_debounced(30,false,false);
+        c.update_debounced(40,true,false);c.update_debounced(50,false,false);
+        assert(c.loop==Loop::playing && c.color==0 && (c.take_events()&finish_record));
+    }
     for(Loop state:{Loop::empty,Loop::armed,Loop::recording,Loop::playing,Loop::paused,Loop::stopped}) {
         Controls c;c.mode=Mode::looper;c.loop=state;c.frames=100;c.direction=-1;
         for(unsigned t=0;t<50;++t)c.update(t,false,false);
@@ -65,6 +75,9 @@ static void session_tests(unsigned seconds) {
     assert(s.set_seconds(seconds));assert(s.sample_rate()==(seconds==30?24000:12000));
     assert(!s.set_seconds(45) && !s.set_volume(101) && !s.set_threshold(11) && !s.set_threshold(61));
     assert(s.set_threshold(40) && std::fabs(s.controls.threshold-.01f)<1e-7f);
+    s.meter_sample(.02f,true);assert(s.meter_word()>=1310 && s.input_peak>s.controls.threshold);
+    for(unsigned i=0;i<1200;++i)s.meter_decay();assert(s.input_peak<s.controls.threshold);
+    s.meter_sample(1.f,false);s.meter_sample(NAN,true);assert(s.input_peak<s.controls.threshold);
     assert(!s.set_overdub(true));s.controls.power_double();s.controls.preset_tap();
     float l,r;
     for(unsigned i=0;i<100;++i)s.frame(NAN,NAN,true,.1f,-.1f,l,r);

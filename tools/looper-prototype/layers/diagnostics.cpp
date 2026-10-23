@@ -12,7 +12,7 @@ volatile uint32_t mpp_loop_diag[40];
 }
 namespace {
 volatile unsigned pending,command_sequence;
-uint32_t snapshot[40],snapshot_ready,scan_offset,guard_offset;
+uint32_t snapshot[40],snapshot_ready,snapshot_peak,scan_offset,guard_offset;
 uint32_t last_start,last_epoch,last_ctrl;
 volatile bool touched;
 constexpr uintptr_t bases[]={layout::first,layout::second};
@@ -41,7 +41,7 @@ void mpp_loop_fail(unsigned flags,uintptr_t address){
 }
 void mpp_loop_boot(){
  for(volatile uint32_t* p=__loop_bss_start;p<__loop_bss_end;++p)*p=0;
- mpp_loop_diag[0]=0x4c4f5031;mpp_loop_diag[1]=2;mpp_loop_diag[2]=1;
+ mpp_loop_diag[0]=0x4c4f5031;mpp_loop_diag[1]=3;mpp_loop_diag[2]=1;
  mpp_loop_diag[35]=rd(0xe000ed14);mpp_loop_diag[36]=rd(0xe000ed94);
  mpp_loop_init();
  // Detect copy mismatch independently of the cache-clean loop in the stub.
@@ -122,23 +122,24 @@ void mpp_loop_query(const uint8_t* p,unsigned n,unsigned channel){
   else if(!mpp_loop_allowed())error=3;
   else if(pending)error=2;
   else{++command_sequence;barrier();pending=(unsigned(p[9])<<8)|action;}
- }else if(action==0 || action==5){
+ }else if(action==0 || action==5 || action==6){
   snapshot_ready=0;
   for(unsigned attempt=0;attempt<3;++attempt){
    unsigned seq=mpp_loop_diag[16];
    for(unsigned i=0;i<40;++i)snapshot[i]=mpp_loop_diag[i];
    for(unsigned i=0;i<4;++i)snapshot[8+i]=mpp_loop_state(i==0?3:i==1?0:i==2?1:2);
    snapshot[37]=mpp_loop_state(9);snapshot[38]=mpp_loop_state(10);snapshot[39]=mpp_loop_state(11);
+   snapshot_peak=mpp_loop_state(12);
    snapshot[12]=pending;snapshot[28]=mpp_loop_state(4);snapshot[29]=mpp_loop_state(5);snapshot[30]=mpp_loop_state(6);
    barrier();if(!(seq&1)&&seq==mpp_loop_diag[16]){snapshot_ready=1;break;}
   }
   if(!snapshot_ready)error=2;
- }else if(action>5)error=1;
+ }else if(action>6)error=1;
  else if(!snapshot_ready)error=2;
  uint8_t out[55];for(unsigned i=0;i<13;++i)out[i]=p[i];out[9]=p[9]|64;out[13]=error;
  constexpr unsigned compact[]={8,9,10,12,13,14,38,3};
- for(unsigned i=0;i<8;++i){unsigned value=!p[9]&&snapshot_ready&&action==5?
-  (i==0?snapshot[8]|(snapshot[37]<<8):snapshot[compact[i]]):!p[9]&&snapshot_ready&&action<5?snapshot[action*8+i]:i==0?command_sequence:0;
+ for(unsigned i=0;i<8;++i){unsigned value=!p[9]&&snapshot_ready&&(action==5||action==6)?
+  (i==0?snapshot[8]|(snapshot[37]<<8):i==5&&action==6?snapshot[14]|(snapshot_peak<<8):snapshot[compact[i]]):!p[9]&&snapshot_ready&&action<5?snapshot[action*8+i]:i==0?command_sequence:0;
   for(unsigned j=0;j<5;++j)out[14+i*5+j]=(value>>(j*7))&127;}
  out[54]=247;mpp_reply_send(out,sizeof out,channel);
 }

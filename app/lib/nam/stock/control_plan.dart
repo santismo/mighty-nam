@@ -30,29 +30,30 @@ class StockControlPlan {
     'delay': 5,
     'reverb': 6,
   };
-  static int maximumType(String slot, String? identity) =>
-      slot == 'drive' && ['NAMLNK24', 'NAMLNK25', 'NAMLNK26'].contains(identity)
-          ? 14
-          : ['fxa', 'fxb'].contains(slot)
-              ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
-              : slot == 'eq' &&
-                      [
-                        'NAMLNK14',
-                        'NAMLNK15',
-                        'NAMLNK16',
-                        'NAMLNK17',
-                        'NAMLNK18',
-                        'NAMLNK19',
-                        'NAMLNK20',
-                        'NAMLNK21',
-                        'NAMLNK22',
-                        'NAMLNK23',
-                        'NAMLNK24',
-                        'NAMLNK25',
-                        'NAMLNK26'
-                      ].contains(identity)
-                  ? 4
-                  : supportedTypes[slot]!;
+  static int maximumType(String slot, String? identity) => slot == 'drive' &&
+          ['NAMLNK24', 'NAMLNK25', 'NAMLNK26', 'NAMLNK27'].contains(identity)
+      ? 14
+      : ['fxa', 'fxb'].contains(slot)
+          ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
+          : slot == 'eq' &&
+                  [
+                    'NAMLNK14',
+                    'NAMLNK15',
+                    'NAMLNK16',
+                    'NAMLNK17',
+                    'NAMLNK18',
+                    'NAMLNK19',
+                    'NAMLNK20',
+                    'NAMLNK21',
+                    'NAMLNK22',
+                    'NAMLNK23',
+                    'NAMLNK24',
+                    'NAMLNK25',
+                    'NAMLNK26',
+                    'NAMLNK27'
+                  ].contains(identity)
+              ? 4
+              : supportedTypes[slot]!;
   static const ranges = [
     [13, 16, 15],
     [17, 22, 20],
@@ -85,7 +86,8 @@ class StockControlPlan {
               'NAMLNK23',
               'NAMLNK24',
               'NAMLNK25',
-              'NAMLNK26'
+              'NAMLNK26',
+              'NAMLNK27'
             ].contains(identity) &&
             preset[33] == 78 &&
             preset[34] == 2 &&
@@ -98,7 +100,8 @@ class StockControlPlan {
       'NAMLNK23',
       'NAMLNK24',
       'NAMLNK25',
-      'NAMLNK26'
+      'NAMLNK26',
+      'NAMLNK27'
     ].contains(identity)
         ? readNamTone(preset)
         : neutralNamTone();

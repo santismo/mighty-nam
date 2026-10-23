@@ -1,0 +1,15 @@
+{
+  "layers/session.hpp": "d7bed3ff4bf8d03c879ee42f599a5850e044acd215107235c60414e18a1d4eae",
+  "layers/overdub_store.hpp": "bda5d791a02349f6ab936c7393e5ab7a001928545ad85ba6294b7ddc821e2aed",
+  "layers/test_layers.cpp": "d01e29908b8c3a877a335a46f188ac974279a07695711a13b1b9404983bc63cb",
+  "layers/test_long.cpp": "f99ba0080ce298f6a678bcd1adbd0aab36525f81280d415cd51a713c347b439b",
+  "layers/test_quality.cpp": "b10f4e462ea92ba26f7dfe884299dc730f8077077913c8eae8c501d726b4b232",
+  "compressed_audio.hpp": "ef2b82fdb049e499d49564965129e806e04884fd95469adae0159ee681cf7804",
+  "loop_filter.hpp": "ce4ae17535630e1692df85301f8ad5be64d0c124a277f0b1ff7470b280e6a461",
+  "ima_adpcm.hpp": "5de64f735064080a661486270b1b8a4bffa18cdc64b94f1867d3ff8a2761e74a",
+  "layout.hpp": "cc6c1ceee59bea7e3676a408c8996ebca03b7aabffaeed9f150e141478b3e15d",
+  "audio.hpp": "ebae2d6a0d782aeb3457a4487c1f7c4cd336fe627e9fd149663ec321cee3a50b",
+  "controls.hpp": "e3cc8c75b81e43f7a5db0a19bc410cdd4c98a63931e0734700a925894389605d",
+  "../../firmware/target/a2/a2_lite.hpp": "95108d5a43cb3b41f7a917414926444b4b4b97a08edbabe85b8b19b6958e3afb",
+  "../../firmware/target/a2/a2_lite.cpp": "d914db04b1b8b334633a620bf6724ff7d72ff49757023853f68f66c5c9c4c66b"
+}

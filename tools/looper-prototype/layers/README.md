@@ -1,20 +1,41 @@
-# NAMLNK26 looper layers trial
+# NAMLNK27 looper refinements
 
-A local development candidate following the NAMLNK25 hardware trial. The owner
-confirmed that a recorded loop kept its sound and continued through Green,
-Orange and Red preset changes. That result does not establish the new overdub,
-60-second mode or physical gestures on NAMLNK26; those require a new hardware test.
+The owner tested NAMLNK26 recording/playback from the phone, but reported scratchy
+second layers in 30-second mode and missed physical PRESET finishes after phone
+arming. NAMLNK27 addresses both paths and adds live input metering. Offline checks
+pass; the new candidate still needs a physical button and listening trial.
 The public builder remains NAMLNK23 r2. No stock-derived image or personal capture
-is published with these sources.
+is published with these sources. A personal local image can retain a separately
+validated three-preset bank.
+
+## Changes from NAMLNK26
+
+The overwritten ADPCM encoder now carries its state between adjacent blocks
+instead of restarting from each quiet original block. A quiet-first-layer / louder
+second-layer numerical comparison improves SNR from 16.98 to 42.92 dB, with
+block-start RMS error falling from 2108.16 to 27.70 integer sample units. Recording
+uses 12 dB of internal storage headroom and compensates on playback. This is
+synthetic evidence, not a claim that every overdub will be artifact-free.
+
+The stock scanner already debounces physical buttons. The new adapter avoids a
+second 25 ms filter that could discard a short tap. A 12 ms regression fails on
+the prior image and passes on this one. An active recording also takes priority
+when PRESET is released, including after changing control mode. Hold-to-clear and
+stock volume/shutdown remain covered. These cases may explain the reported missed
+press; the user's exact hardware gesture remains to be checked.
 
 ## Controls
 
-Phone controller **0.8.6 → Looper** provides Arm, Finish/Pause/Play, Overdub/Finish
+Phone controller **0.8.7 → Looper** provides Arm, Finish/Pause/Play, Overdub/Finish
 layer, Stop, Clear, threshold (−60 to −12 dBFS), loop level (0–100%), length and
 hardware control mode. Opening or closing the panel does not stop the loop or
 change guitar output. Preset colors remain selectable while looping or layering.
-Mac **0.5.7** recognizes NAMLNK26 for existing guitar, model, effects and preset
-controls; the new looper panel is on the phone controller.
+Mac **0.5.8 → Looper** provides the same transport/settings. Close its panel to
+select another preset; closing does not stop or mute the loop. Both controllers
+show the recent raw guitar peak directly on the threshold slider on NAMLNK27.
+The white marker selects the threshold; the bar is blue below it and green when
+it is reached. The meter remains visible before arming and uses a short peak
+decay so plucked notes are readable. Older firmware cannot supply this reading.
 
 - Double-tap POWER to enter looper mode when empty. PRESET arms threshold recording;
   playing guitar starts it, and another PRESET tap closes the loop and plays it.
@@ -29,7 +50,7 @@ controls; the new looper panel is on the phone controller.
   the preset color. These button/LED adapters have compiled offline coverage,
   not a physical gesture test yet.
 
-Overdub is an explicit phone action. Play the existing loop, tap **Overdub**, choose
+Overdub is an explicit controller action. Play the existing loop, tap **Overdub**, choose
 any saved preset, and play the new layer. **Finish layer** returns to playback.
 Pause/Stop end the layer; they do not erase it. Layers are merged into mono ADPCM,
 with no separate track editing or undo. Repeated encoding and clipping can degrade
@@ -83,12 +104,20 @@ settings, guards, output publication, warm/cold startup, stock scanner/LED paths
 and cooperative IRQ preemption during actual preset recall. Instruction counts
 and synthetic cycle fixtures are **not** physical M7 deadline measurements.
 Packaging requires matching hashes and all startup/audio/continuity/layer/button
-gates; malformed or stale evidence is rejected before a container is created.
+and numerical overdub-quality gates; malformed or stale evidence is rejected before a container is created.
 
 Before using layers on hardware, verify RAM guards, worst-case whole IRQ timing,
 60-second sound quality, preset transitions and real POWER/PRESET gestures. Building and packaging never contact the plug; installation is a separate manual step.
 
 ## Protocol extension
+
+NAMLNK27 adds read-only compact status `op 0, arg 6`. Word 5 packs the command
+error in bits 0–7 and a raw input peak (0–65535) in bits 8–23. Bits 24–31 must
+be zero. Schema 3 identifies this layout; `arg 5` retains its old layout.
+The peak is updated by the existing audio callback, with no extra audio buffer.
+Controllers poll this compact packet about every 125 ms plus transport time
+while visible; closing/backgrounding stops polling without affecting playback.
+
 
 NO version 1 remains length/nonce/argument validated; NAMLNK25 retains its original
 commands. NAMLNK26 adds compact status (`op 0, arg 5`), transport arguments 6–10

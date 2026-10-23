@@ -1,0 +1,110 @@
+{
+  "status": "BUILT_OFFLINE_STARTUP_TEST",
+  "identity": "NAMLNK27",
+  "baseline_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "sha256": "674b7e0234934662dd76ad3e091705e939d305005191f1249d273de459b2ed33",
+  "regions": [
+    {
+      "name": ".loop_startup",
+      "start": "0x1d760",
+      "bytes": 202,
+      "end": "0x1d82a"
+    },
+    {
+      "name": ".text",
+      "start": "0x20314020",
+      "bytes": 11112,
+      "end": "0x20316b88"
+    },
+    {
+      "name": ".bss",
+      "start": "0x20318020",
+      "bytes": 2112,
+      "end": "0x20318860"
+    }
+  ],
+  "source_hashes": {
+    "audio.hpp": "ebae2d6a0d782aeb3457a4487c1f7c4cd336fe627e9fd149663ec321cee3a50b",
+    "build_continuity.py": "e58f73adc3827d7ead2afa248e55cd0f4fc4065e05b94d3028a092ba58e43c15",
+    "compressed_audio.hpp": "ef2b82fdb049e499d49564965129e806e04884fd95469adae0159ee681cf7804",
+    "continuity.cpp": "4208bc9ffa5f4b598a03eb778f23b37e05f5141e7e14ce829f4f7b7a1ff611b5",
+    "controls.hpp": "e3cc8c75b81e43f7a5db0a19bc410cdd4c98a63931e0734700a925894389605d",
+    "hardware/build_test.py": "01166648da2655a92e5a2220da17761899bb54b4a562d27de6b6b695afbb1808",
+    "hardware/diagnostics.cpp": "b3d3f6410fe0c3d7c397f36f731c400465d68854aebb89fded556f8f0d6f971e",
+    "hardware/diagnostics.hpp": "47ce6090d5832716664deca717ac5b69cdfe28465997500af75c7ef29df202e2",
+    "hardware/startup.cpp": "319c57b654ec7f6aec4314da4bbf2d4ecf89242973d0154f5e5dc0e5463d86ce",
+    "hardware/test.ld": "55146754d216ac49c6e68a7c10226a432fdc3704518035a56153be7aee2caf7d",
+    "ima_adpcm.hpp": "5de64f735064080a661486270b1b8a4bffa18cdc64b94f1867d3ff8a2761e74a",
+    "layers/build_next.py": "5f88454c3707fa0eeb6531703f0e48000e7cac89390151cfdba10c3e775c7774",
+    "layers/buttons.cpp": "74c9a5d86a195008424b0831e4d4f31e6a8397417e4dd42d0c6447319744b177",
+    "layers/diagnostics.cpp": "75d2cf6e46ac256bf43728d68c649d2056ba490ac6241196c8aa469095bf8ac4",
+    "layers/native_bridge.cpp": "17ba5d44cd13075272921e149b57df7f0502a465ebc735b9ee208b9ce04b416f",
+    "layers/overdub_store.hpp": "bda5d791a02349f6ab936c7393e5ab7a001928545ad85ba6294b7ddc821e2aed",
+    "layers/session.hpp": "d7bed3ff4bf8d03c879ee42f599a5850e044acd215107235c60414e18a1d4eae",
+    "layers/test_layers.cpp": "d01e29908b8c3a877a335a46f188ac974279a07695711a13b1b9404983bc63cb",
+    "layers/test_long.cpp": "f99ba0080ce298f6a678bcd1adbd0aab36525f81280d415cd51a713c347b439b",
+    "layers/test_quality.cpp": "b10f4e462ea92ba26f7dfe884299dc730f8077077913c8eae8c501d726b4b232",
+    "layout.hpp": "cc6c1ceee59bea7e3676a408c8996ebca03b7aabffaeed9f150e141478b3e15d",
+    "loop_filter.hpp": "ce4ae17535630e1692df85301f8ad5be64d0c124a277f0b1ff7470b280e6a461"
+  },
+  "compiler_flags": [
+    "--target=arm-none-eabi",
+    "-mcpu=cortex-m7",
+    "-mthumb",
+    "-mfpu=vfpv3-d16",
+    "-mfloat-abi=hard",
+    "-std=c++17",
+    "-O2",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-ffp-contract=off",
+    "-fno-exceptions",
+    "-fno-rtti",
+    "-fno-unwind-tables",
+    "-fno-asynchronous-unwind-tables",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DMPP_COMPACT_INIT",
+    "-DMPP_STOCK_V3",
+    "-DMPP_REFERENCE_ORDER",
+    "-DMPP_M7_CONV",
+    "-DMPP_FAST_BYPASS",
+    "-DMPP_M7_DENSE",
+    "-DMPP_PRIME_STATE",
+    "-DMPP_IRQ_TIMING",
+    "-DMPP_LISTENING",
+    "-DMPP_EARLY_OUTPUT",
+    "-DMPP_OUTPUT_BUFFER",
+    "-DMPP_PRESET_BANK",
+    "-DMPP_CACHE_LINE_PRIME",
+    "-DMPP_TUNER",
+    "-DMPP_FX_BLOCKS",
+    "-DMPP_CUT_EQ",
+    "-DMPP_RESPONSIVE_CONTROLS",
+    "-DMPP_M7_POINTER_TAPS",
+    "-DMPP_ADC_SHORT_DELAY",
+    "-DMPP_GLOBAL_BUFFER",
+    "-DMPP_DRIVER_TIMING",
+    "-DMPP_ACTIVE_CHAIN_PROTOTYPE",
+    "-DMPP_ACTIVE_CHAIN_RELEASE",
+    "-DMPP_USB_NAM_CONTROLS",
+    "-DMPP_PITCH_QUALITY_PROTOTYPE",
+    "-DMPP_PITCH_QUALITY_RELEASE",
+    "-DMPP_BLUETOOTH_AUDIO",
+    "-DMPP_DAISY_WAH"
+  ],
+  "per_file_flags": {
+    "core.cpp": [
+      "-Os"
+    ],
+    "audio.cpp": [],
+    "diagnostics.cpp": [
+      "-Os"
+    ],
+    "startup.cpp": []
+  },
+  "flash_container_created": false,
+  "physical_RAM_safe_proven": false,
+  "device_access": false
+}

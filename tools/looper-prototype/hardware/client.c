@@ -73,7 +73,7 @@ int main(int argc,char **argv) {
     MIDIOutputPortCreate(midi,CFSTR("MPP read requests"),&out)!=noErr || MIDIPortConnectSource(in,source,NULL)!=noErr)goto done;
  const uint8_t identify[]={0xf0,0x43,0x58,0,0xf7};++sent;
  if(!request(out,dest,identify,sizeof(identify),1)){status="IDENTITY_TIMEOUT";goto done;}
- if(strcmp(client.version,"NAMLNK25") && strcmp(client.version,"NAMLNK26")){status="UNRECOGNIZED_IDENTITY_NO_CUSTOM_COMMANDS_SENT";code=1;goto done;}
+ if(strcmp(client.version,"NAMLNK25") && strcmp(client.version,"NAMLNK26") && strcmp(client.version,"NAMLNK27")){status="UNRECOGNIZED_IDENTITY_NO_CUSTOM_COMMANDS_SENT";code=1;goto done;}
  if(command){
   uint8_t q[14];if(!loop_request(q,1,command,73)){status="BAD_COMMAND";goto done;}
   ++sent;++commands_sent;
@@ -91,7 +91,7 @@ int main(int argc,char **argv) {
   }
   if(!command || (values[12]==0 && values[13]==sequence))break;
  }
- if(values[0]!=0x4c4f5031 || values[1]!=(strcmp(client.version,"NAMLNK26")?1u:2u) || values[2]!=2){status="UNEXPECTED_DIAGNOSTIC_SCHEMA";goto done;}
+ if(values[0]!=0x4c4f5031 || values[1]!=(!strcmp(client.version,"NAMLNK27")?3u:!strcmp(client.version,"NAMLNK26")?2u:1u) || values[2]!=2){status="UNEXPECTED_DIAGNOSTIC_SCHEMA";goto done;}
  if(values[3]){status="LOOPER_RAM_GUARD_FAULT";goto done;}
  if(command && (values[12] || values[13]!=sequence)){status="COMMAND_NOT_APPLIED";goto done;}
  if(command && values[14]){status="COMMAND_NOT_APPLICABLE";goto done;}

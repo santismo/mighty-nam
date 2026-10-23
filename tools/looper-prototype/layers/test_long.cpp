@@ -30,7 +30,9 @@ int main(int argc,char** argv) {
             if(base==duration*2)assert(s.set_overdub(false));
             if(base && base%(48000*5)==0) {
                 unsigned model=base/(48000*5)%3;assert(nam.load(models[model].data(),mpp::A2Lite::weight_count));
-                ++recalls;s.controls.mode=Mode::presets;s.controls.preset_tap();settling=1200;
+                // Direct controller recall, not physical PRESET (which closes
+                // an active recording before it can select another patch).
+                ++recalls;s.controls.mode=Mode::presets;s.controls.advance_preset();settling=1200;
             }
             float input[8],output[8];
             for(unsigned i=0;i<8;++i)input[i]=float(.04*std::sin((base+i)*.014*(phase+1)));

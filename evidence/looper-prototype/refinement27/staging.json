@@ -1,0 +1,28 @@
+{
+  "status": "PASS_OFFLINE_LOOP_STAGING_GATES",
+  "identity": "NAMLNK27",
+  "elf_sha256": "674b7e0234934662dd76ad3e091705e939d305005191f1249d273de459b2ed33",
+  "rejected_cases": [
+    "missing startup",
+    "stale ELF",
+    "changed payload",
+    "guitar changed",
+    "loop discontinuity",
+    "missing fault coverage",
+    "missing overdub recall",
+    "unbounded button lock",
+    "stale buttons",
+    "missing full duration",
+    "missing meter",
+    "missing short tap",
+    "missing quality",
+    "quality regression"
+  ],
+  "container_bytes": 15009655,
+  "container_headers_preserved": true,
+  "vector_table_and_C_startup_preserved": true,
+  "local_bank_unchanged": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "flashed": false
+}

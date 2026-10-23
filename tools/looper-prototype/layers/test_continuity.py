@@ -77,7 +77,7 @@ for lo,size in guarded:m.u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,be
 def arm(name,*args):
     if name=='mpp_loop_fixture':
         obj=m.get(symbols['_ZN12_GLOBAL__N_15audioE']);controls=obj
-        assert m.loop_state(7)==1604
+        assert m.loop_state(7)==1608
         m.put(obj+80,args[0]);m.put(controls+12,args[0]*2);m.u.mem_write(controls,bytes([0,3]))
         m.u.mem_write(symbols['_ZN12_GLOBAL__N_17touchedE'],b'\1')
         m.u.mem_write(symbols['_ZN12_GLOBAL__N_114headphone_gainE'],bytes(m.u.mem_read(0x200006f8,4)))

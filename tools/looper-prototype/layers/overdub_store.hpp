@@ -17,7 +17,7 @@ struct OverdubStore : AdpcmStore {
     void clear() { AdpcmStore::clear();cached=dirty=false;commits=0; }
     bool rewind_ready() {
         if(dirty)return false;
-        AdpcmStore::rewind();cached=false;return true;
+        AdpcmStore::rewind();cached=false;position=end=0;return true;
     }
     unsigned code(const uint8_t* p,uint32_t frame) const {
         unsigned i=frame%block_samples,v=p[4+i/2];return i&1?v&15:v>>4;
@@ -42,7 +42,7 @@ struct OverdubStore : AdpcmStore {
         if(cursor>=length) {
             // Sequential playback finishes the final partial block itself.
             if(dirty){failed=true;return 0;}
-            AdpcmStore::rewind();cached=false;
+            AdpcmStore::rewind();cached=false;position=end=0;
         }
         if(cached && (cursor<begin || cursor>=end)) {
             if(dirty){failed=true;return 0;}
@@ -54,12 +54,23 @@ struct OverdubStore : AdpcmStore {
             unsigned v=unsigned(source[0])|(unsigned(source[1])<<8);
             decoder.predictor=v>=32768?int(v)-65536:int(v);decoder.index=source[2];
         }
-        if(overdub && addition && !cached) {
+        // Continue the MIXED signal's predictor across adjacent rewritten
+        // blocks. Resetting it to the original quiet recording at each block
+        // forces repeated adaptation transients (93.75 times/sec at 24 kHz).
+        bool carry=position==cursor && position==end && commits && !dirty;
+        if(overdub && (addition || carry) && !cached) {
+            Ima prior=writer;
             begin=cursor-(cursor%block_samples);end=begin+block_samples;
             if(end>length)end=length;
             auto* base=block(begin);
             for(unsigned j=0;j<block_bytes;++j)original[j]=replacement[j]=base[j];
             position=cursor;writer=tail=decoder;cached=dirty=true;source=original;
+            if(!(cursor%block_samples) && carry) {
+                writer=prior;
+                unsigned v=uint16_t(writer.predictor);
+                replacement[0]=uint8_t(v);replacement[1]=uint8_t(v>>8);
+                replacement[2]=uint8_t(writer.index);replacement[3]=0;
+            }
         }
         int16_t sample=decoder.decode(code(source,cursor));
         if(dirty && position==cursor) {

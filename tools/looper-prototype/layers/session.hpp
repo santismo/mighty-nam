@@ -19,6 +19,16 @@ struct LoopSession {
     bool overdubbing=false,trigger=false,rewind_pending=false;
     Loop previous=Loop::empty;
     uint32_t played_frames=0;
+    float input_peak=0;
+    // 12 dB of storage headroom; playback compensates exactly. This reduces
+    // hard clipping when combining several independently captured presets.
+    static constexpr float storage_gain=.25f, playback_gain=4.f;
+    void meter_decay() { input_peak*=.998333f; }
+    void meter_sample(float raw,bool ready) {
+        float v=ready?__builtin_fabsf(Audio::finite(raw)):0;
+        if(v>input_peak)input_peak=v>1.f?1.f:v;
+    }
+    unsigned meter_word() const { return unsigned(input_peak*65535.f+.5f); }
     LoopSession(uint8_t* p,size_t n,uint8_t* q,size_t m,uint32_t capacity=720000):
         store(p,n,q,m,capacity) { controls.capacity=capacity*ratio; }
     LoopSession(uint8_t* p,size_t n,uint32_t capacity):store(p,n,capacity) {
@@ -96,11 +106,11 @@ struct LoopSession {
                 c.begin_record(n*ratio);
             }
             if(c.loop==Loop::recording) {
-                if(store.append(Audio::encode(decimated)))c.audio(0,ratio);
+                if(store.append(Audio::encode(decimated*storage_gain)))c.audio(0,ratio);
                 was_recording=true;
                 if(c.loop==Loop::playing)reset_playback();
             }else if(c.loop==Loop::armed) {
-                history[history_next]=Audio::encode(decimated);history_next=(history_next+1)%64;
+                history[history_next]=Audio::encode(decimated*storage_gain);history_next=(history_next+1)%64;
                 if(history_count<64)++history_count;
             }
         }
@@ -111,7 +121,7 @@ struct LoopSession {
             // Align the overdub decimator with the playback clock. Its filter
             // states track live processed guitar, including preset settle zeros.
             float sample=0;
-            if(play_phase==0)sample=float(store.next_layer(Audio::encode(addition),overdubbing))/32768.f;
+            if(play_phase==0)sample=float(store.next_layer(Audio::encode(addition*storage_gain),overdubbing))/32768.f*playback_gain;
             if(ratio==4) {
                 float middle=0;
                 if(!(play_phase&1))middle=play2.process(sample*2.f);

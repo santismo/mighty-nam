@@ -8,8 +8,8 @@ from capstone import Cs,CS_ARCH_ARM,CS_MODE_THUMB,CS_MODE_MCLASS
 
 def setup(baseline,payload,output,reference=False):
     identity=json.loads((output/'build/build.json').read_text())['identity']
-    assert identity in ['NAMLNK25','NAMLNK26']
-    schema=1 if identity=='NAMLNK25' else 2
+    assert identity in ['NAMLNK25','NAMLNK26','NAMLNK27']
+    schema=1 if identity=='NAMLNK25' else 3 if identity=='NAMLNK27' else 2
     # Identity allowlists only; no weakened state/transport/write assertions.
     path=output/'harness'/str(os.getpid());path.mkdir(parents=True,exist_ok=True)
     original=(baseline/'generated/research/test_preset_runtime.py').read_text()

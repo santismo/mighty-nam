@@ -51,6 +51,8 @@ struct Controls {
         if(frames)events|=play;
     }
     void preset_tap() {
+        // A recording always owns PRESET, including one started remotely.
+        if(loop==Loop::recording){finish();return;}
         if(mode==Mode::presets) { advance_preset(); return; }
         switch(loop) {
             case Loop::empty: frames=0; loop=Loop::armed; events|=arm; break;
@@ -129,6 +131,13 @@ struct Controls {
         if(pending_power && elapsed(now,first_power_up)>double_ms) {
             pending_power=false; power_single();
         }
+    }
+    // Hardware levels are already debounced by the stock four-sample scanner.
+    // Do not discard short taps with a second 25 ms debounce window.
+    void update_debounced(uint32_t now,bool preset_down,bool power_down) {
+        if(preset_down!=preset.candidate){preset.candidate=preset_down;preset.changed=now-debounce_ms;}
+        if(power_down!=power.candidate){power.candidate=power_down;power.changed=now-debounce_ms;}
+        update(now,preset_down,power_down);
     }
 };
 } // namespace mighty_loop

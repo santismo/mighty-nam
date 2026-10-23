@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage a PRIVATE local NAMLNK25/26 trial after exact offline gates.
+"""Stage a PRIVATE local NAMLNK25/26/27 trial after exact offline gates.
 Requires the user's stock firmware and an already validated local preset bank.
 Does not enumerate USB, invoke an updater, mute, reset or access host audio.
 """
@@ -18,8 +18,8 @@ def stage(baseline,work,stock_file,bank_file,bank_report,output):
     if sha(stock_file.read_bytes())!='39fa7057865f95e4c52c48544cd8284f4da606d3ac29e985e9b8938a3237467e':raise ValueError('Exact MP3_OR_V3.0.5.bin required')
     elf=work/'build/loop-startup-test.elf';manifest=json.loads((work/'build/build.json').read_text())
     identity=manifest['identity']
-    if identity not in ['NAMLNK25','NAMLNK26']:raise ValueError('Unsupported diagnostic identity')
-    extended=identity=='NAMLNK26'
+    if identity not in ['NAMLNK25','NAMLNK26','NAMLNK27']:raise ValueError('Unsupported diagnostic identity')
+    extended=identity in ['NAMLNK26','NAMLNK27']
     if manifest['sha256']!=sha(elf.read_bytes()):raise ValueError('ELF does not match build manifest')
     for name,digest in manifest['source_hashes'].items():
         if sha((ROOT.parent/name).read_bytes())!=digest:raise ValueError('Source changed: '+name)
@@ -43,12 +43,18 @@ def stage(baseline,work,stock_file,bank_file,bank_report,output):
             r=json.loads((work/name).read_text());extra_evidence[name]=sha((work/name).read_bytes())
             if r['status']!=status or r['elf_sha256']!=manifest['sha256']:raise ValueError('Missing/stale extended gate: '+name)
             if name=='layers-arm.json' and not(r['settings_readback'] and r['clear_while_overdubbing'] and r['guard_fault_guitar_unchanged']):raise ValueError('Layer control gate failed')
+            if identity=='NAMLNK27' and name=='layers-arm.json' and not r.get('live_meter_in_compact_status'):raise ValueError('Live meter coverage missing')
+            if identity=='NAMLNK27' and name=='buttons.json' and not r.get('phone_arm_physical_short_tap_finish'):raise ValueError('Short tap coverage missing')
             if name=='buttons.json' and not(r['power_double_enter'] and r['threshold_arm'] and r['hold_preset_clear'] and r['stock_volume_preserved'] and r['stock_power_hold_shutdown']):raise ValueError('Button gate failed')
         for name,status in [('offline/layers.json','PASS_OFFLINE_LAYERS'),('offline/full-duration.json','PASS_FULL_DURATION_NAM_LAYERS')]:
             r=json.loads((work/name).read_text());extra_evidence[name]=sha((work/name).read_bytes())
             if r['status']!=status or r['storage_bytes' if name.endswith('layers.json') else 'loop_storage_bytes']!=371316:raise ValueError('Native layer gate failed')
             if name.endswith('layers.json') and r.get('partial_layer_cases')!=3484:raise ValueError('Partial layer coverage missing')
             if name.endswith('full-duration.json') and not(r['callbacks']==1620000 and r['nam_model_changes']==52):raise ValueError('Full duration coverage missing')
+        if identity=='NAMLNK27':
+            quality=json.loads((work/'offline/quality.json').read_text())
+            if quality.get('status')!='PASS_OFFLINE_OVERDUB_QUALITY' or quality['snr_db']<=25 or quality['block_start_error_rms']>=250:raise ValueError('Overdub quality gate failed')
+            extra_evidence['offline/quality.json']=sha((work/'offline/quality.json').read_bytes())
         native_sources=json.loads((work/'offline/source-hashes.json').read_text())
         for name,digest in native_sources.items():
             if sha((ROOT.parent/name).read_bytes())!=digest:raise ValueError('Native source changed: '+name)
@@ -61,7 +67,7 @@ def stage(baseline,work,stock_file,bank_file,bank_report,output):
     assert final.records[0]==stock.records[0] and all(x[:28]==y[:28] for x,y in zip(final.records,stock.records))
     assert final.payload[:0x400]==stock.payload[:0x400] and final.payload[0x22618:0x229ac]==stock.payload[0x22618:0x229ac]
     assert final.payload[0x344000:0x360000]==bank
-    name='NAMLNK26-looper-layers-test.bin' if extended else 'NAMLNK25-looper-ram-timing-test.bin'
+    name=identity+'-looper-layers-test.bin' if extended else 'NAMLNK25-looper-ram-timing-test.bin'
     report=dict(status='PASS_LOCAL_'+identity+'_DIAGNOSTIC_STAGING',identity=identity,file=name,sha256=sha(encoded),bytes=len(encoded),
         elf_sha256=manifest['sha256'],payload_sha256=sha(data),bank_sha256=sha(bank),local_three_presets_unchanged=True,
         presets=[{k:r[k] for k in ['color','color_name','name','model_crc','model_sha256']} for r in before['presets']],
@@ -69,7 +75,7 @@ def stage(baseline,work,stock_file,bank_file,bank_report,output):
         storage_bytes=371316,recording_seconds=30,recording_sample_rate=24000,recording_format='mono IMA ADPCM',optional_60_seconds_at_12000_Hz=extended,merged_overdubs=extended,
         private_diagnostic_build=True,public_release=False,physical_RAM_safe_proven=False,physical_timing_verified=False,
         boot_copy_implemented=True,physical_looper_buttons_implemented=extended,looper_phone_UI_implemented=extended,
-        required_controller_versions={'phone':'0.8.6','mac':'0.5.7'} if extended else {'phone':'0.8.5','mac':'0.5.6'},standard_protocol_unchanged=True,
+        required_controller_versions={'phone':'0.8.7','mac':'0.5.8'} if identity=='NAMLNK27' else {'phone':'0.8.6','mac':'0.5.7'} if extended else {'phone':'0.8.5','mac':'0.5.6'},standard_protocol_unchanged=True,
         flash_and_vectors_preserved=True,preset_writes_blocked_while_loop_exists=True,
         sources=manifest['source_hashes'],evidence={**{n:sha((work/n).read_bytes()) for n in expected},**extra_evidence},
         device_access=False,host_audio_access=False,flashed=False,auto_mute_sent=False)

@@ -1,0 +1,67 @@
+{
+  "status": "PASS_OFFLINE_LOOP_STARTUP",
+  "elf_sha256": "674b7e0234934662dd76ad3e091705e939d305005191f1249d273de459b2ed33",
+  "candidate_payload_sha256": "8089de64517ae7ab264fa4ebdb827b62536ea411dfa0a1628eb7e19a363487a0",
+  "startup_bytes_checked": 371316,
+  "startup_pattern_passes": 2,
+  "startup_code_hash": 1380945876,
+  "loop_state_bytes": 1608,
+  "cold_fill": 165,
+  "warm_dirty_state_cleared": true,
+  "boot_events": [
+    "0x20315d68",
+    "0x9194",
+    "0x20315d68",
+    "0x9194",
+    "0x20315d68",
+    "0x9194"
+  ],
+  "normal_output_on_after_restart": true,
+  "preset_colors_cycled": [
+    1,
+    2,
+    0
+  ],
+  "idle_preset_save_supported": true,
+  "USB_BLE_mailbox": true,
+  "malformed_packets_rejected": true,
+  "negative_controls": [
+    {
+      "case": "idle ownership overwrite",
+      "fault": 8,
+      "guitar_running": true,
+      "output_armed": true
+    },
+    {
+      "case": "guard overwrite",
+      "fault": 4,
+      "guitar_running": true,
+      "output_armed": true
+    },
+    {
+      "case": "startup code copy mismatch",
+      "fault": 1,
+      "guitar_running": true,
+      "output_armed": true
+    },
+    {
+      "case": "RAM readback mismatch",
+      "fault": 2,
+      "guitar_running": true,
+      "output_armed": true
+    }
+  ],
+  "arm_during_idle_sweep_safe": true,
+  "idle_full_sweeps": 1,
+  "startup_cache_operations_recorded": 234960,
+  "timing_negative_controls": [
+    "32-bit cycle wrap accepted",
+    "disabled cycle counter rejected",
+    "counter reset during IRQ rejected"
+  ],
+  "synthetic_timing_only": true,
+  "physical_RAM_safe_proven": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "flashed": false
+}

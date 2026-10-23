@@ -30,7 +30,9 @@ def command(op,arg,expected=0):
     state=status();assert state[3]==0 and state[4]==words[0] and state[5]==expected,state
     return state
 process(1350);process(8,label='idle_NAM_spring')
-assert bytes(m.u.mem_read(v.sym['mpp_probe_identity'],8))==b'NAMLNK26'
+error,meter=m.loop_request(0,6);assert not error and meter[5]>>8>0 and meter[5]&255==0
+assert meter[5]>>24==0
+assert bytes(m.u.mem_read(v.sym['mpp_probe_identity'],8))==b'NAMLNK27'
 assert status()[6]==40|(50<<8)|(30<<16)
 command(2,60);command(3,35);command(4,60)
 assert status()[6]==60|(35<<8)|(60<<16)
@@ -63,6 +65,6 @@ assert m.diag()[3]&4 and m.get(v.sym['mpp_listen_enabled'])==1 and not m.words()
 assert m.loop_request(1,1)[0]==3
 report=dict(status='PASS_OFFLINE_ARM_LAYERS',elf_sha256=hashlib.sha256((a.output/'build/loop-startup-test.elf').read_bytes()).hexdigest(),
     max_executed_instructions_per_case=costs,callback_frames=8,live_sample_rate=48000,stored_rates=[24000,12000],
-    settings_readback=True,clear_while_overdubbing=True,guard_fault_guitar_unchanged=True,
+    settings_readback=True,live_meter_in_compact_status=True,clear_while_overdubbing=True,guard_fault_guitar_unchanged=True,
     physical_deadlines_proven=False,device_access=False,host_audio_access=False,flashed=False)
 (a.output/'layers-arm.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

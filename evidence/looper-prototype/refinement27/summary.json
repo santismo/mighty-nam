@@ -1,0 +1,59 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK27_REFINEMENT",
+  "firmware": "NAMLNK27",
+  "elf_sha256": "674b7e0234934662dd76ad3e091705e939d305005191f1249d273de459b2ed33",
+  "mac_app": "0.5.8",
+  "phone_controller": "0.8.7",
+  "phone_tests": 140,
+  "flutter_tests": 135,
+  "flutter_fixture_only_skips": 3,
+  "swift_stock_wire_checks": 1754,
+  "swift_fx_checks": 85,
+  "swift_tuner_checks": 921,
+  "swift_loop_checks": 227,
+  "swift_nam_wire_passed": true,
+  "physical_NAMLNK26_user_report": {
+    "mode_seconds": 30,
+    "armed_from": "phone",
+    "record_playback": "working",
+    "overdub": "second layer scratchy",
+    "physical_preset_finish": "missed"
+  },
+  "numerical_overdub_comparison": {
+    "before": {
+      "snr_db": 16.97819,
+      "block_start_error_rms": 2108.159006,
+      "samples": 24000
+    },
+    "after": {
+      "status": "PASS_OFFLINE_OVERDUB_QUALITY",
+      "snr_db": 42.918792,
+      "block_start_error_rms": 27.697082,
+      "samples": 24000,
+      "host_audio_access": false
+    }
+  },
+  "prior_image_fails_12_ms_stock_scan_tap": true,
+  "new_image_passes_same_tap": true,
+  "browser_fixture_checks": [
+    "390px phone layout",
+    "live input above threshold green",
+    "live input below threshold blue",
+    "threshold marker on same dB scale",
+    "threshold change applied and read back",
+    "no browser warnings/errors"
+  ],
+  "physical_NAMLNK27_verified": false,
+  "flashed": false,
+  "device_access": false,
+  "auto_mute_sent": false,
+  "host_audio_access": false,
+  "limitations": [
+    "Numerical improvements still need listening and physical timing checks.",
+    "A short-tap regression does not establish the exact cause of the reported hardware gesture.",
+    "60-second mode stores mono audio at 12 kHz.",
+    "Overdubs merge into ADPCM; no undo or recording after power-off.",
+    "Loop playback goes to headphones; USB recording stays on its existing guitar path.",
+    "Public builder remains NAMLNK23 r2; personal updater image is local only."
+  ]
+}

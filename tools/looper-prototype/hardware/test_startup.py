@@ -39,7 +39,7 @@ print('Idle saving, warm restart, normal startup playback and preset cycling PAS
 m.put(s['_ZN12_GLOBAL__N_114snapshot_readyE'],0)
 assert m.loop_request(0,1)[0]==2
 assert m.loop_request(0,5)[0]==(1 if identity=='NAMLNK25' else 0)
-assert m.loop_request(0,6)[0]==1
+assert m.loop_request(0,7)[0]==1
 assert m.loop_request(1,0)[0]==1
 first=m.loop_request(0,0)[1]
 m.process(1450,input_block(1450));assert m.loop_request(0,1)[0]==0
@@ -85,7 +85,7 @@ m.arm_loop('mpp_loop_boot');assert not fault()
 # Model an IRQ publishing "touched" and recording bytes during an idle sweep.
 # The new read must not be mistaken for foreign RAM ownership. The separate
 # ownership-overwrite negative control above still has to fail closed.
-if identity=='NAMLNK26':
+if identity in ['NAMLNK26','NAMLNK27']:
     def arm_during_read(u,kind,addr,size,value,user):
         u.mem_write(s['_ZN12_GLOBAL__N_17touchedE'],b'\1');u.mem_write(addr,b'\0'*4)
     hook=m.u.hook_add(UC_HOOK_MEM_READ,arm_during_read,begin=address,end=address+3)
@@ -123,7 +123,7 @@ report=dict(status='PASS_OFFLINE_LOOP_STARTUP',elf_sha256=hashlib.sha256((a.outp
     candidate_payload_sha256=v.plan['candidate_sha256'],startup_bytes_checked=initial[5],startup_pattern_passes=initial[6],
     startup_code_hash=initial[34],loop_state_bytes=initial[15],cold_fill=165,warm_dirty_state_cleared=True,
     boot_events=m.loop_boot_events,normal_output_on_after_restart=True,preset_colors_cycled=[1,2,0],
-    idle_preset_save_supported=True,USB_BLE_mailbox=True,malformed_packets_rejected=True,negative_controls=negative,arm_during_idle_sweep_safe=identity=='NAMLNK26',
+    idle_preset_save_supported=True,USB_BLE_mailbox=True,malformed_packets_rejected=True,negative_controls=negative,arm_during_idle_sweep_safe=identity in ['NAMLNK26','NAMLNK27'],
     idle_full_sweeps=m.diag()[7],startup_cache_operations_recorded=len([x for x in m.stock_writes if x[0] in (0xe000ef68,0xe000ef70,0xe000ef50)]),
     timing_negative_controls=timing,synthetic_timing_only=True,physical_RAM_safe_proven=False,device_access=False,host_audio_access=False,flashed=False)
 (a.output/'startup.json').write_text(json.dumps(report,indent=2)+'\n')
