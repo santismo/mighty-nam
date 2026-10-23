@@ -133,9 +133,11 @@ def main():
     (ROOT/'docs/builder/provenance.json').write_text(json.dumps(public_audit, indent=2)+'\n')
     # Curated allowlist only. Never zip a workspace, ELF or staged directory.
     files = {
-        'builder.html': ROOT/'docs/builder.html',
+        'builder.html': ROOT/'docs/builder-v23.html',
         'assets/style.css': ROOT/'docs/assets/style.css',
         'assets/guitar.svg': ROOT/'docs/assets/guitar.svg',
+        'assets/brand/mighty-nam.svg': ROOT/'docs/assets/brand/mighty-nam.svg',
+        'assets/brand/mighty-nam-icon.png': ROOT/'docs/assets/brand/mighty-nam-icon.png',
         'LICENSE': ROOT/'LICENSE', 'NAM-LICENSE': ROOT/'firmware/target/a2/UPSTREAM-LICENSE',
         'RIFFSMITH-LICENSE': ROOT/'firmware/models/riffsmith/LICENSE',
         'THIRD_PARTY_NOTICES.md': ROOT/'THIRD_PARTY_NOTICES.md',

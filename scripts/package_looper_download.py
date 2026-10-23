@@ -28,7 +28,7 @@ for name, path in [('NAM-LICENSE', 'firmware/target/a2/UPSTREAM-LICENSE'),
     files[name] = root / path
 entries = {name: path.read_bytes() for name, path in files.items()}
 html = (docs / 'looper-builder.html').read_text()
-html = re.sub(r'href="((?:index|guide|phone|status|development|builder|looper-builder)\.html(?:#[^"]*)?)"',
+html = re.sub(r'href="((?:index|guide|phone|status|development|builder|builder-v23|looper-builder)\.html(?:#[^"]*)?)"',
               r'href="https://santismo.github.io/mighty-nam/\1"', html)
 entries['builder.html'] = html.encode()
 entries['README.txt'] = f'''mighty-nam local builder {version} — NAMLNK28 experimental preview

@@ -1,6 +1,6 @@
 # mighty-nam: rights and distribution
 
-Reviewed 22 October 2026. This records project boundaries and release practices, not a legal opinion or manufacturer approval.
+Reviewed 23 October 2026. This records project boundaries and release practices, not a legal opinion or manufacturer approval.
 
 ## Original code
 
@@ -43,7 +43,7 @@ redistribution; it is not a finding that modification or any circumvention is
 legally permitted in every jurisdiction. Public availability does not make
 firmware public domain. A disclaimer or user action cannot supply missing rights.
 
-NAMLNK23 builder outputs are experimental. The new starter-bank variant has offline validation; the core has limited device validation. Complete hardware validation remains outstanding.
+The current NAMLNK28 builder output is experimental. The exact NAMLNK28 starter-bank variant has offline validation; earlier NAM/looper versions have limited device validation. Complete hardware validation of this release remains outstanding.
 They replace onboard presets/settings and may cause unexpected audio or leave
 a device unusable. No compatibility or recovery guarantee is provided. Software
 is provided without warranty to the extent permitted by applicable law; the

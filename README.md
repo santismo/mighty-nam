@@ -42,7 +42,7 @@ On Mac, install the preview into Applications and connect the plug over a data-c
 
 Installation replaces all onboard presets and global settings. Preserve anything you need first. The public builder does not incorporate the maintainer's private captures. Installing the Mac app alone preserves existing libraries and does not flash the plug.
 
-The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.3.1-preview.1/mighty-nam-local-builder-0.3.1.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
+The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.5.0-preview.1/mighty-nam-local-builder-0.5.0.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
 
 ## Source, licenses and privacy
 
@@ -59,6 +59,6 @@ The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/downlo
 | `docs/` | Guide source; public GitHub Pages guide |
 | `tools/`, `scripts/`, `examples/` | Validation, packaging and extension examples |
 
-Historical results stay scoped to their original build. See the [builder details](docs/local-builder.md), [USB/NAM changes](docs/usb-audio-nam-controls.md), and [latency investigation](docs/driver-phase-investigation.md). The latest builder includes the looper preview; the older NAMLNK23 builder remains available.
+Historical results stay scoped to their original build. See the [builder details](docs/local-builder.md), [USB/NAM changes](docs/usb-audio-nam-controls.md), and [latency investigation](docs/driver-phase-investigation.md). The latest builder includes the looper preview; the [archived NAMLNK23 builder](https://santismo.github.io/mighty-nam/builder-v23.html) remains available.
 
 NAMLNK28 local-build preview adds saved looper settings, 100% default loop level, hold-to-overdub, tap-then-hold clear and one-step backward presets. [All plug gestures](https://santismo.github.io/mighty-nam/guide.html#gestures). Exact hardware validation remains pending.
