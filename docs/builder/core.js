@@ -6,10 +6,12 @@
   const INPUT_BYTES = 15009655, PAYLOAD_BYTES = 14229504;
   const BANK_START = 0x344000, BANK_END = 0x360000;
   const GLOBAL_START = 0x364000, GLOBAL_END = 0x366000;
-  const HOOKS = new Map([[0x55b4,8],[0x581a,10],[0xe19c,8],[0x5868,8],
+  const HOOKS23 = new Map([[0x55b4,8],[0x581a,10],[0xe19c,8],[0x5868,8],
     [0x6a38,8],[0x1088c,8],[0x21243,4],[0x6498,4],[0x229b0,4],[0x8c96,4],[0xb23c,8]]);
-  const CODE = new Map([['.text',[0x1c45c,0x1d830]],['.retired_audio',[0x1c0e8,0x1c270]],
+  const CODE23 = new Map([['.text',[0x1c45c,0x1d830]],['.retired_audio',[0x1c0e8,0x1c270]],
     ['.ARM.exidx',[0x1c0e8,0x1c270]],['.banktext',[0x366000,0x36b000]]]);
+  const HOOKS27 = new Map([...HOOKS23, [0xa05e,10], [0x60ec,8]]);
+  const CODE27 = new Map([...CODE23, ['.loop_startup',[0x1d760,0x1d830]], ['.looptext',[0x360000,0x364000]]]);
   function need(ok, message) { if (!ok) throw new Error(message); }
   function bytes(value) {
     need(value instanceof Uint8Array, 'Expected a firmware byte array.');
@@ -96,10 +98,12 @@
     // Snapshot both inputs before any asynchronous work; never edit the user's file.
     const original = bytes(input).slice(), r = JSON.parse(JSON.stringify(recipe));
     await inspect(original);
-    need(r.schema === 'mighty-nam-local-builder-1' && r.identity === 'NAMLNK23' && r.target === 'NUX-MP3', 'Unsupported builder recipe.');
+    const latest = ['NAMLNK27','NAMLNK28'].includes(r.identity);
+    const CODE = latest ? CODE27 : CODE23, HOOKS = latest ? HOOKS27 : HOOKS23;
+    need(r.schema === 'mighty-nam-local-builder-1' && ['NAMLNK23','NAMLNK27','NAMLNK28'].includes(r.identity) && r.target === 'NUX-MP3', 'Unsupported builder recipe.');
     need(r.input.sha256 === INPUT_SHA && r.input.bytes === INPUT_BYTES && r.input.payload_sha256 === PAYLOAD_SHA, 'Recipe input does not match this builder.');
     need(r.presets === 'riffsmith-mit-3' && r.captures_included === true && r.starter_presets?.length === 3, 'Only the licensed starter bank is allowed.');
-    need(r.output.name === 'mighty-nam-NAMLNK23-r2-experimental.bin' && /^[a-f0-9]{64}$/.test(r.output.sha256), 'Invalid output specification.');
+    need(r.output.name === (latest ? `mighty-nam-${r.identity}-experimental.bin` : 'mighty-nam-NAMLNK23-r2-experimental.bin') && /^[a-f0-9]{64}$/.test(r.output.sha256), 'Invalid output specification.');
     need(Array.isArray(r.operations) && r.operations.length === CODE.size + HOOKS.size + 2, 'Incomplete builder recipe.');
     const parsed = parse(original), payload = parsed.payload.slice();
     const spans = [], seen = new Set();
@@ -146,7 +150,7 @@
       capture_license: 'MIT © 2026 Matt Hartman; see RIFFSMITH-LICENSE',
       license_notices: r.license_notices, original_file_changed: false,
       built_locally: true, device_access: false, flashed: false, hardware_verified: false,
-      limitations: ['Three-starter variant verified offline; NAMLNK23 core has limited device validation. Physical pitch timing and Logic duplex remain unverified.',
+      limitations: [latest ? 'Public looper starter variant verified offline; earlier looper variants have limited device tests. Final gesture, overdub and timing checks remain.' : 'Three-starter variant verified offline; NAMLNK23 core has limited device validation. Physical pitch timing and Logic duplex remain unverified.',
         'Installation replaces onboard presets and global settings with three RiffSmith A2 Lite starters and four empty colors.',
         'Combined image contains user-supplied NUX firmware; it is not wholly MIT licensed. Keep it local.',
         'Recovery depends on a reachable updater; not guaranteed.']

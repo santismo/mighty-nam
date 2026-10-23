@@ -38,7 +38,7 @@
       const reportURL = URL.createObjectURL(new Blob([JSON.stringify(built.report, null, 2)+'\n'], {type:'application/json'}));
       urls = [firmwareURL, reportURL];
       fileLink.href = firmwareURL; fileLink.download = built.name;
-      reportLink.href = reportURL; reportLink.download = 'mighty-nam-NAMLNK23-build-report.json';
+      reportLink.href = reportURL; reportLink.download = 'mighty-nam-'+built.report.identity+'-build-report.json';
       document.querySelector('#output-hash').textContent = built.report.output_sha256;
       result.hidden = false;
       message('Build verified. Save the firmware and report below. Nothing has been installed.');

@@ -1,5 +1,13 @@
 # Local firmware builder
 
+The latest preview is **builder 0.5.0 / NAMLNK28**, available at the
+[looper builder](https://santismo.github.io/mighty-nam/looper-builder.html).
+It uses the same exact NUX input below and includes licensed RiffSmith starters,
+Daisy-derived Auto Wah, the looper and optional saved loop settings.
+[Implementation and current gates](../tools/looper-prototype/settings/README.md).
+Its exact combined hardware trial is pending. The older builder below remains
+available for the NAMLNK23 baseline; the reproduction commands describe that baseline.
+
 Builder **0.3.1** creates experimental **NAMLNK23** from **`MP3_OR_V3.0.5.bin`**, the publicly downloadable **NUX Mighty Plug Pro V3.0.5 Original** file. This exact input is required; the builder verifies its checksum. The public starter variant has offline validation; NAMLNK23 core has limited physical validation documented on the [Status page](status.html). These packaging tests do not access a device or play audio.
 
 ## Obtain the input

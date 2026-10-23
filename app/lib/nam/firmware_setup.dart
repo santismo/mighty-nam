@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const nuxDownloadsUrl = 'https://nuxaudio.com/product/mightyplugpro/';
 const nuxFirmwareUrl =
     'https://nux.cherubtechnology.com/download/Firmware/Amps/HeadphoneAmps/MightyPlugPro/NUX_MightyPlugPro_Firmware_V3.0.5_macOS.zip';
-const firmwareBuilderUrl = 'https://santismo.github.io/mighty-nam/builder.html';
+const firmwareBuilderUrl = 'https://santismo.github.io/mighty-nam/looper-builder.html';
 const firmwareInstallUrl = '$firmwareBuilderUrl#install';
 
 /// Opens documented web resources only. No device, updater or audio API.

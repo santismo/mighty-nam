@@ -1,0 +1,43 @@
+{
+  "status": "PASS_OFFLINE_LOOP_GUITAR_AND_MEDIA",
+  "elf_sha256": "c2da8900711762826ff207744af9e53c68c95d4168592f59173b71b88f6a61e8",
+  "candidate_payload_sha256": "b80453a3052817c1212e80bb2b1faabd3b47c0ce03c3705cbb5bfa4f5ed8be6b",
+  "cases": [
+    {
+      "case": "NAM",
+      "compared_samples": 1600,
+      "output_exact": true,
+      "USB_record_exact": true,
+      "baseline_instructions": 49697,
+      "diagnostic_instructions": 50040,
+      "additional_instructions": 343
+    },
+    {
+      "case": "NAM + spring",
+      "compared_samples": 1600,
+      "output_exact": true,
+      "USB_record_exact": true,
+      "baseline_instructions": 56862,
+      "diagnostic_instructions": 57205,
+      "additional_instructions": 343
+    },
+    {
+      "case": "full stock chain",
+      "compared_samples": 1600,
+      "output_exact": true,
+      "USB_record_exact": true,
+      "baseline_instructions": 100932,
+      "diagnostic_instructions": 101275,
+      "additional_instructions": 343
+    }
+  ],
+  "stereo_bluetooth_exact": true,
+  "stereo_USB_ring_paths": true,
+  "loop_idle": true,
+  "live_sample_rate": 48000,
+  "callback_frames": 8,
+  "additional_guitar_buffer_frames": 0,
+  "synthetic_instruction_counts_not_hardware_timing": true,
+  "device_access": false,
+  "host_audio_access": false
+}

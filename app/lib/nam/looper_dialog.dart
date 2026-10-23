@@ -16,7 +16,8 @@ class _LooperDialogState extends State<LooperDialog>
   Timer? timer;
   Future<void>? work;
   bool busy = false, changing = false, closing = false, visible = true;
-  double threshold = -40, volume = 50;
+  double threshold = -50, volume = 100;
+  bool actionWaiting = false;
   final Map<int, int> pending = {};
   final Set<int> dragging = {};
   @override
@@ -102,16 +103,34 @@ class _LooperDialogState extends State<LooperDialog>
     run();
   }
 
+  Future<void> transport(int arg) async {
+    if (changing || actionWaiting || closing) return;
+    setState(() => actionWaiting = true);
+    timer?.cancel();
+    await work;
+    if (!mounted || closing || !visible) return;
+    setState(() => actionWaiting = false);
+    run(op: 1, arg: arg);
+  }
+
   Widget action(String text, int arg, {bool allowed = true}) => OutlinedButton(
-      onPressed:
-          busy || closing || reading == null || reading!.faults != 0 || !allowed
-              ? null
-              : () => run(op: 1, arg: arg),
+      onPressed: changing ||
+              actionWaiting ||
+              closing ||
+              reading == null ||
+              reading!.faults != 0 ||
+              !allowed
+          ? null
+          : () => transport(arg),
       child: Text(text));
   @override
   Widget build(BuildContext context) {
     final s = reading,
-        can = s != null && s.faults == 0 && !closing && !changing;
+        can = s != null &&
+            s.faults == 0 &&
+            !closing &&
+            !changing &&
+            !actionWaiting;
     final db = s?.inputDb, above = s?.reaches(threshold) == true;
     return PopScope(
         canPop: false,
@@ -256,7 +275,7 @@ class _LooperDialogState extends State<LooperDialog>
                               children: [
                                 DropdownButton<int>(
                                     value: s?.seconds ?? 30,
-                                    onChanged: can && !busy && s?.state == 0
+                                    onChanged: can && s.state == 0
                                         ? (v) {
                                             if (v != null) setting(4, v);
                                           }
@@ -279,6 +298,40 @@ class _LooperDialogState extends State<LooperDialog>
                                     child: const Text('Refresh')),
                               ]),
                           const SizedBox(height: 16),
+                          Wrap(
+                              spacing: 12,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                OutlinedButton(
+                                    key: const ValueKey('save-loop-settings'),
+                                    onPressed: can &&
+                                            s.saveSupported &&
+                                            s.state == 0 &&
+                                            s.length == 0 &&
+                                            (!s.saved || pending.isNotEmpty)
+                                        ? () => setting(5, 1)
+                                        : null,
+                                    child: const Text('Save looper settings')),
+                                Text(
+                                    s?.saveSupported != true
+                                        ? 'Saving needs NAMLNK28'
+                                        : s!.state != 0 || s.length != 0
+                                            ? 'Clear loop before saving'
+                                            : s.saved
+                                                ? 'Saved on plug'
+                                                : 'Live · not saved',
+                                    style: const TextStyle(
+                                        color: Colors.white54, fontSize: 12)),
+                              ]),
+                          ExpansionTile(
+                              title: const Text('Plug buttons'),
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Text(s?.saveSupported == true
+                                        ? 'PRESET: tap next preset; hold previous. In Looper: tap to arm, finish, pause or play; hold to toggle overdub; tap then hold within 300 ms to clear. POWER: double tap enters Looper, or stops and exits; single tap switches loop/preset controls. Hold POWER to turn off.'
+                                        : 'PRESET: tap next preset; hold reverses direction. In Looper: tap to arm, finish, pause or play; hold to clear. POWER: double tap enters Looper, or stops and exits; single tap switches loop/preset controls. Use the Overdub button to layer. Hold POWER to turn off.'))
+                              ]),
                           const Text(
                               'Loops stay in memory until cleared or powered off. Close this panel to select presets; playback continues.',
                               style: TextStyle(

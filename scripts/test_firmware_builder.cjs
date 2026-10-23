@@ -7,21 +7,23 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const core = require('../docs/builder/core.js');
-require('../docs/builder/recipe.js');
+const recipeDir=process.env.MIGHTY_NAM_RECIPE==='looper'?'looper-builder':'builder';
+require('../docs/'+recipeDir+'/recipe.js');
 const recipe = globalThis.MightyNamRecipe;
+const extended = ['NAMLNK27','NAMLNK28'].includes(recipe.identity);
 const copy = () => structuredClone(recipe);
 const stockPath = process.env.MIGHTY_NAM_STOCK_FILE;
 const stock = stockPath ? new Uint8Array(fs.readFileSync(stockPath)) : null;
 
 test('release contains original code, hooks, licensed starters and global erase', () => {
-  assert.equal(recipe.operations.length, 17);
-  assert.equal(recipe.operations.filter(x => x.kind === 'code').length, 4);
-  assert.equal(recipe.operations.filter(x => x.kind === 'hook').length, 11);
+  assert.equal(recipe.operations.length, extended?21:17);
+  assert.equal(recipe.operations.filter(x => x.kind === 'code').length, extended?6:4);
+  assert.equal(recipe.operations.filter(x => x.kind === 'hook').length, extended?13:11);
   assert.equal(recipe.operations.filter(x => x.kind === 'fill').length, 1);
   assert.equal(recipe.presets, 'riffsmith-mit-3'); assert.equal(recipe.captures_included, true); assert.equal(recipe.operations.filter(x => x.kind === 'preset-bank').length, 1);
   assert.ok(!JSON.stringify(recipe).includes('original":'));
   assert.ok(recipe.operations.every(x => !('original' in x)));
-  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), 25556);
+  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), recipe.identity==='NAMLNK28'?38012:recipe.identity==='NAMLNK27'?36128:25556);
 });
 test('wrong size and renamed/corrupted stock fail before building', async () => {
   await assert.rejects(core.inspect(new Uint8Array(100)), /Unsupported file size/);
@@ -40,8 +42,8 @@ test('WebCrypto is required and no network/device/audio facilities exist', async
   assert.ok(html.includes("connect-src 'none'")); assert.ok(html.includes("form-action 'none'"));
 });
 test('recipe and checked-in provenance match', async () => {
-  const audit = JSON.parse(fs.readFileSync(path.join(root,'docs/builder/provenance.json')));
-  assert.equal(await core.sha(new Uint8Array(fs.readFileSync(path.join(root,'docs/builder/recipe.js')))), audit.recipe_sha256);
+  const audit = JSON.parse(fs.readFileSync(path.join(root,'docs',recipeDir,'provenance.json')));
+  assert.equal(await core.sha(new Uint8Array(fs.readFileSync(path.join(root,'docs',recipeDir,'recipe.js')))), audit.recipe_sha256);
   assert.equal(recipe.output.sha256, audit.output_sha256);
   assert.equal(recipe.elf_sha256, audit.elf_sha256);
 });
@@ -49,7 +51,7 @@ test('exact local stock produces the independently staged image, without editing
   const before = await core.sha(stock);
   const built = await core.build(stock, recipe);
   assert.equal(await core.sha(stock), before);
-  assert.equal(await core.sha(built.bytes), 'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
+  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
   assert.equal(built.report.presets,'riffsmith-mit-3'); assert.equal(built.report.flashed,false);
   assert.equal(built.report.hardware_verified,false);
   for(const license of Object.values(built.report.license_notices)) assert.match(license,/Permission is hereby granted/);
@@ -84,11 +86,11 @@ const mutations = [
   ['overlap',r=>{r.operations[2].offset=r.operations[1].offset},/overlap/],
   ['out of bounds',r=>{r.operations[0].offset=-1},/out of bounds/],
   ['code escape',r=>{r.operations[0].offset=0},/audited region/],
-  ['unknown hook',r=>{r.operations[4].offset=0x1000},/Unknown hook/],
+  ['unknown hook',r=>{r.operations.find(x=>x.kind==='hook').offset=0x1000},/Unknown hook/],
   ['changed code',r=>{r.operations[0].data='AAAA'+r.operations[0].data.slice(4)},/checksum mismatch/],
   ['patch-site mismatch',r=>{r.operations[0].before_sha256='0'.repeat(64)},/Patch-site/],
-  ['changed starter payload',r=>{r.operations[15].data='AAAA'+r.operations[15].data.slice(4)},/bank checksum/]
-  ,['filled global payload',r=>{r.operations[16].value=0},/storage operation/],
+  ['changed starter payload',r=>{r.operations.find(x=>x.kind==='preset-bank').data='AAAA'+r.operations.find(x=>x.kind==='preset-bank').data.slice(4)},/bank checksum/]
+  ,['filled global payload',r=>{r.operations.find(x=>x.kind==='fill').value=0},/storage operation/],
   ['output checksum mismatch',r=>{r.output.sha256='0'.repeat(64)},/firmware failed/],
   ['output payload mismatch',r=>{r.output.payload_sha256='0'.repeat(64)},/payload failed/],
 ];

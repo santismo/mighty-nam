@@ -8,13 +8,21 @@ from capstone import Cs,CS_ARCH_ARM,CS_MODE_THUMB,CS_MODE_MCLASS
 
 def setup(baseline,payload,output,reference=False):
     identity=json.loads((output/'build/build.json').read_text())['identity']
-    assert identity in ['NAMLNK25','NAMLNK26','NAMLNK27']
-    schema=1 if identity=='NAMLNK25' else 3 if identity=='NAMLNK27' else 2
+    assert identity in ['NAMLNK25','NAMLNK26','NAMLNK27','NAMLNK28']
+    schema={'NAMLNK25':1,'NAMLNK26':2,'NAMLNK27':3,'NAMLNK28':4}[identity]
     # Identity allowlists only; no weakened state/transport/write assertions.
     path=output/'harness'/str(os.getpid());path.mkdir(parents=True,exist_ok=True)
     original=(baseline/'generated/research/test_preset_runtime.py').read_text()
     changed=original.replace("'NAMLNK24',",f"'NAMLNK24','{identity}',")
     assert changed.count(f"'{identity}'")==3
+    if identity=='NAMLNK28':
+        with (output/'build/loop-startup-test.elf').open('rb') as f:
+            entries=ELFFile(f).get_section_by_name('.symtab').iter_symbols()
+            scratch=[(x['st_value'],x['st_value']+x['st_size']) for x in entries if x.name in ['_ZN12_GLOBAL__N_11aE','_ZN12_GLOBAL__N_11bE']]
+        assert len(scratch)==2 and all(hi-lo==256 and 0x20318020<=lo<hi<=0x20319fe0 for lo,hi in scratch)
+        old='n in (4,256) and v.state_start<=r0 and r0+n<=v.state_end'
+        assert changed.count(old)==1
+        changed=changed.replace(old,f'n in (4,256) and ((v.state_start<=r0 and r0+n<=v.state_end) or any(lo<=r0 and r0+n<=hi for lo,hi in {scratch!r}))')
     (path/'test_preset_runtime.py').write_text(changed)
     chain=(baseline/'generated/research/test_link_stock_chain.py').read_text()
     assert chain.count('  self.u.mem_map(0x20240000,0x80000)')==1

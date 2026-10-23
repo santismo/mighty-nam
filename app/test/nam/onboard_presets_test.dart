@@ -78,6 +78,21 @@ class BankFixture extends UsbFixture {
   Future<dynamic> call(MethodCall c) async {
     if (c.method == 'exchangeFxFrame') {
       final q = (c.arguments as Map)['frame'] as Uint8List;
+      if (q[7] == 79) {
+        final legacy = List<int>.filled(40, 0);
+        legacy[0] = 0x4c4f5031;
+        legacy[1] = 1;
+        legacy[2] = 2;
+        final words = identity == 'NAMLNK25'
+            ? legacy.sublist(q[10] * 8, q[10] * 8 + 8)
+            : [0, 0, 0, 0, 0, 0, 50 | (100 << 8) | (30 << 16), 0];
+        return Uint8List.fromList([
+          ...q.take(9), q[9] | 64, ...q.sublist(10, 13), 0,
+          for (final word in words)
+            for (var j = 0; j < 5; j++) (word >> (7 * j)) & 127,
+          247
+        ]);
+      }
       var error = 0;
       if (q[7] == 86) {
         if (q[9] == 1) {

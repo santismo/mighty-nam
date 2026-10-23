@@ -1,0 +1,7 @@
+{
+  "status": "PASS_LOOP_GESTURES",
+  "tap_forward_hold_previous": true,
+  "hold_overdub": true,
+  "tap_hold_clear": true,
+  "recording_preserved": true
+}

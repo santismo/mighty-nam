@@ -14,6 +14,26 @@ Uint8List response(Uint8List q, List<int> words) => Uint8List.fromList([
       247
     ]);
 void main() {
+  test('saved threshold and level are explicit NAMLNK28-only controls',
+      () async {
+    final sent = <Uint8List>[];
+    final client = LooperClient((q) async {
+      sent.add(q);
+      return response(
+          q,
+          q[9] == 5
+              ? [4, 0, 0, 0, 0, 0, 0, 0]
+              : [0, 0, 0, 0, 4, 0, 50 | (63 << 8) | (30 << 16) | (1 << 24), 0]);
+    }, 'NAMLNK28');
+    final s = await client.change(5, 1);
+    expect(s.volume, 63);
+    expect(s.saved, isTrue);
+    expect(s.saveSupported, isTrue);
+    expect(sent.where((q) => q[9] == 5).length, 1);
+    final old = LooperClient(
+        (q) async => throw StateError('Must not send'), 'NAMLNK27');
+    await expectLater(old.request(5, 1), throwsFormatException);
+  });
   test(
       'meter uses raw peak with matching threshold and rejects malformed replies',
       () async {
