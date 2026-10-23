@@ -1,0 +1,11 @@
+{
+  "status": "PASS_WAH_STAGE_REJECTIONS",
+  "rejected": [
+    "wah:missing",
+    "wah:stale",
+    "wah:bypass",
+    "touch:saved"
+  ],
+  "device_access": false,
+  "host_audio_access": false
+}

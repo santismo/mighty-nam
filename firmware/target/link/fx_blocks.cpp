@@ -13,6 +13,9 @@ bool valid(const uint8_t* p){
 }
 void defaults(uint8_t* p){for(unsigned i=0;i<32;++i)p[i]=0;for(unsigned j=0;j<2;++j){auto* c=p+j*16;c[0]=j+1;c[2]=j+2;c[3]=12;c[4]=100;c[5]=30;c[6]=50;c[8]=50;c[9]=50;}}
 void Engine::reset(){
+#ifdef MPP_DAISY_WAH
+ wah.reset();
+#endif
  // No delay-buffer clear inside the IRQ. filled prevents stale reads until
  // samples from the new route have overwritten each required delay position.
  for(auto& channel:allpass)for(auto& value:channel)value=0;
@@ -66,6 +69,20 @@ void Engine::process(const uint8_t* c,float* l,float* r,unsigned count){
  if(mode!=previous_mode||c[2]!=previous_position||(c[1]&&!previous_enabled))reset();
  previous_mode=mode;previous_position=c[2];previous_enabled=c[1];
  if(!c[1]&&wet==0)return;
+#ifdef MPP_DAISY_WAH
+ if(mode==2){
+  const float target=c[1]?c[4]*.01f:0;
+  const float sensitivity=.25f+.006375f*c[8]*c[8],resonance=.35f+.013f*c[9];
+  for(unsigned i=0;i<count;++i){
+   float original[2]={l[i],r[i]},x[2]={l[i],r[i]};
+   if(!__builtin_isfinite(x[0])||!__builtin_isfinite(x[1])){reset();l[i]=r[i]=0;continue;}
+   wah.process(x,sensitivity,resonance);wet+=clamp(target-wet,-1.f/256,1.f/256);
+   for(unsigned ch=0;ch<2;++ch){float y=original[ch]+wet*(x[ch]-original[ch]);
+    if(!__builtin_isfinite(y)){reset();y=0;}if(ch)r[i]=y;else l[i]=y;}
+  }return;
+ }
+
+#endif
 #ifdef MPP_PITCH_QUALITY_PROTOTYPE
  if(mode==1){
   // A return from downshift/neutral must not revive a stale filter transient.
@@ -147,6 +164,8 @@ void Engine::process(const uint8_t* c,float* l,float* r,unsigned count){
    float second=pitch_phase+.5f;if(second>=1)second-=1;
    const float w=1-absf(2*pitch_phase-1);
    for(unsigned ch=0;ch<2;++ch)out[ch]=w*tap(*this,ch,16+pitch_window*pitch_phase)+(1-w)*tap(*this,ch,16+pitch_window*second);
+
+#ifndef MPP_DAISY_WAH
   }else if(mode==2){
    // A wider envelope response and resonant, normalized band-pass sweep.
    // Rational compression gives quiet notes useful movement without hard
@@ -155,6 +174,8 @@ void Engine::process(const uint8_t* c,float* l,float* r,unsigned count){
    const float frequency=180+3420*drive/(1+drive),q=1/(1+.06f*c[9]);
    const float x=frequency*(3.141592654f/48000),g=x/(1-.3333333f*x*x),den=1/(1+g*(g+q));
    for(unsigned ch=0;ch<2;++ch){float v3=input[ch]-allpass[ch][1],v1=(allpass[ch][0]+g*v3)*den,v2=allpass[ch][1]+g*v1;allpass[ch][0]=2*v1-allpass[ch][0];allpass[ch][1]=2*v2-allpass[ch][1];out[ch]=v1*q;}
+
+#endif
   }else if(mode==3||mode==4||mode==7){
    for(unsigned ch=0;ch<2;++ch){float mod=modulation;if(ch&&mode==3){float p=phase+.25f;if(p>=1)p-=1;mod=wave(p);}
     float distance=mode==4?3+(1+mod)*depth*90:mode==3?600+mod*depth*470:350+mod*depth*320;

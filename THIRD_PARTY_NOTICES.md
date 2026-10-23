@@ -6,7 +6,7 @@ Original mighty-nam code and documentation: MIT, Copyright (c) 2026 santismo. Th
 | --- | --- | --- |
 | Mightier Amp adaptation and effect definitions | [tuntorius/mightier_amp](https://github.com/tuntorius/mightier_amp), MIT, Dian Iliev | `app/LICENSE.md`, `app/PROVENANCE.json`, source notices |
 | NeuralAmpModelerCore | [sdatkinson/NeuralAmpModelerCore](https://github.com/sdatkinson/NeuralAmpModelerCore), MIT, Steven Atkinson | `firmware/third_party/nam/LICENSE`, `firmware/target/a2/UPSTREAM-LICENSE` |
-| DaisySP AutoWah (offline research only) | [daisyaudio/DaisySP](https://github.com/daisyaudio/DaisySP), MIT, Electrosmith and Soundpipe contributors | `tools/auto-wah-prototype/DAISY-LICENSE`, pinned upstream files; not compiled into builder 0.3.1 |
+| DaisySP AutoWah (NAMLNK24 experimental candidate) | [daisyaudio/DaisySP](https://github.com/daisyaudio/DaisySP), MIT, Electrosmith and Soundpipe contributors | `firmware/target/link/DAISY-LICENSE` and `tools/auto-wah-prototype/DAISY-LICENSE`; pinned upstream files; compiled only with `MPP_DAISY_WAH`, not into builder 0.3.1 |
 | Eigen | [Eigen](https://gitlab.com/libeigen/eigen), primarily MPL-2.0, with file-level alternatives | `firmware/third_party/eigen/COPYING.*` and source headers |
 | nlohmann/json | [nlohmann/json](https://github.com/nlohmann/json), MIT | Notice in `firmware/third_party/json/json.hpp` |
 | musl math | [musl](https://git.musl-libc.org/cgit/musl/), mixed permissive source notices | `firmware/third_party/musl-math/COPYRIGHT` and individual source headers |

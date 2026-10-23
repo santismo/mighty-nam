@@ -1,0 +1,288 @@
+{
+  "status": "PASS_OFFLINE_DAISY_WAH_ARM",
+  "elf_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "cases": [
+    {
+      "variant": "baseline",
+      "model": "riffsmith-bass-clean-lite.nam",
+      "case": "bypassed",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 0,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.002074942458420992,
+      "whole_callback_instruction_counts": [
+        49699,
+        49773,
+        49700,
+        49688
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "baseline",
+      "model": "riffsmith-clean-lite.nam",
+      "case": "bypassed",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 0,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0015284274704754353,
+      "whole_callback_instruction_counts": [
+        49697,
+        49750,
+        49690,
+        49686
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "baseline",
+      "model": "riffsmith-distorted-lite.nam",
+      "case": "bypassed",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 0,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0047153751365840435,
+      "whole_callback_instruction_counts": [
+        49635,
+        49691,
+        49636,
+        49640
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-bass-clean-lite.nam",
+      "case": "bypassed",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 0,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.002074942458420992,
+      "whole_callback_instruction_counts": [
+        49699,
+        49773,
+        49700,
+        49688
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-bass-clean-lite.nam",
+      "case": "pre wah",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 1,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.001133711077272892,
+      "whole_callback_instruction_counts": [
+        51546,
+        51543,
+        51547,
+        51550
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-bass-clean-lite.nam",
+      "case": "post wah spring",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 1,
+      "stock_callbacks": 2,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0022709141485393047,
+      "whole_callback_instruction_counts": [
+        58694,
+        58707,
+        58692,
+        58771
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-bass-clean-lite.nam",
+      "case": "dual wah spring",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 2,
+      "stock_callbacks": 2,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0012640389613807201,
+      "whole_callback_instruction_counts": [
+        60589,
+        60662,
+        60586,
+        60602
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-clean-lite.nam",
+      "case": "bypassed",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 0,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0015284274704754353,
+      "whole_callback_instruction_counts": [
+        49697,
+        49750,
+        49690,
+        49686
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-clean-lite.nam",
+      "case": "pre wah",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 1,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0010854145511984825,
+      "whole_callback_instruction_counts": [
+        51537,
+        51556,
+        51543,
+        51545
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-clean-lite.nam",
+      "case": "post wah spring",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 1,
+      "stock_callbacks": 2,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0013242801651358604,
+      "whole_callback_instruction_counts": [
+        58704,
+        58713,
+        58679,
+        58757
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-clean-lite.nam",
+      "case": "dual wah spring",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 2,
+      "stock_callbacks": 2,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0009777108207345009,
+      "whole_callback_instruction_counts": [
+        60575,
+        60645,
+        60592,
+        60610
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-distorted-lite.nam",
+      "case": "bypassed",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 0,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.0047153751365840435,
+      "whole_callback_instruction_counts": [
+        49635,
+        49691,
+        49636,
+        49640
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-distorted-lite.nam",
+      "case": "pre wah",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 1,
+      "stock_callbacks": 1,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.004617217928171158,
+      "whole_callback_instruction_counts": [
+        51556,
+        51512,
+        51482,
+        51496
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-distorted-lite.nam",
+      "case": "post wah spring",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 1,
+      "stock_callbacks": 2,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.004692212678492069,
+      "whole_callback_instruction_counts": [
+        58637,
+        58659,
+        58622,
+        58704
+      ],
+      "faults": 0
+    },
+    {
+      "variant": "prototype",
+      "model": "riffsmith-distorted-lite.nam",
+      "case": "dual wah spring",
+      "callbacks": 1454,
+      "buffer_samples": 8,
+      "active_fx": 2,
+      "stock_callbacks": 2,
+      "NAM_reference_peak_error": 0,
+      "peak": 0.005170011427253485,
+      "whole_callback_instruction_counts": [
+        60548,
+        60662,
+        60595,
+        60550
+      ],
+      "faults": 0
+    }
+  ],
+  "block_samples": 8,
+  "sample_rate": 48000,
+  "bypassed_guitar_sample_exact": true,
+  "memory_guards_passed": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "physical_deadlines_verified": false,
+  "limitations": [
+    "Unicorn executes the actual ARM NAM/effect instructions; peripherals and timers are modeled.",
+    "Instruction counts do not measure Cortex-M7 execution time or end-to-end latency.",
+    "Listening and worst-case on-device timing are pending."
+  ]
+}

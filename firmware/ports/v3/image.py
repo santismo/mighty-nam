@@ -33,7 +33,8 @@ def build(stock,elf,**unused):
   e=ELFFile(f);syms=list(e.get_section_by_name('.symtab').iter_symbols());symbols={s.name:s['st_value'] for s in syms}
   require(not [s.name for s in syms if s.name and s['st_shndx']=='SHN_UNDEF'],'Unresolved symbols')
   ident=e.get_section_by_name('.symtab').get_symbol_by_name('mpp_probe_identity')[0];sec=e.get_section(ident['st_shndx']);at=ident['st_value']-sec['sh_addr']
-  require(sec.data()[at:at+8]==b'NAMLNK23','Public-base firmware identity required')
+  identity=sec.data()[at:at+8].decode('ascii')
+  require(identity in ('NAMLNK23','NAMLNK24'),'Public-base firmware identity required')
   for s in e.iter_sections():
    if not s['sh_flags']&2 or not s['sh_size']:continue
    start=s['sh_addr'];end=start+s['sh_size'];offset=start
@@ -65,5 +66,5 @@ def build(stock,elf,**unused):
  require(stock[0x6498:0x649c]==bytes.fromhex('75603368'),'Counter displaced instructions')
  require(out[:0x400]==stock[:0x400] and len(out)==len(stock),'Vector/extent changed')
  require(all(any(a<=i<b for a,b in spans) for i,(x,y) in enumerate(zip(stock,out)) if x!=y),'Change outside allowlist')
- plan=dict(identity='NAMLNK23',mode='IN_MEMORY_OFFLINE_ONLY',elf_regions=regions,patches=patches,stock_sha256=STOCK_SHA,elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),candidate_sha256=hashlib.sha256(out).hexdigest(),retired_code_audit=ca,compressed_initializer_reference=dict(offset='0x2312c',raw_word='0x303851b7',reads=reads,initialized_DTCM_sha256=hashlib.sha256(ram).hexdigest(),resulting_storage_pointers=0),preset_ownership=dict(owners=owners,base=hex(BANK),end=hex(BANK_END),slots=7,copies=2,record_bytes=8192),copied_code=dict(source=hex(SOURCE),destination='0x2030f000',bytes=next(r['bytes'] for r in regions if r['name']=='.banktext')),changed_spans=spans,original_vector_table_preserved=True,device_access=False,flash_container_created=False)
+ plan=dict(identity=identity,mode='IN_MEMORY_OFFLINE_ONLY',elf_regions=regions,patches=patches,stock_sha256=STOCK_SHA,elf_sha256=hashlib.sha256(elf.read_bytes()).hexdigest(),candidate_sha256=hashlib.sha256(out).hexdigest(),retired_code_audit=ca,compressed_initializer_reference=dict(offset='0x2312c',raw_word='0x303851b7',reads=reads,initialized_DTCM_sha256=hashlib.sha256(ram).hexdigest(),resulting_storage_pointers=0),preset_ownership=dict(owners=owners,base=hex(BANK),end=hex(BANK_END),slots=7,copies=2,record_bytes=8192),copied_code=dict(source=hex(SOURCE),destination='0x2030f000',bytes=next(r['bytes'] for r in regions if r['name']=='.banktext')),changed_spans=spans,original_vector_table_preserved=True,device_access=False,flash_container_created=False)
  return bytes(out),symbols,plan

@@ -1,0 +1,19 @@
+{
+  "status": "PASS_OFFLINE_CONTROLLER_COMPATIBILITY",
+  "firmware": "NAMLNK24",
+  "mac": "0.5.5",
+  "phone": "0.8.4",
+  "phone_tests_passed": 127,
+  "flutter_tests_passed": 111,
+  "flutter_tests_skipped": 3,
+  "flutter_note": "110 existing tests passed in full suite; corrected new Touch Wah test passed on focused rerun. Three gallery/export tests remained skipped.",
+  "native_stock_wire_checks": 1733,
+  "native_fx_checks": 85,
+  "native_tuner_checks": 921,
+  "native_NAM_wire_passed": true,
+  "mac_universal_release_built": true,
+  "mac_ad_hoc_signature_verified": true,
+  "private_build_paths_rejected": true,
+  "device_access": false,
+  "host_audio_access": false
+}

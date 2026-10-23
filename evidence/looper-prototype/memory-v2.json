@@ -1,0 +1,366 @@
+{
+  "status": "COMPLETED_OFFLINE_LOOPER_MEMORY_PROBE",
+  "elf_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "range": [
+    "0x20314000",
+    "0x2031b000"
+  ],
+  "bytes": 28672,
+  "PCM16_mono_seconds": 0.2986666666666667,
+  "ADPCM4_mono_seconds_before_overhead": 1.1946666666666668,
+  "loader_cases": [
+    {
+      "stage": 1,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 1,
+      "type": 2,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 1,
+      "type": 3,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 2,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 3,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 4,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 5,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 6,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 7,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 8,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 9,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 10,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 11,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 12,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 13,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 2,
+      "type": 14,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 4,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 4,
+      "type": 2,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 4,
+      "type": 3,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 4,
+      "type": 4,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 5,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 2,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 3,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 4,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 5,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 6,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 7,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 8,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 9,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 10,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 11,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 12,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 6,
+      "type": 13,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 7,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 7,
+      "type": 2,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 7,
+      "type": 3,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 7,
+      "type": 4,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 7,
+      "type": 5,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 8,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 8,
+      "type": 2,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 8,
+      "type": 3,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 8,
+      "type": 4,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 8,
+      "type": 5,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 8,
+      "type": 6,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 1,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 2,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 3,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 4,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 5,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 6,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 7,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 8,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 9,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 10,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 11,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 12,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 13,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 14,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 15,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 16,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 17,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 18,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 19,
+      "sentinel_intact": true
+    },
+    {
+      "stage": 9,
+      "type": 20,
+      "sentinel_intact": true
+    }
+  ],
+  "full_chain_sentinel_intact": true,
+  "save_recall_sentinel_intact": true,
+  "cold_restart_sentinel_intact": false,
+  "accesses": [
+    {
+      "phase": "cold restart",
+      "access": 17,
+      "pc": "0x35e6",
+      "lr": "0x22659",
+      "count": 7168,
+      "first": 540098560,
+      "last": 540127231
+    }
+  ],
+  "production_allocation": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "limitations": [
+    "Bounded stock-loader and render coverage; not proof of ownership or complete DSP coverage.",
+    "USB/Bluetooth DMA and peripheral accesses are modeled, not real bus masters.",
+    "This is too small for a useful multi-second PCM loop.",
+    "Loop playback cannot continue through a masked interrupt; flash-read stalls are not timed here."
+  ]
+}

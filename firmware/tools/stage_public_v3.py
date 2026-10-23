@@ -11,7 +11,7 @@ def need(ok,message):
  if not ok:raise ValueError(message)
 def stage(stock_file,build_dir,reports,out):
  generated=build_dir.parent/'generated';meta=json.loads((build_dir/'build.json').read_text());elf=build_dir/'nam-link-offline.elf'
- need(meta['identity']=='NAMLNK23' and meta['stock_base']=='V3.0.5 Original','Public V3 build required')
+ need(meta['identity'] in ('NAMLNK23','NAMLNK24') and meta['stock_base']=='V3.0.5 Original','Public V3 build required')
  need(sha(elf.read_bytes())==meta['elf_sha256'],'ELF mismatch')
  need(set(meta['port_sources'])=={'prepare.py','relocations.json','image.py'},'Incomplete port provenance')
  for name,digest in meta['port_sources'].items():need(sha((ROOT/'ports/v3'/name).read_bytes())==digest,'Stale port source '+name)
@@ -24,7 +24,7 @@ def stage(stock_file,build_dir,reports,out):
  need(sha((generated/'target/link/usb_nam.ld').read_bytes())==meta['linker_sha256'],'Linker mismatch')
  need('-DMPP_STOCK_V3' in meta['compiler_flags'] and '-DMPP_PITCH_QUALITY_RELEASE' in meta['compiler_flags'],'Required build flags')
  evidence={}
- for name,status in [('arm','PASS_OFFLINE_NAMLNK23'),('storage','PASS_NAMLNK10_STOCK_STORAGE_CONTRACT'),('runtime','PASS_OFFLINE_NAMLNK23_RUNTIME'),('chain','PASS_OFFLINE_NAMLNK23_PITCH_CHAIN')]:
+ for name,status in [('arm','PASS_OFFLINE_'+meta['identity']),('storage','PASS_NAMLNK10_STOCK_STORAGE_CONTRACT'),('runtime','PASS_OFFLINE_NAMLNK23_RUNTIME'),('chain','PASS_OFFLINE_NAMLNK23_PITCH_CHAIN')]:
   path=reports/(name+'.json');r=json.loads(path.read_text());need(r['status']==status and r['elf_sha256']==meta['elf_sha256'],'Missing/stale/failed '+name+' evidence');need(r.get('device_access') is False,'Offline evidence required');evidence[name]=sha(path.read_bytes())
   if name=='arm':need(all(r[k] for k in ['stereo_USB_PCM_ring_roundtrip','NAM_controls_both_transports','seven_presets_cold_warm_button','removed_NAM_no_callback']) and r['neutral_NAM_reference_peak_error']<2e-5,'ARM acceptance')
   if name=='runtime':need(len(r['cases'])==6 and r['guard_failures']==0 and r['global_buffers_restarted']==[32,16,8] and r['V3_SysEx_F7_inclusive_and_fragmentation'],'Runtime acceptance')
@@ -35,6 +35,14 @@ def stage(stock_file,build_dir,reports,out):
   need(all(r[k] for k in ['baseline_music_discard_reproduced','guitar_samples_exact','record_feed_excludes_music','usb_initialized_stereo_music','nonfinite_and_sum_ceiling']),'Bluetooth acceptance')
   need([x['samples'] for x in r['buffer_cases']]==[8,16,32] and len(r['media_cases'])>=5 and len(r['frequency_cases'])>=6,'Incomplete stereo regression')
   evidence['bluetooth']=sha(path.read_bytes())
+ if meta['identity']=='NAMLNK24':
+  need('-DMPP_DAISY_WAH' in meta['compiler_flags'] and not meta.get('research_only'),'NAMLNK24 build flags')
+  for name,status in [('wah','PASS_OFFLINE_DAISY_WAH_ARM'),('touch','PASS_OFFLINE_TOUCH_WAH')]:
+   path=reports/(name+'.json');r=json.loads(path.read_text())
+   need(r['status']==status and r['elf_sha256']==meta['elf_sha256'] and r['device_access'] is False,'Missing/stale/failed '+name+' evidence')
+   if name=='wah':need(r['bypassed_guitar_sample_exact'] and r['memory_guards_passed'] and len(r['cases'])==15,'Wah acceptance')
+   else:need(r['saved_and_recalled'] and r['finite_audio'] and r['bypass_sample_exact'],'Touch Wah acceptance')
+   evidence[name]=sha(path.read_bytes())
  stock=stock_file.read_bytes();need(sha(stock)==INPUT_SHA,'Exact public MP3_OR_V3.0.5.bin required; CT and other versions rejected')
  container=Container(stock);need(container.data[7]==2 and container.version=='20240812','Public container format')
  sys.path.insert(0,str(generated/'research'))
@@ -45,8 +53,8 @@ def stage(stock_file,build_dir,reports,out):
  need(roundtrip.records[0]==container.records[0] and all(a[:28]==b[:28] for a,b in zip(roundtrip.records,container.records)),'Opaque update headers changed')
  need(payload[:0x400]==container.payload[:0x400] and payload[0x22618:0x229ac]==container.payload[0x22618:0x229ac],'Vectors/startup changed')
  need(payload[0x344000:0x360000]==b'\xff'*0x1c000,'Seeded bank forbidden')
- review=dict(identity='NAMLNK23',stock_base='V3.0.5 Original',input_sha256=sha(stock),output_sha256=sha(candidate),output_payload_sha256=sha(payload),elf_sha256=meta['elf_sha256'],evidence=evidence,candidate_plan=plan,factory_presets=False,source_bank_sha256=None,container_headers_preserved=True,device_access=False,flashed=False,physical_validation='pending',limitations=['Offline CPU and modeled peripherals only','Factory bootloader acceptance and recovery are not proven','Physical audio timing and Logic duplex need a later controlled hardware test'])
- out.mkdir(parents=True,exist_ok=True);(out/'NAMLNK23-public-v3-test.bin').write_bytes(candidate);(out/'NAMLNK23-review.json').write_text(json.dumps(review,indent=2)+'\n')
+ review=dict(identity=meta['identity'],stock_base='V3.0.5 Original',input_sha256=sha(stock),output_sha256=sha(candidate),output_payload_sha256=sha(payload),elf_sha256=meta['elf_sha256'],evidence=evidence,candidate_plan=plan,factory_presets=False,source_bank_sha256=None,container_headers_preserved=True,device_access=False,flashed=False,physical_validation='pending',limitations=['Offline CPU and modeled peripherals only','Factory bootloader acceptance and recovery are not proven','Physical audio timing and Logic duplex need a later controlled hardware test'])
+ out.mkdir(parents=True,exist_ok=True);(out/(meta['identity']+'-public-v3-test.bin')).write_bytes(candidate);(out/(meta['identity']+'-review.json')).write_text(json.dumps(review,indent=2)+'\n')
  return review
 if __name__=='__main__':
  p=argparse.ArgumentParser()

@@ -12,5 +12,5 @@ import Foundation
  for i in 0..<record.count {var bad=record;bad[i]=255;precondition(!NamRecordWire.request(bad))}
  for i in [7,8,9,10,11,12,16] {var bad=recorded;bad[i]^=1;precondition(NamRecordWire.reply(bad,to:record)==nil)}
  var outOfRange=record;outOfRange[19]=97;precondition(!NamRecordWire.request(outOfRange))
- precondition(NamLinkWire.supportsModels("NAMLNK21"));precondition(!NamLinkWire.supportsModels("NAMLNK24") && NamLinkWire.supportsModels("NAMLNK22"));print("PASS native NAM control wire")
+ precondition(NamLinkWire.supportsModels("NAMLNK21"));precondition(!NamLinkWire.supportsModels("NAMLNK25") && NamLinkWire.supportsModels("NAMLNK22"));print("PASS native NAM control wire")
 }}

@@ -35,7 +35,9 @@ p.add_argument('--usb-nam-controls',action='store_true',help='NAMLNK21 USB duple
 p.add_argument('--pitch-quality-prototype',action='store_true',help='OFFLINE ONLY: NAMPIT01 pitch-period refinement and upshift anti-aliasing; requires USB NAM controls')
 p.add_argument('--pitch-quality',action='store_true',help='NAMLNK22 improved pitch/octave test release; requires USB NAM controls')
 p.add_argument('--bluetooth-audio',action='store_true',help='V3 NAMLNK23-r2 stereo phone playback; requires --pitch-quality and the V3 adapter')
+p.add_argument('--daisy-wah',action='store_true',help='NAMLNK23-r3 linked-stereo DaisySP wah candidate; requires Bluetooth V3 build')
 a=p.parse_args()
+if a.daisy_wah and not a.bluetooth_audio:p.error('--daisy-wah requires --bluetooth-audio')
 if a.bluetooth_audio and (not a.pitch_quality or 'generated' not in str(Path(__file__).resolve())):p.error('--bluetooth-audio requires --pitch-quality and a generated V3 port')
 if a.pitch_quality and (not a.usb_nam_controls or a.pitch_quality_prototype):p.error('--pitch-quality requires --usb-nam-controls and excludes --pitch-quality-prototype')
 if a.pitch_quality_prototype and not a.usb_nam_controls:p.error('--pitch-quality-prototype requires --usb-nam-controls')
@@ -140,10 +142,12 @@ if a.pitch_quality:flags+=['-DMPP_PITCH_QUALITY_RELEASE']
 if a.bluetooth_audio:
  flags+=['-DMPP_BLUETOOTH_AUDIO']
  sources+=['target/link/bluetooth_audio.cpp']
+if a.daisy_wah:flags+=['-DMPP_DAISY_WAH']
 objects=[]
 for source in sources:
  obj=out/(Path(source).stem+'.o')
  optimize='-O2' if ('a2_lite' in source or 'fx_blocks.cpp' in source or 'cut_eq.cpp' in source) else '-Oz'
+ if a.daisy_wah and 'fx_blocks.cpp' in source:optimize='-Os'
  subprocess.run(['clang++',*flags,optimize,'-c',str(root/source),'-o',str(obj)],check=True)
  objects.append(str(obj))
 elf=out/'nam-link-offline.elf';ld=root/('target/link/presets.ld' if a.preset_bank else ('target/link/listening.ld' if a.listening else 'target/link/link_firmware.ld'))
@@ -246,5 +250,7 @@ if a.pitch_quality:
  report.update(identity='NAMLNK22',status='EXPERIMENTAL_PITCH_QUALITY_TEST_BUILD',requires_offline_image_opt_in=False,pitch_quality='Same tested NAMPIT01 DSP: five-lag refinement, phase compensation, upshift anti-alias filter',physical_pitch_quality_verified=False,physical_pitch_deadline_verified=False)
 if a.bluetooth_audio:
  report.update(revision='r2-bluetooth-audio',bluetooth_audio='Independent stereo RX lanes 0/1 mixed after guitar processing and before output staging; follows physical headphone gain; excluded from USB guitar recording',physical_bluetooth_audio_verified=False)
+if a.daisy_wah:
+ report.update(identity='NAMLNK24',revision='wah-touch-test',wah='DaisySP-derived linked-stereo envelope filter; FX A/B mode 2',physical_wah_verified=False)
 (out/'build.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

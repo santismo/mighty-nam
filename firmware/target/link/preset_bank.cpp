@@ -22,7 +22,12 @@ bool valid_model(const uint8_t* p){
  return true;
 }
 bool valid_effects(const uint8_t* p){
- const uint8_t ids[]={1,2,4,5,6,7,8,9},max[]={3,13,
+ const uint8_t ids[]={1,2,4,5,6,7,8,9},max[]={3,
+#ifdef MPP_DAISY_WAH
+ 14,
+#else
+ 13,
+#endif
 #ifdef MPP_CUT_EQ
  4,
 #else

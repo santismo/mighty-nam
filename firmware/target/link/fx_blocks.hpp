@@ -1,5 +1,8 @@
 #pragma once
 #include <stdint.h>
+#ifdef MPP_DAISY_WAH
+#include "daisy_wah.hpp"
+#endif
 namespace mpp::fx {
 constexpr unsigned config_bytes=32, delay_size=2048;
 // Each independent slot: mode, enabled, absolute position in 11-block chain,
@@ -7,6 +10,9 @@ constexpr unsigned config_bytes=32, delay_size=2048;
 bool valid(const uint8_t*);
 void defaults(uint8_t*);
 struct Engine {
+#ifdef MPP_DAISY_WAH
+ mighty_wah::State wah;
+#endif
  float delay[2][delay_size], allpass[2][4], feedback[2];
 #ifdef MPP_PITCH_QUALITY_PROTOTYPE
  // Five one-sample lag refinements reuse the ring; no extra audio buffer.

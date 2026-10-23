@@ -31,23 +31,26 @@ class StockControlPlan {
     'reverb': 6,
   };
   static int maximumType(String slot, String? identity) =>
-      ['fxa', 'fxb'].contains(slot)
-          ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
-          : slot == 'eq' &&
-                  [
-                    'NAMLNK14',
-                    'NAMLNK15',
-                    'NAMLNK16',
-                    'NAMLNK17',
-                    'NAMLNK18',
-                    'NAMLNK19',
-                    'NAMLNK20',
-                    'NAMLNK21',
-                    'NAMLNK22',
-                    'NAMLNK23'
-                  ].contains(identity)
-              ? 4
-              : supportedTypes[slot]!;
+      slot == 'drive' && identity == 'NAMLNK24'
+          ? 14
+          : ['fxa', 'fxb'].contains(slot)
+              ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
+              : slot == 'eq' &&
+                      [
+                        'NAMLNK14',
+                        'NAMLNK15',
+                        'NAMLNK16',
+                        'NAMLNK17',
+                        'NAMLNK18',
+                        'NAMLNK19',
+                        'NAMLNK20',
+                        'NAMLNK21',
+                        'NAMLNK22',
+                        'NAMLNK23',
+                        'NAMLNK24'
+                      ].contains(identity)
+                  ? 4
+                  : supportedTypes[slot]!;
   static const ranges = [
     [13, 16, 15],
     [17, 22, 20],
@@ -75,15 +78,16 @@ class StockControlPlan {
             identity); // Validate the complete response before changing UI state.
     final next = HybridRig.parse(previous.encode())..masterVolume = preset[84];
     next.usbRecordGain =
-        ['NAMLNK21', 'NAMLNK22', 'NAMLNK23'].contains(identity) &&
+        ['NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24'].contains(identity) &&
                 preset[33] == 78 &&
                 preset[34] == 2 &&
                 preset[35] <= 96
             ? preset[35]
             : 48;
-    next.namTone = ['NAMLNK21', 'NAMLNK22', 'NAMLNK23'].contains(identity)
-        ? readNamTone(preset)
-        : neutralNamTone();
+    next.namTone =
+        ['NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24'].contains(identity)
+            ? readNamTone(preset)
+            : neutralNamTone();
     for (final block in next.blocks.where((b) => !b.extra)) {
       final id = stages[block.slot]!;
       block.enabled = (preset[id] & 64) == 0;

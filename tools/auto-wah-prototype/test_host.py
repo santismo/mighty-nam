@@ -7,7 +7,7 @@ p=argparse.ArgumentParser();p.add_argument('work',type=Path);a=p.parse_args();a.
 ptr=ctypes.POINTER(ctypes.c_float);bp=ctypes.POINTER(ctypes.c_uint8);libs={}
 for name,source in [('baseline',ROOT/'firmware/target/link'),('prototype',a.work/'generated/target/link')]:
  path=a.work/(name+'.dylib')
- subprocess.run(['clang++','-O2' if name=='baseline' else '-Os','-std=c++17','-shared','-fPIC','-ffp-contract=off','-DMPP_PITCH_QUALITY_PROTOTYPE','-I'+str(source),'-I'+str(HERE/'upstream'),str(source/'fx_blocks.cpp'),str(HERE/'host.cpp'),str(HERE/'upstream/autowah.cpp'),'-o',str(path)],check=True)
+ subprocess.run(['clang++','-O2' if name=='baseline' else '-Os','-std=c++17','-shared','-fPIC','-ffp-contract=off','-DMPP_PITCH_QUALITY_PROTOTYPE',*(['-DMPP_DAISY_WAH'] if name=='prototype' else []),'-I'+str(source),'-I'+str(HERE/'upstream'),str(source/'fx_blocks.cpp'),str(HERE/'host.cpp'),str(HERE/'upstream/autowah.cpp'),'-o',str(path)],check=True)
  lib=ctypes.CDLL(str(path));lib.run_fx.argtypes=[ptr,ptr,ctypes.c_uint,bp];lib.upstream.argtypes=[ptr,ctypes.c_uint,ctypes.c_float];libs[name]=lib
 def cfg(n,mode=2,enabled=1,mix=100,sense=50,res=50):
  c=np.zeros((n//8,32),dtype=np.uint8);c[:,:10]=[mode,enabled,2,24,mix,30,50,0,sense,res];c[:,16:26]=[2,0,3,12,100,30,50,0,50,50];return c

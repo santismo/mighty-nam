@@ -184,24 +184,24 @@ public final class NamMidi {
                   Array(message[36..<44]) == Array("PLUGPRO\0".utf8) else { return }
             version = String(bytes: message[4..<12], encoding: .ascii) ?? ""
             if let fx = pendingFx {
-                if (NamToneWire.request(fx) || NamRecordWire.request(fx)) && !["NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) {finish(.failure(Failure.message("NAM controls require NAMLNK21.")));return}
-                guard ["NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) else {finish(.failure(Failure.message("FX A/B require NAMLNK13 or newer. No FX command sent.")));return}
+                if (NamToneWire.request(fx) || NamRecordWire.request(fx)) && !["NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) {finish(.failure(Failure.message("NAM controls require NAMLNK21.")));return}
+                guard ["NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) else {finish(.failure(Failure.message("FX A/B require NAMLNK13 or newer. No FX command sent.")));return}
                 page = -11;request(fx);return
             }
             if let tuner = pendingTuner {
-                guard ["NAMLNK12", "NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) else {
+                guard ["NAMLNK12", "NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) else {
                     finish(.failure(Failure.message("The tuner requires NAMLNK12. No tuner command was sent."))); return
                 }
                 page = -10; request(tuner); return
             }
-            if pendingBuffer != nil && !["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) {
+            if pendingBuffer != nil && !["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) {
                 finish(.failure(Failure.message("Adjustable output buffering requires NAMLNK09. No setting was sent."))); return
             }
             if pendingListen != nil && !NamListening.supports(version) {
                 finish(.failure(Failure.message("Listening requires NAMLNK07 or NAMLNK08. No listening command sent."))); return
             }
             if let raw = pendingPreset {
-                guard ["NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version), let wire = NamPresetWire.request(raw) else {
+                guard ["NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version), let wire = NamPresetWire.request(raw) else {
                     finish(.failure(Failure.message("Onboard presets require NAMLNK10. Nothing was saved to the plug."))); return
                 }
                 page = -9; request(wire); return
@@ -221,9 +221,9 @@ public final class NamMidi {
             guard version == "NAMA2I01" || NamLinkWire.supportsModels(version) else {
                 finish(.success(["identity":version,"compatible":false,"modelTransfer":false,"requests":sent,"words":[],"audioStreamOpened":false])); return
             }
-            pageCount = ["NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) ? 26 : (version == "NAMLNK09" ? 25 : (NamListening.supports(version) ? 24 : (version == "NAMLNK06" ? 23 : (NamLinkWire.supportsModels(version) ? 12 : 62))))
+            pageCount = ["NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) ? 26 : (version == "NAMLNK09" ? 25 : (NamListening.supports(version) ? 24 : (version == "NAMLNK06" ? 23 : (NamLinkWire.supportsModels(version) ? 12 : 62))))
             page = 0
-            if ["NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) { pageCount = 27 }
+            if ["NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) { pageCount = 27 }
         } else if page == -11 {
             guard let pending=pendingFx,let raw=(NamRecordWire.request(pending) ? NamRecordWire.reply(message,to:pending) : NamToneWire.request(pending) ? NamToneWire.reply(message,to:pending) : NamFxWire.reply(message,to:pending)) else {return}
             finish(.success(["frame":raw]));return
@@ -245,7 +245,7 @@ public final class NamMidi {
                 listenSnapshot["audioBuffer"] = decoded
                 page = -8; request([0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,23,0xf7]); return
             }
-            let expected = ["NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) ? ((listenSnapshot["listening"] as? [String:Any])?["enabled"] as? Bool) : false
+            let expected = ["NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) ? ((listenSnapshot["listening"] as? [String:Any])?["enabled"] as? Bool) : false
             guard let state = NamListening.decode(value), state["enabled"] as? Bool == expected else {
                 finish(.failure(Failure.message("The plug did not confirm output state after changing its buffer."))); return
             }
@@ -314,7 +314,7 @@ public final class NamMidi {
             guard message.count == 15, Array(message[0..<6]) == [0xf0,0x43,0x58,0x70,4,2], message[6] == 1,
                   message[7] == NamCodecStatus.statusPage(index:page,identity:version), message[13] < 16 else { return }
             if message[8] != 0 {
-                if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) && page == 12 && message[8] == 2 && snapshotAttempts < 2 {
+                if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) && page == 12 && message[8] == 2 && snapshotAttempts < 2 {
                     snapshotAttempts += 1
                     request([0xf0,0x43,0x58,0x70,4,2,0x4e,0x50,12,0xf7]); return
                 }
@@ -330,13 +330,13 @@ public final class NamMidi {
             var result: [String:Any] = ["identity":version,"compatible":true,"modelTransfer":linked,
                              "stockChain":NamLinkWire.supportsStockChain(version),"requests":sent,
                              "words":(linked ? Array(values.prefix(12)) : values).map{Int64($0)},"audioStreamOpened":false]
-            if ["NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) {
+            if ["NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) {
                 guard let codec = NamCodecStatus.decode(values[26]) else {
                     finish(.failure(Failure.message("Unexpected converter startup status."))); return
                 }
                 result["codecStartup"] = codec
             }
-            if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) {
+            if ["NAMLNK06","NAMLNK07","NAMLNK08","NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) {
                 guard let timing = NamIrqTiming.decode(Array(values[12..<23])) else {
                     finish(.failure(Failure.message("Unexpected timing snapshot. No hardware timing conclusion is available."))); return
                 }
@@ -348,13 +348,13 @@ public final class NamMidi {
                 }
                 result["listeningSupported"] = true; result["listening"] = listening
             }
-            if ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) {
+            if ["NAMLNK09","NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) {
                 guard let decoded = NamOutputBuffer.decode(values[24], identity:version) else {
                     finish(.failure(Failure.message("Unexpected output buffer status."))); return
                 }
                 result["audioBuffer"] = decoded
             }
-            if ["NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23"].contains(version) {
+            if ["NAMLNK10","NAMLNK11","NAMLNK12","NAMLNK13","NAMLNK14","NAMLNK15", "NAMLNK16", "NAMLNK17", "NAMLNK18", "NAMLNK19", "NAMLNK20", "NAMLNK21", "NAMLNK22", "NAMLNK23", "NAMLNK24"].contains(version) {
                 let bank=values[25],active=bank & 255,mask=(bank >> 8) & 255
                 guard bank >> 24 == 1,bank & 0x00ff0000 == 0,(active < 7 || active == 255),mask < 128 else {
                     finish(.failure(Failure.message("Unexpected preset bank status"))); return

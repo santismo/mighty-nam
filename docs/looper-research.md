@@ -1,7 +1,7 @@
 # Standalone looper research
 
-Status: **button/transport model tested offline; no hardware looper is released**.
-The current prototype has no sample storage, audio mixer or physical button hooks.
+Status: **button model and PCM audio transport tested offline; no hardware looper is released**.
+The audio prototype uses caller-owned host memory. No device RAM address or physical button hooks are assigned.
 
 ## Requested controls
 
@@ -85,6 +85,18 @@ At 48 kHz, mono PCM16 requires 96,000 bytes/second:
 These are arithmetic examples, **not available recording durations**. Thirty seconds
 of uncompressed mono PCM16 alone needs 2.88 MB. A practical longer loop may need a
 verified reclaimed region plus compression, or other storage; streaming recordings
-to program flash is not assumed safe. Compression quality, pre-roll for the first
-attack, seam smoothing, pause/resume cursor behavior and overdub headroom remain
-for the audio prototype after the ownership audit.
+to program flash is not assumed safe. Compression quality and overdub headroom remain open. The second host prototype below exercises pre-roll, a basic edge fade and pause/resume; hardware ownership remains unproven.
+
+## PCM transport and preset changes (second prototype)
+
+`tools/looper-prototype/audio.hpp` now records mono PCM16 post-effects guitar, independently of the live guitar graph. A 64-frame pre-roll retains the attack before the threshold crossing. Backing music and loop playback are excluded from recording. Playback is mixed after live guitar processing, so changing a preset does not reprocess the recording. Pause retains the cursor; stop returns it to the beginning while retaining the recording. An optional short edge fade preserves the recorded period.
+
+ASan/UBSan tests pass at 8, 16 and 32 frames: 504,000 playback frames across 21 simulated preset reloads, each including 200 ms with the guitar path unavailable. They also cover threshold waiting, capacity truncation, tiny/zero buffers, nonfinite input, headroom, pre-roll order, pause/resume and stereo backing exclusion. Audio state is 168 bytes on the host, plus caller-supplied PCM storage; controls use 60 bytes. This is an architectural test, not actual ARM preset switching or a guarantee of uninterrupted hardware playback. A blocked DMA interrupt still stops the audio clock regardless of this separation.
+
+## Bounded tail-RAM probe
+
+The NAMLNK24 emulator probe marks `0x20314000..0x2031b000` (28,672 bytes) beyond copied code. The sentinel survives 66 stock type-loader cases, a rendered full chain, and save/recall. No CPU reads or writes were observed there during those tested runtime phases. Cold startup clears it from PC `0x35e6`, with LR `0x22659`; a looper must not promise power-off persistence from RAM.
+
+This is **candidate space, not proven free RAM**: hardware DMA is modeled, loader coverage is bounded, and untested combinations can still own it. Even if reclaimed, it holds only 0.299 s of 48 kHz mono PCM16, or 1.195 s of 4-bit mono ADPCM before codec overhead. It cannot by itself support a useful multi-second loop. Next work is a larger RAM-ownership audit, compression quality/budget testing, and interrupt-friendly preset loads. No program-flash recording is enabled.
+
+The new reports are [audio-v2.json](../evidence/looper-prototype/audio-v2.json), [controls-v2.json](../evidence/looper-prototype/controls-v2.json) and [memory-v2.json](../evidence/looper-prototype/memory-v2.json). Run `test_audio.cpp` with the same sanitizer flags as `test.cpp`; `scripts/probe_looper_memory.py` runs the bounded ARM memory audit. No audio device is opened.

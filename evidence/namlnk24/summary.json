@@ -1,0 +1,57 @@
+{
+  "identity": "NAMLNK24",
+  "revision": "wah-touch-test",
+  "elf_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "regions": [
+    {
+      "name": ".banktext",
+      "start": "0x2030f000",
+      "bytes": 19520,
+      "end_exclusive": "0x20313c40"
+    },
+    {
+      "name": ".retired_audio",
+      "start": "0x1c0e8",
+      "bytes": 312,
+      "end_exclusive": "0x1c220"
+    },
+    {
+      "name": ".text",
+      "start": "0x1c45c",
+      "bytes": 4866,
+      "end_exclusive": "0x1d75e"
+    },
+    {
+      "name": ".ARM.exidx",
+      "start": "0x1c220",
+      "bytes": 24,
+      "end_exclusive": "0x1c238"
+    },
+    {
+      "name": ".bss",
+      "start": "0x202e4020",
+      "bytes": 175452,
+      "end_exclusive": "0x2030ed7c"
+    }
+  ],
+  "wah": "DaisySP-derived linked-stereo envelope filter; FX A/B mode 2",
+  "status": "OFFLINE_CANDIDATE_READY",
+  "device_access": false,
+  "host_audio_access": false,
+  "flashed": false,
+  "physical_wah_verified": false,
+  "looper_integrated": false,
+  "controllers": {
+    "Mac": "0.5.5",
+    "phone": "0.8.4"
+  },
+  "bluetooth_regression": {
+    "guitar_samples_exact": true,
+    "baseline_music_discard_reproduced": true,
+    "record_feed_excludes_music": true,
+    "usb_initialized_stereo_music": true,
+    "nonfinite_and_sum_ceiling": true
+  },
+  "public_builder_unchanged": "0.3.1 / NAMLNK23 r2",
+  "private_capture_weights_published": false
+}

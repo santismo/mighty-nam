@@ -33,6 +33,9 @@ def prepare(out):
     text=text.replace("'offset_example':{'literal':'0x1aa84 = 0x1a864','use':'0x1a88a loads it; 0x1a890 uses [r4,r0], where r4 is amp data base, not a code pointer'},",'')
    if relative.as_posix()=='research/preset_image.py':
     text=(Path(__file__).with_name('image.py')).read_text()
+   if relative.as_posix()=='research/test_preset_runtime.py':text=text.replace("'NAMLNK23',", "'NAMLNK23','NAMLNK24',")
+   if relative.as_posix()=='research/test_usb_nam.py':text=text.replace("'NAMLNK23' if a.pitch_release", "bundle[2]['identity'] if a.pitch_release and bundle[2]['identity'] in ('NAMLNK23','NAMLNK24')")
+   if relative.as_posix()=='research/test_pitch_chain.py':text=text.replace("bundle[2]['identity']=='NAMLNK23'", "bundle[2]['identity'] in ('NAMLNK23','NAMLNK24')")
    dest.write_text(text)
    report[str(relative)]={'source_sha256':hashlib.sha256(original.encode()).hexdigest(),'generated_sha256':hashlib.sha256(text.encode()).hexdigest()}
  for directory in ('artifacts','models'):

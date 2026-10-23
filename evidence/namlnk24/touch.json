@@ -1,0 +1,82 @@
+{
+  "status": "PASS_OFFLINE_TOUCH_WAH",
+  "elf_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "identity": "NAMLNK24",
+  "cases": [
+    {
+      "type": 0,
+      "direction": 0,
+      "peak": 0.0004459046758711338,
+      "callbacks": 1400,
+      "NAM_error": 0.0
+    },
+    {
+      "type": 1,
+      "direction": 0,
+      "peak": 0.00032917968928813934,
+      "callbacks": 1400,
+      "NAM_error": 0.0
+    },
+    {
+      "type": 2,
+      "direction": 0,
+      "peak": 0.00014601647853851318,
+      "callbacks": 1400,
+      "NAM_error": 0.0
+    },
+    {
+      "type": 3,
+      "direction": 0,
+      "peak": 0.00015269778668880463,
+      "callbacks": 1400,
+      "NAM_error": 0.0
+    },
+    {
+      "type": 1,
+      "direction": 1,
+      "peak": 0.00016467273235321045,
+      "callbacks": 1400,
+      "NAM_error": 0.0
+    }
+  ],
+  "saved_and_recalled": true,
+  "finite_audio": true,
+  "bypass_sample_exact": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "physical_deadlines_verified": false,
+  "tail_RAM_probe": {
+    "start": "0x20314000",
+    "end": "0x2031b000",
+    "bytes": 28672,
+    "writes": [
+      {
+        "phase": "restart",
+        "pc": "0x35e6",
+        "lr": "0x22659",
+        "count": 7168,
+        "first": 540098560,
+        "last": 540127231
+      },
+      {
+        "phase": "bypass restart 1",
+        "pc": "0x35e6",
+        "lr": "0x22659",
+        "count": 7168,
+        "first": 540098560,
+        "last": 540127231
+      },
+      {
+        "phase": "bypass restart 14",
+        "pc": "0x35e6",
+        "lr": "0x22659",
+        "count": 7168,
+        "first": 540098560,
+        "last": 540127231
+      }
+    ],
+    "reads": [],
+    "scope": "Touch Wah variants, NAM and Spring; incomplete stock/USB/DMA coverage",
+    "production_allocation": false
+  }
+}

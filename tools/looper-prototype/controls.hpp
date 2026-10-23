@@ -71,11 +71,17 @@ struct Controls {
             mode=Mode::presets; events|=stop|view_changed;
         } else { mode=Mode::looper; events|=view_changed; }
     }
-    // The future recorder supplies a measured peak and frame count. This model
-    // does not allocate a loop buffer, record samples, or implement an audio mixer.
+    void begin_record(uint32_t pre_frames=0) {
+        if(loop!=Loop::armed || !capacity)return;
+        loop=Loop::recording; frames=pre_frames<capacity ? pre_frames : capacity;
+        events|=start_record;
+        if(frames==capacity)finish();
+    }
+    // The offline audio prototype supplies peak/frame counts. Storage and mixing
+    // live outside this button state, so changing a preset cannot reset a loop.
     void audio(float peak,uint32_t count) {
         if(loop==Loop::armed && __builtin_isfinite(peak) && peak>=threshold && count && capacity) {
-            loop=Loop::recording; frames=0; events|=start_record;
+            begin_record();
         }
         if(loop==Loop::recording) {
             uint32_t room=capacity-frames;

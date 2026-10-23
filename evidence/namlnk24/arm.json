@@ -1,0 +1,20 @@
+{
+  "status": "PASS_OFFLINE_NAMLNK24",
+  "elf_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "compiled_callback_blocks": 1652,
+  "neutral_NAM_reference_peak_error": 0.0,
+  "stereo_USB_PCM_ring_roundtrip": true,
+  "class_mutes_verified": true,
+  "wet_record_excludes_host_return": true,
+  "USB_record_gain_guarded_and_persistent": true,
+  "USB_record_gain_headphone_independent": true,
+  "NAM_controls_both_transports": true,
+  "seven_presets_cold_warm_button": true,
+  "removed_NAM_no_callback": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "limitations": [
+    "USB enumeration/endpoint completion/frame counter modeled",
+    "Real-time physical deadlines and Logic duplex pending installation"
+  ]
+}
