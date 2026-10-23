@@ -25,9 +25,9 @@ Preset recalls use the tested interruptible flash-read path. Saving flash is
 allowed while no recording exists and rejected while armed/recording/playing/
 paused/stopped. Stop retains the recording; explicit Clear permits saving again.
 The existing physical PRESET button still selects presets. **The requested new
-POWER/PRESET gestures and app looper UI are not installed by this trial.** Existing
-Mac/phone releases also need their firmware-identity allowlists updated for 25;
-use the diagnostic client for this controlled test, not an assumed app upgrade.
+POWER/PRESET gestures and app looper UI are not installed by this trial.** Mac **0.5.6** and phone **0.8.5** recognize NAMLNK25 for existing guitar,
+wah, preset and model controls. Looper commands remain in the diagnostic client;
+these controller updates do not add a looper UI or install firmware.
 
 ## Offline reproduction
 
@@ -69,6 +69,9 @@ clang -std=c11 -O2 -Wall -Wextra -Werror -Wno-unused-function \
   -framework CoreMIDI -framework CoreFoundation \
   tools/looper-prototype/hardware/client.c -o OUT/mighty-loop
 ```
+
+The client accepts the known USB names `MIGHTY PLUG PRO USB` and `NUX NMP-03`,
+requires one paired source/destination, and verifies NAMLNK25 before diagnostics.
 
 Only after a separately authorized installation and normal restart, disconnect
 other controllers and run `mighty-loop --status`. It requires the exact NAMLNK25

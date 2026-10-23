@@ -2,7 +2,7 @@
 
 NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller. By **santismo**.
 
-[Local firmware builder](https://santismo.github.io/mighty-nam/builder.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.4-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
+[Local firmware builder](https://santismo.github.io/mighty-nam/builder.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.5.6-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
 
 This repository contains the firmware experiments, Mac app, protocols and test evidence. The separate [mighty-nam-controller repository](https://github.com/santismo/mighty-nam-controller) is public and hosts the phone page.
 
@@ -10,13 +10,13 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 
 | Component | Status |
 | --- | --- |
-| Mac 0.5.4 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23 support. Not notarized. |
-| Phone 0.8.4 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
+| Mac 0.5.6 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23–25 support and both wah choices on 24/25. Not notarized. |
+| Phone 0.8.5 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
 | Local builder 0.3.1 / NAMLNK23 r2 | Requires `MP3_OR_V3.0.5.bin`, the exact public NUX Mighty Plug Pro V3.0.5 Original firmware, to create a local image. Includes the stereo Bluetooth playback fix and three MIT-licensed RiffSmith A2 Lite starter presets. Install with the official NUX updater. [Instructions](docs/local-builder.md). |
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
 
-The development-unit owner reports Bluetooth music playback working with NAMLNK23 r2. Mac 0.5.4 and phone 0.8.3 remain compatible; no controller update is required. [Bluetooth evidence and scope](docs/bluetooth-audio.md). NAMLNK24 is a separate offline-tested development candidate with DaisySP Auto Wah and retained NUX Touch Wah, supported by Mac 0.5.5 and phone 0.8.4. A [30-second compressed looper prototype](docs/looper-research.md#ram-placement-and-continuous-preset-recall) now passes bounded RAM checks and offline audio-IRQ tests during preset loading. Hardware RAM safety and uninterrupted physical playback remain unproven. No looper is released. Both remain excluded from the public builder. [Wah candidate details](docs/wah-prototype.md).
+The development-unit owner reports Bluetooth music playback working with NAMLNK23 r2. Mac 0.5.4 and phone 0.8.3 remain compatible; no controller update is required. [Bluetooth evidence and scope](docs/bluetooth-audio.md). NAMLNK24/25 development builds include Daisy-derived Auto Wah in FX A/B and retained NUX Touch Wah under Drive, supported by Mac 0.5.6 and phone 0.8.5. The [NAMLNK25 looper diagnostic trial](tools/looper-prototype/hardware/README.md) has passed startup and idle RAM checks on the development plug, plus controller status reads without changing playback. Offline tests cover 30-second compressed loops and continuous playback during preset loading. Physical recording/playback, worst-case timing, long-term RAM ownership and new button gestures remain pending. Neither trial is included in the public builder. [Wah details](docs/wah-prototype.md).
 
 ## What you can do
 

@@ -31,7 +31,7 @@ class StockControlPlan {
     'reverb': 6,
   };
   static int maximumType(String slot, String? identity) =>
-      slot == 'drive' && identity == 'NAMLNK24'
+      slot == 'drive' && ['NAMLNK24', 'NAMLNK25'].contains(identity)
           ? 14
           : ['fxa', 'fxb'].contains(slot)
               ? (identity == null || supportsExtraFx(identity) ? 7 : 0)
@@ -47,7 +47,8 @@ class StockControlPlan {
                         'NAMLNK21',
                         'NAMLNK22',
                         'NAMLNK23',
-                        'NAMLNK24'
+                        'NAMLNK24',
+                        'NAMLNK25'
                       ].contains(identity)
                   ? 4
                   : supportedTypes[slot]!;
@@ -77,17 +78,22 @@ class StockControlPlan {
         identity:
             identity); // Validate the complete response before changing UI state.
     final next = HybridRig.parse(previous.encode())..masterVolume = preset[84];
-    next.usbRecordGain =
-        ['NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24'].contains(identity) &&
-                preset[33] == 78 &&
-                preset[34] == 2 &&
-                preset[35] <= 96
-            ? preset[35]
-            : 48;
-    next.namTone =
-        ['NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24'].contains(identity)
-            ? readNamTone(preset)
-            : neutralNamTone();
+    next.usbRecordGain = [
+              'NAMLNK21',
+              'NAMLNK22',
+              'NAMLNK23',
+              'NAMLNK24',
+              'NAMLNK25'
+            ].contains(identity) &&
+            preset[33] == 78 &&
+            preset[34] == 2 &&
+            preset[35] <= 96
+        ? preset[35]
+        : 48;
+    next.namTone = ['NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24', 'NAMLNK25']
+            .contains(identity)
+        ? readNamTone(preset)
+        : neutralNamTone();
     for (final block in next.blocks.where((b) => !b.extra)) {
       final id = stages[block.slot]!;
       block.enabled = (preset[id] & 64) == 0;

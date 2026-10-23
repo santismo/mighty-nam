@@ -1,0 +1,62 @@
+{
+  "status": "PASS_NAMLNK25_IDLE_RAM_AND_CONTROLLER_READS",
+  "date": "2026-10-23",
+  "firmware_identity": "NAMLNK25",
+  "ram_bytes_checked": 371316,
+  "startup_pattern_passes": 2,
+  "idle_sweeps": 406,
+  "latched_loop_fault_bits": 0,
+  "loop_state": "empty",
+  "audio_interface_error_flags": 0,
+  "diagnostic_timing": {
+    "valid_intervals": 4123190,
+    "rejected_intervals": 0,
+    "max_observed_irq_cycles": 96825,
+    "min_observed_start_interval_cycles": 156441,
+    "max_observed_start_interval_cycles": 175609,
+    "loop_recording_or_playback_measured": false,
+    "physical_deadline_proven": false
+  },
+  "mac_production_readback": {
+    "identity": true,
+    "status": true,
+    "stock_chain": true,
+    "fx_ab": true,
+    "occupied_colors": 3,
+    "buffer_samples": 8,
+    "output_remained_enabled": true
+  },
+  "hardware_changes_by_this_check": {
+    "flash": false,
+    "preset_writes": false,
+    "model_transfers": false,
+    "loop_commands": false,
+    "mute_or_output_commands": false,
+    "host_audio_opened": false
+  },
+  "controller_versions": {
+    "mac": "0.5.6",
+    "phone": "0.8.5"
+  },
+  "offline_tests": {
+    "flutter_initial_suite_passed": 112,
+    "flutter_initial_skipped": 2,
+    "flutter_extended_compatibility_suite_passed": 64,
+    "phone_suite_passed": 131,
+    "phone_extra_auto_wah_test_passed": 1,
+    "native_wire_suites_passed": 4,
+    "looper_wire_asan_ubsan": true,
+    "dart_analyzer": {
+      "errors": 0,
+      "warnings": 0,
+      "style_info": 18
+    }
+  },
+  "limits": [
+    "Idle startup/readback only; no physical loop recording/playback yet.",
+    "Cache/DMA contention and long-term RAM ownership not proven.",
+    "No acoustic listening or analog latency measurement in this check.",
+    "Phone BLE tests use a fixture; iPhone hardware connection still needs user testing.",
+    "POWER/PRESET looper gestures and controller looper UI remain pending."
+  ]
+}

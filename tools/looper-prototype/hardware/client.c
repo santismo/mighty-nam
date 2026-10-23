@@ -28,7 +28,7 @@ static int matches(MIDIEndpointRef endpoint) {
  CFStringRef name=NULL;char text[256]={0};
  if(MIDIObjectGetStringProperty(endpoint,kMIDIPropertyDisplayName,&name)!=noErr || !name)return 0;
  int ok=CFStringGetCString(name,text,sizeof(text),kCFStringEncodingUTF8);CFRelease(name);
- return ok && !strcmp(text,"MIGHTY PLUG PRO USB");
+ return ok && loop_usb_name(text);
 }
 static double monotonic_seconds(void) {
  struct timespec t;clock_gettime(CLOCK_MONOTONIC,&t);

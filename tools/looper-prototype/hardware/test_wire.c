@@ -9,6 +9,8 @@ static void message(const uint8_t *p,size_t n,void *ctx){
  assert(!error && words[0]==0x4c4f5031 && words[7]==0xffffffff);++received;
 }
 int main(void){
+ assert(loop_usb_name("MIGHTY PLUG PRO USB") && loop_usb_name("NUX NMP-03"));
+ assert(!loop_usb_name(NULL) && !loop_usb_name("NUX NMP-03 UPDATE") && !loop_usb_name("Other MIDI"));
  uint8_t p[55]={0};unsigned error;uint32_t words[8];
  assert(loop_request(query,0,0,123));memcpy(p,query,13);p[9]=64;p[54]=247;
  for(unsigned i=0;i<8;++i){uint32_t value=i==0?0x4c4f5031u:i==7?0xffffffffu:i;for(unsigned j=0;j<5;++j)p[14+i*5+j]=(value>>(j*7))&127;}

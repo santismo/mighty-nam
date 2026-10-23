@@ -38,7 +38,9 @@ class BankFixture extends UsbFixture {
             'NAMLNK20',
             'NAMLNK21',
             'NAMLNK22',
-            'NAMLNK23'
+            'NAMLNK23',
+            'NAMLNK24',
+            'NAMLNK25'
           ].contains(identity),
           'storageError': 0
         },
@@ -61,7 +63,9 @@ class BankFixture extends UsbFixture {
       'NAMLNK20',
       'NAMLNK21',
       'NAMLNK22',
-      'NAMLNK23'
+      'NAMLNK23',
+      'NAMLNK24',
+      'NAMLNK25'
     ].contains(identity)) {
       bufferSamples = ByteData.sublistView(h).getUint32(24, Endian.little);
     }
@@ -97,7 +101,9 @@ class BankFixture extends UsbFixture {
       }
       if (q[7] == 71) {
         expectSync(
-            ['NAMLNK21', 'NAMLNK22', 'NAMLNK23'].contains(identity), true);
+            ['NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24', 'NAMLNK25']
+                .contains(identity),
+            true);
         if (q[9] == 1) {
           final crc = List.generate(5, (i) => q[14 + i] << (7 * i))
               .fold<int>(0, (a, b) => a | b);
@@ -187,7 +193,9 @@ class BankFixture extends UsbFixture {
           'NAMLNK20',
           'NAMLNK21',
           'NAMLNK22',
-          'NAMLNK23'
+          'NAMLNK23',
+          'NAMLNK24',
+          'NAMLNK25'
         ].contains(identity)) listening = false;
       }
     } else if (op == 3) {
@@ -204,8 +212,16 @@ class BankFixture extends UsbFixture {
     reply[14] = active;
     reply[15] = headers.keys.fold<int>(0, (a, b) => a | (1 << b));
     if (headers.containsKey(slot)) reply.setRange(16, 272, headers[slot]!);
-    if (['NAMLNK18', 'NAMLNK19', 'NAMLNK20', 'NAMLNK21', 'NAMLNK22', 'NAMLNK23']
-            .contains(identity) &&
+    if ([
+          'NAMLNK18',
+          'NAMLNK19',
+          'NAMLNK20',
+          'NAMLNK21',
+          'NAMLNK22',
+          'NAMLNK23',
+          'NAMLNK24',
+          'NAMLNK25'
+        ].contains(identity) &&
         headers.containsKey(slot)) {
       w.setUint32(16 + 24, bufferSamples, Endian.little);
     }
@@ -319,29 +335,37 @@ void main() {
     expect(home.onboard.dirty[slot], false, reason: home.status);
   }
 
-  for (final playing in [false, true]) {
-    testWidgets('NAMLNK23 startup and refresh preserve playback=$playing',
-        (t) async {
-      usb.identity = 'NAMLNK23';
-      final a = capture('Local fallback', 1);
-      usb.catalog.add(a);
-      usb.seed([a], selected: a);
-      usb.listening = playing;
-      final dynamic home = await start(t);
-      expect(home.hardware['identity'], 'NAMLNK23');
-      await work(t, home, () => home.refreshConnection());
-      expect(usb.listenCommands, isEmpty);
-      expect(usb.listening, playing);
-      expect(usb.transfers, 0);
-      expect(usb.saves, 0);
-      expect(t.takeException(), isNull);
-      await t.pumpWidget(const SizedBox.shrink());
-      await t.pump();
-      debugDefaultTargetPlatformOverride = null;
-    });
+  for (final firmware in ['NAMLNK23', 'NAMLNK25']) {
+    for (final playing in [false, true]) {
+      testWidgets('$firmware startup and refresh preserve playback=$playing',
+          (t) async {
+        usb.identity = firmware;
+        final a = capture('Local fallback', 1);
+        usb.catalog.add(a);
+        usb.seed([a], selected: a);
+        usb.listening = playing;
+        final dynamic home = await start(t);
+        expect(home.hardware['identity'], firmware);
+        await work(t, home, () => home.refreshConnection());
+        expect(usb.listenCommands, isEmpty);
+        expect(usb.listening, playing);
+        expect(usb.transfers, 0);
+        expect(usb.saves, 0);
+        expect(t.takeException(), isNull);
+        await t.pumpWidget(const SizedBox.shrink());
+        await t.pump();
+        debugDefaultTargetPlatformOverride = null;
+      });
+    }
   }
 
-  for (final firmware in ['NAMLNK21', 'NAMLNK22', 'NAMLNK23'])
+  for (final firmware in [
+    'NAMLNK21',
+    'NAMLNK22',
+    'NAMLNK23',
+    'NAMLNK24',
+    'NAMLNK25'
+  ])
     testWidgets(
         '$firmware direct color selection jumps to saved slot and USB gain stays independent',
         (t) async {
@@ -383,7 +407,13 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
     });
 
-  for (final firmware in ['NAMLNK21', 'NAMLNK22', 'NAMLNK23'])
+  for (final firmware in [
+    'NAMLNK21',
+    'NAMLNK22',
+    'NAMLNK23',
+    'NAMLNK24',
+    'NAMLNK25'
+  ])
     testWidgets(
         '$firmware NAM sliders apply live, retain bypass and save/recall',
         (t) async {
@@ -448,7 +478,9 @@ void main() {
     'NAMLNK20',
     'NAMLNK21',
     'NAMLNK22',
-    'NAMLNK23'
+    'NAMLNK23',
+    'NAMLNK24',
+    'NAMLNK25'
   ])
     for (final playing in [false, true]) {
       testWidgets(

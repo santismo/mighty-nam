@@ -49,8 +49,14 @@ class RigEditor extends StatefulWidget {
 
 class _RigEditorState extends State<RigEditor> {
   String selected = 'nam';
-  bool get compact => ['NAMLNK20', 'NAMLNK21', 'NAMLNK22', 'NAMLNK23', 'NAMLNK24']
-      .contains(widget.firmwareIdentity);
+  bool get compact => [
+        'NAMLNK20',
+        'NAMLNK21',
+        'NAMLNK22',
+        'NAMLNK23',
+        'NAMLNK24',
+        'NAMLNK25'
+      ].contains(widget.firmwareIdentity);
   Future<void> addBlock() async {
     final available = widget.rig.blocks
         .where((b) => !widget.rig.visibleBlocks(activeOnly: true).contains(b))
