@@ -1,0 +1,19 @@
+{
+  "status": "PASS_OFFLINE",
+  "NAM": "actual portable A2 Lite implementation, three public captures",
+  "live_rate": 48000,
+  "callback_frames": 8,
+  "record_seconds": 30,
+  "playback_seconds": 60,
+  "model_reloads": 17,
+  "record_bytes_48k": 742500,
+  "record_bytes_24k": 371316,
+  "host_audio_state_bytes": 720,
+  "host_controls_bytes": 60,
+  "immutable_playback_hash48": "7700603605521622542",
+  "immutable_playback_hash24": "6492087745103163946",
+  "zero_missing_or_repeated_playback_frames": true,
+  "preset_flash_timing_modeled": false,
+  "device_access": false,
+  "audio_device_opened": false
+}

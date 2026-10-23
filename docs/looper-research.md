@@ -1,7 +1,7 @@
 # Standalone looper research
 
-Status: **button model and PCM audio transport tested offline; no hardware looper is released**.
-The audio prototype uses caller-owned host memory. No device RAM address or physical button hooks are assigned.
+Status: **30-second compressed recording/playback tested offline with A2 Lite at eight frames; no hardware looper is released**.
+The prototype uses caller-owned memory. No physical RAM allocation or button hooks are assigned. See the [compressed prototype and RAM audit](#compressed-30-second-prototype) below.
 
 ## Requested controls
 
@@ -97,6 +97,52 @@ ASan/UBSan tests pass at 8, 16 and 32 frames: 504,000 playback frames across 21 
 
 The NAMLNK24 emulator probe marks `0x20314000..0x2031b000` (28,672 bytes) beyond copied code. The sentinel survives 66 stock type-loader cases, a rendered full chain, and save/recall. No CPU reads or writes were observed there during those tested runtime phases. Cold startup clears it from PC `0x35e6`, with LR `0x22659`; a looper must not promise power-off persistence from RAM.
 
-This is **candidate space, not proven free RAM**: hardware DMA is modeled, loader coverage is bounded, and untested combinations can still own it. Even if reclaimed, it holds only 0.299 s of 48 kHz mono PCM16, or 1.195 s of 4-bit mono ADPCM before codec overhead. It cannot by itself support a useful multi-second loop. Next work is a larger RAM-ownership audit, compression quality/budget testing, and interrupt-friendly preset loads. No program-flash recording is enabled.
+This is **candidate space, not proven free RAM**: hardware DMA is modeled, loader coverage is bounded, and untested combinations can still own it. Even if reclaimed, it holds only 0.299 s of 48 kHz mono PCM16, or 1.195 s of 4-bit mono ADPCM before codec overhead. It cannot by itself support a useful multi-second loop. The larger audit below supersedes this narrow probe; interrupt-friendly preset loads remain unresolved. No program-flash recording is enabled.
 
 The new reports are [audio-v2.json](../evidence/looper-prototype/audio-v2.json), [controls-v2.json](../evidence/looper-prototype/controls-v2.json) and [memory-v2.json](../evidence/looper-prototype/memory-v2.json). Run `test_audio.cpp` with the same sanitizer flags as `test.cpp`; `scripts/probe_looper_memory.py` runs the bounded ARM memory audit. No audio device is opened.
+
+## Compressed 30-second prototype
+
+The original MIT implementation in [`compressed_audio.hpp`](../tools/looper-prototype/compressed_audio.hpp) uses 4-bit IMA ADPCM: 256 encoded samples and a four-byte predictor/index header per block. This is an internal storage format, not a WAV or RTP file. Codec behavior is checked against CPython's independent `audioop` implementation. The [IMA/DVI description in RFC 3551](https://www.rfc-editor.org/rfc/rfc3551.html#section-4.5.1) is a specification reference; no third-party codec source is bundled.
+
+| Thirty-second mono loop | Encoded recording | Recording plus ARM audio/control objects |
+| --- | ---: | ---: |
+| 48 kHz ADPCM | 742,500 bytes | 743,272 bytes |
+| 24 kHz ADPCM | 371,316 bytes | 372,088 bytes |
+
+These totals exclude code, stack, alignment, command queues and any DMA buffers. Live guitar/NAM stays at **48 kHz, eight frames** for both formats. Only the recorded loop is reduced to 24 kHz. Its capture and reconstruction filters have 62 frames of combined group delay at 48 kHz (about 1.29 ms); they do not queue the live guitar path. The 63-tap filters attenuate frequencies above 12 kHz by at least 75 dB in the offline response test. A lower loop sample rate trades recorded bandwidth/quality for capacity; it is not a change to guitar or converter latency.
+
+The recorder waits for raw guitar to cross the threshold, retains up to 64 stored-rate samples before the trigger, records processed guitar, then loops independently of the active preset. The mixer adds loop playback after live guitar processing. Backing audio is excluded from recording. Pause retains the cursor and decoder/filter state; stop rewinds while retaining the recording. Capacity closes the loop automatically. Buffers and state have fixed bounds and no heap allocation in the component.
+
+### Tests completed
+
+- ASan/UBSan: both full 30-second formats recorded through the actual portable A2 Lite implementation, followed by 60 seconds of playback. Three licensed public captures are reloaded 17 times across recording/playback. Eight-frame callbacks, 200 ms guitar-only settling intervals, independent sequential playback checks, immutable recording hashes, capacity limits, tiny buffers, pre-roll, malformed headers, nonfinite input, backing exclusion and pause/resume/stop pass.
+- Independent codec validation: all encoded bytes match CPython on 131,071 stress samples and both full-duration recordings. The synthetic guitar-like NAM fixture measures 42.76 dB signal-to-error ratio at 48 kHz and 28.02 dB at 24 kHz against each format's PCM input. These are **fixture results, not listening-quality claims**. Arbitrary loop endpoints can still click; wrap smoothing and overdubbing are not implemented.
+- Bounded ARM execution: 5,622 loop callbacks match the native output exactly, including first/last blocks of a full 720,000-sample recording, wrap, pause/resume and four real stock preset recalls. The firmware executes actual NAM and stock spring reverb. Loop state/storage survive those recalls in **artificial emulator RAM**. The loop is called separately after the stock IRQ; this is not a firmware audio hook or proof that playback continues during a blocked IRQ.
+
+The ARM component uses 712 bytes of audio state plus 60 bytes of controls, excluding storage, stack and the test bridge pointer. Executed instruction counts are included in the report to identify work, not to assert real-time performance. The emulator does not model M7 cycles, cache misses or peripheral contention. A physical deadline measurement is still required, particularly on the threshold callback that encodes pre-roll.
+
+### Expanded RAM audit
+
+The audit uses the exact NAMLNK24 ELF (`13e14ec6…26e65d`) and V3.0.5-derived payload, 66 stock type-loader cases, representative spring/delay/full chains, public model transfers and four actual preset recalls. Runtime CPU reads/writes are observed in 256-byte pages:
+
+| Observed region, end exclusive | Pages touched, rounded bytes | Largest unobserved span within that region |
+| --- | ---: | ---: |
+| `0x20200000..0x20240000` — M4 RAM alias / stock DSP | 249,088 | 7,936 |
+| `0x20240000..0x202c0000` — OCRAM1 | 376,832 | 147,456 |
+| `0x202c0000..0x202e4000` — below custom arena | 0 | 147,456 |
+| `0x20314000..0x20340000` — beyond copied code | 0 | 180,224 |
+
+The two adjacent middle spans could form a **294,912-byte investigation range**, still smaller than a 24 kHz recording. Combining that range with part of the upper span would fit the arithmetic budget, but would require segmented storage or a verified memory-layout change. **Unobserved means unobserved, not available.** Stock literal references include `0x2031b000`; their reachable uses need resolution. Cold startup clears `0x202e4000..0x2031c000`. DMA, USB/Bluetooth concurrency, long-running effects, other cores, MPU/cache settings and configured RAM aliases are not fully covered. DTCM/ITCM and configuration-dependent ECC/FlexRAM banks are not counted as additional free storage. [NXP's memory-allocation note](https://www.nxp.com/docs/en/application-note/AN13106.pdf) explains why nominal chip capacity alone is insufficient.
+
+The audited custom-state area has only **644 bytes spare**. Its largest existing objects are the 84,024-byte NAM state, 33,120-byte FX engines, 16,404-byte receiver and three 8,192-byte preset/model scratch buffers. They have active owners; this prototype does not reuse them or disable effects. Even the loop's small control/audio objects need a separately justified allocation. The emulator component's code also needs a real linker placement; its artificial addresses are deliberately unsuitable for installation.
+
+Every observed recall performs **two 8,192-byte flash reads with interrupts masked**. The emulator substitutes those peripheral transfers and cannot measure their duration. Separating the loop's state from NAM prevents reset damage, but does not make a masked audio interrupt run. Continuous hardware playback needs a verified interrupt-friendly read path, preload strategy or bounded scheduling design; flash writes/erases while looping need their own policy.
+
+### Before a hardware trial
+
+1. Prove ownership and initialization of enough RAM, including bus masters and cache policy; implement any required segmented allocator.
+2. Keep the loop mixer/clock alive through guitar resets and preset reads; verify deadlines for recording, playback, threshold pre-roll and all supported effect combinations at eight frames.
+3. Integrate debounced physical gestures, a bounded command mailbox, output placement and LED/controller feedback. Add loop-clear behavior and evaluate seam/quality handling.
+
+The original and compressed prototypes remain outside the firmware build, public builder, Mac app and phone controller. No update file was produced, no physical device was accessed and no audio device was opened. Reproduction commands are in the [prototype README](../tools/looper-prototype/README.md); sanitized reports are in [evidence/looper-prototype](../evidence/looper-prototype/).

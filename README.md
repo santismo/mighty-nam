@@ -16,7 +16,7 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
 
-The development-unit owner reports Bluetooth music playback working with NAMLNK23 r2. Mac 0.5.4 and phone 0.8.3 remain compatible; no controller update is required. [Bluetooth evidence and scope](docs/bluetooth-audio.md). NAMLNK24 is a separate offline-tested development candidate with DaisySP Auto Wah and retained NUX Touch Wah, supported by Mac 0.5.5 and phone 0.8.4. The looper now has a host PCM prototype; no looper is released. Both remain excluded from the public builder. [Wah candidate details](docs/wah-prototype.md).
+The development-unit owner reports Bluetooth music playback working with NAMLNK23 r2. Mac 0.5.4 and phone 0.8.3 remain compatible; no controller update is required. [Bluetooth evidence and scope](docs/bluetooth-audio.md). NAMLNK24 is a separate offline-tested development candidate with DaisySP Auto Wah and retained NUX Touch Wah, supported by Mac 0.5.5 and phone 0.8.4. A [30-second compressed looper prototype](docs/looper-research.md#compressed-30-second-prototype) has passed offline NAM/preset tests; RAM placement and uninterrupted hardware playback remain unproven. No looper is released. Both remain excluded from the public builder. [Wah candidate details](docs/wah-prototype.md).
 
 ## What you can do
 

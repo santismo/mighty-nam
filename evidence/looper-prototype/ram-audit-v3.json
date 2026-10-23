@@ -1,0 +1,661 @@
+{
+  "cold_start_zeroed_spans": [
+    {
+      "start": "0x20036000",
+      "bytes": 64,
+      "end": "0x20036040"
+    },
+    {
+      "start": "0x20036080",
+      "bytes": 64,
+      "end": "0x200360c0"
+    },
+    {
+      "start": "0x20036100",
+      "bytes": 64,
+      "end": "0x20036140"
+    },
+    {
+      "start": "0x20036180",
+      "bytes": 64,
+      "end": "0x200361c0"
+    },
+    {
+      "start": "0x20036200",
+      "bytes": 64,
+      "end": "0x20036240"
+    },
+    {
+      "start": "0x20036280",
+      "bytes": 64,
+      "end": "0x200362c0"
+    },
+    {
+      "start": "0x20036a80",
+      "bytes": 1832,
+      "end": "0x200371a8"
+    },
+    {
+      "start": "0x20201000",
+      "bytes": 4520,
+      "end": "0x202021a8"
+    },
+    {
+      "start": "0x2000b000",
+      "bytes": 54752,
+      "end": "0x200185e0"
+    },
+    {
+      "start": "0x20018800",
+      "bytes": 2880,
+      "end": "0x20019340"
+    },
+    {
+      "start": "0x202e4000",
+      "bytes": 229376,
+      "end": "0x2031c000"
+    }
+  ],
+  "unobserved_total_bytes": 488192,
+  "status": "COMPLETED_OFFLINE_RAM_OWNERSHIP_AUDIT",
+  "elf_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "stock_payload_sha256": "e971240a1e333003804cfd154e5ee053026254bbf09b11499e8b4968d3600752",
+  "regions": [
+    {
+      "name": "M4 RAM alias / stock DSP",
+      "start": "0x20200000",
+      "end": "0x20240000",
+      "observed_pages": 973,
+      "observed_bytes_rounded_to_256": 249088,
+      "largest_unobserved_span": [
+        "0x20202100",
+        "0x20204000",
+        7936
+      ],
+      "unobserved_is_not_free": true
+    },
+    {
+      "name": "OCRAM1",
+      "start": "0x20240000",
+      "end": "0x202c0000",
+      "observed_pages": 1472,
+      "observed_bytes_rounded_to_256": 376832,
+      "largest_unobserved_span": [
+        "0x2029c000",
+        "0x202c0000",
+        147456
+      ],
+      "unobserved_is_not_free": true
+    },
+    {
+      "name": "OCRAM2 below custom arena",
+      "start": "0x202c0000",
+      "end": "0x202e4000",
+      "observed_pages": 0,
+      "observed_bytes_rounded_to_256": 0,
+      "largest_unobserved_span": [
+        "0x202c0000",
+        "0x202e4000",
+        147456
+      ],
+      "unobserved_is_not_free": true
+    },
+    {
+      "name": "OCRAM2 beyond copied code",
+      "start": "0x20314000",
+      "end": "0x20340000",
+      "observed_pages": 0,
+      "observed_bytes_rounded_to_256": 0,
+      "largest_unobserved_span": [
+        "0x20314000",
+        "0x20340000",
+        180224
+      ],
+      "unobserved_is_not_free": true
+    }
+  ],
+  "custom_objects": [
+    {
+      "name": "_ZL5model",
+      "address": "0x202e4020",
+      "bytes": 84024
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_17enginesE",
+      "address": "0x203068b8",
+      "bytes": 33120
+    },
+    {
+      "name": "_ZL8receiver",
+      "address": "0x202fa6f0",
+      "bytes": 16404
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_16recordE",
+      "address": "0x202ff3bc",
+      "bytes": 8192
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_17scratchE",
+      "address": "0x203013bc",
+      "bytes": 8192
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_110model_slotE",
+      "address": "0x2030361c",
+      "bytes": 8192
+    },
+    {
+      "name": "_ZL12load_scratch",
+      "address": "0x202f8970",
+      "bytes": 7484
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_17captureE",
+      "address": "0x20305634",
+      "bytes": 4112
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_17headersE",
+      "address": "0x202fe957",
+      "bytes": 1792
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_14wireE",
+      "address": "0x203034d0",
+      "bytes": 330
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_14wireE",
+      "address": "0x2030675c",
+      "bytes": 330
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_15cacheE",
+      "address": "0x2030ea60",
+      "bytes": 328
+    },
+    {
+      "name": "_ZL6packet",
+      "address": "0x202f8858",
+      "bytes": 280
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_15replyE",
+      "address": "0x20306644",
+      "bytes": 280
+    },
+    {
+      "name": "_ZN12_GLOBAL__N_16outputE",
+      "address": "0x203033bc",
+      "bytes": 276
+    }
+  ],
+  "static_RAM_literal_leads": [
+    {
+      "pc": "0x535a",
+      "literal": "0x54a4",
+      "value": "0x202e4000"
+    },
+    {
+      "pc": "0x5362",
+      "literal": "0x54a4",
+      "value": "0x202e4000"
+    },
+    {
+      "pc": "0x53ae",
+      "literal": "0x54ac",
+      "value": "0x2031b000"
+    },
+    {
+      "pc": "0x5442",
+      "literal": "0x54a4",
+      "value": "0x202e4000"
+    },
+    {
+      "pc": "0x562a",
+      "literal": "0x5848",
+      "value": "0x2031b000"
+    },
+    {
+      "pc": "0x562c",
+      "literal": "0x584c",
+      "value": "0x202e4000"
+    },
+    {
+      "pc": "0x5668",
+      "literal": "0x5848",
+      "value": "0x2031b000"
+    },
+    {
+      "pc": "0x5670",
+      "literal": "0x584c",
+      "value": "0x202e4000"
+    },
+    {
+      "pc": "0x56e0",
+      "literal": "0x5848",
+      "value": "0x2031b000"
+    },
+    {
+      "pc": "0x56e8",
+      "literal": "0x584c",
+      "value": "0x202e4000"
+    },
+    {
+      "pc": "0x5bac",
+      "literal": "0x5eb8",
+      "value": "0x20214000"
+    },
+    {
+      "pc": "0x5bb8",
+      "literal": "0x5ebc",
+      "value": "0x2021c000"
+    },
+    {
+      "pc": "0x5bc0",
+      "literal": "0x5ec0",
+      "value": "0x2025c000"
+    },
+    {
+      "pc": "0x6516",
+      "literal": "0x6530",
+      "value": "0x20210000"
+    },
+    {
+      "pc": "0x6520",
+      "literal": "0x6538",
+      "value": "0x20211000"
+    },
+    {
+      "pc": "0x74a0",
+      "literal": "0x7618",
+      "value": "0x20300017"
+    },
+    {
+      "pc": "0x74a4",
+      "literal": "0x761c",
+      "value": "0x20200016"
+    },
+    {
+      "pc": "0x74be",
+      "literal": "0x7624",
+      "value": "0x20201000"
+    },
+    {
+      "pc": "0xb4d8",
+      "literal": "0xb520",
+      "value": "0x20204000"
+    },
+    {
+      "pc": "0xb738",
+      "literal": "0xb784",
+      "value": "0x2020c000"
+    },
+    {
+      "pc": "0xba14",
+      "literal": "0xba98",
+      "value": "0x20214000"
+    },
+    {
+      "pc": "0xbd5c",
+      "literal": "0xbe0c",
+      "value": "0x2025c000"
+    },
+    {
+      "pc": "0xbfc8",
+      "literal": "0xc010",
+      "value": "0x2021c000"
+    },
+    {
+      "pc": "0x1988a",
+      "literal": "0x199bc",
+      "value": "0x20214000"
+    },
+    {
+      "pc": "0x1a134",
+      "literal": "0x1a26c",
+      "value": "0x20295532"
+    }
+  ],
+  "loader_cases": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      2,
+      11
+    ],
+    [
+      2,
+      12
+    ],
+    [
+      2,
+      13
+    ],
+    [
+      2,
+      14
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      4,
+      4
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      6,
+      1
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      6,
+      3
+    ],
+    [
+      6,
+      4
+    ],
+    [
+      6,
+      5
+    ],
+    [
+      6,
+      6
+    ],
+    [
+      6,
+      7
+    ],
+    [
+      6,
+      8
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      10
+    ],
+    [
+      6,
+      11
+    ],
+    [
+      6,
+      12
+    ],
+    [
+      6,
+      13
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      7,
+      4
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      8,
+      4
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      8,
+      6
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      9,
+      6
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      9,
+      9
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      9,
+      11
+    ],
+    [
+      9,
+      12
+    ],
+    [
+      9,
+      13
+    ],
+    [
+      9,
+      14
+    ],
+    [
+      9,
+      15
+    ],
+    [
+      9,
+      16
+    ],
+    [
+      9,
+      17
+    ],
+    [
+      9,
+      18
+    ],
+    [
+      9,
+      19
+    ],
+    [
+      9,
+      20
+    ]
+  ],
+  "callbacks": 7598,
+  "actual_model_recalls": [
+    0,
+    1,
+    2,
+    0
+  ],
+  "preset_read_calls": [
+    {
+      "phase": "recall 0",
+      "bytes": 8192,
+      "IRQs_masked": true
+    },
+    {
+      "phase": "recall 0",
+      "bytes": 8192,
+      "IRQs_masked": true
+    },
+    {
+      "phase": "recall 1",
+      "bytes": 8192,
+      "IRQs_masked": true
+    },
+    {
+      "phase": "recall 1",
+      "bytes": 8192,
+      "IRQs_masked": true
+    },
+    {
+      "phase": "recall 2",
+      "bytes": 8192,
+      "IRQs_masked": true
+    },
+    {
+      "phase": "recall 2",
+      "bytes": 8192,
+      "IRQs_masked": true
+    },
+    {
+      "phase": "recall 0",
+      "bytes": 8192,
+      "IRQs_masked": true
+    },
+    {
+      "phase": "recall 0",
+      "bytes": 8192,
+      "IRQs_masked": true
+    }
+  ],
+  "max_contiguous_modeled_IRQ_masked_instructions": 10,
+  "interrupt_count_is_not_physical_time": true,
+  "hardware_RAM_reserved": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "limitations": [
+    "CPU observation of bounded stock paths, not hardware bus-master ownership proof.",
+    "Startup/peripherals/cache/USB completion and flash reads have modeled behavior.",
+    "Unobserved pages cannot be allocated until static ownership, initialization, MPU/cache and DMA uses are resolved.",
+    "M4 RAM and flexible OCRAM aliases must not be double-counted.",
+    "Stock preset reads still mask interrupts; continuous hardware loop playback is not established."
+  ],
+  "observed_page_details": "Detailed per-page counts can be reproduced with ram_audit.py; omitted from public summary.",
+  "largest_cross_region_unobserved_span": {
+    "start": "0x2029c000",
+    "end": "0x202e4000",
+    "bytes": 294912,
+    "not_proven_free": true
+  },
+  "thirty_second_budget": {
+    "48k_recording_bytes": 742500,
+    "24k_recording_bytes": 371316,
+    "ARM_component_objects_bytes": 772,
+    "hardware_allocated": false
+  }
+}

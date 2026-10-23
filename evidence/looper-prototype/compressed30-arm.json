@@ -1,0 +1,59 @@
+{
+  "status": "PASS_BOUNDED_ARM_COMPRESSED_LOOP",
+  "firmware_elf_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "loop_elf_sha256": "d43619918da6485d170f7f1aaf5d8eb2f50aec5bf609bdaa6c6ac9a10d7ecfc2",
+  "loop_ARM_state_bytes": 712,
+  "control_ARM_state_bytes": 60,
+  "callback_frames": 8,
+  "live_rate": 48000,
+  "recorded_loop_rate": 24000,
+  "loop_callbacks": 5622,
+  "actual_preset_recalls": [
+    {
+      "color": 0,
+      "callbacks": 1320,
+      "store_unchanged": true,
+      "playback_frames": 10560
+    },
+    {
+      "color": 1,
+      "callbacks": 1320,
+      "store_unchanged": true,
+      "playback_frames": 10560
+    },
+    {
+      "color": 2,
+      "callbacks": 1320,
+      "store_unchanged": true,
+      "playback_frames": 10560
+    },
+    {
+      "color": 0,
+      "callbacks": 1320,
+      "store_unchanged": true,
+      "playback_frames": 10560
+    }
+  ],
+  "full_duration_fixture_samples": 720000,
+  "max_native_ARM_sample_error": 0.0,
+  "modeled_instructions_per_loop_callback": {
+    "record_arm": 5367,
+    "record_trigger_64_preroll": 10723,
+    "record_steady": 5573,
+    "play_after_recall": 5572,
+    "play_wrap": 5510,
+    "paused": 1043,
+    "resume": 5493,
+    "stopped": 1132
+  },
+  "storage_guards_intact": true,
+  "device_access": false,
+  "audio_device_opened": false,
+  "limitations": [
+    "Artificial emulator RAM, not device placement.",
+    "Loop mixer is called separately after the stock IRQ, not patched into firmware.",
+    "Actual stock flash reads remain IRQ-masked; no loop callback occurs during them.",
+    "Instruction counts are NOT Cortex-M7 cycles or deadline verification.",
+    "Full 30s duration runs natively; ARM tests bounded windows and wrap plus actual NAM/preset paths."
+  ]
+}

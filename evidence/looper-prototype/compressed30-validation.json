@@ -1,0 +1,44 @@
+{
+  "status": "PASS_OFFLINE_COMPRESSED_30_SECOND_LOOPER",
+  "version": 1,
+  "tests": [
+    "controls (ASan/UBSan)",
+    "PCM transport (ASan/UBSan)",
+    "full-duration compressed transport + actual native A2 Lite (ASan/UBSan)",
+    "independent CPython IMA ADPCM and FIR response",
+    "bounded actual ARM NAM, spring reverb, loop component and preset recalls",
+    "stock RAM ownership audit"
+  ],
+  "sources": {
+    "tools/looper-prototype/arm_bridge.cpp": "d1310ab4fec6f000ebd010728bbc41e170566a69cb6e39c8a401449daf20ec04",
+    "tools/looper-prototype/audio.hpp": "ebae2d6a0d782aeb3457a4487c1f7c4cd336fe627e9fd149663ec321cee3a50b",
+    "tools/looper-prototype/build_arm.py": "4edfe6e30f1a5c84fc700d3cad6a71f4204e95d1ed33e4176227f7429f5ca023",
+    "tools/looper-prototype/check_compression.py": "818db52773485762d314dead1882e456c2bc0f21ed942df020772e01c7781477",
+    "tools/looper-prototype/compressed_audio.hpp": "28bd9abdf8c5a446f39e81809dd44ae3ebc68173bad34f451c4f11b76250f42a",
+    "tools/looper-prototype/controls.hpp": "9b4d897332b3cd9fa433f670a4e801d62069da8f875600f8e1c1f33e88cd1e83",
+    "tools/looper-prototype/ima_adpcm.hpp": "b40acf3d8368123313a7320cbbb98a7824757a4651f17dfc5fd46f02481d1b85",
+    "tools/looper-prototype/loop_emulator.ld": "797244cf80d1a60986fea07539092be86d5d3078c7f4bcb6fd06589d87f62194",
+    "tools/looper-prototype/loop_filter.hpp": "ce4ae17535630e1692df85301f8ad5be64d0c124a277f0b1ff7470b280e6a461",
+    "tools/looper-prototype/ram_audit.py": "ae65584f24efbfebf2fba3a93f143b29a384f266f9620fa88604c623873fe47a",
+    "tools/looper-prototype/run_offline.py": "ece1a24335cbd2a689f1c0fc1feaa4b6ea7bb93ccfa95a6892e06f337ac4afc6",
+    "tools/looper-prototype/test.cpp": "2e51d1177335754e21833b50e759d0fc0ace16ffa506e1aa04a05a4f778eba07",
+    "tools/looper-prototype/test_audio.cpp": "4d2ffe99f949ff2722008017b5ea2136e938f4f11b64bd4d5912c4242b065677",
+    "tools/looper-prototype/test_compressed.cpp": "b9f771e38af9904ed36509e1c57f0d468961be9a07ed3dcfc4e9b8e9c17d9c19",
+    "tools/looper-prototype/test_compressed_arm.py": "76546a4a74fcee84bea0d3f42f0eba870f95affe30f41b971de71e84cc0189e8"
+  },
+  "reports": {
+    "compressed30-native.json": "66902ed4c02a3228594d1d1a249cd643ac034e8598d2423518cb7146a6176f2a",
+    "compressed30-quality.json": "6f8428fd74081eebdd7fed8007196f62c657562c3c3b6cc361fba7a0df9bf05d",
+    "compressed30-arm.json": "3ee2260016c9cf4f62f25d2c2a2beb3eb9120280bc254a136ff0c1f7379dbe2b",
+    "compressed30-build.json": "aab1a8f596e1f67bf5ab5b35f359b779c5fe78ff909b221197d08061ca4fd355",
+    "ram-audit-v3.json": "2b69e1c68b7933f03db73fb2e37f36d7e50e2936bf6769fab9b5c15ef3394e6d"
+  },
+  "hardware_ready": false,
+  "device_access": false,
+  "firmware_flash": false,
+  "physical_presets_changed": false,
+  "plug_output_changed": false,
+  "audio_device_opened": false,
+  "system_volume_changed": false,
+  "public_builder_changed": false
+}

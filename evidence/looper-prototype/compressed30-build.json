@@ -1,0 +1,23 @@
+{
+  "status": "OFFLINE_ELF_ONLY",
+  "sections": [
+    {
+      "name": ".text",
+      "address": "0x10000000",
+      "bytes": 5236
+    },
+    {
+      "name": ".data",
+      "address": "0x21000000",
+      "bytes": 60
+    },
+    {
+      "name": ".bss",
+      "address": "0x2100003c",
+      "bytes": 716
+    }
+  ],
+  "sha256": "d43619918da6485d170f7f1aaf5d8eb2f50aec5bf609bdaa6c6ac9a10d7ecfc2",
+  "physical_RAM_address_chosen": false,
+  "flash_container_created": false
+}
