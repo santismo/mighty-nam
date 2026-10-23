@@ -38,6 +38,10 @@ def main():
     parser.add_argument('--starter-bank', type=Path, required=True)
     parser.add_argument('--starter-report', type=Path, required=True)
     args = parser.parse_args()
+    meta = json.loads((args.build_dir/'build.json').read_text())
+    need('-DMPP_BLUETOOTH_AUDIO' in meta['compiler_flags'] and
+         meta.get('revision') == 'r2-bluetooth-audio' and not meta.get('research_only'),
+         'Builder 0.3.1 requires the production Bluetooth r2 build, not a research prototype')
     bank = args.starter_bank.read_bytes()
     starters = json.loads(args.starter_report.read_text())
     from starter_bank import validate_bank
@@ -51,6 +55,7 @@ def main():
         candidate = (staged/'NAMLNK23-public-v3-test.bin').read_bytes()
     need(review['identity'] == 'NAMLNK23' and not review['factory_presets'] and
          review['source_bank_sha256'] is None, 'Expected the audited unseeded NAMLNK23 baseline')
+    need('bluetooth' in review['evidence'], 'Bluetooth release evidence required')
     stock = args.stock_file.read_bytes()
     original = Container(stock)
     baseline_sha = sha(candidate)
@@ -93,13 +98,12 @@ def main():
         rebuilt[op['offset']:op['offset']+op['length']] = data
     need(original.rebuild_same_length(bytes(rebuilt)) == candidate, 'Recipe differs from validated image builder')
     need(rebuilt[0x344000:0x360000] == bank, 'Starter bank mismatch')
-    meta = json.loads((args.build_dir/'build.json').read_text())
     need(meta['elf_sha256'] == starters['elf_sha256'], 'Starter tests used a different firmware')
-    recipe = dict(schema='mighty-nam-local-builder-1', builder_version='0.3.0', identity='NAMLNK23',
+    recipe = dict(schema='mighty-nam-local-builder-1', builder_version='0.3.1', firmware_revision='r2-bluetooth-audio', identity='NAMLNK23',
                   target='NUX-MP3', presets='riffsmith-mit-3', captures_included=True, starter_presets=starters['presets'], starter_bank_sha256=sha(bank),
                   input=dict(name='MP3_OR_V3.0.5.bin', bytes=len(stock), sha256=sha(stock),
                              payload_sha256=sha(original.payload)),
-                  output=dict(name='mighty-nam-NAMLNK23-experimental.bin', bytes=len(candidate),
+                  output=dict(name='mighty-nam-NAMLNK23-r2-experimental.bin', bytes=len(candidate),
                               sha256=sha(candidate), payload_sha256=sha(bytes(rebuilt))),
                   elf_sha256=meta['elf_sha256'], sources=meta['sources'], headers=meta['headers'],
                   linker_sha256=meta['linker_sha256'], evidence=review['evidence'],
@@ -141,8 +145,8 @@ def main():
     for name in ['core.js','ui.js','recipe.js','style.css','provenance.json']:
         files['builder/'+name] = ROOT/'docs/builder'/name
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    (args.output_dir/'mighty-nam-NAMLNK23-experimental.bin').write_bytes(candidate)
-    output = args.output_dir/'mighty-nam-local-builder-0.3.0.zip'
+    (args.output_dir/'mighty-nam-NAMLNK23-r2-experimental.bin').write_bytes(candidate)
+    output = args.output_dir/'mighty-nam-local-builder-0.3.1.zip'
     with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, path in sorted(files.items()):
             # Fixed metadata makes the archive reproducible and excludes local paths.

@@ -1,4 +1,4 @@
-mighty-nam local builder 0.3.0 — experimental NAMLNK23
+mighty-nam local builder 0.3.1 — experimental NAMLNK23 r2
 
 Extract this ZIP and open builder.html in a current desktop browser. Keep the
 other files beside it. No compiler, account or connected plug is needed.
@@ -23,7 +23,10 @@ Installation replaces all seven preset slots and global settings. Three
 MIT-licensed RiffSmith A2 Lite starters are included: Green Clean, Orange
 Bass Clean and Red Distorted. Four slots remain empty. Presets include the
 cabinet and run NAM only initially. Add effects in either controller.
-Mac 0.5.4 and phone 0.8.3 support NAMLNK23.
+Mac 0.5.4 and phone 0.8.3 support NAMLNK23 r2.
+This revision restores stereo Bluetooth music playback. The owner reports
+success on the development unit; the public starter variant remains an
+offline-tested preview. DaisySP wah and looper experiments are not included.
 
 The new starter bank passes offline checks; the core has limited device
 validation. Physical pitch timing, this bank's power-cycle behavior and

@@ -1,0 +1,15 @@
+{
+  "status": "PASS_BLUETOOTH_STAGING_REJECTIONS",
+  "rejected": [
+    "failed",
+    "stale",
+    "missing",
+    "routing",
+    "buffers",
+    "waveforms",
+    "wrong stock"
+  ],
+  "elf_sha256": "1cf2b1a8146879c2e2d25aab22de3e144ab24ba82e6d20cb5bbdce2d45bf32f7",
+  "device_access": false,
+  "host_audio_access": false
+}

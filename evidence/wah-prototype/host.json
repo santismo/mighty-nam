@@ -1,0 +1,517 @@
+{
+  "status": "PASS_OFFLINE_DAISY_WAH_HOST",
+  "audio_devices_opened": false,
+  "device_access": false,
+  "block_samples": 8,
+  "sample_rate": 48000,
+  "reference_cases": [
+    {
+      "hz": 82.4069,
+      "amplitude": 0.001,
+      "sensitivity": 0,
+      "peak": 0.002082081511616707,
+      "peak_error": 5.960464477539063e-08,
+      "relative_rms_error": 2.6336651872451766e-05
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.001,
+      "sensitivity": 50,
+      "peak": 0.0020939242094755173,
+      "peak_error": 2.385495463386178e-07,
+      "relative_rms_error": 8.134851361326797e-05
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.001,
+      "sensitivity": 100,
+      "peak": 0.0020595379173755646,
+      "peak_error": 3.228778950870037e-07,
+      "relative_rms_error": 0.00016150706759352222
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.01,
+      "sensitivity": 0,
+      "peak": 0.02084222435951233,
+      "peak_error": 7.135095074772835e-07,
+      "relative_rms_error": 3.216983867343097e-05
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.01,
+      "sensitivity": 50,
+      "peak": 0.019428908824920654,
+      "peak_error": 2.5015324354171753e-06,
+      "relative_rms_error": 0.00014887471414504395
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.01,
+      "sensitivity": 100,
+      "peak": 0.015479020774364471,
+      "peak_error": 8.493661880493164e-07,
+      "relative_rms_error": 6.124739880342891e-05
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.1,
+      "sensitivity": 0,
+      "peak": 0.2070300579071045,
+      "peak_error": 3.3020973205566406e-05,
+      "relative_rms_error": 0.00012860069461519084
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.1,
+      "sensitivity": 50,
+      "peak": 0.052913129329681396,
+      "peak_error": 3.6172568798065186e-06,
+      "relative_rms_error": 3.438012206418008e-05
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.1,
+      "sensitivity": 100,
+      "peak": 0.04964737594127655,
+      "peak_error": 2.384185791015625e-07,
+      "relative_rms_error": 8.443519593488417e-06
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.5,
+      "sensitivity": 0,
+      "peak": 0.9971752166748047,
+      "peak_error": 0.00018611550331115723,
+      "relative_rms_error": 0.00013952223483904922
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.5,
+      "sensitivity": 50,
+      "peak": 0.2482428252696991,
+      "peak_error": 1.7583370208740234e-06,
+      "relative_rms_error": 8.451798743257363e-06
+    },
+    {
+      "hz": 82.4069,
+      "amplitude": 0.5,
+      "sensitivity": 100,
+      "peak": 0.2482793778181076,
+      "peak_error": 1.6689300537109375e-06,
+      "relative_rms_error": 8.705836567694853e-06
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.001,
+      "sensitivity": 0,
+      "peak": 0.0025445781648159027,
+      "peak_error": 7.08096195012331e-08,
+      "relative_rms_error": 2.016440705956747e-05
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.001,
+      "sensitivity": 50,
+      "peak": 0.0025563519448041916,
+      "peak_error": 2.693304850254208e-07,
+      "relative_rms_error": 0.00010314431312396927
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.001,
+      "sensitivity": 100,
+      "peak": 0.0022760145366191864,
+      "peak_error": 5.195033736526966e-07,
+      "relative_rms_error": 0.00019528139224263912
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.01,
+      "sensitivity": 0,
+      "peak": 0.02548164129257202,
+      "peak_error": 1.698703272268176e-06,
+      "relative_rms_error": 3.760412083654943e-05
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.01,
+      "sensitivity": 50,
+      "peak": 0.021583855152130127,
+      "peak_error": 3.6833807826042175e-06,
+      "relative_rms_error": 9.914721226485992e-05
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.01,
+      "sensitivity": 100,
+      "peak": 0.018667198717594147,
+      "peak_error": 2.473592758178711e-06,
+      "relative_rms_error": 0.00010360614878511494
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.1,
+      "sensitivity": 0,
+      "peak": 0.24674701690673828,
+      "peak_error": 1.4365650713443756e-05,
+      "relative_rms_error": 5.585198766433856e-05
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.1,
+      "sensitivity": 50,
+      "peak": 0.0834079310297966,
+      "peak_error": 6.275251507759094e-06,
+      "relative_rms_error": 3.930288085118138e-05
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.1,
+      "sensitivity": 100,
+      "peak": 0.04276090860366821,
+      "peak_error": 2.682209014892578e-07,
+      "relative_rms_error": 7.422884222542018e-06
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.5,
+      "sensitivity": 0,
+      "peak": 1.0990419387817383,
+      "peak_error": 0.00021648406982421875,
+      "relative_rms_error": 0.00012072224920816128
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.5,
+      "sensitivity": 50,
+      "peak": 0.21380627155303955,
+      "peak_error": 1.4901161193847656e-06,
+      "relative_rms_error": 6.998430772138788e-06
+    },
+    {
+      "hz": 110,
+      "amplitude": 0.5,
+      "sensitivity": 100,
+      "peak": 0.2138310670852661,
+      "peak_error": 1.6689300537109375e-06,
+      "relative_rms_error": 7.412730885672439e-06
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.001,
+      "sensitivity": 0,
+      "peak": 0.0029661469161510468,
+      "peak_error": 9.314680937677622e-08,
+      "relative_rms_error": 2.1378690821134483e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.001,
+      "sensitivity": 50,
+      "peak": 0.002984181046485901,
+      "peak_error": 3.4441472962498665e-07,
+      "relative_rms_error": 6.023328069921166e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.001,
+      "sensitivity": 100,
+      "peak": 0.0029923394322395325,
+      "peak_error": 5.122565198689699e-07,
+      "relative_rms_error": 0.0001202674393677354
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.01,
+      "sensitivity": 0,
+      "peak": 0.02969248592853546,
+      "peak_error": 1.5441328287124634e-06,
+      "relative_rms_error": 2.516631116516594e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.01,
+      "sensitivity": 50,
+      "peak": 0.029238060116767883,
+      "peak_error": 2.5980407372117043e-06,
+      "relative_rms_error": 8.790566561046737e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.01,
+      "sensitivity": 100,
+      "peak": 0.025190025568008423,
+      "peak_error": 8.959323167800903e-07,
+      "relative_rms_error": 4.8832550318299485e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.1,
+      "sensitivity": 0,
+      "peak": 0.2974371910095215,
+      "peak_error": 2.0563602447509766e-05,
+      "relative_rms_error": 4.141643879928663e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.1,
+      "sensitivity": 50,
+      "peak": 0.16404235363006592,
+      "peak_error": 2.2761523723602295e-06,
+      "relative_rms_error": 1.897453408027542e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.1,
+      "sensitivity": 100,
+      "peak": 0.06007271260023117,
+      "peak_error": 2.086162567138672e-07,
+      "relative_rms_error": 4.082954318259559e-06
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.5,
+      "sensitivity": 0,
+      "peak": 1.4788751602172852,
+      "peak_error": 0.0001163482666015625,
+      "relative_rms_error": 4.6677770091186715e-05
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.5,
+      "sensitivity": 50,
+      "peak": 0.3003638684749603,
+      "peak_error": 1.1622905731201172e-06,
+      "relative_rms_error": 4.0712981042201475e-06
+    },
+    {
+      "hz": 196,
+      "amplitude": 0.5,
+      "sensitivity": 100,
+      "peak": 0.3003638684749603,
+      "peak_error": 1.430511474609375e-06,
+      "relative_rms_error": 4.2389006465465135e-06
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.001,
+      "sensitivity": 0,
+      "peak": 0.010987315326929092,
+      "peak_error": 4.0227314457297325e-07,
+      "relative_rms_error": 1.2973456552478172e-05
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.001,
+      "sensitivity": 50,
+      "peak": 0.010935049504041672,
+      "peak_error": 1.79588096216321e-06,
+      "relative_rms_error": 9.476974099930834e-05
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.001,
+      "sensitivity": 100,
+      "peak": 0.009589441120624542,
+      "peak_error": 1.5722471289336681e-06,
+      "relative_rms_error": 0.00010743658418530457
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.01,
+      "sensitivity": 0,
+      "peak": 0.11002611368894577,
+      "peak_error": 1.2367963790893555e-05,
+      "relative_rms_error": 3.922576330231822e-05
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.01,
+      "sensitivity": 50,
+      "peak": 0.07094135880470276,
+      "peak_error": 3.0078459531068802e-05,
+      "relative_rms_error": 0.00016816675089607172
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.01,
+      "sensitivity": 100,
+      "peak": 0.033314742147922516,
+      "peak_error": 1.9371509552001953e-06,
+      "relative_rms_error": 4.265729779576578e-05
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.1,
+      "sensitivity": 0,
+      "peak": 1.0483874082565308,
+      "peak_error": 0.0005245208740234375,
+      "relative_rms_error": 0.0002720134304160147
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.1,
+      "sensitivity": 50,
+      "peak": 0.22282826900482178,
+      "peak_error": 2.99699604511261e-05,
+      "relative_rms_error": 7.624249111742566e-05
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.1,
+      "sensitivity": 100,
+      "peak": 0.1434408575296402,
+      "peak_error": 2.980232238769531e-07,
+      "relative_rms_error": 1.7780130766758497e-06
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.5,
+      "sensitivity": 0,
+      "peak": 3.9567763805389404,
+      "peak_error": 0.0005950927734375,
+      "relative_rms_error": 9.059760482541763e-05
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.5,
+      "sensitivity": 50,
+      "peak": 0.7172050476074219,
+      "peak_error": 1.4603137969970703e-06,
+      "relative_rms_error": 1.679038351061466e-06
+    },
+    {
+      "hz": 440,
+      "amplitude": 0.5,
+      "sensitivity": 100,
+      "peak": 0.7172050476074219,
+      "peak_error": 9.5367431640625e-07,
+      "relative_rms_error": 1.6335824823022568e-06
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.001,
+      "sensitivity": 0,
+      "peak": 0.003354146145284176,
+      "peak_error": 4.100729711353779e-08,
+      "relative_rms_error": 9.217684714818969e-06
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.001,
+      "sensitivity": 50,
+      "peak": 0.003363909898325801,
+      "peak_error": 1.9010622054338455e-07,
+      "relative_rms_error": 2.4494026218705348e-05
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.001,
+      "sensitivity": 100,
+      "peak": 0.0034168537240475416,
+      "peak_error": 4.3585896492004395e-07,
+      "relative_rms_error": 6.306099781308557e-05
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.01,
+      "sensitivity": 0,
+      "peak": 0.03346700966358185,
+      "peak_error": 8.228234946727753e-07,
+      "relative_rms_error": 1.154679763034958e-05
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.01,
+      "sensitivity": 50,
+      "peak": 0.038774482905864716,
+      "peak_error": 4.945322871208191e-06,
+      "relative_rms_error": 5.9103878795742515e-05
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.01,
+      "sensitivity": 100,
+      "peak": 0.08662211894989014,
+      "peak_error": 2.199411392211914e-05,
+      "relative_rms_error": 0.00016104267213768556
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.1,
+      "sensitivity": 0,
+      "peak": 0.33678656816482544,
+      "peak_error": 4.410557448863983e-05,
+      "relative_rms_error": 5.595332841946399e-05
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.1,
+      "sensitivity": 50,
+      "peak": 0.25737327337265015,
+      "peak_error": 2.1144747734069824e-05,
+      "relative_rms_error": 4.9370183647253224e-05
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.1,
+      "sensitivity": 100,
+      "peak": 0.17976869642734528,
+      "peak_error": 2.980232238769531e-07,
+      "relative_rms_error": 1.3118283109153765e-06
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.5,
+      "sensitivity": 0,
+      "peak": 1.8182997703552246,
+      "peak_error": 0.00018310919404029846,
+      "relative_rms_error": 3.6522055239735055e-05
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.5,
+      "sensitivity": 50,
+      "peak": 0.89884352684021,
+      "peak_error": 1.4901161193847656e-06,
+      "relative_rms_error": 1.289879605883407e-06
+    },
+    {
+      "hz": 659.255,
+      "amplitude": 0.5,
+      "sensitivity": 100,
+      "peak": 0.89884352684021,
+      "peak_error": 1.430511474609375e-06,
+      "relative_rms_error": 1.298919554237131e-06
+    }
+  ],
+  "extremes": [
+    {
+      "sensitivity": 0,
+      "resonance": 0,
+      "peak": 6.42263126373291
+    },
+    {
+      "sensitivity": 0,
+      "resonance": 100,
+      "peak": 2.6872897148132324
+    },
+    {
+      "sensitivity": 100,
+      "resonance": 0,
+      "peak": 5.835972785949707
+    },
+    {
+      "sensitivity": 100,
+      "resonance": 100,
+      "peak": 2.775667905807495
+    }
+  ],
+  "non_wah_modes_sample_exact": true,
+  "bypass_and_zero_mix_sample_exact": true,
+  "stereo_no_crosstalk": true,
+  "mode_switches_and_nonfinite_recovery": true,
+  "source_sha256": "4abc380d99758e98715553824cc810c7073853d11fde5e71e0b164b1f236218e",
+  "limitation": "Synthetic signals and host arithmetic; no subjective quality or MCU deadline claim"
+}

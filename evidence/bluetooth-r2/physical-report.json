@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-22",
+  "source": "Owner report in development conversation",
+  "reported_result": "Bluetooth works",
+  "revision_test_supplied": "NAMLNK23 r2 stereo playback repair",
+  "elf_sha256": "1cf2b1a8146879c2e2d25aab22de3e144ab24ba82e6d20cb5bbdce2d45bf32f7",
+  "scope": "One owner/unit; not a measured stereo/frequency/latency/USB-duplex test",
+  "fresh_device_readback_this_turn": false,
+  "presets_in_test": "Private; not distributed",
+  "public_starter_variant_listening_test": false
+}

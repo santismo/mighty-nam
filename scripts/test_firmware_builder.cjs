@@ -21,7 +21,7 @@ test('release contains original code, hooks, licensed starters and global erase'
   assert.equal(recipe.presets, 'riffsmith-mit-3'); assert.equal(recipe.captures_included, true); assert.equal(recipe.operations.filter(x => x.kind === 'preset-bank').length, 1);
   assert.ok(!JSON.stringify(recipe).includes('original":'));
   assert.ok(recipe.operations.every(x => !('original' in x)));
-  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), 25468);
+  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), 25556);
 });
 test('wrong size and renamed/corrupted stock fail before building', async () => {
   await assert.rejects(core.inspect(new Uint8Array(100)), /Unsupported file size/);
@@ -49,7 +49,7 @@ test('exact local stock produces the independently staged image, without editing
   const before = await core.sha(stock);
   const built = await core.build(stock, recipe);
   assert.equal(await core.sha(stock), before);
-  assert.equal(await core.sha(built.bytes), 'b1604529fa8792015d51126175ab140f2f8b9dae80cd83b67fe8d638bc46a0f5');
+  assert.equal(await core.sha(built.bytes), 'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
   assert.equal(built.report.presets,'riffsmith-mit-3'); assert.equal(built.report.flashed,false);
   assert.equal(built.report.hardware_verified,false);
   for(const license of Object.values(built.report.license_notices)) assert.match(license,/Permission is hereby granted/);

@@ -1,0 +1,33 @@
+{
+  "status": "PASS_OFFLINE_LOOPER_CONTROLS",
+  "occupancy_cases": 1792,
+  "control_state_bytes": 60,
+  "audio_buffer_allocated": false,
+  "device_access": false,
+  "host_audio_access": false,
+  "firmware_integrated": false,
+  "physical_buttons_verified": false,
+  "source_sha256": "ce23714a11dc00c2d8c03946d5f0bd26779fbd228594de1c4c0c34beb1cc4b61",
+  "test_sha256": "2e51d1177335754e21833b50e759d0fc0ace16ffa506e1aa04a05a4f778eba07",
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "tests": [
+    "record threshold and finish",
+    "exit to presets while loop plays",
+    "return to looper, pause and resume",
+    "stop/exit with double POWER in either view",
+    "reenter stopped loop and resume",
+    "preset reversal and occupied-color skipping",
+    "debounce and hold release suppression",
+    "long POWER shutdown request",
+    "boot-held buttons ignored until released",
+    "32-bit clock wrap",
+    "capacity exhaustion and zero capacity",
+    "first POWER tap delayed until double window expires"
+  ],
+  "stock_payload_sha256": "e971240a1e333003804cfd154e5ee053026254bbf09b11499e8b4968d3600752",
+  "raw_GPIO_hook_verified": false,
+  "loop_memory_region_verified": false
+}

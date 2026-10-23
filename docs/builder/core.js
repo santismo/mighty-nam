@@ -99,7 +99,7 @@
     need(r.schema === 'mighty-nam-local-builder-1' && r.identity === 'NAMLNK23' && r.target === 'NUX-MP3', 'Unsupported builder recipe.');
     need(r.input.sha256 === INPUT_SHA && r.input.bytes === INPUT_BYTES && r.input.payload_sha256 === PAYLOAD_SHA, 'Recipe input does not match this builder.');
     need(r.presets === 'riffsmith-mit-3' && r.captures_included === true && r.starter_presets?.length === 3, 'Only the licensed starter bank is allowed.');
-    need(r.output.name === 'mighty-nam-NAMLNK23-experimental.bin' && /^[a-f0-9]{64}$/.test(r.output.sha256), 'Invalid output specification.');
+    need(r.output.name === 'mighty-nam-NAMLNK23-r2-experimental.bin' && /^[a-f0-9]{64}$/.test(r.output.sha256), 'Invalid output specification.');
     need(Array.isArray(r.operations) && r.operations.length === CODE.size + HOOKS.size + 2, 'Incomplete builder recipe.');
     const parsed = parse(original), payload = parsed.payload.slice();
     const spans = [], seen = new Set();

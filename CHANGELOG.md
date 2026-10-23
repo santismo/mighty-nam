@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-22 — builder 0.3.1 / NAMLNK23 r2
+
+- Restore stereo Bluetooth phone music separately from guitar/NAM and USB recording.
+- Regenerate the local builder with the same three licensed RiffSmith starters. Firmware identity stays NAMLNK23; Mac 0.5.4 and phone 0.8.3 remain compatible.
+- Record owner-confirmed Bluetooth playback, with broader hardware validation still pending.
+- Keep DaisySP wah and new button/looper work as offline research, outside the downloadable builder.
+
 ## Mac 0.4.1 / phone 0.7.1 — playback and master volume
 
 Replace manual Listen/Mute controls with a live per-preset master volume. Verified capture loads and tuner return resume playback; failed transfers and faults remain guarded. Saved presets play after startup. Fix bounded HTTPS model-download redirects without forwarding API authorization to external storage; keep the browser restricted to actual A2 Lite / 48 kHz payloads. No firmware update is required for these controls. See [validation notes](docs/playback-volume.md).

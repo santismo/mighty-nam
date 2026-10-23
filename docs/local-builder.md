@@ -1,6 +1,6 @@
 # Local firmware builder
 
-Builder **0.3.0** creates experimental **NAMLNK23** from **`MP3_OR_V3.0.5.bin`**, the publicly downloadable **NUX Mighty Plug Pro V3.0.5 Original** file. This exact input is required; the builder verifies its checksum. The public starter variant has offline validation; NAMLNK23 core has limited physical validation documented on the [Status page](status.html). These packaging tests do not access a device or play audio.
+Builder **0.3.1** creates experimental **NAMLNK23** from **`MP3_OR_V3.0.5.bin`**, the publicly downloadable **NUX Mighty Plug Pro V3.0.5 Original** file. This exact input is required; the builder verifies its checksum. The public starter variant has offline validation; NAMLNK23 core has limited physical validation documented on the [Status page](status.html). These packaging tests do not access a device or play audio.
 
 ## Obtain the input
 
@@ -37,7 +37,7 @@ These are bounded static and CPU checks, not exhaustive indirect-reference or ha
 Use Python with Unicorn 2.1.4, Capstone 5, pyelftools and ziglang 0.13, plus Apple clang. No connected plug is required. Keep user stock files, captures and generated firmware outside the repository.
 
 ```sh
-python firmware/tools/build_public_v3.py /path/to/local-build
+python firmware/tools/build_public_v3.py /path/to/local-build --bluetooth-audio
 ```
 
 Decode the user-supplied container with `firmware/tools/nux_container_lab.py`'s `Container(...).payload`. With an independently built NAM reference library and your own compatible A2 Lite capture, run:
@@ -47,14 +47,15 @@ python /path/to/local-build/generated/research/test_usb_nam.py PAYLOAD ELF MODEL
 python /path/to/local-build/generated/research/test_preset_storage_contract.py PAYLOAD ELF --output /path/to/local-build/storage.json
 python firmware/ports/v3/test_runtime.py /path/to/local-build/generated PAYLOAD ELF MODEL REFERENCE_LIBRARY /path/to/local-build/runtime.json
 python /path/to/local-build/generated/research/test_pitch_chain.py PAYLOAD ELF MODEL REFERENCE_LIBRARY /path/to/local-build/chain.json
-python firmware/ports/v3/test_staging.py STOCK_BIN /path/to/local-build /path/to/local-build/staging-tests.json
-python firmware/tools/stage_public_v3.py STOCK_BIN /path/to/local-build/build /path/to/local-build /path/to/local-staged
 python scripts/build_starter_presets.py /path/to/local-build PAYLOAD REFERENCE_LIBRARY /path/to/local-starters
+python scripts/test_bluetooth_audio.py /path/to/local-build PAYLOAD BASELINE_ELF /path/to/local-starters/starter-bank.bin /path/to/local-starters/starter-bank.json /path/to/local-build/bluetooth.json
+python scripts/test_bluetooth_staging.py STOCK_BIN /path/to/local-build /path/to/local-build /path/to/local-build/staging-tests.json
+python firmware/tools/stage_public_v3.py STOCK_BIN /path/to/local-build/build /path/to/local-build /path/to/local-staged
 python scripts/package_firmware_builder.py STOCK_BIN /path/to/local-build/build /path/to/local-build /path/to/local-kit --starter-bank /path/to/local-starters/starter-bank.bin --starter-report /path/to/local-starters/starter-bank.json
 MIGHTY_NAM_STOCK_FILE=STOCK_BIN node --test scripts/test_firmware_builder.cjs
 ```
 
-`ELF` is `/path/to/local-build/build/nam-link-offline.elf`. Staging fails on stale source, generated source, linker, ELF or test report hashes. The kit exporter independently reconstructs the staged baseline plus a strictly validated public starter bank using only allowed operations and requires byte equality. Source hashes, model-slot CRCs, record commits/padding, emulator reports and all three source licenses are checked. The three populated colors run NAM only; remaining colors are erased. The ZIP uses a curated file allowlist and fixed metadata.
+`ELF` is `/path/to/local-build/build/nam-link-offline.elf`. `BASELINE_ELF` comes from a separate `build_public_v3.py` invocation without `--bluetooth-audio`, to reproduce the previous missing-music path. Staging fails on stale source, generated source, linker, ELF or test report hashes. The kit exporter independently reconstructs the staged baseline plus a strictly validated public starter bank using only allowed operations and requires byte equality. Source hashes, model-slot CRCs, record commits/padding, emulator reports and all three source licenses are checked. The three populated colors run NAM only; remaining colors are erased. The ZIP uses a curated file allowlist and fixed metadata.
 
 ## Controller compatibility
 
@@ -65,3 +66,7 @@ NAMLNK23 capability allowlists and protocol fixtures are updated in both control
 Nothing is automatically installed. Flashing is a separate, explicitly chosen operation. Installation replaces all seven onboard NAM slots and global settings. Green, Orange and Red contain RiffSmith Clean, Bass Clean and Distorted; four slots remain empty. Each uses the 48 kHz A2 Lite component with its included cabinet. Save any additional captures to a color after installation. Saved playback intent and global buffer settings are retained on subsequent power cycles.
 
 NAMLNK23 has been installed on the development unit with private presets and confirmed guitar output. The new public starter bank has not been physically tested. An intact reachable updater is required to restore stock; full bootloader backup and recovery from arbitrary damage are not established. Local building reduces bundled third-party material but does not establish legal clearance or grant redistribution rights. See [LEGAL.md](../LEGAL.md) and [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
+
+## Bluetooth revision r2
+
+Builder 0.3.1 uses the separately gated `--bluetooth-audio` build. `bluetooth.json` must match the exact ELF and pass stereo routing, 8/16/32 staging, guitar equivalence and recording-isolation checks before packaging. See [Bluetooth evidence](bluetooth-audio.md). It does not include the offline DaisySP wah or looper gesture prototypes.

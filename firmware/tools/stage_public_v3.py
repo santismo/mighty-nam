@@ -29,6 +29,12 @@ def stage(stock_file,build_dir,reports,out):
   if name=='arm':need(all(r[k] for k in ['stereo_USB_PCM_ring_roundtrip','NAM_controls_both_transports','seven_presets_cold_warm_button','removed_NAM_no_callback']) and r['neutral_NAM_reference_peak_error']<2e-5,'ARM acceptance')
   if name=='runtime':need(len(r['cases'])==6 and r['guard_failures']==0 and r['global_buffers_restarted']==[32,16,8] and r['V3_SysEx_F7_inclusive_and_fragmentation'],'Runtime acceptance')
   if name=='chain':need(r['bypassed_pitch_callbacks']==0 and len(r['cases'])==3,'Pitch chain acceptance')
+ if '-DMPP_BLUETOOTH_AUDIO' in meta['compiler_flags']:
+  path=reports/'bluetooth.json';r=json.loads(path.read_text())
+  need(r['status']=='PASS_NAMLNK23_R2_BLUETOOTH_OFFLINE' and r['elf_sha256']==meta['elf_sha256'] and r['device_access'] is False,'Missing/stale/failed Bluetooth evidence')
+  need(all(r[k] for k in ['baseline_music_discard_reproduced','guitar_samples_exact','record_feed_excludes_music','usb_initialized_stereo_music','nonfinite_and_sum_ceiling']),'Bluetooth acceptance')
+  need([x['samples'] for x in r['buffer_cases']]==[8,16,32] and len(r['media_cases'])>=5 and len(r['frequency_cases'])>=6,'Incomplete stereo regression')
+  evidence['bluetooth']=sha(path.read_bytes())
  stock=stock_file.read_bytes();need(sha(stock)==INPUT_SHA,'Exact public MP3_OR_V3.0.5.bin required; CT and other versions rejected')
  container=Container(stock);need(container.data[7]==2 and container.version=='20240812','Public container format')
  sys.path.insert(0,str(generated/'research'))

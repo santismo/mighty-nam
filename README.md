@@ -12,9 +12,11 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 | --- | --- |
 | Mac 0.5.4 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23 support. Not notarized. |
 | Phone 0.8.3 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering. |
-| Local builder 0.3.0 / NAMLNK23 | Requires `MP3_OR_V3.0.5.bin`, the exact public NUX Mighty Plug Pro V3.0.5 Original firmware, to create a local image. Includes three MIT-licensed RiffSmith A2 Lite starter presets. Install with the official NUX updater. [Instructions](docs/local-builder.md). |
+| Local builder 0.3.1 / NAMLNK23 r2 | Requires `MP3_OR_V3.0.5.bin`, the exact public NUX Mighty Plug Pro V3.0.5 Original firmware, to create a local image. Includes the stereo Bluetooth playback fix and three MIT-licensed RiffSmith A2 Lite starter presets. Install with the official NUX updater. [Instructions](docs/local-builder.md). |
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
+
+The development-unit owner reports Bluetooth music playback working with NAMLNK23 r2. Mac 0.5.4 and phone 0.8.3 remain compatible; no controller update is required. [Bluetooth evidence and scope](docs/bluetooth-audio.md). The new DaisySP wah and looper gestures are offline experiments, excluded from the public builder.
 
 ## What you can do
 
@@ -38,7 +40,7 @@ On Mac, install the preview into Applications and connect the plug over a data-c
 
 Installation replaces all onboard presets and global settings. Preserve anything you need first. The public builder does not incorporate the maintainer's private captures. Installing the Mac app alone preserves existing libraries and does not flash the plug.
 
-The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.3.0-preview.1/mighty-nam-local-builder-0.3.0.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
+The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.3.1-preview.1/mighty-nam-local-builder-0.3.1.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
 
 ## Source, licenses and privacy
 

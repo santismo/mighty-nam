@@ -1,0 +1,19 @@
+{
+  "status": "PASS_PUBLIC_BUILDER_R2",
+  "tests": 24,
+  "passed": 22,
+  "failed": 0,
+  "skipped": [
+    "actual ChopTones input (not supplied this run)",
+    "actual legacy V1.5.6 input (not supplied this run)"
+  ],
+  "exact_public_input_tested": true,
+  "byte_equal_independent_stage": true,
+  "input_unchanged": true,
+  "wrong_size_corrupt_recipe_and_checksum_rejected": true,
+  "offline_zip_files": 15,
+  "offline_zip_sha256": "1953db4a26aea166f1aac392a1c58865bd825ef3f80810bbc388eac5bd2c24fc",
+  "output_sha256": "de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698",
+  "device_access": false,
+  "host_audio_access": false
+}

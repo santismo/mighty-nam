@@ -555,6 +555,12 @@ extern "C" void mpp_probe_audio(const int32_t* rx,int32_t* tx){
   ++mpp_link.faults;mpp_link.running=0;
  }
 #endif
+#ifdef MPP_BLUETOOTH_AUDIO
+ // Captured alongside the completed guitar block for next IRQ publication.
+ // This never touches the instrument-only USB record buffer.
+ extern void mpp_bluetooth_capture(const int32_t*);
+ mpp_bluetooth_capture(rx);
+#endif
  uint32_t bits;__builtin_memcpy(&bits,mpp_link_output+7,4);
  mpp_link.last_output_bits=bits;++mpp_link.runs;
 #if defined(MPP_LISTENING) && !defined(MPP_EARLY_OUTPUT) && !defined(MPP_DMA_CURRENT_PROTOTYPE)

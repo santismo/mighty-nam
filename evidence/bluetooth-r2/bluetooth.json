@@ -1,0 +1,124 @@
+{
+  "status": "PASS_NAMLNK23_R2_BLUETOOTH_OFFLINE",
+  "identity": "NAMLNK23",
+  "revision": "r2-bluetooth",
+  "elf_sha256": "1cf2b1a8146879c2e2d25aab22de3e144ab24ba82e6d20cb5bbdce2d45bf32f7",
+  "candidate_payload_sha256": "73a3bf379a4a5d36a65dee5483b8e01055d5734175aed48664ce5a713e8ebe88",
+  "bank_sha256": "c9e6c1297cda6cd512e79f9978d97f859be1267967a7876ce73915a9d8156578",
+  "baseline_music_discard_reproduced": true,
+  "guitar_samples_exact": true,
+  "guitar_chains": [
+    {
+      "color": 0,
+      "model_crc": 1714321768,
+      "peak": 0.0015427246689796448,
+      "faults": 0,
+      "callbacks": 1600
+    },
+    {
+      "color": 1,
+      "model_crc": 3900636889,
+      "peak": 0.002074942458420992,
+      "faults": 0,
+      "callbacks": 1600
+    },
+    {
+      "color": 2,
+      "model_crc": 3777684211,
+      "peak": 0.004719689954072237,
+      "faults": 0,
+      "callbacks": 1600
+    }
+  ],
+  "media_cases": [
+    {
+      "case": "left only",
+      "peak": 0.0365414097905159,
+      "headphone_gain": 0.1827070415019989,
+      "peak_error": 1.4901161207725444e-09
+    },
+    {
+      "case": "right only",
+      "peak": 0.027406057342886925,
+      "headphone_gain": 0.1827070415019989,
+      "peak_error": 1.1175870888446848e-09
+    },
+    {
+      "case": "center music",
+      "peak": 0.02192484401166439,
+      "headphone_gain": 0.1827070415019989,
+      "peak_error": 9.685754767674304e-10
+    },
+    {
+      "case": "opposite polarity",
+      "peak": 0.02192484401166439,
+      "headphone_gain": 0.1827070415019989,
+      "peak_error": 9.685754767674304e-10
+    },
+    {
+      "case": "microphone excluded",
+      "peak": 0.0,
+      "headphone_gain": 0.1827070415019989,
+      "peak_error": 0.0
+    }
+  ],
+  "buffer_cases": [
+    {
+      "samples": 8,
+      "total_callback_blocks": 1,
+      "ordered_stereo": true
+    },
+    {
+      "samples": 16,
+      "total_callback_blocks": 2,
+      "ordered_stereo": true
+    },
+    {
+      "samples": 32,
+      "total_callback_blocks": 4,
+      "ordered_stereo": true
+    }
+  ],
+  "frequency_cases": [
+    {
+      "hz": 80,
+      "peak_error": 2.2493609856677477e-09
+    },
+    {
+      "hz": 440,
+      "peak_error": 2.2493609856677477e-09
+    },
+    {
+      "hz": 1000,
+      "peak_error": 1.4891448976706023e-09
+    },
+    {
+      "hz": 6000,
+      "peak_error": 1.1175870888446848e-09
+    },
+    {
+      "hz": 12000,
+      "peak_error": 1.1175870888446848e-09
+    },
+    {
+      "hz": 18000,
+      "peak_error": 1.1175870888446848e-09
+    }
+  ],
+  "record_feed_excludes_music": true,
+  "usb_initialized_stereo_music": true,
+  "nonfinite_and_sum_ceiling": true,
+  "cold_warm_RAM_fills": [
+    0,
+    165,
+    255
+  ],
+  "device_access": false,
+  "host_audio_access": false,
+  "limitations": [
+    "RX PCM is synthetic; this test does not measure physical Bluetooth transport, analog gain or listening.",
+    "The emulated timer is synthetic; real processing deadlines require a later hardware check.",
+    "Bluetooth uses a flat stereo path; the stock Bluetooth EQ/vocal-cancel feature is not applied.",
+    "Headphone gain follows the stock smoother once per eight-sample block; guitar smoothing is unchanged."
+  ]
+}

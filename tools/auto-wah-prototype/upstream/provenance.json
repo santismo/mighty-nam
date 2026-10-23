@@ -1,0 +1,25 @@
+{
+  "repo": "daisyaudio/DaisySP",
+  "commit": "2c72eaf9eac5fc0dca1919d65d606da907832618",
+  "files": {
+    "Source/Effects/autowah.cpp": {
+      "url": "https://raw.githubusercontent.com/daisyaudio/DaisySP/2c72eaf9eac5fc0dca1919d65d606da907832618/Source/Effects/autowah.cpp",
+      "bytes": 1794,
+      "sha256": "09deca407384cd15b186347c17accbb2f4adb5c98ef26c9e63a48d413c455060"
+    },
+    "Source/Effects/autowah.h": {
+      "url": "https://raw.githubusercontent.com/daisyaudio/DaisySP/2c72eaf9eac5fc0dca1919d65d606da907832618/Source/Effects/autowah.h",
+      "bytes": 1369,
+      "sha256": "e3091e1e18eb0b0aea5033bb267b256131d7494b3fb846888fc894931285f319"
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/daisyaudio/DaisySP/2c72eaf9eac5fc0dca1919d65d606da907832618/LICENSE",
+      "bytes": 3492,
+      "sha256": "ae36576d7394109775a8cc86c31c94f016de256526e86d11ee554ef25d429570"
+    },
+    "README.md": {
+      "url": "https://raw.githubusercontent.com/daisyaudio/DaisySP/2c72eaf9eac5fc0dca1919d65d606da907832618/README.md",
+      "bytes": 4767
+    }
+  }
+}
