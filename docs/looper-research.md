@@ -1,7 +1,10 @@
 # Standalone looper research
 
 Status: **30-second compressed recording/playback and interruptible preset loading pass offline tests with A2 Lite at eight frames; no hardware looper is released**.
-The latest RAM-only prototype uses two candidate device-address buffers. Stock memory permissions, initialization and bounded ownership checks pass; physical ownership and deadlines remain unproven. See [RAM placement and continuous preset recall](#ram-placement-and-continuous-preset-recall).
+The RAM-only prototype uses two candidate device-address buffers. A newer local
+NAMLNK25 diagnostic build adds startup copying, RAM checks and timing reports;
+physical ownership and deadlines remain unproven. See
+[startup and hardware diagnostics](#startup-and-hardware-diagnostics).
 
 ## Requested controls
 
@@ -66,7 +69,9 @@ a capture with interrupts masked during flash reads. Some graph changes also use
 pause/reset path: its playback clock and mixer must survive guitar-graph reloads,
 and flash access must be bounded or made interrupt-friendly. Saving/erasing flash
 while looping needs a separate policy and test; offline button tests do not solve it.
-The new RAM-only overlay below replaces these paths and exercises IRQs during the load itself.
+The RAM-only overlay below replaces these paths and exercises IRQs during the load itself.
+The subsequent diagnostic build integrates those changes into startup, with idle
+saving allowed and flash writes rejected while a loop exists.
 
 ## Memory budget
 
@@ -243,3 +248,59 @@ steps are boot copy/cache handling, a bounded button-command mailbox, and guarde
 hardware RAM/deadline checks. The normal image builder rejects this RAM-only ELF.
 No updater file, app/controller release, hardware access or audio playback is part
 of this prototype.
+
+## Startup and hardware diagnostics
+
+The separate **NAMLNK25 local trial** now copies the loop code from retired amp
+storage after runtime initialization and before audio DMA setup. Its 202-byte
+startup stub, 12,548-byte code section and 1,260-byte state section fit inside
+the previously audited candidate ranges. The ordinary public builder and released
+controllers are unchanged. No prebuilt stock-derived firmware is published.
+
+Startup checks both recording buffers with two address-dependent pattern passes,
+including cache clean/invalidate before readback. The 371,316-byte store can hold
+the existing 30-second mono 24 kHz ADPCM format. The loop starts empty; the normal
+saved guitar preset starts with output enabled. Guard words, an incremental idle
+scan and whole-software-IRQ cycle observations support the subsequent hardware
+trial. Detected loop faults disable the loop path without muting guitar.
+
+Offline results for the exact compiled test image:
+
+- Cold and dirty warm startup pass, including preset persistence and the existing
+  physical PRESET handler. Idle preset saves still work.
+- Code-copy, RAM readback, guard and idle-overwrite negative controls all detect
+  their injected faults while guitar keeps running. Counter wrap, disabled DWT
+  and counter-reset cases exercise the timing rejection rules.
+- NAM-only, NAM + spring and a full stock chain match NAMLNK24 sample for sample
+  across 4,800 compared steady-state samples. USB record samples and stereo
+  Bluetooth output also match; both USB PCM ring directions execute successfully.
+  The idle diagnostic path adds 76 executed instructions in the measured emulator
+  fixture and no guitar buffering. This is not a physical time measurement.
+- The preloaded 30-second loop passes 8,745 playback callbacks with 1,641 IRQs
+  interleaved during foreground work. Preset recalls mask no IRQ instructions;
+  rejecting a save while looping briefly masks 20 instructions in this fixture.
+  Loop samples and 1,617 paused-guitar DMA blocks match the reference exactly.
+- The actual recording hook, threshold waiting, closing/replaying a recording,
+  split-storage boundary, final partial block, stop/rewind/resume and clear rules
+  pass. Writes are rejected while a loop exists; explicit Clear after stopping
+  allows normal saves again.
+
+The command mailbox applies loop actions in the audio IRQ and replies through
+both existing MIDI paths with bounded 55-byte packets. The bundled Mac diagnostic
+client defaults to an explicit status read and contains no audio-stream, mute,
+flash or reset operations. Physical looper gestures, LED feedback and app UI are
+still pending. Current controller releases need a NAMLNK25 identity update before
+their normal editing controls can be used with this trial.
+
+See the [trial procedure and wire layout](../tools/looper-prototype/hardware/README.md),
+[startup evidence](../evidence/looper-prototype/startup-v5.json),
+[audio comparison](../evidence/looper-prototype/audio-v5.json),
+[preset/loop continuity](../evidence/looper-prototype/continuity-v5.json), and
+[compiled layout](../evidence/looper-prototype/startup-build-v5.json).
+
+Physical RAM ownership, cache/DMA interference, startup duration and worst-case
+timing remain unverified. Runtime canary reads may miss external writes hidden
+behind a cache. The emulator neither models those interactions nor establishes a
+real-time deadline. The local trial is prepared to measure them; it is not a claim
+that a 30-second hardware looper is ready for normal use. No device was accessed,
+firmware flashed, plug output muted, or Mac audio setting changed during this work.

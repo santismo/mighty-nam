@@ -1,0 +1,70 @@
+"""Extend the established CPU harness for the new startup area; no physical I/O."""
+import hashlib,struct,sys
+from pathlib import Path
+from elftools.elf.elffile import ELFFile
+from unicorn import UC_HOOK_CODE,UC_HOOK_MEM_WRITE,UC_PROT_ALL
+from unicorn.arm_const import UC_ARM_REG_PC
+from capstone import Cs,CS_ARCH_ARM,CS_MODE_THUMB,CS_MODE_MCLASS
+
+def setup(baseline,payload,output,reference=False):
+    # Identity allowlists only; no weakened state/transport/write assertions.
+    path=output/'harness';path.mkdir(parents=True,exist_ok=True)
+    original=(baseline/'generated/research/test_preset_runtime.py').read_text()
+    changed=original.replace("'NAMLNK24',","'NAMLNK24','NAMLNK25',")
+    assert changed.count("'NAMLNK25'")==3
+    (path/'test_preset_runtime.py').write_text(changed)
+    chain=(baseline/'generated/research/test_link_stock_chain.py').read_text()
+    assert chain.count('  self.u.mem_map(0x20240000,0x80000)')==1
+    chain=chain.replace('  self.u.mem_map(0x20240000,0x80000)', '  if not getattr(self,"loop_first_mapped",False):self.u.mem_map(0x20240000,0x80000)')
+    (path/'test_link_stock_chain.py').write_text(chain)
+    sys.path[:0]=[str(path),str(baseline/'generated/research'),str(baseline/'generated/tools')]
+    from test_usb_nam import UsbMachine,v,preset_fixture,input_block,model_slot
+    from image import build
+    from preset_image import build as original_build
+    base=baseline/'build/nam-link-offline.elf';overlay=output/'build/loop-startup-test.elf'
+    v.configure(payload,True,candidate_bundle=original_build(payload.read_bytes(),base) if reference else build(payload.read_bytes(),base,overlay));v.elf_path=base
+    with overlay.open('rb') as f:
+        e=ELFFile(f);symbols={s.name:s['st_value'] for s in e.get_section_by_name('.symtab').iter_symbols() if s.name}
+        functions=[(s['st_value']&~1,s['st_size']) for s in e.get_section_by_name('.symtab').iter_symbols() if s['st_info']['type']=='STT_FUNC']
+    class Machine(UsbMachine):
+        def __init__(self,*args,**kwargs):
+            self.loop_boot_count=0;self.loop_boot_events=[];self.inject=None
+            super().__init__(*args,**kwargs)
+            if reference:return
+            decoder=Cs(CS_ARCH_ARM,CS_MODE_THUMB|CS_MODE_MCLASS);decoder.skipdata=True
+            for address,length in functions:
+                for ins in decoder.disasm(bytes(self.u.mem_read(address,length)),address):
+                    if ins.mnemonic in ('mrs','msr') and 'primask' in ins.op_str or ins.mnemonic in ('cpsid','cpsie'):
+                        self.mclass_ops[ins.address]=(ins.mnemonic,ins.op_str,ins.size)
+                        self.u.hook_add(UC_HOOK_CODE,self.code,begin=ins.address,end=ins.address)
+        def boot(self,*args,**kwargs):
+            if not reference:
+                if not getattr(self,'loop_first_mapped',False):
+                    self.u.mem_map(0x20240000,0x80000);self.loop_first_mapped=True
+                self.u.mem_protect(0x20314000,0x4000,UC_PROT_ALL)
+            super().boot(*args,**kwargs)
+            if not reference:
+                self.loop_boot_count+=1
+                assert self.diag()[:7]==[0x4c4f5031,1,2,0,0,371316,2],self.diag()
+                assert self.loop_state(3)==0
+        def code(self,u,pc,n,user):
+            if not reference and self.phase=='boot':
+                if pc in [symbols['mpp_loop_boot']&~1,0x9194]:self.loop_boot_events.append(hex(pc))
+                if pc==0x9194:assert self.diag()[2]==2,'Audio setup preceded loop startup'
+            return super().code(u,pc,n,user)
+        def arm_loop(self,name,*args):
+            self.call(symbols[name],list(args));return self.u.reg_read(v.R[0])
+        def diag(self):return list(struct.unpack('<40I',self.u.mem_read(symbols['mpp_loop_diag'],160)))
+        def loop_state(self,key):return self.arm_loop('mpp_loop_state',key)
+        def loop_request(self,op=0,arg=0,channel=0,nonce=73):
+            message=bytes([240,67,88,112,4,2,78,79,1,op,arg,nonce&127,nonce>>7,247])
+            rows=self.ingress([message],channel);assert len(rows)==1 and rows[0][1]==channel,rows
+            reply=rows[0][0];assert len(reply)==55 and reply[:9]==message[:9] and reply[9]==op|64 and reply[10:13]==message[10:13]
+            values=[sum(reply[14+5*i+j]<<(7*j) for j in range(5)) for i in range(8)]
+            return reply[13],values
+        def loop_report(self,channel=0):
+            values=[]
+            for arg in range(5):
+                error,words=self.loop_request(0,arg,channel);assert not error;values+=words
+            return values
+    return Machine,v,symbols,preset_fixture,input_block,model_slot

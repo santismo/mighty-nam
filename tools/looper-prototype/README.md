@@ -1,7 +1,10 @@
 # Looper prototypes
 
 See [controls, compressed transport, tests and RAM findings](../../docs/looper-research.md).
-Nothing here is integrated into NAMLNK24 or the public builder. There is no device access or audio playback.
+Nothing here is integrated into NAMLNK24 or the public builder. The separate
+[NAMLNK25 hardware-test sources](hardware/README.md) add startup integration and
+local diagnostic-image staging. Offline tests never access devices or play audio;
+the explicitly invoked MIDI client is reserved for a later physical trial.
 
 - `test.cpp`: gestures and color selection.
 - `test_audio.cpp`: initial PCM prototype across simulated guitar reloads.

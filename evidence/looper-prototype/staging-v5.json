@@ -1,0 +1,20 @@
+{
+  "status": "PASS_OFFLINE_LOOP_STAGING_GATES",
+  "identity": "NAMLNK25",
+  "elf_sha256": "6865df4055362c887d3be8b8d3c1ca02b7460f774e263ebdaad0fc5e9aa6a854",
+  "rejected_cases": [
+    "missing startup",
+    "stale ELF",
+    "changed payload",
+    "guitar changed",
+    "loop discontinuity",
+    "missing fault coverage"
+  ],
+  "container_bytes": 15009655,
+  "container_headers_preserved": true,
+  "vector_table_and_C_startup_preserved": true,
+  "local_bank_unchanged": true,
+  "device_access": false,
+  "host_audio_access": false,
+  "flashed": false
+}

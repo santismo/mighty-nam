@@ -1,0 +1,105 @@
+{
+  "status": "PASS_OFFLINE_STARTUP_PRESET_LOOP",
+  "candidate_payload_sha256": "aa3aad833929e2001cc1eee7e9ff849320ccc0410b3223f931347c85e76fe062",
+  "startup_copy_used": true,
+  "baseline_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "overlay_sha256": "6865df4055362c887d3be8b8d3c1ca02b7460f774e263ebdaad0fc5e9aa6a854",
+  "store_sha256": "898ba7bfa6d901833273e8c4ab776d07dd3c9dbd4758ca63d538a5893926bb7b",
+  "storage_bytes": 371316,
+  "recorded_samples": 720000,
+  "recorded_rate": 24000,
+  "live_rate": 48000,
+  "callback_frames": 8,
+  "callbacks": 8745,
+  "interleaved_IRQs": 1641,
+  "interrupt_phases": {
+    "mpp_loop_read": 36,
+    "_ZN3mpp4link5crc32EPKhj": 1135,
+    "_ZN3mpp7presets4wordEPKhj": 32,
+    "_ZN3mpp7presets4Bank5validEPKhj": 282,
+    "_ZN3mpp7presetsL4copyEPhPKhj": 18,
+    "_ZN3mpp7presets4Bank12unpack_modelEPKhPh": 2,
+    "_ZN3mpp4linkL2rdEPKh": 12,
+    "_ZN3mpp4linkL10valid_slotEPKh": 9,
+    "_ZN3mpp4linkL4copyEPhPKhj": 19,
+    "_ZNK3mpp4link13ModelReceiver11load_activeERNS_6A2LiteEbPfj": 7,
+    "_ZN3mpp6A2Lite4loadEPKfj": 16,
+    "_ZN3mpp6A2Lite5resetEv": 35,
+    "_ZN12_GLOBAL__N_14copyEPhPKhj": 3,
+    "mpp_bank_query": 1,
+    "_ZN3mpp4link5pack7EPKhjPhj": 1,
+    "_ZN3mpp7presets11valid_modelEPKh": 18,
+    "_ZN3mpp2fx5validEPKh": 1,
+    "_ZNK3mpp6A2Lite17prime_working_setEv": 2,
+    "0x3fffc": 1,
+    "0xa488": 1,
+    "_ZN3mpp7presets4Bank4saveEjPKhS3_S3_S3_jjPhS4_S3_": 3,
+    "_ZN3mpp7presets3putEPhjj": 1,
+    "_ZN3mpp4link13ModelReceiver5resetEv": 6
+  },
+  "masked_foreground_instructions": 20,
+  "recalls": [
+    {
+      "color": 0,
+      "interleaved_irqs": 272,
+      "IRQs_masked": false
+    },
+    {
+      "color": 1,
+      "interleaved_irqs": 173,
+      "IRQs_masked": false
+    },
+    {
+      "color": 2,
+      "interleaved_irqs": 425,
+      "IRQs_masked": false
+    },
+    {
+      "color": 0,
+      "interleaved_irqs": 224,
+      "IRQs_masked": false
+    }
+  ],
+  "recall_masked_instructions": 0,
+  "rejected_save_masked_instructions": 20,
+  "stock_preset_button_selected": 1,
+  "paused_guitar_irqs": 8011,
+  "nonzero_loop_paused_irqs": 7996,
+  "guitar_active_irqs": 734,
+  "max_native_loop_sample_error": 0.0,
+  "peak_output_PCM": 11571233,
+  "paused_guitar_DMA_blocks_checked": 1617,
+  "max_paused_guitar_PCM_error": 0,
+  "AHB_read_calls": 48,
+  "AHB_read_bytes": 377344,
+  "blocked_flash_writes": 3,
+  "loop_state_bytes": 720,
+  "guards_intact": true,
+  "recording_unchanged": true,
+  "flash_mutations_after_overlay": 0,
+  "device_access": false,
+  "audio_device_opened": false,
+  "pause_preserves_queued_DMA": true,
+  "real_preset_save_rejected": true,
+  "limitations": [
+    "Cooperative instruction-boundary preemption, not Cortex-M7 exception/bus/deadline emulation.",
+    "Hardware OCRAM ownership, MPU/cache permissions, AHB stalls and physical performance remain unproven.",
+    "Flash writes rejected while a loop exists; normal idle saving supported. No overdub or power persistence.",
+    "Real startup copy is installed; physical looper button mapping is not installed."
+  ],
+  "actual_recording_hook": {
+    "callbacks": 120,
+    "recorded_samples": 476,
+    "encoded_bytes_match_native": true,
+    "threshold_waiting_callbacks": 16,
+    "closed_loop_playback_callbacks": 80,
+    "guards_intact": true
+  },
+  "stop_resume_clear_controls": true,
+  "timing_buckets_exercised": {
+    "recording": 3000,
+    "playing": 3000,
+    "inactive": 3000
+  },
+  "normal_image_builder_rejects_overlay": true
+}
