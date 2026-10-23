@@ -26,13 +26,16 @@ press; the user's exact hardware gesture remains to be checked.
 
 ## Controls
 
-Phone controller **0.8.7 → Looper** provides Arm, Finish/Pause/Play, Overdub/Finish
+Phone controller **0.8.8 → Looper** provides Arm, Finish/Pause/Play, Overdub/Finish
 layer, Stop, Clear, threshold (−60 to −12 dBFS), loop level (0–100%), length and
 hardware control mode. Opening or closing the panel does not stop the loop or
 change guitar output. Preset colors remain selectable while looping or layering.
 Mac **0.5.8 → Looper** provides the same transport/settings. Close its panel to
 select another preset; closing does not stop or mute the loop. Both controllers
 show the recent raw guitar peak directly on the threshold slider on NAMLNK27.
+Controller 0.8.8 keeps meter polling visually steady and displays the current
+physical button mode plus Forward/Reverse preset order. The mode button names
+the mode it will switch to.
 The white marker selects the threshold; the bar is blue below it and green when
 it is reached. The meter remains visible before arming and uses a short peak
 decay so plucked notes are readable. Older firmware cannot supply this reading.

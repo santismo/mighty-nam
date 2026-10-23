@@ -11,7 +11,7 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 | Component | Status |
 | --- | --- |
 | Mac 0.5.8 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23–27 support, both wah choices on 24–27, and a Looper panel on 26/27 (live threshold meter on 27). Not notarized. |
-| Phone 0.8.7 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering and Looper controls with a live threshold meter on NAMLNK27. |
+| Phone 0.8.8 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering and Looper controls with a live threshold meter on NAMLNK27. |
 | Local builder 0.3.1 / NAMLNK23 r2 | Requires `MP3_OR_V3.0.5.bin`, the exact public NUX Mighty Plug Pro V3.0.5 Original firmware, to create a local image. Includes the stereo Bluetooth playback fix and three MIT-licensed RiffSmith A2 Lite starter presets. Install with the official NUX updater. [Instructions](docs/local-builder.md). |
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).

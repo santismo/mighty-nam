@@ -1,0 +1,22 @@
+{
+  "status": "PASS_OFFLINE_CONTROLLER_088",
+  "controller": "0.8.8",
+  "firmware_unchanged": "NAMLNK27",
+  "full_suite_tests": 145,
+  "full_suite_failures": 0,
+  "final_targeted_tests": 12,
+  "new_close_reopen_case_passed": true,
+  "checks": [
+    "background meter reads leave page and transport enabled",
+    "transport waits for current read and sends once",
+    "queued tap canceled on disconnect or close",
+    "preset edits and coalesced sliders wait for current meter read",
+    "reverse flag decoded from firmware",
+    "browser arm, finish, preset change and mode switch while polling",
+    "no browser warnings or errors"
+  ],
+  "physical_device_access": false,
+  "host_audio_access": false,
+  "flashed": false,
+  "auto_mute_sent": false
+}
