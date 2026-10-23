@@ -1,0 +1,46 @@
+{
+  "status": "PASS_INDEPENDENT_CODEC_AND_FILTER_CHECKS",
+  "cases": [
+    {
+      "case": "codec",
+      "samples": 131071,
+      "independent_encoded_bytes_match": true,
+      "SNR_dB": 16.449936974473808,
+      "peak_error_PCM16": 36512,
+      "wrap_step_PCM16": 10967
+    },
+    {
+      "case": "record48",
+      "samples": 1440000,
+      "independent_encoded_bytes_match": true,
+      "SNR_dB": 42.75641533344154,
+      "peak_error_PCM16": 913,
+      "wrap_step_PCM16": 426
+    },
+    {
+      "case": "record24",
+      "samples": 720000,
+      "independent_encoded_bytes_match": true,
+      "SNR_dB": 28.019838213649532,
+      "peak_error_PCM16": 1665,
+      "wrap_step_PCM16": 213
+    }
+  ],
+  "mono": true,
+  "format": "internal IMA4, 256 samples + 4 byte state per block",
+  "filter": {
+    "taps": 63,
+    "cutoff_Hz": 9000,
+    "passband_through_6000_Hz_min_dB": -0.001004188591663626,
+    "stopband_from_12000_Hz_max_dB": -75.27097263102864,
+    "recorded_loop_path_group_delay_frames_48k": 62,
+    "live_guitar_added_buffer_frames": 0
+  },
+  "limitations": [
+    "No listening or arbitrary-capture perceptual validation.",
+    "IMA is lossy; wrap seam is not automatically crossfaded.",
+    "Mono recording folds stereo effects down at the proposed integration point.",
+    "Filter delay affects recorded loop only, not live guitar."
+  ],
+  "audio_device_opened": false
+}

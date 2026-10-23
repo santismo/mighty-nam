@@ -1,0 +1,282 @@
+{
+  "status": "PASS_STOCK_MPU_AND_C_RUNTIME_CONTRACT",
+  "stock_sha256": "e971240a1e333003804cfd154e5ee053026254bbf09b11499e8b4968d3600752",
+  "MPU_routine": "0x73e0",
+  "regions": {
+    "0": {
+      "base": 0,
+      "attributes": 1048639,
+      "bytes": 4294967296,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 0,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    },
+    "1": {
+      "base": 2147483648,
+      "attributes": 50528313,
+      "bytes": 536870912,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 0,
+      "shareable": false,
+      "cacheable": true,
+      "bufferable": true
+    },
+    "2": {
+      "base": 1610612736,
+      "attributes": 51380281,
+      "bytes": 536870912,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    },
+    "3": {
+      "base": 0,
+      "attributes": 51380283,
+      "bytes": 1073741824,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    },
+    "4": {
+      "base": 0,
+      "attributes": 50528291,
+      "bytes": 262144,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 0,
+      "shareable": false,
+      "cacheable": true,
+      "bufferable": true
+    },
+    "5": {
+      "base": 536870912,
+      "attributes": 50528291,
+      "bytes": 262144,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 0,
+      "shareable": false,
+      "cacheable": true,
+      "bufferable": true
+    },
+    "6": {
+      "base": 538968064,
+      "attributes": 50528295,
+      "bytes": 1048576,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 0,
+      "shareable": false,
+      "cacheable": true,
+      "bufferable": true
+    },
+    "7": {
+      "base": 540016640,
+      "attributes": 50528293,
+      "bytes": 524288,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 0,
+      "shareable": false,
+      "cacheable": true,
+      "bufferable": true
+    },
+    "11": {
+      "base": 1073741824,
+      "attributes": 51380271,
+      "bytes": 16777216,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    },
+    "12": {
+      "base": 1090519040,
+      "attributes": 51380265,
+      "bytes": 2097152,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    },
+    "13": {
+      "base": 1094713344,
+      "attributes": 51380263,
+      "bytes": 1048576,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    },
+    "14": {
+      "base": 1098907648,
+      "attributes": 51380263,
+      "bytes": 1048576,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    },
+    "15": {
+      "base": 1107296256,
+      "attributes": 51380263,
+      "bytes": 1048576,
+      "enabled": true,
+      "subregions_disabled": 0,
+      "executable": true,
+      "AP": 3,
+      "TEX": 2,
+      "shareable": false,
+      "cacheable": false,
+      "bufferable": false
+    }
+  },
+  "checks": [
+    {
+      "name": "store1",
+      "start": "0x202a0020",
+      "end": "0x202e2020",
+      "highest_priority_regions": [
+        6
+      ],
+      "required_access_allowed": true
+    },
+    {
+      "name": "store2",
+      "start": "0x2031c020",
+      "end": "0x20334a94",
+      "highest_priority_regions": [
+        7
+      ],
+      "required_access_allowed": true
+    },
+    {
+      "name": "code",
+      "start": "0x20314020",
+      "end": "0x20317fe0",
+      "highest_priority_regions": [
+        7
+      ],
+      "required_access_allowed": true
+    },
+    {
+      "name": "state",
+      "start": "0x20318020",
+      "end": "0x20319fe0",
+      "highest_priority_regions": [
+        7
+      ],
+      "required_access_allowed": true
+    },
+    {
+      "name": "preset AHB read",
+      "start": "0x30384000",
+      "end": "0x303a0000",
+      "highest_priority_regions": [
+        3
+      ],
+      "required_access_allowed": true
+    }
+  ],
+  "instruction_words_not_pointers": [
+    {
+      "at": "0xf828",
+      "word": "0x202bf880",
+      "instruction": "strb.w r2, [r0, #0x2b]"
+    },
+    {
+      "at": "0xf858",
+      "word": "0x2031f880",
+      "instruction": "strb.w r2, [r0, #0x31]"
+    },
+    {
+      "at": "0x13db4",
+      "word": "0x202cf881",
+      "instruction": "strb.w r2, [r1, #0x2c]"
+    },
+    {
+      "at": "0x13e80",
+      "word": "0x202cf881",
+      "instruction": "strb.w r2, [r1, #0x2c]"
+    }
+  ],
+  "compressed_initializer_lead": {
+    "address": "0x23a7c",
+    "reads": [
+      {
+        "pc": "0x20fa4",
+        "address": "0x23a7c",
+        "bytes": 1
+      },
+      {
+        "pc": "0x20fa4",
+        "address": "0x23a7d",
+        "bytes": 1
+      },
+      {
+        "pc": "0x20fa4",
+        "address": "0x23a7e",
+        "bytes": 1
+      },
+      {
+        "pc": "0x20ed6",
+        "address": "0x23a7f",
+        "bytes": 1
+      }
+    ],
+    "initialized_DTCM_sha256": "ef63d9923157937962ff44d67f94e59c047a6078abd0972c8ebd7014c9b0e921"
+  },
+  "stock_startup_clears_overlay": true,
+  "stock_startup_preserves_recording_buffers": true,
+  "physical_RAM_safe_proven": false,
+  "device_access": false,
+  "audio_device_opened": false,
+  "limitations": [
+    "Registers are modeled; actual MPU state/cache coherency and instruction fetch remain untested.",
+    "Fixed OCRAM ranges avoid FlexRAM/ECC aliases; this does not prove no DMA or other core owns them.",
+    "Boot must initialize transport and copy loop code after the stock clear; RAM is not persistent loop storage.",
+    "No exhaustive computed-pointer or whole-program ownership proof."
+  ]
+}

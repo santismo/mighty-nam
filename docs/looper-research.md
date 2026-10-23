@@ -1,7 +1,7 @@
 # Standalone looper research
 
-Status: **30-second compressed recording/playback tested offline with A2 Lite at eight frames; no hardware looper is released**.
-The prototype uses caller-owned memory. No physical RAM allocation or button hooks are assigned. See the [compressed prototype and RAM audit](#compressed-30-second-prototype) below.
+Status: **30-second compressed recording/playback and interruptible preset loading pass offline tests with A2 Lite at eight frames; no hardware looper is released**.
+The latest RAM-only prototype uses two candidate device-address buffers. Stock memory permissions, initialization and bounded ownership checks pass; physical ownership and deadlines remain unproven. See [RAM placement and continuous preset recall](#ram-placement-and-continuous-preset-recall).
 
 ## Requested controls
 
@@ -60,12 +60,13 @@ Record processed guitar **before** Bluetooth/USB backing playback and headphone
 volume, then mix loop playback **after** the current live-guitar effects. This lets
 a new preset change the live guitar without reprocessing the recorded sound.
 
-However, current preset recall calls `mpp_bank_pause`, resets output state and loads
+However, released preset recall calls `mpp_bank_pause`, resets output state and loads
 a capture with interrupts masked during flash reads. Some graph changes also use
 1,200 eight-frame settling callbacks (200 ms). A looper cannot simply share that
 pause/reset path: its playback clock and mixer must survive guitar-graph reloads,
 and flash access must be bounded or made interrupt-friendly. Saving/erasing flash
 while looping needs a separate policy and test; offline button tests do not solve it.
+The new RAM-only overlay below replaces these paths and exercises IRQs during the load itself.
 
 ## Memory budget
 
@@ -102,6 +103,9 @@ This is **candidate space, not proven free RAM**: hardware DMA is modeled, loade
 The new reports are [audio-v2.json](../evidence/looper-prototype/audio-v2.json), [controls-v2.json](../evidence/looper-prototype/controls-v2.json) and [memory-v2.json](../evidence/looper-prototype/memory-v2.json). Run `test_audio.cpp` with the same sanitizer flags as `test.cpp`; `scripts/probe_looper_memory.py` runs the bounded ARM memory audit. No audio device is opened.
 
 ## Compressed 30-second prototype
+
+This section records the earlier `2eb68cd` milestone. Its reports and object sizes
+belong to that version; the segmented layout and integrated IRQ tests follow below.
 
 The original MIT implementation in [`compressed_audio.hpp`](../tools/looper-prototype/compressed_audio.hpp) uses 4-bit IMA ADPCM: 256 encoded samples and a four-byte predictor/index header per block. This is an internal storage format, not a WAV or RTP file. Codec behavior is checked against CPython's independent `audioop` implementation. The [IMA/DVI description in RFC 3551](https://www.rfc-editor.org/rfc/rfc3551.html#section-4.5.1) is a specification reference; no third-party codec source is bundled.
 
@@ -146,3 +150,96 @@ Every observed recall performs **two 8,192-byte flash reads with interrupts mask
 3. Integrate debounced physical gestures, a bounded command mailbox, output placement and LED/controller feedback. Add loop-clear behavior and evaluate seam/quality handling.
 
 The original and compressed prototypes remain outside the firmware build, public builder, Mac app and phone controller. No update file was produced, no physical device was accessed and no audio device was opened. Reproduction commands are in the [prototype README](../tools/looper-prototype/README.md); sanitized reports are in [evidence/looper-prototype](../evidence/looper-prototype/).
+
+## RAM placement and continuous preset recall
+
+The next prototype reserves **371,316 bytes** across two noncontiguous buffers for
+720,000 stored samples: 30 seconds of mono, 24 kHz IMA ADPCM. Live guitar, NAM and
+stock effects stay at 48 kHz with eight-frame callbacks. There is no new live-guitar
+queue. The recording still has reduced bandwidth, lossy compression and no seam
+crossfade; it is not a quality-validated or released looper.
+
+| Purpose | Candidate range, end exclusive | Used bytes |
+| --- | --- | ---: |
+| First 2,048 encoded blocks | `0x202a0020..0x202e2020` | 270,336 |
+| Remaining 765 encoded blocks | `0x2031c020..0x20334a94` | 100,980 |
+| Loop code plus audio-hook overlay | starts at `0x20314020`, bounded below `0x20317fe0` | 7,544 |
+| Loop objects, controls and cached audio | starts at `0x20318020`, bounded below `0x20319fe0` | 900 |
+
+The audio object is 720 ARM bytes; the final row also includes its pointer, controls,
+cached blocks and counters. Stack and guard bytes are additional. This allocation
+does not overlap the existing NAM/FX/preset objects or reuse their 644-byte spare
+space. It leaves the stock `0x2031b000` AMP scratch area out of the proposal.
+These are fixed OCRAM ranges, not extra capacity inferred from overlapping
+FlexRAM, M4 or ECC aliases. [NXP's memory allocation note](https://www.nxp.com/docs/en/application-note/AN13106.pdf)
+explains those distinctions.
+
+### What the RAM checks establish
+
+- All 80 tested stock type loaders, including all 34 cabinet choices, preserve the
+  candidate regions. Long delay/reverb settings, a full chain and custom FX paths
+  pass 6,800 guarded callbacks. CPU read/write watchers detect intentional invalid
+  accesses in separate negative controls. Observed stock copy/clear helper spans
+  end at `0x2029c000`, before the first buffer. This is bounded coverage, not a
+  whole-program ownership proof.
+- Executing the exact stock MPU setup at `0x73e0` permits the proposed buffer/state
+  accesses and code execution. Region priorities and disabled subregions are
+  checked, including the flash AHB read range. These are modeled register writes,
+  not measurements of the unit's current MPU configuration or cache behavior.
+- Executing stock C initialization confirms that it clears the proposed code/state
+  area and leaves both recording buffers untouched. A future startup integration
+  must copy code and initialize loop state **after** that clear, with appropriate
+  cache maintenance. Uninitialized buffer contents never count as a saved loop.
+- The segmented codec matches contiguous storage byte-for-byte for a full
+  30-second recording and 90 seconds of decoded playback. ASan/UBSan, boundary
+  guards, short/invalid buffers and a corrupted header at the split all pass.
+
+The stock code audit also distinguishes four instruction words that resemble RAM
+pointers from actual addresses, and executes the compressed initializer that
+contains another apparent pointer. This does not exclude computed references,
+unexercised owners, DMA or another core. **Safe use on hardware is not yet proven.**
+
+### Preset-load changes and tests
+
+[`continuity.cpp`](../tools/looper-prototype/continuity.cpp) supplies an offline
+read-only preset backend. It copies through the existing memory-mapped flash AHB
+window without the old interrupt-masked IP transfer. Its pause function suspends
+the guitar engine without clearing either queued DMA half. Loop state and its
+headphone-volume smoother are separate from NAM and graph reset state.
+
+The audio hook mixes loop playback into the normal stereo DMA lanes before the
+next NAM computation, including while the guitar engine is paused or settling.
+Recording captures a mono fold of processed guitar before headphone gain and
+Bluetooth/USB backing. The recorder uses the preceding cached eight-frame guitar
+block, paired with that block's raw input for threshold detection. Existing live
+guitar publication order is retained.
+
+The emulator suspends actual foreground ARM code at different instruction
+boundaries, runs the compiled software audio IRQ on a separate lower stack, then
+restores the foreground registers. Four controller recalls and the stock PRESET
+button/deferred-load path pass, including interruptions during copying, CRC
+validation, model loading and NAM state reset. Loop output matches the native
+reference with no missing/repeated playback samples; storage and stack guards
+remain intact. Guitar-only settling does not stop the loop. Failed/empty recalls
+and a rejected real preset-save request are included.
+
+Flash erase/program requests are **always rejected in this research overlay**;
+it is seeded with emulated presets before installation. This policy avoids claiming
+that flash writes are safe while looping. It is not a finished save workflow.
+The native full-duration A2 Lite test and independent CPython codec/filter checks
+also pass again after segmentation. The actual ARM recording hook is checked
+against the native encoder, followed by closing and replaying its recording.
+
+Reports: [RAM ownership](../evidence/looper-prototype/ram-layout-v4.json),
+[MPU/startup contract](../evidence/looper-prototype/memory-contract-v4.json),
+[compiled preset/IRQ continuity](../evidence/looper-prototype/continuity-v4.json),
+[build layout](../evidence/looper-prototype/continuity-build-v4.json), and
+[source/test manifest](../evidence/looper-prototype/continuity-validation-v4.json).
+
+This test schedules interrupts by instruction count. It does not model M7
+exception latency, cache misses, AHB stalls or bus contention, and it does not
+establish the physical 166.7 microsecond callback deadline. The next integration
+steps are boot copy/cache handling, a bounded button-command mailbox, and guarded
+hardware RAM/deadline checks. The normal image builder rejects this RAM-only ELF.
+No updater file, app/controller release, hardware access or audio playback is part
+of this prototype.

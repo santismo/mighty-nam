@@ -53,6 +53,8 @@ struct AdpcmStore {
     static constexpr uint32_t maximum_frames=48000*30;
     uint8_t* memory;
     size_t bytes;
+    uint8_t* second=nullptr;
+    uint32_t first_blocks=0;
     uint32_t capacity, length=0, cursor=0;
     Ima encoder{}, decoder{};
     bool failed=false;
@@ -60,20 +62,31 @@ struct AdpcmStore {
         return ((size_t(frames)+block_samples-1)/block_samples)*block_bytes;
     }
     AdpcmStore(uint8_t* p,size_t n,uint32_t frames):memory(p),bytes(n),
+        first_blocks(uint32_t(n/block_bytes)),
         capacity(p && frames<=maximum_frames && n>=required(frames)?frames:0) {}
+    AdpcmStore(uint8_t* p,size_t n,uint8_t* q,size_t m,uint32_t frames):
+        memory(p),bytes(n+m),second(q),first_blocks(uint32_t(n/block_bytes)),
+        capacity(p && q && n%block_bytes==0 && frames<=maximum_frames &&
+                 n<=required(maximum_frames) && m<=required(maximum_frames) &&
+                 n+m>=required(frames)?frames:0) {}
+    uint8_t* block(uint32_t sample) {
+        const uint32_t number=sample/block_samples;
+        return number<first_blocks?memory+size_t(number)*block_bytes:
+            second+size_t(number-first_blocks)*block_bytes;
+    }
     void clear() { length=cursor=0;encoder={};decoder={};failed=false; }
     void rewind() { cursor=0;decoder={}; }
     bool append(int16_t sample) {
         if(failed || length>=capacity)return false;
         const uint32_t within=length%block_samples;
-        const size_t base=size_t(length/block_samples)*block_bytes;
+        uint8_t* base=block(length);
         if(!within) {
             const uint16_t p=uint16_t(encoder.predictor);
-            memory[base]=uint8_t(p);memory[base+1]=uint8_t(p>>8);
-            memory[base+2]=uint8_t(encoder.index);memory[base+3]=0;
+            base[0]=uint8_t(p);base[1]=uint8_t(p>>8);
+            base[2]=uint8_t(encoder.index);base[3]=0;
         }
         const unsigned nibble=encoder.encode(sample);
-        uint8_t& packed=memory[base+4+within/2];
+        uint8_t& packed=base[4+within/2];
         if(within&1)packed=uint8_t(packed|nibble);
         else packed=uint8_t(nibble<<4);
         ++length;return true;
@@ -82,14 +95,14 @@ struct AdpcmStore {
         if(failed || !length)return 0;
         if(cursor>=length)rewind();
         const uint32_t within=cursor%block_samples;
-        const size_t base=size_t(cursor/block_samples)*block_bytes;
+        const uint8_t* base=block(cursor);
         if(!within) {
-            if(memory[base+2]>88 || memory[base+3]) { failed=true;return 0; }
-            const unsigned p=unsigned(memory[base])|(unsigned(memory[base+1])<<8);
+            if(base[2]>88 || base[3]) { failed=true;return 0; }
+            const unsigned p=unsigned(base[0])|(unsigned(base[1])<<8);
             decoder.predictor=p>=32768?int(p)-65536:int(p);
-            decoder.index=memory[base+2];
+            decoder.index=base[2];
         }
-        unsigned packed=memory[base+4+within/2];
+        unsigned packed=base[4+within/2];
         ++cursor;
         return decoder.decode((within&1)?packed&15:packed>>4);
     }

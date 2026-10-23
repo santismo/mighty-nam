@@ -24,6 +24,8 @@ struct CompressedAudio {
         ratio(sample_rate==24000?2:1) {
         if(sample_rate!=24000 && sample_rate!=48000)store.capacity=0;
     }
+    CompressedAudio(uint8_t* first,size_t first_bytes,uint8_t* second,size_t second_bytes):
+        store(first,first_bytes,second,second_bytes,720000),ratio(2) {}
     void reset_playback() { store.rewind();play_phase=0;playback_filter.reset(); }
     void sync(Controls& c) {
         c.capacity=store.capacity*ratio;

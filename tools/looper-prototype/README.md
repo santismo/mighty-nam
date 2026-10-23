@@ -21,3 +21,29 @@ research-python tools/looper-prototype/run_offline.py \
 Replace `/path/to/v3-work` above with the single path to the prepared research directory (quote paths containing spaces). `research-python` means the Python environment with Unicorn, Capstone, pyelftools and ziglang; `--signal-python` needs Python 3.12 with numpy and stdlib `audioop`. Clang++ must support native macOS and `arm-none-eabi` builds. The native parity library is macOS-specific. This runner creates local data/test executables and JSON only, not an installable firmware container.
 
 The work directory contains raw numeric test fixtures, not files intended for listening. The public reports omit those fixtures and all stock/firmware binaries. The 30-second result proves component behavior with supplied memory; physical RAM ownership, flash-read scheduling, button hooks and hardware deadlines remain unresolved.
+
+## Candidate device RAM and interruptible preset loads
+
+The newer RAM-only overlay moves storage into two candidate device-address ranges
+and keeps the mixer running while actual preset loading is preempted by audio IRQs.
+It is **not an installable firmware**. Stock MPU/startup and bounded CPU ownership
+checks do not prove physical DMA ownership, cache coherency or real-time timing.
+
+- `layout.hpp`, `test_segments.cpp`: fixed split storage, exact byte parity and bounds.
+- `audit_layout.py`: 80 stock loader cases, heavy chains, guarded memory/helper spans and negative controls.
+- `audit_memory_contract.py`: actual stock MPU/C-runtime routines with modeled registers; initialization ordering and apparent-pointer classification.
+- `continuity.cpp`, `continuity.ld`, `build_continuity.py`: AHB reads, independent loop mixer and pause path, write rejection, exact baseline ELF pin. No flash load address or boot copy.
+- `test_continuity.py`: actual ARM IRQ interleaving during recalls, stock preset-button path, separate interrupt stack, native playback/recording parity, failed save/recall and full-store split/wrap.
+
+```sh
+research-python tools/looper-prototype/run_continuity.py \
+  /path/to/v3-work /path/to/stock-payload.bin /tmp/mighty-loop-continuity \
+  --signal-python python3.12
+```
+
+The dependencies and pinned NAMLNK24 baseline are the same as above. This separate
+runner regenerates its fixtures from the three licensed repository captures, runs
+the sanitizer/oracle checks, builds only a local RAM ELF, and writes JSON evidence.
+The ELF requires the baseline in the emulator and cannot be passed to the normal
+image builder. The research backend rejects **all** preset flash writes; production
+firmware and the public builder are unchanged.

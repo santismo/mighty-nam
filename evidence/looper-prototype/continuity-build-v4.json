@@ -1,0 +1,59 @@
+{
+  "status": "OFFLINE_RAM_OVERLAY_ONLY",
+  "baseline_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "sha256": "718f0ec02320f81ed701d7fe2ac576e31aa8cf148ce480815ea83412aaafd7bb",
+  "audio_source_sha256": "bdc7e36c2b5dfccfc289ba01c05dfae25eaa0986e4cfd4cb382a2c65947e3e27",
+  "compiler_defines": [
+    "-DMPP_COMPACT_INIT",
+    "-DMPP_STOCK_V3",
+    "-DMPP_REFERENCE_ORDER",
+    "-DMPP_M7_CONV",
+    "-DMPP_FAST_BYPASS",
+    "-DMPP_M7_DENSE",
+    "-DMPP_PRIME_STATE",
+    "-DMPP_IRQ_TIMING",
+    "-DMPP_LISTENING",
+    "-DMPP_EARLY_OUTPUT",
+    "-DMPP_OUTPUT_BUFFER",
+    "-DMPP_PRESET_BANK",
+    "-DMPP_CACHE_LINE_PRIME",
+    "-DMPP_TUNER",
+    "-DMPP_FX_BLOCKS",
+    "-DMPP_CUT_EQ",
+    "-DMPP_RESPONSIVE_CONTROLS",
+    "-DMPP_M7_POINTER_TAPS",
+    "-DMPP_ADC_SHORT_DELAY",
+    "-DMPP_GLOBAL_BUFFER",
+    "-DMPP_DRIVER_TIMING",
+    "-DMPP_ACTIVE_CHAIN_PROTOTYPE",
+    "-DMPP_ACTIVE_CHAIN_RELEASE",
+    "-DMPP_USB_NAM_CONTROLS",
+    "-DMPP_PITCH_QUALITY_PROTOTYPE",
+    "-DMPP_PITCH_QUALITY_RELEASE",
+    "-DMPP_BLUETOOTH_AUDIO",
+    "-DMPP_DAISY_WAH"
+  ],
+  "regions": [
+    {
+      "name": ".text",
+      "start": "0x20314020",
+      "bytes": 7544,
+      "end": "0x20315d98"
+    },
+    {
+      "name": ".data",
+      "start": "0x20318020",
+      "bytes": 60,
+      "end": "0x2031805c"
+    },
+    {
+      "name": ".bss",
+      "start": "0x2031805c",
+      "bytes": 840,
+      "end": "0x203183a4"
+    }
+  ],
+  "flash_container_created": false,
+  "boot_copy_implemented": false,
+  "physical_RAM_safe_proven": false
+}

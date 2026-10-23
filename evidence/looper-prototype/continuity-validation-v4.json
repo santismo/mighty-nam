@@ -1,0 +1,60 @@
+{
+  "status": "PASS_OFFLINE_LOOP_RAM_AND_PRESET_CONTINUITY",
+  "version": 4,
+  "reproduction_runner": "tools/looper-prototype/run_continuity.py",
+  "execution": "Component commands executed individually; all completed successfully.",
+  "sources": {
+    "tools/looper-prototype/arm_bridge.cpp": "d1310ab4fec6f000ebd010728bbc41e170566a69cb6e39c8a401449daf20ec04",
+    "tools/looper-prototype/audio.hpp": "ebae2d6a0d782aeb3457a4487c1f7c4cd336fe627e9fd149663ec321cee3a50b",
+    "tools/looper-prototype/audit_layout.py": "f3edc104bdc25c3dd27da740aa4b84a1760f86e96df8429975e20757a87c756e",
+    "tools/looper-prototype/audit_memory_contract.py": "bf4ec68eecd019188fbade98ee05c945ad22263da6e1560611512b2fa9ec70af",
+    "tools/looper-prototype/build_arm.py": "4edfe6e30f1a5c84fc700d3cad6a71f4204e95d1ed33e4176227f7429f5ca023",
+    "tools/looper-prototype/build_continuity.py": "e58f73adc3827d7ead2afa248e55cd0f4fc4065e05b94d3028a092ba58e43c15",
+    "tools/looper-prototype/check_compression.py": "818db52773485762d314dead1882e456c2bc0f21ed942df020772e01c7781477",
+    "tools/looper-prototype/compressed_audio.hpp": "ef2b82fdb049e499d49564965129e806e04884fd95469adae0159ee681cf7804",
+    "tools/looper-prototype/continuity.cpp": "4208bc9ffa5f4b598a03eb778f23b37e05f5141e7e14ce829f4f7b7a1ff611b5",
+    "tools/looper-prototype/continuity.ld": "6998af9654ea94f63147dc64b949a128ba70663806b5206066d935cd24e4836e",
+    "tools/looper-prototype/controls.hpp": "9b4d897332b3cd9fa433f670a4e801d62069da8f875600f8e1c1f33e88cd1e83",
+    "tools/looper-prototype/ima_adpcm.hpp": "5de64f735064080a661486270b1b8a4bffa18cdc64b94f1867d3ff8a2761e74a",
+    "tools/looper-prototype/layout.hpp": "cc6c1ceee59bea7e3676a408c8996ebca03b7aabffaeed9f150e141478b3e15d",
+    "tools/looper-prototype/loop_emulator.ld": "797244cf80d1a60986fea07539092be86d5d3078c7f4bcb6fd06589d87f62194",
+    "tools/looper-prototype/loop_filter.hpp": "ce4ae17535630e1692df85301f8ad5be64d0c124a277f0b1ff7470b280e6a461",
+    "tools/looper-prototype/ram_audit.py": "ae65584f24efbfebf2fba3a93f143b29a384f266f9620fa88604c623873fe47a",
+    "tools/looper-prototype/run_continuity.py": "cbe8c4758a26cd8869bf66725dcc06cd1fbbdb9b35f9d23cb163fcb986a4dd26",
+    "tools/looper-prototype/run_offline.py": "ece1a24335cbd2a689f1c0fc1feaa4b6ea7bb93ccfa95a6892e06f337ac4afc6",
+    "tools/looper-prototype/test.cpp": "2e51d1177335754e21833b50e759d0fc0ace16ffa506e1aa04a05a4f778eba07",
+    "tools/looper-prototype/test_audio.cpp": "4d2ffe99f949ff2722008017b5ea2136e938f4f11b64bd4d5912c4242b065677",
+    "tools/looper-prototype/test_compressed.cpp": "b9f771e38af9904ed36509e1c57f0d468961be9a07ed3dcfc4e9b8e9c17d9c19",
+    "tools/looper-prototype/test_compressed_arm.py": "76546a4a74fcee84bea0d3f42f0eba870f95affe30f41b971de71e84cc0189e8",
+    "tools/looper-prototype/test_continuity.py": "6bab412257f5377f97cdecb9a517d3888a0d7f6de07195a8efa7ae93e8796f16",
+    "tools/looper-prototype/test_segments.cpp": "05ae73c0c594c411360c1f1c9baecb3e00605f8ca96e6b105156b36159776d11"
+  },
+  "tests": [
+    "ASan/UBSan controls: 1792 occupied-color/direction cases",
+    "ASan/UBSan PCM transport: 504000 playback frames, 21 simulated recalls",
+    "ASan/UBSan segmented store: 30s encode, 90s decode, byte/sample parity, guards, malformed and short buffers",
+    "ASan/UBSan compressed 30s recording + 60s playback with native A2 Lite at 8 frames; 17 model reloads",
+    "Independent CPython codec and filter oracle",
+    "Exact stock MPU and C-runtime contract",
+    "80 stock loader cases and 6800 candidate-RAM guarded callbacks",
+    "Real compiled IRQ interleaving during preset reads/CRC/model loads, settling, preset button, empty recall and rejected save",
+    "Actual ARM recording hook, native encoder/playback parity, split and wrap, read/write rejection, updater packaging rejection"
+  ],
+  "reports": {
+    "ram-layout-v4.json": "4229344c7dcc4bdf1f8f4617702e4b735d5a7c6460530ab13af1b4c084edc4d9",
+    "memory-contract-v4.json": "724aa5a5a5f83d0caea40e6d1f89c607f079c9d787c012a23cec3e8d4dc0b957",
+    "compressed-native-v4.json": "7314a68ed62b9b43bf847acf6d7dd4fb37e12a1ee3a063340187eb45fe0b34e4",
+    "compression-quality-v4.json": "6f8428fd74081eebdd7fed8007196f62c657562c3c3b6cc361fba7a0df9bf05d",
+    "continuity-build-v4.json": "e215e4e34dbdd3da1e8a30871f4354cdfc272a9473d8e81ee6b43b8ea31318e3",
+    "continuity-v4.json": "b836a03fc87e8aa2145cf4c14714a3d96b53986e392f052f766130f913548a0a"
+  },
+  "device_access": false,
+  "audio_device_opened": false,
+  "flash_container_created": false,
+  "physical_RAM_safe_proven": false,
+  "limitations": [
+    "Hardware DMA/other-core ownership, cache behavior and real deadlines need physical verification.",
+    "RAM-only overlay, no startup copy or physical looper controls; production firmware and public builder unchanged.",
+    "AHB backend rejects all writes; no concurrent flash saving or permanent loops."
+  ]
+}

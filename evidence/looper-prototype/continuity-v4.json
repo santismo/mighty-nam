@@ -1,0 +1,94 @@
+{
+  "status": "PASS_OFFLINE_PREEMPTIBLE_PRESET_LOOP",
+  "baseline_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "overlay_sha256": "718f0ec02320f81ed701d7fe2ac576e31aa8cf148ce480815ea83412aaafd7bb",
+  "store_sha256": "898ba7bfa6d901833273e8c4ab776d07dd3c9dbd4758ca63d538a5893926bb7b",
+  "storage_bytes": 371316,
+  "recorded_samples": 720000,
+  "recorded_rate": 24000,
+  "live_rate": 48000,
+  "callback_frames": 8,
+  "callbacks": 8751,
+  "interleaved_IRQs": 1647,
+  "interrupt_phases": {
+    "mpp_loop_read": 36,
+    "_ZN3mpp4link5crc32EPKhj": 1130,
+    "_ZN3mpp7presets4wordEPKhj": 44,
+    "_ZN3mpp7presets4Bank5validEPKhj": 291,
+    "_ZN3mpp7presetsL4copyEPhPKhj": 18,
+    "_ZN3mpp7presets4Bank12unpack_modelEPKhPh": 2,
+    "_ZN3mpp4linkL2rdEPKh": 10,
+    "_ZN3mpp4linkL10valid_slotEPKh": 12,
+    "_ZN3mpp4linkL4copyEPhPKhj": 19,
+    "_ZNK3mpp4link13ModelReceiver11load_activeERNS_6A2LiteEbPfj": 6,
+    "_ZN3mpp6A2Lite4loadEPKfj": 16,
+    "_ZN3mpp6A2Lite5resetEv": 35,
+    "_ZN12_GLOBAL__N_14copyEPhPKhj": 4,
+    "mpp_bank_query": 1,
+    "_ZN3mpp4link5pack7EPKhjPhj": 2,
+    "_ZN3mpp7presets11valid_modelEPKh": 7,
+    "_ZN3mpp2fx5validEPKh": 1,
+    "_ZN3mppL11prime_linesEPVKfj": 2,
+    "0xa4d6": 1,
+    "_ZN3mpp7presets4Bank4saveEjPKhS3_S3_S3_jjPhS4_S3_": 3,
+    "_ZN3mpp7presets3putEPhjj": 1,
+    "_ZN3mpp4link13ModelReceiver5resetEv": 6
+  },
+  "masked_foreground_instructions": 0,
+  "recalls": [
+    {
+      "color": 0,
+      "interleaved_irqs": 277,
+      "IRQs_masked": false
+    },
+    {
+      "color": 1,
+      "interleaved_irqs": 172,
+      "IRQs_masked": false
+    },
+    {
+      "color": 2,
+      "interleaved_irqs": 428,
+      "IRQs_masked": false
+    },
+    {
+      "color": 0,
+      "interleaved_irqs": 226,
+      "IRQs_masked": false
+    }
+  ],
+  "stock_preset_button_selected": 1,
+  "paused_guitar_irqs": 8018,
+  "nonzero_loop_paused_irqs": 8003,
+  "guitar_active_irqs": 733,
+  "max_native_loop_sample_error": 0.0,
+  "peak_output_PCM": 11571233,
+  "paused_guitar_DMA_blocks_checked": 1624,
+  "max_paused_guitar_PCM_error": 0,
+  "AHB_read_calls": 14,
+  "AHB_read_bytes": 114688,
+  "blocked_flash_writes": 3,
+  "loop_state_bytes": 720,
+  "guards_intact": true,
+  "recording_unchanged": true,
+  "flash_mutations_after_overlay": 0,
+  "device_access": false,
+  "audio_device_opened": false,
+  "pause_preserves_queued_DMA": true,
+  "real_preset_save_rejected": true,
+  "limitations": [
+    "Cooperative instruction-boundary preemption, not Cortex-M7 exception/bus/deadline emulation.",
+    "Hardware OCRAM ownership, MPU/cache permissions, AHB stalls and physical performance remain unproven.",
+    "Prototype read-only preset backend rejects flash writes; no overdub, flash-save concurrency, or power persistence.",
+    "RAM-only overlay; startup copy and physical looper button mapping are not installed."
+  ],
+  "actual_recording_hook": {
+    "callbacks": 120,
+    "recorded_samples": 476,
+    "encoded_bytes_match_native": true,
+    "threshold_waiting_callbacks": 16,
+    "closed_loop_playback_callbacks": 80,
+    "guards_intact": true
+  },
+  "normal_image_builder_rejects_overlay": true
+}
