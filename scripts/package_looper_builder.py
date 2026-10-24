@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export NAMLNK27/28 owned code/patches plus licensed starters. Never stock bytes."""
+"""Export NAMLNK27–29 owned code/patches plus licensed starters. Never stock bytes."""
 import argparse,base64,hashlib,importlib.util,json,sys,tempfile,zipfile
 from pathlib import Path
 from elftools.elf.elffile import ELFFile
@@ -18,7 +18,7 @@ def main():
  from image import build
  bank=(a.starters/'starter-bank.bin').read_bytes();r=json.loads((a.starters/'starter-bank.json').read_text());validate_bank(bank,r)
  manifest=json.loads((a.work/'build/build.json').read_text());identity=manifest['identity']
- need(identity in ['NAMLNK27','NAMLNK28'] and r['identity']==identity and r['elf_sha256']==manifest['sha256'],'Public bank must be tested on exact firmware')
+ need(identity in ['NAMLNK27','NAMLNK28','NAMLNK29'] and r['identity']==identity and r['elf_sha256']==manifest['sha256'],'Public bank must be tested on exact firmware')
  original=Container(a.stock.read_bytes())
  with tempfile.TemporaryDirectory() as t:
   checked=stage(a.baseline,a.work,a.stock,a.starters/'starter-bank.bin',a.starters/'starter-bank.json',Path(t))
@@ -58,9 +58,9 @@ def main():
   reconstructed[op['offset']:op['offset']+op['length']]=data
  need(original.rebuild_same_length(bytes(reconstructed))==candidate,'Recipe not equal to independently gated image')
  notices={'mighty-nam':ROOT/'LICENSE','Neural Amp Modeler':ROOT/'firmware/target/a2/UPSTREAM-LICENSE','RiffSmith captures':ROOT/'firmware/models/riffsmith/LICENSE','DaisySP AutoWah':ROOT/'firmware/target/link/DAISY-LICENSE'}
- recipe=dict(schema='mighty-nam-local-builder-1',builder_version='0.5.0' if identity=='NAMLNK28' else '0.4.0',identity=identity,target='NUX-MP3',firmware_revision='looper-preview',presets='riffsmith-mit-3',captures_included=True,starter_presets=r['presets'],starter_bank_sha256=sha(bank),input=dict(name='MP3_OR_V3.0.5.bin',bytes=len(original.data),sha256=sha(original.data),payload_sha256=sha(original.payload)),output=dict(name=f'mighty-nam-{identity}-experimental.bin',bytes=len(candidate),sha256=sha(candidate),payload_sha256=sha(final)),elf_sha256=manifest['sha256'],baseline_elf_sha256=manifest['baseline_sha256'],evidence=checked['evidence'],licenses=list(notices),license_notices={name:path.read_text() for name,path in notices.items()},physical_validation='Public starter variant offline only; looper hardware tests cover earlier variants.',operations=operations)
+ recipe=dict(schema='mighty-nam-local-builder-1',builder_version={'NAMLNK27':'0.4.0','NAMLNK28':'0.5.0','NAMLNK29':'0.6.0'}[identity],identity=identity,target='NUX-MP3',firmware_revision='looper-preview',presets='riffsmith-mit-3',captures_included=True,starter_presets=r['presets'],starter_bank_sha256=sha(bank),input=dict(name='MP3_OR_V3.0.5.bin',bytes=len(original.data),sha256=sha(original.data),payload_sha256=sha(original.payload)),output=dict(name=f'mighty-nam-{identity}-experimental.bin',bytes=len(candidate),sha256=sha(candidate),payload_sha256=sha(final)),elf_sha256=manifest['sha256'],baseline_elf_sha256=manifest['baseline_sha256'],evidence=checked['evidence'],licenses=list(notices),license_notices={name:path.read_text() for name,path in notices.items()},physical_validation='Public starter variant offline only; looper hardware tests cover earlier variants.',operations=operations)
  target=ROOT/'docs/looper-builder';target.mkdir(exist_ok=True)
- text='/* Original linked code, generated hooks and MIT RiffSmith starters. No stock firmware. */\nglobalThis.MightyNamRecipe = '+json.dumps(recipe,indent=2)+';\n'
+ text='/* Original linked code, generated hooks and MIT RiffSmith starters. No stock firmware. */\nglobalThis.MightyNamRecipe = '+json.dumps(recipe,indent=2)+';\n(globalThis.MightyNamRecipes ??= {})[globalThis.MightyNamRecipe.identity] = globalThis.MightyNamRecipe;\n'
  (target/'recipe.js').write_text(text)
  audit=dict(schema='mighty-nam-builder-provenance-1',identity=identity,recipe_sha256=sha(text.encode()),elf_sha256=manifest['sha256'],input_sha256=sha(original.data),output_sha256=sha(candidate),output_payload_sha256=sha(final),operations=len(operations),code_bytes=sum(op['length'] for op in operations if op['kind']=='code'),stock_original_bytes_exported=False,private_or_tone3000_captures_exported=False,starter_bank_sha256=sha(bank),output_matches_independent_stager=True,device_access=False,flashed=False)
  (target/'provenance.json').write_text(json.dumps(audit,indent=2)+'\n')

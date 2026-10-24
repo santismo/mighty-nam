@@ -1,13 +1,12 @@
 # Local firmware builder
 
-The latest preview is **builder 0.5.0 / NAMLNK28**, available at the
-[current builder](https://santismo.github.io/mighty-nam/builder.html).
-Both `builder.html` and `looper-builder.html` open this same NAMLNK28 recipe.
-It uses the same exact NUX input below and includes licensed RiffSmith starters,
-Daisy-derived Auto Wah, the looper and optional saved loop settings.
-[Implementation and current gates](../tools/looper-prototype/settings/README.md).
-Its exact combined hardware trial is pending. The older builder below remains
-at [builder-v23.html](builder-v23.html) for the NAMLNK23 baseline; the reproduction commands describe that baseline.
+The current **builder 0.6.0** offers **NAMLNK29**, **NAMLNK28** and **NAMLNK23 r2** from the version menu at [builder.html](https://santismo.github.io/mighty-nam/builder.html). `looper-builder.html` opens the same page. The offline ZIP includes all three recipes and needs no network to build. NAMLNK29 is selected by default; bookmarks can use `?firmware=NAMLNK28` or `?firmware=NAMLNK23`.
+
+All versions require the same exact NUX file below and include the three licensed RiffSmith starters. The older outputs are byte-identical to their previous public builders. Upgrading **or downgrading** replaces presets and global settings. The current phone controller recognizes NAMLNK12–29 and does not send newer commands to older firmware. Use Mac 0.6.1+ with NAMLNK29; lane-specific controls are currently phone-only.
+
+NAMLNK29 adds the seven-slot preset write/readback fix and up to three reusable overdub lanes with one-edit undo/redo. The fixed recording pool is shared: a full 30/60-second base leaves no space for independent overdubs. Three editable lanes plus undo require a base slightly under 6/12 seconds. NAMLNK28 retains its older merged-overdub behavior, and NAMLNK23 r2 has no looper. See [implementation and gates](../tools/looper-prototype/takes/README.md). Exact public NAMLNK29 hardware validation remains pending; nothing is flashed by the builder.
+
+The [archived NAMLNK23 page](builder-v23.html) remains available. The reproduction commands below describe that baseline.
 
 Builder **0.3.1** creates experimental **NAMLNK23** from **`MP3_OR_V3.0.5.bin`**, the publicly downloadable **NUX Mighty Plug Pro V3.0.5 Original** file. This exact input is required; the builder verifies its checksum. The public starter variant has offline validation; NAMLNK23 core has limited physical validation documented on the [Status page](status.html). These packaging tests do not access a device or play audio.
 
@@ -79,3 +78,18 @@ NAMLNK23 has been installed on the development unit with private presets and con
 ## Bluetooth revision r2
 
 Builder 0.3.1 uses the separately gated `--bluetooth-audio` build. `bluetooth.json` must match the exact ELF and pass stereo routing, 8/16/32 staging, guitar equivalence and recording-isolation checks before packaging. See [Bluetooth evidence](bluetooth-audio.md). It does not include the offline DaisySP wah or looper gesture prototypes.
+
+## NAMLNK29 public recipe
+
+Build and pass the gates in `tools/looper-prototype/takes/README.md`, using the
+frozen NAMLNK24 baseline. Validate the pinned RiffSmith bank against that exact
+ELF with `scripts/test_looper_starters.py`, then export with
+`scripts/package_looper_builder.py`. The exporter runs all staging gates and
+compares the rebuilt result byte-for-byte with the independent stager.
+`scripts/package_looper_download.py` packages all three checked recipes, their
+provenance and notices without a complete firmware image.
+
+Run `scripts/test_firmware_builder.cjs` with `MIGHTY_NAM_RECIPE=looper`, `v28` or
+`v23` and `MIGHTY_NAM_STOCK_FILE` set to your local exact stock file. The version
+selector invalidates old download links on a change and is locked during an
+in-progress build. The earlier firmware hashes remain pinned in these tests.

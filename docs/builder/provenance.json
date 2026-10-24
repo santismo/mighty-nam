@@ -1,7 +1,7 @@
 {
   "schema": "mighty-nam-builder-provenance-1",
   "identity": "NAMLNK23",
-  "recipe_sha256": "428a9bbe1b4124540434997e53fd3a8247a2adcb6615eb52ffa6c92777f1fa51",
+  "recipe_sha256": "aedceb9c3a0a91917d3d9f5806bfdf9e0ec81c1c89670336cd2a1ccb5743e386",
   "elf_sha256": "1cf2b1a8146879c2e2d25aab22de3e144ab24ba82e6d20cb5bbdce2d45bf32f7",
   "input_sha256": "39fa7057865f95e4c52c48544cd8284f4da606d3ac29e985e9b8938a3237467e",
   "output_sha256": "de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698",

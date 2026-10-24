@@ -98,9 +98,9 @@
     // Snapshot both inputs before any asynchronous work; never edit the user's file.
     const original = bytes(input).slice(), r = JSON.parse(JSON.stringify(recipe));
     await inspect(original);
-    const latest = ['NAMLNK27','NAMLNK28'].includes(r.identity);
+    const latest = ['NAMLNK27','NAMLNK28','NAMLNK29'].includes(r.identity);
     const CODE = latest ? CODE27 : CODE23, HOOKS = latest ? HOOKS27 : HOOKS23;
-    need(r.schema === 'mighty-nam-local-builder-1' && ['NAMLNK23','NAMLNK27','NAMLNK28'].includes(r.identity) && r.target === 'NUX-MP3', 'Unsupported builder recipe.');
+    need(r.schema === 'mighty-nam-local-builder-1' && ['NAMLNK23','NAMLNK27','NAMLNK28','NAMLNK29'].includes(r.identity) && r.target === 'NUX-MP3', 'Unsupported builder recipe.');
     need(r.input.sha256 === INPUT_SHA && r.input.bytes === INPUT_BYTES && r.input.payload_sha256 === PAYLOAD_SHA, 'Recipe input does not match this builder.');
     need(r.presets === 'riffsmith-mit-3' && r.captures_included === true && r.starter_presets?.length === 3, 'Only the licensed starter bank is allowed.');
     need(r.output.name === (latest ? `mighty-nam-${r.identity}-experimental.bin` : 'mighty-nam-NAMLNK23-r2-experimental.bin') && /^[a-f0-9]{64}$/.test(r.output.sha256), 'Invalid output specification.');

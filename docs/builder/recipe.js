@@ -762,3 +762,5 @@ globalThis.MightyNamRecipe = {
     }
   ]
 };
+
+(globalThis.MightyNamRecipes ??= {})[globalThis.MightyNamRecipe.identity] = globalThis.MightyNamRecipe;

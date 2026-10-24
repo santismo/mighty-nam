@@ -4,7 +4,7 @@
 
 NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller. By **santismo**.
 
-[Local firmware builder](https://santismo.github.io/mighty-nam/looper-builder.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.6.0-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
+[Local firmware builder](https://santismo.github.io/mighty-nam/looper-builder.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.6.1-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
 
 This repository contains the firmware experiments, Mac app, protocols and test evidence. The separate [mighty-nam-controller repository](https://github.com/santismo/mighty-nam-controller) is public and hosts the phone page.
 
@@ -12,13 +12,13 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 
 | Component | Status |
 | --- | --- |
-| Mac 0.6.0 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23–28 support, both wah choices on 24–28, and a Looper panel on 26–28 (live input meter on 27+, saved loop settings on 28). Not notarized. |
-| Phone 0.9.0 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering and Looper controls with a live threshold meter on NAMLNK27+, optional saved loop settings on NAMLNK28 and a separate TONE3000 picker that keeps the controller page open. |
-| Local builder 0.5.0 / NAMLNK28 | Requires the exact public NUX `MP3_OR_V3.0.5.bin`. Includes three MIT-licensed RiffSmith A2 Lite starters, Daisy-derived Auto Wah, 30/60-second looper, overdubs, gestures and saved loop settings. Install your locally built image with the official NUX updater. |
+| Mac 0.6.1 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23–29 support, both wah choices on 24–29, and a Looper panel on 26–29 (live input meter on 27+, saved loop settings on 28+). Independent lane controls are phone-only. Not notarized. |
+| Phone 0.10.1 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering and Looper controls with a live threshold meter on NAMLNK27+, optional saved loop settings on NAMLNK28 and a separate TONE3000 picker that keeps the controller page open. |
+| Local builder 0.6.0 / NAMLNK29 | Requires the exact public NUX `MP3_OR_V3.0.5.bin`. Includes three MIT-licensed RiffSmith A2 Lite starters, Daisy-derived Auto Wah, 30/60-second looper, independent overdub lanes, undo/redo, seven-slot save fix, gestures and saved loop settings. Earlier NAMLNK28 and NAMLNK23 r2 remain selectable. Install your locally built image with the official NUX updater. |
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
 
-The development-unit owner reports Bluetooth music playback working with NAMLNK23 r2. [Bluetooth evidence and scope](docs/bluetooth-audio.md). NAMLNK24–28 development builds include Daisy-derived Auto Wah in FX A/B and retained NUX Touch Wah under Drive. NAMLNK25 passed a physical 30-second loop recording/playback check through three preset colors; the owner confirmed that the loop continued with its original sound. [Hardware result](evidence/looper-prototype/record-playback-hardware25.json). The owner tested NAMLNK26 phone recording/playback but reported scratchy 30-second overdubs and missed physical PRESET finishes. The [NAMLNK27 refinement](tools/looper-prototype/layers/README.md) adds a live input meter on the threshold slider in both controllers, carries the overdub encoder state across blocks, adds storage headroom and removes redundant physical-button debounce. Its fixes pass offline checks and still require a hardware/listening trial. The latest local builder includes NAMLNK28 and the licensed starter bank; its exact combined hardware trial is pending. [Wah details](docs/wah-prototype.md).
+The development-unit owner reports Bluetooth music playback working with NAMLNK23 r2. [Bluetooth evidence and scope](docs/bluetooth-audio.md). NAMLNK24–29 development builds include Daisy-derived Auto Wah in FX A/B and retained NUX Touch Wah under Drive. NAMLNK25 passed a physical 30-second loop recording/playback check through three preset colors; the owner confirmed that the loop continued with its original sound. [Hardware result](evidence/looper-prototype/record-playback-hardware25.json). The owner tested NAMLNK26 phone recording/playback but reported scratchy 30-second overdubs and missed physical PRESET finishes. The [NAMLNK27 refinement](tools/looper-prototype/layers/README.md) adds a live input meter on the threshold slider in both controllers, carries the overdub encoder state across blocks, adds storage headroom and removes redundant physical-button debounce. Its fixes pass offline checks and still require a hardware/listening trial. The latest local builder includes NAMLNK29 and the licensed starter bank; its exact combined hardware trial is pending. [Wah details](docs/wah-prototype.md).
 
 ## What you can do
 
@@ -42,7 +42,7 @@ On Mac, install the preview into Applications and connect the plug over a data-c
 
 Installation replaces all onboard presets and global settings. Preserve anything you need first. The public builder does not incorporate the maintainer's private captures. Installing the Mac app alone preserves existing libraries and does not flash the plug.
 
-The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.5.0-preview.1/mighty-nam-local-builder-0.5.0.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
+The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.6.0-preview.1/mighty-nam-local-builder-0.6.0.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
 
 ## Source, licenses and privacy
 

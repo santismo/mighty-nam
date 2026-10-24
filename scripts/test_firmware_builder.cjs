@@ -7,10 +7,10 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const core = require('../docs/builder/core.js');
-const recipeDir=process.env.MIGHTY_NAM_RECIPE==='looper'?'looper-builder':'builder';
+const recipeDir=({looper:'looper-builder',v28:'builder-v28',v23:'builder'})[process.env.MIGHTY_NAM_RECIPE]||'builder';
 require('../docs/'+recipeDir+'/recipe.js');
 const recipe = globalThis.MightyNamRecipe;
-const extended = ['NAMLNK27','NAMLNK28'].includes(recipe.identity);
+const extended = ['NAMLNK27','NAMLNK28','NAMLNK29'].includes(recipe.identity);
 const copy = () => structuredClone(recipe);
 const stockPath = process.env.MIGHTY_NAM_STOCK_FILE;
 const stock = stockPath ? new Uint8Array(fs.readFileSync(stockPath)) : null;
@@ -23,7 +23,7 @@ test('release contains original code, hooks, licensed starters and global erase'
   assert.equal(recipe.presets, 'riffsmith-mit-3'); assert.equal(recipe.captures_included, true); assert.equal(recipe.operations.filter(x => x.kind === 'preset-bank').length, 1);
   assert.ok(!JSON.stringify(recipe).includes('original":'));
   assert.ok(recipe.operations.every(x => !('original' in x)));
-  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), recipe.identity==='NAMLNK28'?38012:recipe.identity==='NAMLNK27'?36128:25556);
+  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), recipe.identity==='NAMLNK29'?40352:recipe.identity==='NAMLNK28'?38012:recipe.identity==='NAMLNK27'?36128:25556);
 });
 test('wrong size and renamed/corrupted stock fail before building', async () => {
   await assert.rejects(core.inspect(new Uint8Array(100)), /Unsupported file size/);
@@ -51,7 +51,7 @@ test('exact local stock produces the independently staged image, without editing
   const before = await core.sha(stock);
   const built = await core.build(stock, recipe);
   assert.equal(await core.sha(stock), before);
-  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
+  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK29'?'0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a':recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
   assert.equal(built.report.presets,'riffsmith-mit-3'); assert.equal(built.report.flashed,false);
   assert.equal(built.report.hardware_verified,false);
   for(const license of Object.values(built.report.license_notices)) assert.match(license,/Permission is hereby granted/);

@@ -1,0 +1,23 @@
+{
+  "status": "PASS_OFFLINE_KIT",
+  "no_combined_firmware": true,
+  "all_resources_local": true,
+  "versions": [
+    {
+      "identity": "NAMLNK23",
+      "sha256": "de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698",
+      "presets": "riffsmith-mit-3"
+    },
+    {
+      "identity": "NAMLNK28",
+      "sha256": "8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77",
+      "presets": "riffsmith-mit-3"
+    },
+    {
+      "identity": "NAMLNK29",
+      "sha256": "0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a",
+      "presets": "riffsmith-mit-3"
+    }
+  ],
+  "device_access": false
+}

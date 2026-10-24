@@ -37,7 +37,7 @@ class FirmwareSetupCard extends StatelessWidget {
       Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         const Text('Set up firmware', style: TextStyle(fontSize: 21)),
         const SizedBox(height: 8),
-        const Text('Mighty Plug Pro only · experimental NAMLNK23',
+        const Text('Mighty Plug Pro only · experimental firmware',
             style: TextStyle(color: Colors.white54, fontSize: 12)),
         step(
             '1  Get the NUX files',
@@ -49,7 +49,7 @@ class FirmwareSetupCard extends StatelessWidget {
         const Divider(),
         step(
             '2  Build mighty-nam',
-            'Select that Original .bin in the local builder, then save the generated firmware and build report. The file stays on your computer.',
+            'Choose NAMLNK29 or an older supported version in the local builder, select that Original .bin, then save the generated firmware and build report. The file stays on your computer.',
             link('Open local builder', firmwareBuilderUrl, primary: true)),
         const Divider(),
         step(
