@@ -20,16 +20,16 @@ class LoopReading {
         cursor = w[2],
         pending = w[3],
         sequence = w[4],
-        error = ['NAMLNK27', 'NAMLNK28'].contains(identity) ? w[5] & 255 : w[5],
+        error = ['NAMLNK27', 'NAMLNK28', 'NAMLNK29'].contains(identity) ? w[5] & 255 : w[5],
         faults = w[7],
         seconds = (w[6] >> 16) & 255,
         threshold = w[6] & 255,
         volume = (w[6] >> 8) & 255,
-        saveSupported = identity == 'NAMLNK28',
-        saved = identity == 'NAMLNK28' && (w[6] & (1 << 24)) != 0,
+        saveSupported = ['NAMLNK28', 'NAMLNK29'].contains(identity),
+        saved = ['NAMLNK28', 'NAMLNK29'].contains(identity) && (w[6] & (1 << 24)) != 0,
         mode = (w[0] & 256) != 0,
         overdub = (w[0] & 512) != 0,
-        peak = ['NAMLNK27', 'NAMLNK28'].contains(identity)
+        peak = ['NAMLNK27', 'NAMLNK28', 'NAMLNK29'].contains(identity)
             ? (w[5] >> 8) / 65535
             : null {
     if (state > 5 ||
@@ -41,8 +41,8 @@ class LoopReading {
         threshold < 12 ||
         threshold > 60 ||
         volume > 100 ||
-        (identity == 'NAMLNK28' && w[6] >> 25 != 0) ||
-        (['NAMLNK27', 'NAMLNK28'].contains(identity) && w[5] >> 24 != 0)) {
+        (['NAMLNK28', 'NAMLNK29'].contains(identity) && w[6] >> 25 != 0) ||
+        (['NAMLNK27', 'NAMLNK28', 'NAMLNK29'].contains(identity) && w[5] >> 24 != 0)) {
       throw const FormatException('Invalid loop status');
     }
   }
@@ -72,14 +72,14 @@ class LooperClient {
   int nonce = 0;
   LooperClient(this.exchange, this.identity);
   Future<List<int>> request(int op, int arg) async {
-    final extended = ['NAMLNK27', 'NAMLNK28'].contains(identity);
-    if (!['NAMLNK26', 'NAMLNK27', 'NAMLNK28'].contains(identity) ||
+    final extended = ['NAMLNK27', 'NAMLNK28', 'NAMLNK29'].contains(identity);
+    if (!['NAMLNK26', 'NAMLNK27', 'NAMLNK28', 'NAMLNK29'].contains(identity) ||
         !(op == 0 && arg >= 0 && arg <= (extended ? 6 : 5) ||
             op == 1 && arg >= 1 && arg <= 10 ||
             op == 2 && arg >= 12 && arg <= 60 ||
             op == 3 && arg >= 0 && arg <= 100 ||
             op == 4 && [30, 60].contains(arg) ||
-            identity == 'NAMLNK28' && op == 5 && arg == 1)) {
+            ['NAMLNK28', 'NAMLNK29'].contains(identity) && op == 5 && arg == 1)) {
       throw const FormatException('Unsupported looper request');
     }
     nonce = nonce % 16383 + 1;
@@ -128,7 +128,7 @@ class LooperClient {
   }
 
   Future<LoopReading> read() async => LoopReading(
-      await request(0, ['NAMLNK27', 'NAMLNK28'].contains(identity) ? 6 : 5),
+      await request(0, ['NAMLNK27', 'NAMLNK28', 'NAMLNK29'].contains(identity) ? 6 : 5),
       identity);
   Future<LoopReading> change(int op, int arg) async {
     final sequence = (await request(op, arg))[0];

@@ -9,6 +9,8 @@ static void message(const uint8_t *p,size_t n,void *ctx){
  assert(!error && words[0]==0x4c4f5031 && words[7]==0xffffffff);++received;
 }
 int main(void){
+ assert(loop_schema("NAMLNK25")==1 && loop_schema("NAMLNK28")==4 && loop_schema("NAMLNK29")==5);
+ assert(!loop_schema("NAMLNK30") && !loop_schema(NULL) && !loop_schema("PLUGPRO"));
  assert(loop_usb_name("MIGHTY PLUG PRO USB") && loop_usb_name("NUX NMP-03"));
  assert(!loop_usb_name(NULL) && !loop_usb_name("NUX NMP-03 UPDATE") && !loop_usb_name("Other MIDI"));
  uint8_t p[55]={0};unsigned error;uint32_t words[8];

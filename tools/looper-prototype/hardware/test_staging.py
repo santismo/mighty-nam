@@ -6,7 +6,7 @@ p=argparse.ArgumentParser(description=__doc__)
 for name in ['baseline','work','stock','bank','bank_report','output']:p.add_argument(name,type=Path)
 a=p.parse_args();rejected=[]
 identity=json.loads((a.work/'build/build.json').read_text())['identity']
-extended=identity in ['NAMLNK26','NAMLNK27']
+extended=identity in ['NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29']
 cases=[
     ('missing startup','startup.json',None),
     ('stale ELF','audio.json',lambda r:r.update(elf_sha256='0'*64)),
@@ -21,18 +21,30 @@ if extended:cases += [
     ('stale buttons','buttons.json',lambda r:r.update(elf_sha256='0'*64)),
     ('missing full duration','offline/full-duration.json',lambda r:r.update(callbacks=1)),
 ]
-if identity=='NAMLNK27':cases += [
+if identity in ['NAMLNK27','NAMLNK28','NAMLNK29']:cases += [
     ('missing meter','layers-arm.json',lambda r:r.update(live_meter_in_compact_status=False)),
     ('missing short tap','buttons.json',lambda r:r.update(phone_arm_physical_short_tap_finish=False)),
     ('missing quality','offline/quality.json',None),
     ('quality regression','offline/quality.json',lambda r:r.update(snr_db=16)),
 ]
+if identity in ['NAMLNK28','NAMLNK29']:cases += [
+    ('settings persistence missing','settings.json',lambda r:r.update(saved_threshold_level_duration_restart=False)),
+    ('settings interrupted writes missing','offline/settings-store.json',lambda r:r.update(interrupted_write_cases=0)),
+]
+if identity=='NAMLNK29':cases += [
+    ('stale seven slots','seven-presets.json',lambda r:r.update(elf_sha256='0'*64)),
+    ('seven slot regression','seven-presets.json',lambda r:r.update(seven_slots=False)),
+    ('existing lane edit missing','layers-arm.json',lambda r:r.update(existing_lane_multi_pass=False)),
+    ('lane boundary coverage missing','offline/takes.json',lambda r:r.update(boundary_cases=0)),
+]
 for label,file,edit in cases:
     with tempfile.TemporaryDirectory(prefix='mighty-loop-stage-') as tmp:
         test=Path(tmp);(test/'build').mkdir()
         files=['build/build.json','build/loop-startup-test.elf','startup.json','audio.json','continuity-test.json']
-        if extended:files+=['layers-arm.json','buttons.json','offline/layers.json','offline/full-duration.json','offline/source-hashes.json']
-        if identity=='NAMLNK27':files+=['offline/quality.json']
+        if extended:files+=['layers-arm.json','buttons.json','offline/takes.json' if identity=='NAMLNK29' else 'offline/layers.json','offline/full-duration.json','offline/source-hashes.json']
+        if identity in ['NAMLNK28','NAMLNK29']:files+=['settings.json','offline/settings-store.json','offline/gestures.json']
+        if identity=='NAMLNK29':files+=['seven-presets.json','vm-observer.json']
+        if identity in ['NAMLNK27','NAMLNK28','NAMLNK29']:files+=['offline/quality.json']
         for name in files:
             (test/name).parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(a.work/name,test/name)
         if edit:

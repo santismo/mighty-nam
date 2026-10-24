@@ -1,5 +1,7 @@
 # Looper prototypes
 
+The latest source-only preview is [NAMLNK29 independent lanes and preset-save fixes](takes/README.md). It adds reusable overdub lanes and one-edit undo within the existing RAM pool.
+
 See [controls, compressed transport, tests and RAM findings](../../docs/looper-research.md).
 Nothing here is integrated into NAMLNK24 or the public builder. The separate
 [NAMLNK25 hardware-test sources](hardware/README.md) add startup integration and

@@ -8,6 +8,11 @@
 static int loop_usb_name(const char *name) {
  return name && (!strcmp(name,"MIGHTY PLUG PRO USB") || !strcmp(name,"NUX NMP-03"));
 }
+static unsigned loop_schema(const char *identity) {
+ const char *known[]={"NAMLNK25","NAMLNK26","NAMLNK27","NAMLNK28","NAMLNK29"};
+ if(identity)for(unsigned i=0;i<5;++i)if(!strcmp(identity,known[i]))return i+1;
+ return 0;
+}
 static int loop_request(uint8_t out[14],unsigned op,unsigned arg,unsigned nonce) {
  if(op>1 || (op==0?arg>4:arg<1||arg>5) || !nonce || nonce>16383)return 0;
  const uint8_t head[]={240,67,88,112,4,2,78,79,1};memcpy(out,head,9);
