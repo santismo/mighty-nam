@@ -8,6 +8,8 @@ NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller
 
 This repository contains the firmware experiments, Mac app, protocols and test evidence. The separate [mighty-nam-controller repository](https://github.com/santismo/mighty-nam-controller) is public and hosts the phone page.
 
+**Amp-model replacement:** The main NAM block replaces the stock NUX amp models. You use NAM captures for the amp sound; the original NUX amp models are not selectable in this firmware. The supported stock effects remain available in the signal chain.
+
 ## Current version
 
 | Component | Status |
