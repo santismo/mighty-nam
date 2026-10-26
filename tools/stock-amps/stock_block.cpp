@@ -7,11 +7,14 @@ void old_loop_startup();void old_loop_service();
 __attribute__((section(".tone"),aligned(32))) uint8_t mpp_amp_tone[68];
 void mpp_fx_get(uint8_t*);void mpp_reply_send(const uint8_t*,unsigned,unsigned);
 void old_loop_query(const uint8_t*,unsigned,unsigned);
+bool old_loop_read(void*,uint32_t,uint8_t*,unsigned);
+bool old_loop_erase(void*,uint32_t);
+bool old_loop_program(void*,uint32_t,const uint8_t*,unsigned);
 void stock_engine_process(void*,const uint8_t*,float*,float*,unsigned);
 extern uint8_t stock_engines[];
 }
 namespace {
-struct State { uint8_t config[16];volatile unsigned ready;float wet;uint32_t calls,prepares,rejections; } state;
+struct State { uint8_t config[16];volatile unsigned ready;float wet;uint32_t calls,prepares,rejections,io_status,io_address,io_count; } state;
 bool supported(unsigned n){return n>=1&&n<=29;}
 struct Meta { uint32_t bytes,init,process,source,tone,checksum; };
 const Meta& meta(unsigned id){return ((const Meta*)0x30b90000)[id-1];}
@@ -34,6 +37,16 @@ bool prepare(unsigned id){
  return true;
 }
 void barrier(){__asm__ volatile("dmb":::"memory");}
+void flash_cache(uint32_t address,unsigned n){
+ // NOR is read-only through AHB. Invalidate, never clean dirty lines back
+ // to flash. The existing driver still owns writes and FlexSPI SWRESET.
+ __asm__ volatile("dsb":::"memory");
+ for(uint32_t p=address&~31u;p<address+n;p+=32)*(volatile uint32_t*)0xe000ef5c=p;
+ __asm__ volatile("dsb\nisb":::"memory");
+}
+bool storage_result(unsigned op,uint32_t address,bool ok){
+ state.io_address=address;state.io_status=(op<<24)|(++state.io_count&0xffffu)|(ok?0:0x80000000u);return ok;
+}
 }
 extern "C" {
 __attribute__((noinline)) void mpp_extra_init(){for(unsigned i=0;i<sizeof(state);++i)((volatile uint8_t*)&state)[i]=0;((void(*)())0x58b7)();}
@@ -100,10 +113,22 @@ void mpp_extra_process(unsigned slot,float* l,float* r){
  }++state.calls;
 }
 void mpp_extra_query(const uint8_t* p,unsigned n,unsigned channel){
- if(n==9&&p[0]==240&&p[1]==67&&p[2]==88&&p[3]==112&&p[4]==4&&p[5]==2&&p[6]==78&&p[7]==80&&p[8]==126){
-  uint8_t out[15]={240,67,88,112,4,2,1,126,0};const uint32_t value=0x5354011d;
+ unsigned size=n;if(size==10&&p[9]==247)--size;
+ if(size==9&&channel<=1&&p[0]==240&&p[1]==67&&p[2]==88&&p[3]==112&&p[4]==4&&p[5]==2&&p[6]==78&&p[7]==80&&p[8]>=124&&p[8]<=127){
+  uint8_t out[15]={240,67,88,112,4,2,1,p[8],0};
+  const uint32_t value=p[8]==126?0x5354011d:p[8]==127?0x4e300002:p[8]==124?state.io_status:state.io_address;
   for(unsigned i=0;i<5;++i)out[9+i]=(value>>(i*7))&127;out[14]=247;mpp_reply_send(out,15,channel);return;
  }
  old_loop_query(p,n,channel);
+}
+bool mpp_extra_erase(void* context,uint32_t address){
+ bool ok=old_loop_erase(context,address);
+ if(ok)flash_cache(address,4096);
+ return storage_result(1,address,ok);
+}
+bool mpp_extra_program(void* context,uint32_t address,const uint8_t* source,unsigned n){
+ bool ok=old_loop_program(context,address,source,n);
+ if(ok)flash_cache(address,n);
+ return storage_result(n==4?3:2,address,ok);
 }
 }

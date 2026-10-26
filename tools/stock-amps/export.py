@@ -2,6 +2,7 @@
 from integration import *
 sys.path[:0]=[str(BASE/"generated/research"),str(BASE/"generated/tools")]
 import base64
+from seven_defaults import populate
 sys.path.insert(0,str(ROOT/'firmware/tools'))
 from nux_container_lab import Container
 repo=ROOT
@@ -11,6 +12,7 @@ old=json.JSONDecoder().raw_decode((repo/'docs/builder-v29/recipe.js').read_text(
 original=Container(STOCK_FILE.read_bytes())
 body,s,plan=extension(original.payload,BASE/'build/nam-link-offline.elf',LOOP/'build/loop-startup-test.elf')
 body=bytearray(body);bank=base64.b64decode(next(o['data'] for o in old['operations'] if o['kind']=='preset-bank'))
+bank=populate(bank)
 body[0x344000:0x360000]=bank;body[0x364000:0x366000]=bytes([255])*8192
 ops=[];covered=[]
 def operation(kind,id,at,content,**extra):
@@ -54,8 +56,10 @@ for op in ops:
  assert len(data)==op['length'] and digest(data)==op['sha256'];rebuilt[op['offset']:op['offset']+len(data)]=data
 assert rebuilt==body
 candidate=original.rebuild_same_length(bytes(body))
-r=copy.deepcopy(old);r.update(builder_version='0.7.0',identity='NAMLNK30',firmware_revision='stock-amps-preview',elf_sha256=sha(HERE/'build/extra.elf'),operations=ops,physical_validation='Exact NAMLNK30 build tested offline; hardware trial pending.',evidence={'stock_amp_dsp_cases':87,'real_time_deadlines_verified':False})
-r['output']=dict(name='mighty-nam-NAMLNK30-experimental.bin',bytes=len(candidate),sha256=digest(candidate),payload_sha256=digest(body))
+r=copy.deepcopy(old);r.update(builder_version='0.7.1',identity='NAMLNK30',firmware_revision='stock-amps-r2',elf_sha256=sha(HERE/'build/extra.elf'),operations=ops,physical_validation='Exact NAMLNK30 build tested offline; hardware trial pending.',evidence={'stock_amp_dsp_cases':87,'real_time_deadlines_verified':False})
+r['starter_presets'] += [{**r['starter_presets'][0], 'color':color} for color in range(3,7)]
+r['starter_bank_sha256']=digest(bank)
+r['output']=dict(name='mighty-nam-NAMLNK30-r2-experimental.bin',bytes=len(candidate),sha256=digest(candidate),payload_sha256=digest(body))
 text='/* Original code, relocation instructions, input-copy descriptions and MIT starters. No stock firmware bytes. */\nglobalThis.MightyNamRecipe = '+json.dumps(r,indent=2)+';\n(globalThis.MightyNamRecipes ??= {})[globalThis.MightyNamRecipe.identity] = globalThis.MightyNamRecipe;\n'
 (repo/'docs/looper-builder/recipe.js').write_text(text)
 audit=dict(schema='mighty-nam-builder-provenance-1',identity='NAMLNK30',recipe_sha256=digest(text.encode()),elf_sha256=r['elf_sha256'],input_sha256=digest(original.data),output_sha256=digest(candidate),output_payload_sha256=digest(body),operations=len(ops),code_bytes=sum(o['length'] for o in ops if o['kind']=='code'),stock_original_bytes_exported=False,private_or_tone3000_captures_exported=False,starter_bank_sha256=digest(bank),output_matches_independent_stager=True,device_access=False,flashed=False)

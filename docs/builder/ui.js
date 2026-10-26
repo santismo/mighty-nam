@@ -8,7 +8,7 @@
   const recipes = globalThis.MightyNamRecipes || {[MightyNamRecipe.identity]: MightyNamRecipe};
   let recipe = MightyNamRecipe, generation = 0, selected = null, building = false, urls = [];
   const summaries = {
-    NAMLNK30:'NAM plus all 29 stock amps, with the version 29 looper. Hardware trial pending.',
+    NAMLNK30:'Revision 2: Amp discovery, seven filled colors and flash-readback cache maintenance. Hardware save check pending.',
     NAMLNK29:'Reusable overdub lanes, undo/redo and the seven-slot save fix. Offline tested; hardware trial pending.',
     NAMLNK28:'Earlier looper with merged overdubs and saved loop settings. No separate lanes or undo.',
     NAMLNK23:'Earlier Bluetooth playback fix, NAM and effects. No looper or Daisy-derived Auto Wah.'

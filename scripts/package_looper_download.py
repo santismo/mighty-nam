@@ -51,9 +51,10 @@ Guide: https://santismo.github.io/mighty-nam/guide.html
 This archive contains original compiled changes and three MIT-licensed
 RiffSmith captures, not a NUX or combined firmware image. Keep generated images
 local. Installation replaces onboard presets and global settings. Green Clean,
-Orange Bass Clean and Red Distorted are supplied; four colors remain empty.
+Orange Bass Clean and Red Distorted are supplied; colors 4–7 start as copies of Green on NAMLNK30 r2. Earlier builds retain four empty colors.
 
-NAMLNK30 adds all 29 stock amp choices through Add block > Amp alongside NAM. Only
+NAMLNK30 revision 2 fixes Bluetooth Amp discovery and adds flash-readback cache invalidation.
+The hardware storage failure still needs verification. NAMLNK30 adds all 29 stock amp choices through Add block > Amp alongside NAM. Only
 one stock amp can run at once. Stock code is copied from your supplied NUX
 file during local assembly. No stock bytes are bundled.
 
@@ -65,7 +66,7 @@ lanes and undo, keep the base slightly under 6 seconds (30 s mode) or 12 seconds
 (60 s mode). Lane controls are on the phone; Mac supports transport/settings.
 Threshold, level and duration apply live. Clear the retained loop, then choose
 Save looper settings to persist them. Defaults: -50 dB threshold, 100% level.
-Loops themselves are lost on power-off. Mac 0.7.0+ and phone 0.11.0+ supported.
+Loops themselves are lost on power-off. Mac 0.7.0+ and phone 0.11.1+ supported.
 
 The version menu also offers NAMLNK29 (without stock amps), NAMLNK28 (merged overdubs, no lanes/undo)
 and NAMLNK23 r2 (NAM/effects, no looper or Daisy-derived Auto Wah).

@@ -37,6 +37,7 @@ def extension(stock,base,loop,identity='NAMLNK30'):
  def base_jump(name,new):jump(0x366000+s[name]-1-0x2030f000,extra[new])
  jump(0x581a,extra['mpp_extra_startup']);jump(0x5868,extra['mpp_extra_service'])
  base_jump('_ZN3mpp2fx5validEPKh','mpp_extra_valid');base_jump('mpp_fx_graph_process','mpp_extra_process')
+ base_jump('_ZN12_GLOBAL__N_15eraseEPvj','mpp_extra_erase');base_jump('_ZN12_GLOBAL__N_17programEPvjPKhj','mpp_extra_program')
  data[0x21243:0x21247]=struct.pack('<I',extra['mpp_extra_query']);allowed.append((0x21243,0x21247))
  assert stock[0x65d8:0x65dc]==bytes.fromhex('56f82270')
  delta=(extra['mpp_master_zero']&~1)-(0x65d8+4);sign=(delta>>24)&1;i1=(delta>>23)&1;i2=(delta>>22)&1

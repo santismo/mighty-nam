@@ -1,0 +1,19 @@
+{
+  "phone_version": "0.11.1",
+  "phone_passed": 212,
+  "phone_failed": 0,
+  "builder_version": "0.7.1",
+  "builder_passed": 27,
+  "builder_skipped": 2,
+  "builder_failed": 0,
+  "builder_skip_reason": "Alternate stock CT and legacy V1 files not supplied",
+  "archived_versions_exact_outputs": [
+    "NAMLNK29",
+    "NAMLNK28",
+    "NAMLNK23 r2"
+  ],
+  "mac_version": "0.7.0",
+  "mac_changed_this_revision": false,
+  "device_access": false,
+  "host_audio_access": false
+}

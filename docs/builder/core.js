@@ -81,8 +81,9 @@
   }
   async function validateStarters(bank, recipe) {
     need(bank.length === BANK_END-BANK_START && await sha(bank) === recipe.starter_bank_sha256, 'Starter bank checksum mismatch.');
-    need(bank.subarray(49152).every(x=>x===255), 'Unexpected extra starter presets.');
-    for(let i=0;i<3;i++) {
+    const count=recipe.identity==='NAMLNK30'&&recipe.firmware_revision==='stock-amps-r2'?7:3;
+    need(bank.subarray(count*16384).every(x=>x===255), 'Unexpected extra starter presets.');
+    for(let i=0;i<count;i++) {
       const record=bank.subarray(i*16384,i*16384+8192), d=new DataView(record.buffer,record.byteOffset,8192);
       const row=recipe.starter_presets[i];
       need(d.getUint32(0,true)===0x3142504e && d.getUint32(4,true)===1 && d.getUint32(8,true)===i && d.getUint32(12,true)===1 && d.getUint32(20,true)===1 && d.getUint32(24,true)===8 && d.getUint32(28,true)===0, 'Invalid starter header.');
@@ -106,8 +107,8 @@
     const CODE = stockAmps ? CODE30 : latest ? CODE27 : CODE23, HOOKS = stockAmps ? HOOKS30 : latest ? HOOKS27 : HOOKS23;
     need(r.schema === 'mighty-nam-local-builder-1' && ['NAMLNK23','NAMLNK27','NAMLNK28','NAMLNK29','NAMLNK30'].includes(r.identity) && r.target === 'NUX-MP3', 'Unsupported builder recipe.');
     need(r.input.sha256 === INPUT_SHA && r.input.bytes === INPUT_BYTES && r.input.payload_sha256 === PAYLOAD_SHA, 'Recipe input does not match this builder.');
-    need(r.presets === 'riffsmith-mit-3' && r.captures_included === true && r.starter_presets?.length === 3, 'Only the licensed starter bank is allowed.');
-    need(r.output.name === (latest ? `mighty-nam-${r.identity}-experimental.bin` : 'mighty-nam-NAMLNK23-r2-experimental.bin') && /^[a-f0-9]{64}$/.test(r.output.sha256), 'Invalid output specification.');
+    need(r.presets === 'riffsmith-mit-3' && r.captures_included === true && r.starter_presets?.length === (stockAmps&&r.firmware_revision==='stock-amps-r2'?7:3), 'Only the licensed starter bank is allowed.');
+    need(r.output.name === (stockAmps&&r.firmware_revision==='stock-amps-r2'?'mighty-nam-NAMLNK30-r2-experimental.bin':latest ? `mighty-nam-${r.identity}-experimental.bin` : 'mighty-nam-NAMLNK23-r2-experimental.bin') && /^[a-f0-9]{64}$/.test(r.output.sha256), 'Invalid output specification.');
     need(Array.isArray(r.operations) && r.operations.length === CODE.size + HOOKS.size + 2 + (stockAmps ? 30 : 0), 'Incomplete builder recipe.');
     const parsed = parse(original), payload = parsed.payload.slice();
     const spans = [], seen = new Set();
@@ -176,7 +177,7 @@
       license_notices: r.license_notices, original_file_changed: false,
       built_locally: true, device_access: false, flashed: false, hardware_verified: false,
       limitations: [latest ? 'Public looper starter variant verified offline; earlier looper variants have limited device tests. Final gesture, overdub and timing checks remain.' : 'Three-starter variant verified offline; NAMLNK23 core has limited device validation. Physical pitch timing and Logic duplex remain unverified.',
-        'Installation replaces onboard presets and global settings with three RiffSmith A2 Lite starters and four empty colors.',
+        stockAmps&&r.firmware_revision==='stock-amps-r2'?'Installation replaces onboard presets and global settings with seven populated colors using three RiffSmith captures. Colors 4–7 start as copies of Green.':'Installation replaces onboard presets and global settings with three RiffSmith A2 Lite starters and four empty colors.',
         'Combined image contains user-supplied NUX firmware; it is not wholly MIT licensed. Keep it local.',
         'Recovery depends on a reachable updater; not guaranteed.']
     }};

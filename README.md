@@ -8,6 +8,8 @@ NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller
 
 This repository contains the firmware experiments, Mac app, protocols and test evidence. The separate [mighty-nam-controller repository](https://github.com/santismo/mighty-nam-controller) is public and hosts the phone page.
 
+**Revision 2:** corrects Amp discovery through the actual USB/Bluetooth receive path and populates all seven colors. Flash-readback cache maintenance and storage diagnostics are included; the reported physical save error still needs a device retest.
+
 **NAM and stock amps:** NAMLNK30 adds all 29 stock NUX amp choices in a movable Amp block, alongside the A2 Lite NAM block. Choose Add block → Amp. One stock amp instance is available; the other FX block remains usable for Pitch, Auto Wah or modulation. Ordinary NAMLNK29 remains compatible but does not have this stock amp extension.
 
 ## Current version
@@ -16,7 +18,7 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 | --- | --- |
 | Mac 0.7.0 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23–30 support, both wah choices on 24–30, and a Looper panel on 26–30 (live input meter on 27+, saved loop settings on 28+). Independent lane controls are phone-only. Not notarized. |
 | Phone 0.11.0 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering and Looper controls with a live threshold meter on NAMLNK27+, optional saved loop settings on NAMLNK28 and a separate TONE3000 picker that keeps the controller page open. |
-| Local builder 0.7.0 / NAMLNK30 | Requires the exact public NUX `MP3_OR_V3.0.5.bin`. Includes all 29 stock amp choices plus NAM, three MIT-licensed RiffSmith A2 Lite starters, Daisy-derived Auto Wah, 30/60-second looper, independent overdub lanes, undo/redo, seven-slot save fix, gestures and saved loop settings. Earlier NAMLNK29, NAMLNK28 and NAMLNK23 r2 remain selectable. Install your locally built image with the official NUX updater. |
+| Local builder 0.7.1 / NAMLNK30 r2 | Requires the exact public NUX `MP3_OR_V3.0.5.bin`. Includes all 29 stock amp choices plus NAM, three MIT-licensed RiffSmith A2 Lite starters, Daisy-derived Auto Wah, 30/60-second looper, independent overdub lanes, undo/redo, seven-slot save fix, gestures and saved loop settings. Earlier NAMLNK29, NAMLNK28 and NAMLNK23 r2 remain selectable. Install your locally built image with the official NUX updater. |
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
 
@@ -40,11 +42,11 @@ On Mac, install the preview into Applications and connect the plug over a data-c
 1. Get the public **V3.0.5 macOS ZIP** from [NUX](https://nuxaudio.com/product/mightyplugpro/) under Support → Firmwares. It includes **MP3_OR_V3.0.5.bin** and **NUX Device Updater 2.2.1.dmg**.
 2. Open the [local builder](https://santismo.github.io/mighty-nam/looper-builder.html), select **MP3_OR_V3.0.5.bin**, and save the generated firmware and report. No compiler, firmware upload or connected plug is needed.
 3. Follow the [installation guide](https://santismo.github.io/mighty-nam/looper-builder.html#install) to install your generated image with the official NUX updater in blinking-blue mode. Wait for success, then restart with POWER only.
-4. Connect the Mac or phone controller in normal mode. Green = RiffSmith Clean, Orange = RiffSmith Bass Clean, Red = RiffSmith Distorted. The other four colors are empty. Add effects and save your own A2 Lite captures into any color.
+4. Connect the Mac or phone controller in normal mode. Green = RiffSmith Clean, Orange = RiffSmith Bass Clean, Red = RiffSmith Distorted. Colors 4–7 start as copies of Green in NAMLNK30 r2. Add effects and save your own A2 Lite captures into any color.
 
 Installation replaces all onboard presets and global settings. Preserve anything you need first. The public builder does not incorporate the maintainer's private captures. Installing the Mac app alone preserves existing libraries and does not flash the plug.
 
-The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.7.0-preview.1/mighty-nam-local-builder-0.7.0.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
+The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/download/builder-v0.7.1-preview.1/mighty-nam-local-builder-0.7.1.zip) includes all build scripts. It contains original compiled changes and licensed starters, not NUX firmware or a complete hybrid image. Keep generated firmware local. There is no guaranteed recovery from arbitrary firmware damage.
 
 ## Source, licenses and privacy
 

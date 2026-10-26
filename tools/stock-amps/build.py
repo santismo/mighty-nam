@@ -12,7 +12,7 @@ def build():
  assert sha(LOOP/'build/loop-startup-test.elf')=='001356fa53c2cd1d2e66ba9e1d8d5c6e37c8d1f64a05898bfd465d3ab45aa496'
  a=symbols(BASE/'build/nam-link-offline.elf');b=symbols(LOOP/'build/loop-startup-test.elf')
  engine=next(k for k in a if k.startswith('_ZN3mpp2fx6Engine7process'))
- aliases={'__aeabi_memcpy':0x54bd,'__aeabi_memcpy4':0x54bd,'__aeabi_memclr4':0x556d,'mpp_fx_get':a['mpp_fx_get'],'mpp_reply_send':a['mpp_reply_send'],'old_loop_startup':b['mpp_loop_startup'],'old_loop_service':b['mpp_loop_service'],'old_loop_query':b['mpp_loop_query'],'stock_engine_process':a[engine],'stock_engines':a['_ZN12_GLOBAL__N_17enginesE']}
+ aliases={'__aeabi_memcpy':0x54bd,'__aeabi_memcpy4':0x54bd,'__aeabi_memclr4':0x556d,'mpp_fx_get':a['mpp_fx_get'],'mpp_reply_send':a['mpp_reply_send'],'old_loop_startup':b['mpp_loop_startup'],'old_loop_service':b['mpp_loop_service'],'old_loop_query':b['mpp_loop_query'],'old_loop_read':b['mpp_loop_read'],'old_loop_erase':b['mpp_loop_erase'],'old_loop_program':b['mpp_loop_program'],'stock_engine_process':a[engine],'stock_engines':a['_ZN12_GLOBAL__N_17enginesE']}
  out=HERE/'build';out.mkdir(exist_ok=True)
  ld='''ENTRY(mpp_extra_startup)
 MEMORY { BOOT(rx): ORIGIN=0x1d7c4,LENGTH=0x6c

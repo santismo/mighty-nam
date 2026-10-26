@@ -51,7 +51,7 @@ test('exact local stock produces the independently staged image, without editing
   const before = await core.sha(stock);
   const built = await core.build(stock, recipe);
   assert.equal(await core.sha(stock), before);
-  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK30'?'8c08629d0251892e730cc85609ec246bfc1f5a809a2b2ec56be14764a863abef':recipe.identity==='NAMLNK29'?'0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a':recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
+  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK30'?'a5cc7a7a48ff1abe8ff68e808e5af1f180694ed96c81a383135eb30832d92362':recipe.identity==='NAMLNK29'?'0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a':recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
   assert.equal(built.report.presets,'riffsmith-mit-3'); assert.equal(built.report.flashed,false);
   assert.equal(built.report.hardware_verified,false);
   for(const license of Object.values(built.report.license_notices)) assert.match(license,/Permission is hereby granted/);
@@ -70,8 +70,9 @@ test('exact local stock produces the independently staged image, without editing
     for (let j=0;j<512;j++) if (built.bytes[at+28+j]!==stock[at+28+j])
       assert.ok(recipe.operations.some(op => i*512+j>=op.offset && i*512+j<op.offset+op.length));
   }
-  assert.ok(payload.subarray(0x344000+49152,0x360000).every(x=>x===255));
-  for(let i=0;i<3;i++) assert.equal(new DataView(payload.buffer).getUint32(0x344000+i*16384,true),0x3142504e);
+  const slots=recipe.identity==='NAMLNK30'?7:3;
+  assert.ok(payload.subarray(0x344000+slots*16384,0x360000).every(x=>x===255));
+  for(let i=0;i<slots;i++) assert.equal(new DataView(payload.buffer).getUint32(0x344000+i*16384,true),0x3142504e);
   assert.ok(payload.subarray(0x364000,0x366000).every(x=>x===255));
 });
 test('same-length corrupt stock is rejected', {skip:!stock}, async () => {

@@ -28,9 +28,9 @@ tone coefficients have their own 68-byte area.
 | Existing bank code | `0x2030f000..0x20313c40` |
 | Existing looper code | `0x20314020..0x20317c70` |
 | Existing looper state | `0x20318020..0x203190b4` |
-| Amp state | `0x20319c00..0x20319c24` |
+| Amp state | `0x20319c00..0x20319c30` |
 | Amp tone coefficients | `0x20319d00..0x20319d44` |
-| Amp overlay code | `0x2031a020..0x2031a518` |
+| Amp overlay code | `0x2031a020..0x2031a620` |
 | Selected relocated wrapper | `0x2031a800..0x2031afe0` maximum |
 | Original amp scratch | `0x2031b000..0x2031c000` |
 
@@ -73,6 +73,7 @@ python tools/stock-amps/test_levels.py
 python tools/stock-amps/test_loop.py
 python tools/stock-amps/test_persistence.py
 python tools/stock-amps/test_starters.py
+python tools/stock-amps/test_phone_paths.py
 python tools/stock-amps/export.py
 MIGHTY_NAM_RECIPE=looper node --test scripts/test_firmware_builder.cjs
 ```
@@ -106,3 +107,24 @@ copied wrapper; even a no-op observer reproduces it (`observer_wrapper.py`). The
 integration harness omits only that observer, retaining the other code/NAM guards,
 loop canaries and exact DSP comparisons. This is a limitation of the dynamic
 ownership test, not evidence of physical RAM ownership.
+
+## Revision 2
+
+The initial NAMLNK30 capability handler accepted a length excluding the SysEx
+terminator. The real V3 receive assembler supplies a length including it. The
+phone therefore correctly hid Amp after an unsupported reply. Revision 2
+normalizes both lengths; tests now pass fragmented messages through the stock
+receive assembler on both transport selectors. NP 127 identifies revision 2
+as `0x4e300002`; NP 124/125 report the last preset storage write status/address.
+
+Seven colors are populated at build time. The three original starters are
+unchanged; colors 4–7 copy Green and can be replaced. Existing user-supplied
+records are preserved by the local population helper.
+
+After successful preset erase/program, the new wrapper invalidates only the
+affected flash D-cache lines. It retains the original bounded writer, FlexSPI
+reset, two-copy commit protocol, and refusal to write while a loop exists.
+This fixes verification under a modeled stale CPU-cache view. It is a
+hardening measure for the reported slot-four I/O error, not proof that cache
+coherency caused the physical device failure; hardware save/restart retest is
+still required. Failed operations are never automatically retried.
