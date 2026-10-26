@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 const nuxDownloadsUrl = 'https://nuxaudio.com/product/mightyplugpro/';
 const nuxFirmwareUrl =
     'https://nux.cherubtechnology.com/download/Firmware/Amps/HeadphoneAmps/MightyPlugPro/NUX_MightyPlugPro_Firmware_V3.0.5_macOS.zip';
-const firmwareBuilderUrl =
-    'https://santismo.github.io/mighty-nam/looper-builder.html';
+const firmwareBuilderUrl = 'https://santismo.github.io/mighty-nam/looper-builder.html';
 const firmwareInstallUrl = '$firmwareBuilderUrl#install';
 
 /// Opens documented web resources only. No device, updater or audio API.
@@ -50,7 +49,7 @@ class FirmwareSetupCard extends StatelessWidget {
         const Divider(),
         step(
             '2  Build mighty-nam',
-            'Choose NAMLNK30 or an older supported version in the local builder, select that Original .bin, then save the generated firmware and build report. The file stays on your computer.',
+            'Choose NAMLNK29 or an older supported version in the local builder, select that Original .bin, then save the generated firmware and build report. The file stays on your computer.',
             link('Open local builder', firmwareBuilderUrl, primary: true)),
         const Divider(),
         step(

@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-26",
+  "purpose": "Restore pre-stock-amp source and downloads",
+  "versions": {
+    "firmware": "NAMLNK29",
+    "mac": "0.6.1",
+    "phone": "0.11.4",
+    "local_builder": "0.6.0"
+  },
+  "baselines": {
+    "main": "947b5e5",
+    "controller": "07a5093"
+  },
+  "phone_behavior": "Controller 0.10.2 behavior, with fresh release and cache version only",
+  "checks": {
+    "phone": {
+      "passed": 202,
+      "failed": 0
+    },
+    "mac_flutter": {
+      "passed": 136,
+      "skipped": 3,
+      "failed": 0
+    },
+    "builder": {
+      "passed": 24,
+      "skipped": 3,
+      "failed": 0
+    },
+    "builder_public_stock_roundtrip": "Original NAMLNK29 output reproduced from MP3_OR_V3.0.5.bin",
+    "public_installer": "DMG verified",
+    "public_builder_archive": "ZIP CRC and release checksum verified"
+  },
+  "hardware_validation": "No device commands or flashing in this rollback; physical Bluetooth check pending",
+  "firmware_output_sha256": "0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a"
+}

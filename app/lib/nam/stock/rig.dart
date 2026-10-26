@@ -30,11 +30,7 @@ class RigBlock {
   }
   bool get extra => slot == 'fxa' || slot == 'fxb';
   Processor? get effect => choices.isEmpty ? null : choices[choice];
-  bool get isAmp => extra && effect?.nuxIndex == 8;
-  String get name => isAmp ? 'Amp' : slotNames[slot]!;
-  String? get modelLabel => isAmp
-      ? stockAmpNames[stockAmpIds.indexOf(effect!.parameters.first.midiValue)]
-      : effect?.name;
+  String get name => slotNames[slot]!;
   Map<String, dynamic> toJson() => {
         'slot': slot,
         if (extra && fxWire != null) 'fx_wire': fxWire,
@@ -72,10 +68,6 @@ class HybridRig {
       config[i] = b.effect!.nuxIndex;
       config[i + 1] = b.enabled ? 1 : 0;
       config[i + 2] = blocks.indexOf(b);
-      if (config[i] < 8) {
-        for (var k = 10; k < 16; k++) config[i + k] = 0;
-        if (b.fxWire?[0] == 8 && config[i] != 1) config[i + 3] = 12;
-      }
       for (final p in b.effect!.parameters) {
         config[i + p.devicePresetIndex] = p.midiValue;
       }
@@ -87,31 +79,6 @@ class HybridRig {
   List<RigBlock> visibleBlocks({required bool activeOnly}) => activeOnly
       ? blocks.where((b) => b.enabled || visibleSlots.contains(b.slot)).toList()
       : blocks;
-
-  RigBlock? get availableAmpSlot {
-    if (!stockAmpsAvailable || availableStockAmpIds.isEmpty) return null;
-    final visible = visibleBlocks(activeOnly: true);
-    for (final block in blocks.where((b) => b.isAmp)) {
-      return visible.contains(block) ? null : block;
-    }
-    for (final block in blocks.where((b) => b.extra && !visible.contains(b))) {
-      return block;
-    }
-    return null;
-  }
-
-  RigBlock addAmpBlock() {
-    final block = availableAmpSlot;
-    if (block == null)
-      throw StateError('Amp is already in the chain or no effect slot is free');
-    if (!block.isAmp) {
-      block.choice = block.choices.indexWhere((e) => e.nuxIndex == 8);
-      block.fxWire = null;
-      block.effect!.parameters.first.midiValue = availableStockAmpIds.first;
-    }
-    addBlock(block);
-    return block;
-  }
 
   void addBlock(RigBlock block) {
     if (!blocks.contains(block)) throw ArgumentError('Unknown block');
@@ -237,10 +204,6 @@ class HybridRig {
               item['choice'] != 4) {
             continue;
           }
-          if (values == null &&
-              b.extra &&
-              e.nuxIndex == 8 &&
-              item['choice'] != 8) continue;
           if (values is! List || values.length != e.parameters.length) {
             throw const FormatException('Invalid effect parameters');
           }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'stock/rig.dart';
 import 'stock/catalog.dart';
-import 'stock/extra_fx.dart';
 import 'stock/control_plan.dart';
 
 const rigColors = {
-  'amp': Color(0xfff4ac75),
   'gate': Color(0xff9aadc2),
   'comp': Color(0xffe5c779),
   'fxa': Color(0xffd0a3ed),
@@ -19,7 +17,6 @@ const rigColors = {
   'reverb': Color(0xffeea5c9),
 };
 const rigIcons = {
-  'amp': Icons.speaker_group_outlined,
   'gate': Icons.multiline_chart,
   'comp': Icons.compress,
   'fxa': Icons.tune,
@@ -61,9 +58,7 @@ class _RigEditorState extends State<RigEditor> {
         'NAMLNK25',
         'NAMLNK26',
         'NAMLNK27',
-        'NAMLNK28',
-        'NAMLNK29',
-        'NAMLNK30'
+        'NAMLNK28', 'NAMLNK29'
       ].contains(widget.firmwareIdentity);
   Future<void> addBlock() async {
     final available = widget.rig.blocks
@@ -77,13 +72,7 @@ class _RigEditorState extends State<RigEditor> {
                     width: 360,
                     height: (available.length * 52.0).clamp(80.0, 380.0),
                     child: ListView(children: [
-                      if (widget.rig.availableAmpSlot != null)
-                        ListTile(
-                            key: const ValueKey('add-amp'),
-                            title: const Text('Amp'),
-                            onTap: () => Navigator.pop(context, 'amp')),
-                      for (final b in available.where((b) =>
-                          !b.isAmp || widget.rig.availableAmpSlot == null))
+                      for (final b in available)
                         ListTile(
                             key: ValueKey('add-${b.slot}'),
                             title: Text(b.name),
@@ -96,13 +85,9 @@ class _RigEditorState extends State<RigEditor> {
                 ]));
     if (mounted && slot != null) {
       change(() {
-        if (slot == 'amp') {
-          selected = widget.rig.addAmpBlock().slot;
-        } else {
-          final block = widget.rig.blocks.singleWhere((b) => b.slot == slot);
-          widget.rig.addBlock(block);
-          selected = slot;
-        }
+        final block = widget.rig.blocks.singleWhere((b) => b.slot == slot);
+        widget.rig.addBlock(block);
+        selected = slot;
       });
     }
   }
@@ -147,19 +132,7 @@ class _RigEditorState extends State<RigEditor> {
         context: context,
         builder: (_) => _EffectPicker(
             block: block, firmwareIdentity: widget.firmwareIdentity));
-    if (mounted && choice != null) {
-      if (block.choices[choice].nuxIndex == 8 &&
-          widget.rig.blocks
-              .any((b) => b != block && b.extra && b.effect?.nuxIndex == 8)) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Only one stock amp block is available.')));
-        return;
-      }
-      change(() {
-        block.choice = choice;
-        block.fxWire = null;
-      });
-    }
+    if (mounted && choice != null) change(() => block.choice = choice);
   }
 
   void change(VoidCallback action) {
@@ -174,7 +147,7 @@ class _RigEditorState extends State<RigEditor> {
       selected = visible.isEmpty ? 'nam' : visible.first.slot;
     }
     final b = widget.rig.blocks.firstWhere((b) => b.slot == selected);
-    final color = rigColors[b.isAmp ? 'amp' : b.slot]!;
+    final color = rigColors[b.slot]!;
     final index = visible.indexOf(b);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       const Row(children: [
@@ -218,8 +191,7 @@ class _RigEditorState extends State<RigEditor> {
                       proxyDecorator: (child, _, animation) =>
                           Material(color: Colors.transparent, child: child),
                       itemBuilder: (context, i) {
-                        final item = visible[i],
-                            c = rigColors[item.isAmp ? 'amp' : item.slot]!;
+                        final item = visible[i], c = rigColors[item.slot]!;
                         return Padding(
                           key: ValueKey('block-${item.slot}'),
                           padding: const EdgeInsets.only(right: 10),
@@ -262,10 +234,7 @@ class _RigEditorState extends State<RigEditor> {
                                                     widget.rig.bypassBlock(
                                                         item, !item.enabled);
                                                   }),
-                                              icon: Icon(
-                                                  rigIcons[item.isAmp
-                                                      ? 'amp'
-                                                      : item.slot],
+                                              icon: Icon(rigIcons[item.slot],
                                                   size: 21,
                                                   color: item.enabled
                                                       ? c
@@ -296,7 +265,7 @@ class _RigEditorState extends State<RigEditor> {
                                         const SizedBox(height: 4),
                                         Text(
                                             item.enabled
-                                                ? (item.modelLabel ??
+                                                ? (item.effect?.name ??
                                                     widget.modelName ??
                                                     'Choose tone')
                                                 : 'Bypassed',
@@ -328,7 +297,7 @@ class _RigEditorState extends State<RigEditor> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Row(children: [
-              Icon(rigIcons[b.isAmp ? 'amp' : b.slot], color: color),
+              Icon(rigIcons[b.slot], color: color),
               const SizedBox(width: 12),
               Expanded(
                   child: Column(
@@ -340,9 +309,7 @@ class _RigEditorState extends State<RigEditor> {
                     Text(
                         b.slot == 'nam'
                             ? 'Your captures and favorites'
-                            : b.isAmp
-                                ? '${availableStockAmpIds.length} amplifiers'
-                                : 'Mighty Plug Pro · ${b.choices.length} ${b.choices.length == 1 ? 'effect' : 'effects'}',
+                            : 'Mighty Plug Pro · ${b.choices.length} ${b.choices.length == 1 ? 'effect' : 'effects'}',
                         style: const TextStyle(
                             fontSize: 12, color: Colors.white54)),
                   ])),
@@ -391,12 +358,11 @@ class _RigEditorState extends State<RigEditor> {
                         runSpacing: 12,
                         children: [
                           for (final p in b.effect!.parameters)
-                            if (!(b.effect is StockAmpFx && p.name.isEmpty))
-                              SizedBox(
-                                  width: constraints.maxWidth >= 650
-                                      ? (constraints.maxWidth - 24) / 2
-                                      : constraints.maxWidth,
-                                  child: parameter(b, p, color))
+                            SizedBox(
+                                width: constraints.maxWidth >= 650
+                                    ? (constraints.maxWidth - 24) / 2
+                                    : constraints.maxWidth,
+                                child: parameter(b, p, color))
                         ],
                       )),
             ],
@@ -435,11 +401,8 @@ class _RigEditorState extends State<RigEditor> {
           value: p.value.round(),
           items: [
             for (var i = 0; i < f.midiValues.length; i++)
-              if (f is! StockAmpChoice ||
-                  availableStockAmpIds.contains(f.midiValues[i]) ||
-                  f.midiValues[i] == p.midiValue)
-                DropdownMenuItem(
-                    value: f.midiValues[i], child: Text(f.labelValues[i]))
+              DropdownMenuItem(
+                  value: f.midiValues[i], child: Text(f.labelValues[i]))
           ],
           onChanged: !b.enabled
               ? null

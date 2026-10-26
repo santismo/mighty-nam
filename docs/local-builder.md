@@ -1,12 +1,10 @@
 # Local firmware builder
 
-The current **builder 0.7.0** offers **NAMLNK30**, **NAMLNK29**, **NAMLNK28** and **NAMLNK23 r2** from the version menu at [builder.html](https://santismo.github.io/mighty-nam/builder.html). `looper-builder.html` opens the same page. The offline ZIP includes all four recipes and needs no network to build. NAMLNK30 is selected by default; bookmarks can use `?firmware=NAMLNK28` or `?firmware=NAMLNK23`.
+The current **builder 0.6.0** offers **NAMLNK29**, **NAMLNK28** and **NAMLNK23 r2** from the version menu at [builder.html](https://santismo.github.io/mighty-nam/builder.html). `looper-builder.html` opens the same page. The offline ZIP includes all three recipes and needs no network to build. NAMLNK29 is selected by default; bookmarks can use `?firmware=NAMLNK28` or `?firmware=NAMLNK23`.
 
-All versions require the same exact NUX file below and include the three licensed RiffSmith starters. The older outputs are byte-identical to their previous public builders. Upgrading **or downgrading** replaces presets and global settings. The current phone controller recognizes NAMLNK12–30 and does not send newer commands to older firmware. Use Mac 0.7.0+ with NAMLNK29; lane-specific controls are currently phone-only.
+All versions require the same exact NUX file below and include the three licensed RiffSmith starters. The older outputs are byte-identical to their previous public builders. Upgrading **or downgrading** replaces presets and global settings. The current phone controller recognizes NAMLNK12–29 and does not send newer commands to older firmware. Use Mac 0.6.1+ with NAMLNK29; lane-specific controls are currently phone-only.
 
-NAMLNK30 adds all 29 stock amp choices in one movable FX slot alongside NAM. It retains the NAMLNK29 RAM layout and looper. Relocated stock instructions and resources are copied from the user-supplied file; the public recipe contains only copy descriptions and new relocation instructions. See [stock amp implementation](../tools/stock-amps/README.md).
-
-NAMLNK29 adds the seven-slot preset write/readback fix and up to three reusable overdub lanes with one-edit undo/redo. The fixed recording pool is shared: a full 30/60-second base leaves no space for independent overdubs. Three editable lanes plus undo require a base slightly under 6/12 seconds. NAMLNK28 retains its older merged-overdub behavior, and NAMLNK23 r2 has no looper. See [implementation and gates](../tools/looper-prototype/takes/README.md). Exact public NAMLNK30 hardware validation remains pending; nothing is flashed by the builder.
+NAMLNK29 adds the seven-slot preset write/readback fix and up to three reusable overdub lanes with one-edit undo/redo. The fixed recording pool is shared: a full 30/60-second base leaves no space for independent overdubs. Three editable lanes plus undo require a base slightly under 6/12 seconds. NAMLNK28 retains its older merged-overdub behavior, and NAMLNK23 r2 has no looper. See [implementation and gates](../tools/looper-prototype/takes/README.md). Exact public NAMLNK29 hardware validation remains pending; nothing is flashed by the builder.
 
 The [archived NAMLNK23 page](builder-v23.html) remains available. The reproduction commands below describe that baseline.
 
@@ -91,7 +89,7 @@ compares the rebuilt result byte-for-byte with the independent stager.
 `scripts/package_looper_download.py` packages all three checked recipes, their
 provenance and notices without a complete firmware image.
 
-Run `scripts/test_firmware_builder.cjs` with `MIGHTY_NAM_RECIPE=looper` (30), `v29`, `v28` or
+Run `scripts/test_firmware_builder.cjs` with `MIGHTY_NAM_RECIPE=looper`, `v28` or
 `v23` and `MIGHTY_NAM_STOCK_FILE` set to your local exact stock file. The version
 selector invalidates old download links on a change and is locked during an
 in-progress build. The earlier firmware hashes remain pinned in these tests.

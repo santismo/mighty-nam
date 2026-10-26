@@ -1,7 +1,0 @@
-{
-  "status": "PASS_COPY_CHECKSUM_FALLBACK",
-  "corrupt_copy_never_executed": true,
-  "dry_path_preserved": true,
-  "recovered_after_valid_copy": true,
-  "extra_sha256": "630e0e889927d524703d1264ac12baa83a94a908eed479b3a382641ea480c967"
-}
