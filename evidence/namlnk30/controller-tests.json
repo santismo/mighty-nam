@@ -1,0 +1,15 @@
+{
+  "phone_version": "0.11.0",
+  "phone_passed": 209,
+  "phone_failed": 0,
+  "mac_version": "0.7.0",
+  "flutter_passed": 140,
+  "flutter_failed": 0,
+  "flutter_optional_skipped": 3,
+  "native_fx_checks": 317,
+  "native_stock_checks": 1781,
+  "native_tuner_checks": 921,
+  "native_loop_checks": 265,
+  "older_phone_versions": "12 through 29; stock capabilities distinguish ordinary 29 and five-amp extension",
+  "hardware_tested": false
+}

@@ -8,7 +8,7 @@ FLASH=0x30040000
 sha=lambda b:hashlib.sha256(b).hexdigest()
 
 def build(stock, baseline, overlay, identity='NAMLNK25'):
-    if identity not in ['NAMLNK25','NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29']:raise ValueError('Unsupported looper identity')
+    if identity not in ['NAMLNK25','NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29','NAMLNK30']:raise ValueError('Unsupported looper identity')
     from preset_image import build as base_build
     if sha(baseline.read_bytes())!=BASELINE_SHA:raise ValueError('Unsupported baseline')
     original,base,plan=base_build(stock,baseline)
@@ -43,7 +43,7 @@ def build(stock, baseline, overlay, identity='NAMLNK25'):
         target=new[name];assert target&1
         patch(at,(b'\x00\xbf' if at%4 else b'')+bytes.fromhex('dff800f0')+struct.pack('<I',target),name)
     for at,name in [(0x581a,'mpp_loop_startup'),(0xe19c,'mpp_loop_probe_audio'),(0x5868,'mpp_loop_service')]:jump(at,name)
-    if identity in ['NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29']:
+    if identity in ['NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29','NAMLNK30']:
         for at,name in [(0xa05e,'mpp_loop_buttons'),(0x60ec,'mpp_loop_color')]:jump(at,name)
     patch(0x21243,struct.pack('<I',new['mpp_loop_query']),'Looper diagnostic command; standard commands delegate')
     patch(0x229b0,struct.pack('<I',new['mpp_loop_irq']),'Whole IRQ cycle observation')
@@ -52,7 +52,7 @@ def build(stock, baseline, overlay, identity='NAMLNK25'):
         ('mpp_bank_pause','mpp_loop_bank_pause')]:
         address=base[old]&~1;assert 0x2030f000<=address<0x20314000
         jump(0x303a6000-FLASH+address-0x2030f000,target)
-    if identity in ['NAMLNK28','NAMLNK29']:
+    if identity in ['NAMLNK28','NAMLNK29','NAMLNK30']:
         for prefix,target in [('_ZN3mpp8settings11BufferStore4load','mpp_loop_store_load'),('_ZN3mpp8settings11BufferStore4save','mpp_loop_store_buffer')]:
             names=[k for k in base if k.startswith(prefix)]
             assert len(names)==1,(prefix,names)
@@ -72,5 +72,5 @@ def build(stock, baseline, overlay, identity='NAMLNK25'):
     plan.update(identity=identity,mode='LOOPER_RAM_TIMING_TEST_ONLY',baseline_elf_sha256=BASELINE_SHA,
         elf_sha256=sha(overlay.read_bytes()),candidate_sha256=sha(out),elf_regions=plan['elf_regions']+rows,
         loop_patches=patches,loop_changed_spans=allowed,startup_copy_implemented=True,
-        physical_button_looper_hooks=identity in ['NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29'],physical_RAM_safe_proven=False)
+        physical_button_looper_hooks=identity in ['NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29','NAMLNK30'],physical_RAM_safe_proven=False)
     return bytes(out),symbols,plan

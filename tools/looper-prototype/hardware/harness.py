@@ -6,16 +6,16 @@ from unicorn import UC_HOOK_CODE,UC_HOOK_MEM_WRITE,UC_HOOK_MEM_READ,UC_PROT_ALL
 from unicorn.arm_const import UC_ARM_REG_PC
 from capstone import Cs,CS_ARCH_ARM,CS_MODE_THUMB,CS_MODE_MCLASS
 
-def setup(baseline,payload,output,reference=False):
-    identity=json.loads((output/'build/build.json').read_text())['identity']
-    assert identity in ['NAMLNK25','NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29']
-    schema={'NAMLNK25':1,'NAMLNK26':2,'NAMLNK27':3,'NAMLNK28':4,'NAMLNK29':5}[identity]
+def setup(baseline,payload,output,reference=False,identity=None):
+    identity=identity or json.loads((output/'build/build.json').read_text())['identity']
+    assert identity in ['NAMLNK25','NAMLNK26','NAMLNK27','NAMLNK28','NAMLNK29','NAMLNK30']
+    schema={'NAMLNK25':1,'NAMLNK26':2,'NAMLNK27':3,'NAMLNK28':4,'NAMLNK29':5,'NAMLNK30':5}[identity]
     # Identity allowlists only; no weakened state/transport/write assertions.
     path=output/'harness'/str(os.getpid());path.mkdir(parents=True,exist_ok=True)
     original=(baseline/'generated/research/test_preset_runtime.py').read_text()
     changed=original.replace("'NAMLNK24',",f"'NAMLNK24','{identity}',")
     assert changed.count(f"'{identity}'")==3
-    if identity in ['NAMLNK28','NAMLNK29']:
+    if identity in ['NAMLNK28','NAMLNK29','NAMLNK30']:
         with (output/'build/loop-startup-test.elf').open('rb') as f:
             entries=ELFFile(f).get_section_by_name('.symtab').iter_symbols()
             scratch=[(x['st_value'],x['st_value']+x['st_size']) for x in entries if x.name in ['_ZN12_GLOBAL__N_11aE','_ZN12_GLOBAL__N_11bE']]
@@ -46,7 +46,7 @@ def setup(baseline,payload,output,reference=False):
             super().__init__(*args,**kwargs)
             if reference:return
             self.flexspi_resets=0
-            if identity=='NAMLNK29':
+            if identity in ['NAMLNK29','NAMLNK30']:
                 # Peripheral self-clearing SWRESET bit; timing is not modeled.
                 def reset(u,kind,address,size,value,unused):
                     if u.mem_read(address,1)[0]&1:

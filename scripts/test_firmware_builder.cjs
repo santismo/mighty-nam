@@ -7,23 +7,23 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const core = require('../docs/builder/core.js');
-const recipeDir=({looper:'looper-builder',v28:'builder-v28',v23:'builder'})[process.env.MIGHTY_NAM_RECIPE]||'builder';
+const recipeDir=({looper:'looper-builder',v29:'builder-v29',v28:'builder-v28',v23:'builder'})[process.env.MIGHTY_NAM_RECIPE]||'builder';
 require('../docs/'+recipeDir+'/recipe.js');
 const recipe = globalThis.MightyNamRecipe;
-const extended = ['NAMLNK27','NAMLNK28','NAMLNK29'].includes(recipe.identity);
+const extended = ['NAMLNK27','NAMLNK28','NAMLNK29','NAMLNK30'].includes(recipe.identity);
 const copy = () => structuredClone(recipe);
 const stockPath = process.env.MIGHTY_NAM_STOCK_FILE;
 const stock = stockPath ? new Uint8Array(fs.readFileSync(stockPath)) : null;
 
 test('release contains original code, hooks, licensed starters and global erase', () => {
-  assert.equal(recipe.operations.length, extended?21:17);
-  assert.equal(recipe.operations.filter(x => x.kind === 'code').length, extended?6:4);
-  assert.equal(recipe.operations.filter(x => x.kind === 'hook').length, extended?13:11);
+  assert.equal(recipe.operations.length, recipe.identity==='NAMLNK30'?56:extended?21:17);
+  assert.equal(recipe.operations.filter(x => x.kind === 'code').length, recipe.identity==='NAMLNK30'?10:extended?6:4);
+  assert.equal(recipe.operations.filter(x => x.kind === 'hook').length, recipe.identity==='NAMLNK30'?14:extended?13:11);
   assert.equal(recipe.operations.filter(x => x.kind === 'fill').length, 1);
   assert.equal(recipe.presets, 'riffsmith-mit-3'); assert.equal(recipe.captures_included, true); assert.equal(recipe.operations.filter(x => x.kind === 'preset-bank').length, 1);
   assert.ok(!JSON.stringify(recipe).includes('original":'));
   assert.ok(recipe.operations.every(x => !('original' in x)));
-  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), recipe.identity==='NAMLNK29'?40352:recipe.identity==='NAMLNK28'?38012:recipe.identity==='NAMLNK27'?36128:25556);
+  if(recipe.identity!=='NAMLNK30')assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), recipe.identity==='NAMLNK29'?40352:recipe.identity==='NAMLNK28'?38012:recipe.identity==='NAMLNK27'?36128:25556);
 });
 test('wrong size and renamed/corrupted stock fail before building', async () => {
   await assert.rejects(core.inspect(new Uint8Array(100)), /Unsupported file size/);
@@ -51,7 +51,7 @@ test('exact local stock produces the independently staged image, without editing
   const before = await core.sha(stock);
   const built = await core.build(stock, recipe);
   assert.equal(await core.sha(stock), before);
-  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK29'?'0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a':recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
+  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK30'?'8c08629d0251892e730cc85609ec246bfc1f5a809a2b2ec56be14764a863abef':recipe.identity==='NAMLNK29'?'0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a':recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
   assert.equal(built.report.presets,'riffsmith-mit-3'); assert.equal(built.report.flashed,false);
   assert.equal(built.report.hardware_verified,false);
   for(const license of Object.values(built.report.license_notices)) assert.match(license,/Permission is hereby granted/);
@@ -94,6 +94,13 @@ const mutations = [
   ['output checksum mismatch',r=>{r.output.sha256='0'.repeat(64)},/firmware failed/],
   ['output payload mismatch',r=>{r.output.payload_sha256='0'.repeat(64)},/payload failed/],
 ];
+if(recipe.identity==='NAMLNK30') mutations.push(
+ ['stock resource source',r=>r.operations.find(o=>o.kind==='stock-copy').source=0,/resource copy/],
+ ['stock wrapper source',r=>r.operations.find(o=>o.kind==='stock-wrapper').segments.find(p=>'source' in p).source=0x40000,/instruction source/],
+ ['stock wrapper gap',r=>r.operations.find(o=>o.kind==='stock-wrapper').segments[0].offset=1,/fragment extent/],
+ ['stock wrapper corruption',r=>{const p=r.operations.find(o=>o.kind==='stock-wrapper').segments.find(p=>'data' in p);const b=Buffer.from(p.data,'base64');b[0]^=1;p.data=b.toString('base64');},/checksum mismatch/],
+ ['stock constant escape',r=>r.operations.find(o=>o.kind==='amp-zero').offset=0xb60000,/stock constant/]
+);
 for (const [name,mutate,error] of mutations) test('rejects '+name,{skip:!stock},async()=>{
   const r=copy();mutate(r);await assert.rejects(core.build(stock,r),error);
 });

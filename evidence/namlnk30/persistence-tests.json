@@ -1,0 +1,12 @@
+{
+  "status": "PASS_NAMLNK30_STOCK_PERSISTENCE",
+  "sha256": "630e0e889927d524703d1264ac12baa83a94a908eed479b3a382641ea480c967",
+  "rows": [
+    {
+      "case": "stored_stock_block",
+      "persisted_after_restart": true,
+      "unsupported_models_rejected": true
+    }
+  ],
+  "seconds": 89.57674360298552
+}

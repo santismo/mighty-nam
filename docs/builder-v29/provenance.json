@@ -1,0 +1,17 @@
+{
+  "schema": "mighty-nam-builder-provenance-1",
+  "identity": "NAMLNK29",
+  "recipe_sha256": "abd7fd87f0475eeffb25c4e671a133eeb6dc42a2d463f770680966cf4a03e0e6",
+  "elf_sha256": "001356fa53c2cd1d2e66ba9e1d8d5c6e37c8d1f64a05898bfd465d3ab45aa496",
+  "input_sha256": "39fa7057865f95e4c52c48544cd8284f4da606d3ac29e985e9b8938a3237467e",
+  "output_sha256": "0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a",
+  "output_payload_sha256": "90d4662e03f6aed3ad9d827c43e75bd052b7477b7cbda2d0c40414abffe2bd3b",
+  "operations": 21,
+  "code_bytes": 40260,
+  "stock_original_bytes_exported": false,
+  "private_or_tone3000_captures_exported": false,
+  "starter_bank_sha256": "c9e6c1297cda6cd512e79f9978d97f859be1267967a7876ce73915a9d8156578",
+  "output_matches_independent_stager": true,
+  "device_access": false,
+  "flashed": false
+}

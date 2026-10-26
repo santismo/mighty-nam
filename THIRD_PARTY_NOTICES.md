@@ -29,3 +29,13 @@ it does not embed the NUX file or an Eigen/musl runtime. See
 [recipe provenance](docs/builder/provenance.json) and [builder details](docs/local-builder.md).
 
 The three RiffSmith captures were downloaded directly from their creator's MIT-licensed repository, not through the TONE3000 catalog API. The recipe includes their A2 Lite weights and preset records. The Mac app includes the same model slots for identity recognition and preserves existing user libraries. Creator copyright and permission text accompany every distribution. Full upstream files are retained unchanged with pinned hashes; only the Lite component runs on the device. These alternatives are not claimed to reproduce the private captures' sound.
+
+## Stock amp extension (NAMLNK30)
+
+The 29 stock amp algorithms and coefficient resources remain NUX material.
+The public builder obtains their instructions/resources from the user's exact
+V3.0.5 Original file using bounded copy descriptions. The recipe distributes
+original overlay/relocation instructions, not stock DSP bytes. MIT applies only
+to original project contributions and separately licensed components, not the
+combined locally generated firmware. Amp labels/control mappings follow the
+existing MIT-licensed Mightier Amp catalog; its attribution remains in app/LICENSE.md.

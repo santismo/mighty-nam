@@ -14,7 +14,10 @@ export 'vendor/Processor.dart' show Processor, Parameter;
 export 'vendor/SwitchFormatters.dart' show SwitchFormatter;
 
 List<Processor> stockEffects(String slot) => switch (slot) {
-      'fxa' || 'fxb' => List.generate(7, (i) => ExtraFx(i + 1)),
+      'fxa' || 'fxb' => [
+          ...List.generate(7, (i) => ExtraFx(i + 1)),
+          StockAmpFx()
+        ],
       'gate' => [NoiseGatePro()],
       'comp' => [RoseCompPro(), KComp(), StudioComp()],
       'drive' => [

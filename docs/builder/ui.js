@@ -8,6 +8,7 @@
   const recipes = globalThis.MightyNamRecipes || {[MightyNamRecipe.identity]: MightyNamRecipe};
   let recipe = MightyNamRecipe, generation = 0, selected = null, building = false, urls = [];
   const summaries = {
+    NAMLNK30:'NAM plus all 29 stock amps, with the version 29 looper. Hardware trial pending.',
     NAMLNK29:'Reusable overdub lanes, undo/redo and the seven-slot save fix. Offline tested; hardware trial pending.',
     NAMLNK28:'Earlier looper with merged overdubs and saved loop settings. No separate lanes or undo.',
     NAMLNK23:'Earlier Bluetooth playback fix, NAM and effects. No looper or Daisy-derived Auto Wah.'
@@ -32,9 +33,9 @@
     if (selected) message('Verified V3.0.5 Original. Ready to build ' + recipe.identity + ' locally.');
   }
   if (version) {
-    // A known explicit selection may be bookmarked. Unknown versions fall back to 29.
+    // A known explicit selection may be bookmarked. Unknown versions fall back to 30.
     const requested = new URLSearchParams(location.search).get('firmware');
-    version.value = recipes[requested] ? requested : 'NAMLNK29';
+    version.value = recipes[requested] ? requested : 'NAMLNK30';
     version.addEventListener('change', chooseVersion);
   }
   chooseVersion();
