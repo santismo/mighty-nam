@@ -1,0 +1,17 @@
+{
+  "status": "PASS_NAMLNK29_SEVEN_CPU_CACHE",
+  "elf_sha256": "8145bf9c092feee45acfe2213a21cb8dc1a4ad6bdbd95edd6430f52fbf8d62d8",
+  "saves": 21,
+  "seven_saves": true,
+  "USB_BLE": true,
+  "overwrite_and_random_recall": true,
+  "button_cycle": true,
+  "restart": true,
+  "failed_write_preserves_previous": true,
+  "original_failure_reproduced": true,
+  "cpu_cache_model": true,
+  "cache_cause_on_hardware_verified": false,
+  "invalidated_lines": 10773,
+  "device_access": false,
+  "seconds": 168.86812429898418
+}

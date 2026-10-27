@@ -34,6 +34,9 @@ if identity in ['NAMLNK28','NAMLNK29']:cases += [
 if identity=='NAMLNK29':cases += [
     ('stale seven slots','seven-presets.json',lambda r:r.update(elf_sha256='0'*64)),
     ('seven slot regression','seven-presets.json',lambda r:r.update(seven_slots=False)),
+    ('missing CPU cache gate','seven-presets-cpu.json',None),
+    ('stale CPU cache gate','seven-presets-cpu.json',lambda r:r.update(elf_sha256='0'*64)),
+    ('incomplete CPU cache saves','seven-presets-cpu.json',lambda r:r.update(saves=7)),
     ('existing lane edit missing','layers-arm.json',lambda r:r.update(existing_lane_multi_pass=False)),
     ('lane boundary coverage missing','offline/takes.json',lambda r:r.update(boundary_cases=0)),
 ]
@@ -43,7 +46,7 @@ for label,file,edit in cases:
         files=['build/build.json','build/loop-startup-test.elf','startup.json','audio.json','continuity-test.json']
         if extended:files+=['layers-arm.json','buttons.json','offline/takes.json' if identity=='NAMLNK29' else 'offline/layers.json','offline/full-duration.json','offline/source-hashes.json']
         if identity in ['NAMLNK28','NAMLNK29']:files+=['settings.json','offline/settings-store.json','offline/gestures.json']
-        if identity=='NAMLNK29':files+=['seven-presets.json','vm-observer.json']
+        if identity=='NAMLNK29':files+=['seven-presets.json','seven-presets-cpu.json','vm-observer.json']
         if identity in ['NAMLNK27','NAMLNK28','NAMLNK29']:files+=['offline/quality.json']
         for name in files:
             (test/name).parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(a.work/name,test/name)

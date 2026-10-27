@@ -1,0 +1,43 @@
+{
+  "status": "PASS_OFFLINE_STOCK_BUTTON_LED_ADAPTER",
+  "elf_sha256": "8145bf9c092feee45acfe2213a21cb8dc1a4ad6bdbd95edd6430f52fbf8d62d8",
+  "forward_colors": [
+    0,
+    1,
+    2,
+    0
+  ],
+  "reverse_color": 2,
+  "power_double_enter": true,
+  "threshold_arm": true,
+  "tap_hold_clear": true,
+  "hold_overdub": true,
+  "hold_previous_once": true,
+  "phone_arm_physical_short_tap_finish": true,
+  "armed_rgb_on_writes": [
+    [
+      1086718088,
+      33554432
+    ],
+    [
+      1086718084,
+      16384
+    ],
+    [
+      1086718088,
+      4194304
+    ]
+  ],
+  "armed_rgb_off_writes": [
+    [
+      1086718088,
+      37765120
+    ]
+  ],
+  "stock_volume_preserved": true,
+  "stock_power_hold_shutdown": true,
+  "automatic_mute": false,
+  "physical_buttons_verified": false,
+  "device_access": false,
+  "host_audio_access": false
+}

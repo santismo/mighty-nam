@@ -1,0 +1,6 @@
+{
+  "status": "PASS_LOOP_SETTINGS_STORE",
+  "interrupted_write_cases": 261,
+  "legacy_migration": true,
+  "buffer_preserved": true
+}

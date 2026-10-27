@@ -1,0 +1,13 @@
+{
+  "status": "PASS_OFFLINE_ARM_LOOP_SETTINGS",
+  "elf_sha256": "8145bf9c092feee45acfe2213a21cb8dc1a4ad6bdbd95edd6430f52fbf8d62d8",
+  "live_unsaved_restart": true,
+  "saved_threshold_level_duration_restart": true,
+  "global_buffer_preserved": true,
+  "unsaved_level_not_saved_by_buffer": true,
+  "armed_save_rejected": true,
+  "presets_unchanged": true,
+  "playback_state_preserved": true,
+  "USB_BLE_save": true,
+  "device_access": false
+}

@@ -1,0 +1,130 @@
+{
+  "status": "PASS_OFFLINE_STARTUP_PRESET_LOOP",
+  "candidate_payload_sha256": "dedf7f4c710d9b25f5858353d6027258eb6d12c943d135fdffbcf520892d392c",
+  "startup_copy_used": true,
+  "baseline_sha256": "13e14ec6a6ad1ad30142cf0ae28f57691e35d4d6435db8cc11208bba7726e65d",
+  "overlay_sha256": "8145bf9c092feee45acfe2213a21cb8dc1a4ad6bdbd95edd6430f52fbf8d62d8",
+  "store_sha256": "898ba7bfa6d901833273e8c4ab776d07dd3c9dbd4758ca63d538a5893926bb7b",
+  "storage_bytes": 371316,
+  "recorded_samples": 720000,
+  "recorded_rate": 24000,
+  "live_rate": 48000,
+  "callback_frames": 8,
+  "callbacks": 14834,
+  "interleaved_IRQs": 2360,
+  "interrupt_phases": {
+    "mpp_loop_read": 48,
+    "_ZN3mpp4link5crc32EPKhj": 1150,
+    "_ZN3mpp7presets4wordEPKhj": 35,
+    "_ZN3mpp7presets11valid_modelEPKh": 16,
+    "_ZN3mpp7presets4Bank5validEPKhj": 273,
+    "_ZN3mpp7presetsL4copyEPhPKhj": 20,
+    "_ZN3mpp4linkL2rdEPKh": 10,
+    "_ZN3mpp4linkL10valid_slotEPKh": 11,
+    "_ZN3mpp4linkL4copyEPhPKhj": 19,
+    "_ZNK3mpp4link13ModelReceiver11load_activeERNS_6A2LiteEbPfj": 7,
+    "_ZN3mpp6A2Lite4loadEPKfj": 15,
+    "_ZN3mpp6A2Lite5resetEv": 35,
+    "_ZNK3mpp6A2Lite17prime_working_setEv": 3,
+    "_ZN3mpp7presets13valid_effectsEPKh": 1,
+    "_ZN12_GLOBAL__N_14copyEPhPKhj": 1,
+    "mpp_bank_query": 1,
+    "_ZN3mpp4link5pack7EPKhjPhj": 1,
+    "_ZN3mppL11prime_linesEPVKfj": 1,
+    "0x3fffc": 1,
+    "_ZN11mighty_loop8Controls6updateEjbb": 1,
+    "_ZN11mighty_loop8Controls13sample_buttonERNS_6ButtonEbbj": 1,
+    "mpp_loop_control_tick": 1,
+    "mpp_loop_button_tail": 1,
+    "0x9e20": 1,
+    "mpp_loop_buttons": 1,
+    "0x9f3e": 1,
+    "_ZN3mpp7presets4Bank4saveEjPKhS3_S3_S3_jjPhS4_S3_": 4,
+    "_ZN3mpp7presets4Bank4readEjPhS2_Pj": 1,
+    "_ZN3mpp4link13ModelReceiver5resetEv": 6
+  },
+  "masked_foreground_instructions": 5312,
+  "recalls": [
+    {
+      "color": 0,
+      "interleaved_irqs": 279,
+      "IRQs_masked": false
+    },
+    {
+      "color": 1,
+      "interleaved_irqs": 177,
+      "IRQs_masked": false
+    },
+    {
+      "color": 2,
+      "interleaved_irqs": 424,
+      "IRQs_masked": false
+    },
+    {
+      "color": 0,
+      "interleaved_irqs": 232,
+      "IRQs_masked": false
+    }
+  ],
+  "recall_masked_instructions": 0,
+  "rejected_save_masked_instructions": 24,
+  "button_mailbox_masked_instructions": 5288,
+  "max_masked_instruction_run": 31,
+  "stock_preset_button_selected": 1,
+  "paused_guitar_irqs": 8034,
+  "nonzero_loop_paused_irqs": 8031,
+  "guitar_active_irqs": 736,
+  "max_native_loop_sample_error": 0.0,
+  "peak_output_PCM": 33909656,
+  "paused_guitar_DMA_blocks_checked": 1640,
+  "max_paused_guitar_PCM_error": 0,
+  "AHB_read_calls": 50,
+  "AHB_read_bytes": 377856,
+  "blocked_flash_writes": 3,
+  "loop_state_bytes": 3188,
+  "guards_intact": true,
+  "recording_unchanged": true,
+  "flash_mutations_after_overlay": 0,
+  "device_access": false,
+  "audio_device_opened": false,
+  "pause_preserves_queued_DMA": true,
+  "real_preset_save_rejected": true,
+  "limitations": [
+    "Cooperative instruction-boundary preemption, not Cortex-M7 exception/bus/deadline emulation.",
+    "Hardware OCRAM ownership, MPU/cache permissions, AHB stalls and physical performance remain unproven.",
+    "Live-data read/write owner hooks disabled because Unicorn changes conditional IT execution; native ASan covers lane access bounds and per-IRQ canaries/code bytes are checked.",
+    "Flash writes rejected while a loop exists; normal idle saving supported. RAM recording is lost on power-off.",
+    "Real startup copy and button adapter installed; physical gestures still require hardware verification."
+  ],
+  "actual_recording_hook": {
+    "callbacks": 120,
+    "recorded_samples": 476,
+    "encoded_bytes_match_native": true,
+    "threshold_waiting_callbacks": 16,
+    "closed_loop_playback_callbacks": 80,
+    "guards_intact": true
+  },
+  "overdub_preset_recalls": [
+    {
+      "color": 1,
+      "interleaved_irqs": 228
+    },
+    {
+      "color": 2,
+      "interleaved_irqs": 230
+    },
+    {
+      "color": 0,
+      "interleaved_irqs": 236
+    }
+  ],
+  "overdub_encoded_bytes_match_native": true,
+  "layer_commits": 54,
+  "stop_resume_clear_controls": true,
+  "timing_buckets_exercised": {
+    "recording": 3000,
+    "playing": 3000,
+    "inactive": 3000
+  },
+  "normal_image_builder_rejects_overlay": true
+}

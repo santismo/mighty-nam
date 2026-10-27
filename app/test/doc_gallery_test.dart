@@ -20,7 +20,7 @@ void main() {
     for (final family in ['Roboto', '.SF Pro Text', '.SF Pro Display', '.AppleSystemUIFont']) {
       final loader = FontLoader(family)
         ..addFont(Future.value(ByteData.sublistView(
-            File(family == '.AppleSystemUIFont' ? '/System/Library/Fonts/SFNS.ttf' : '$fonts/Roboto-Regular.ttf').readAsBytesSync())));
+            File('/System/Library/Fonts/SFNS.ttf').readAsBytesSync())));
       await loader.load();
     }
     final icons = FontLoader('MaterialIcons')
@@ -71,7 +71,13 @@ void main() {
       state.setState(() {
         state.rig = rig;
         state.captures = ModelLibrary()..add(model);
-        state.hardware = {'identity': 'NAMLNK23', 'compatible': true};
+        for (var i = 0; i < 7; i++) {
+          state.onboard.slots[i] = HybridRig.parse(rig.encode())
+            ..name = ['RiffSmith Clean', 'RiffSmith Bass Clean', 'RiffSmith Distorted'][i % 3];
+          state.onboard.generations[i] = 1;
+        }
+        state.hardware = {'identity': 'NAMLNK29', 'compatible': true,
+          'presetBank': {'active': 0, 'mask': 127}};
         state.status = '';
       });
       await t.pumpAndSettle();

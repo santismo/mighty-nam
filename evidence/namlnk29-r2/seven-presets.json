@@ -1,0 +1,13 @@
+{
+  "status": "PASS_SEVEN_PRESETS_STALE_AHB",
+  "elf_sha256": "8145bf9c092feee45acfe2213a21cb8dc1a4ad6bdbd95edd6430f52fbf8d62d8",
+  "seven_slots": true,
+  "USB_BLE": true,
+  "random_recall": true,
+  "restart_and_button_cycle": true,
+  "failed_write_preserves_previous": true,
+  "refreshes": 231,
+  "driver_model": "NOR backing separate from stale AHB view",
+  "hardware_verified": false,
+  "device_access": false
+}

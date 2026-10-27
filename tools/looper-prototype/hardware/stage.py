@@ -73,11 +73,14 @@ def stage(baseline,work,stock_file,bank_file,bank_report,output):
         r=json.loads((work/'seven-presets.json').read_text())
         if r.get('status')!='PASS_SEVEN_PRESETS_STALE_AHB' or r.get('elf_sha256')!=manifest['sha256'] or not all(r.get(k) for k in ['seven_slots','USB_BLE','random_recall','restart_and_button_cycle','failed_write_preserves_previous']):raise ValueError('Seven-preset gate failed')
         extra_evidence['seven-presets.json']=sha((work/'seven-presets.json').read_bytes())
+        cache=json.loads((work/'seven-presets-cpu.json').read_text())
+        if cache.get('status')!='PASS_NAMLNK29_SEVEN_CPU_CACHE' or cache.get('elf_sha256')!=manifest['sha256'] or cache.get('saves',0)<21 or not all(cache.get(k) for k in ['USB_BLE','overwrite_and_random_recall','restart','button_cycle','failed_write_preserves_previous','original_failure_reproduced']):raise ValueError('CPU cache seven-preset coverage missing')
+        extra_evidence['seven-presets-cpu.json']=sha((work/'seven-presets-cpu.json').read_bytes())
         vm=json.loads((work/'vm-observer.json').read_text())
         if vm.get('status')!='PASS_VM_OBSERVER_REGRESSION' or not vm.get('unobserved_programs_pass'):raise ValueError('Emulator observer regression missing')
         extra_evidence['vm-observer.json']=sha((work/'vm-observer.json').read_bytes())
     bank=bank_file.read_bytes();before=json.loads(bank_report.read_text())
-    if len(bank)!=0x1c000 or sha(bank)!=before['bank_sha256'] or len(before['presets'])!=3:raise ValueError('Local three-preset bank mismatch')
+    if len(bank)!=0x1c000 or sha(bank)!=before['bank_sha256'] or len(before['presets']) not in (3,7):raise ValueError('Local preset bank mismatch')
     data=bytearray(payload);data[0x344000:0x360000]=bank
     encoded=stock.rebuild_same_length(bytes(data));final=Container(encoded)
     assert final.payload==bytes(data) and len(encoded)==len(stock.data)
@@ -86,7 +89,7 @@ def stage(baseline,work,stock_file,bank_file,bank_report,output):
     assert final.payload[0x344000:0x360000]==bank
     name=identity+'-looper-lanes-test.bin' if identity=='NAMLNK29' else identity+'-looper-layers-test.bin' if extended else 'NAMLNK25-looper-ram-timing-test.bin'
     report=dict(status='PASS_LOCAL_'+identity+'_DIAGNOSTIC_STAGING',identity=identity,file=name,sha256=sha(encoded),bytes=len(encoded),
-        elf_sha256=manifest['sha256'],payload_sha256=sha(data),bank_sha256=sha(bank),local_three_presets_unchanged=True,
+        elf_sha256=manifest['sha256'],payload_sha256=sha(data),bank_sha256=sha(bank),local_presets_unchanged=True,preset_count=len(before['presets']),
         presets=[{k:r[k] for k in ['color','color_name','name','model_crc','model_sha256']} for r in before['presets']],
         play_on_boot=True,looper_active_on_boot=False,live_sample_rate=48000,callback_frames=8,
         storage_bytes=371316,recording_seconds=30,recording_sample_rate=24000,recording_format='mono IMA ADPCM',optional_60_seconds_at_12000_Hz=extended,merged_overdubs=extended and identity!='NAMLNK29',independent_lanes=3 if identity=='NAMLNK29' else 0,undo_levels=1 if identity=='NAMLNK29' else 0,

@@ -12,13 +12,14 @@ def validate_bank(bank, report):
     source = ROOT/'firmware/models/riffsmith'
     provenance = json.loads((source/'provenance.json').read_text())
     require(report['status']=='PASS_OFFLINE_PUBLIC_STARTERS' and
-            report['cold_boot'] and report['button_cycles_three'] and
-            report['remaining_four_empty'], 'Starter emulation has not passed')
+            report['cold_boot'] and (report.get('button_cycles_all') or report['button_cycles_three']), 'Starter emulation has not passed')
     require(report['provenance_sha256']==sha((source/'provenance.json').read_bytes()), 'Stale starter provenance')
     require(len(bank)==114688 and sha(bank)==report['bank_sha256'], 'Starter bank checksum mismatch')
-    require(bank[49152:]==b'\xff'*65536, 'Unexpected additional presets')
-    require(len(report['presets'])==len(report['callbacks'])==3, 'Expected three starter tests')
-    for i, entry in enumerate(provenance['models']):
+    count=len(report['presets'])
+    require(count in (3,7) and len(report['callbacks'])==count, 'Expected three or seven starter tests')
+    require(bank[count*16384:]==b'\xff'*(114688-count*16384), 'Unexpected additional presets')
+    for i in range(count):
+        entry=provenance['models'][i%3]
         raw = (source/entry['file']).read_bytes()
         require(sha(raw)==entry['sha256'], 'Licensed source changed')
         model = model_slot(source/entry['file'])

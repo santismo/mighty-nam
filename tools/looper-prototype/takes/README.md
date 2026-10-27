@@ -18,11 +18,11 @@ The existing pool is unchanged: 270,336 bytes at 0x202a0020 plus 100,980 at 0x20
 | Base + two lanes + undo | 7.499 s | 14.997 s |
 | Base + three lanes + undo | 5.995 s | 11.989 s |
 
-A full 30/60-second base can play, but cannot add an independent lane. The controller reads capacity from the firmware. This version does not claim unlimited tracks or use unverified external RAM. Code uses 15,440 bytes of the existing 16,320-byte overlay code range; BSS uses 4,244 of 8,128 bytes. Physical timing still requires a device trial.
+A full 30/60-second base can play, but cannot add an independent lane. The controller reads capacity from the firmware. This version does not claim unlimited tracks or use unverified external RAM. Code uses 15,508 bytes of the existing 16,320-byte overlay code range; BSS uses 4,244 of 8,128 bytes. Physical timing still requires a device trial.
 
 ## Seven saved presets
 
-The stock low-level page-program entry does not reset FlexSPI AHB buffers, unlike the stock multi-page wrapper. The overlay now performs a bounded controller software reset after each successful page program, including the commit word, before readback. A split backing-store/AHB emulator reproduces the old slot-four I/O error and verifies all seven saves, restart/cycling and failed-write preservation. Hardware confirmation remains pending.
+The stock low-level page-program entry does not reset FlexSPI AHB buffers, unlike the stock multi-page wrapper. The overlay now performs a bounded controller software reset after each successful page program, including the commit word, before readback. A split backing-store/AHB emulator reproduces the old slot-four I/O error and verifies all seven saves, restart/cycling and failed-write preservation. Revision 2 also invalidates the corresponding Cortex-M7 D-cache lines after successful erase/program operations, including the final commit. It never cleans NOR cache lines. A separate stale CPU-read model reproduces code 3 on slot four with the original NAMLNK29; the new image passes 21 saves/overwrites across all seven slots, random recall, restart/button cycling and failed-write preservation. This establishes a regression fix under the model, not the cause or outcome on physical hardware. No audio callback, buffer, NAM working-data placement or stock-amp code changes are included. Hardware confirmation remains pending.
 
 ## Protocol
 
@@ -38,7 +38,7 @@ Page 7 returns eight words: presence/mute/recording/undone/preparing/pending/can
 
 ## Offline verification
 
-`run_native.py` runs ASan/UBSan storage, gesture, codec-quality, lane-boundary and full-duration NAM/model-switching tests. `test_arm.py` executes the compiled lane commands with NAM and spring reverb. `test_presets.py` models stale AHB reads. `test_continuity.py` interleaves actual ARM IRQ processing with preset loading and compares recorded bytes/playback to the native oracle. Startup, media/USB and saved-setting regressions use the existing hardware/settings test runners.
+`run_native.py` runs ASan/UBSan storage, gesture, codec-quality, lane-boundary and full-duration NAM/model-switching tests. `test_arm.py` executes the compiled lane commands with NAM and spring reverb. `test_presets.py` models stale AHB reads. `test_presets_cpu.py` additionally separates stale CPU reads from NOR storage and requires actual DCIMVAC instructions to refresh them. `test_continuity.py` interleaves actual ARM IRQ processing with preset loading and compares recorded bytes/playback to the native oracle. Startup, media/USB and saved-setting regressions use the existing hardware/settings test runners.
 
 The staging tool requires matching source/ELF hashes and all gates before creating a private test container. These tests do not prove Cortex-M7 cycle deadlines, electrical button behavior or physical RAM/DMA ownership.
 

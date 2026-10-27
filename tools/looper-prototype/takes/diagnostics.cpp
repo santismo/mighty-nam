@@ -152,11 +152,21 @@ void mpp_loop_query(const uint8_t* p,unsigned n,unsigned channel){
   for(unsigned j=0;j<5;++j)out[14+i*5+j]=(value>>(j*7))&127;}
  out[54]=247;mpp_reply_send(out,sizeof out,channel);
 }
+// NOR writes use the peripheral command path. Refresh the CPU view as well
+// as FlexSPI's read buffers before validating the record (including commit).
+// Never clean a cache line back into the read-only memory-mapped NOR window.
+static void flash_view(uint32_t address,unsigned n){
+ __asm__ volatile("dsb":::"memory");
+ for(uint32_t line=address&~31u;line<address+n;line+=32)wr(0xe000ef5c,line);
+ __asm__ volatile("dsb\nisb":::"memory");
+}
 bool mpp_loop_erase(void*,uint32_t address){
  unsigned mask=lock();bool allowed=writable();
  if(!allowed||!((address>=0x30384000&&address<0x303a0000)||(address>=0x303a4000&&address<0x303a6000))||(address&4095)){
   unlock(mask);extern bool mpp_loop_no_erase(void*,uint32_t);return mpp_loop_no_erase(nullptr,address);}
- int result=((int(*)(uint32_t))0x841d)(address);unlock(mask);++mpp_loop_diag[31];return result==0;
+ int result=((int(*)(uint32_t))0x841d)(address);
+ if(!result)flash_view(address,4096);
+ unlock(mask);++mpp_loop_diag[31];return result==0;
 }
 bool mpp_loop_program(void*,uint32_t address,const uint8_t* src,unsigned n){
  unsigned mask=lock();bool allowed=writable();
@@ -164,12 +174,13 @@ bool mpp_loop_program(void*,uint32_t address,const uint8_t* src,unsigned n){
   unlock(mask);extern bool mpp_loop_no_program(void*,uint32_t,const uint8_t*,unsigned);return mpp_loop_no_program(nullptr,address,src,n);}
  int result=((int(*)(const uint8_t*,uint32_t))0x84ad)(src,address);
  // Invalidate FlexSPI AHB prefetch/read buffers, including the final commit.
- // Flash is noncacheable in the audited MPU map; D-cache invalidation alone
- // cannot fix this. Same register/sequence as the stock multi-page writer.
+ // AHB reset alone does not evict an already-cached CPU read of the record.
+ // Same register/sequence as the stock multi-page writer, followed by DCIMVAC.
  if(!result){
   __asm__ volatile("dsb":::"memory");wr(0x400cc000,rd(0x400cc000)|1);
   unsigned wait=65536;while((rd(0x400cc000)&1)&&--wait){}
   __asm__ volatile("dsb\nisb":::"memory");if(!wait)result=1;
+  else flash_view(address,n);
  }
  unlock(mask);++mpp_loop_diag[31];return result==0;
 }

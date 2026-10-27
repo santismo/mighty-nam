@@ -1,10 +1,10 @@
 # Local firmware builder
 
-The current **builder 0.6.0** offers **NAMLNK29**, **NAMLNK28** and **NAMLNK23 r2** from the version menu at [builder.html](https://santismo.github.io/mighty-nam/builder.html). `looper-builder.html` opens the same page. The offline ZIP includes all three recipes and needs no network to build. NAMLNK29 is selected by default; bookmarks can use `?firmware=NAMLNK28` or `?firmware=NAMLNK23`.
+The current **builder 0.6.2** offers **NAMLNK29**, **NAMLNK28** and **NAMLNK23 r2** from the version menu at [builder.html](https://santismo.github.io/mighty-nam/builder.html). `looper-builder.html` opens the same page. The offline ZIP includes all three recipes and needs no network to build. NAMLNK29 is selected by default; bookmarks can use `?firmware=NAMLNK28` or `?firmware=NAMLNK23`.
 
-All versions require the same exact NUX file below and include the three licensed RiffSmith starters. The older outputs are byte-identical to their previous public builders. Upgrading **or downgrading** replaces presets and global settings. The current phone controller recognizes NAMLNK12–29 and does not send newer commands to older firmware. Use Mac 0.6.1+ with NAMLNK29; lane-specific controls are currently phone-only.
+All versions require the same exact NUX file below. NAMLNK29 revision 2 fills all seven editable colors with the three licensed RiffSmith captures repeated in order; older builds retain their three populated colors. The older outputs are byte-identical to their previous public builders. Upgrading **or downgrading** replaces presets and global settings. The current phone controller recognizes NAMLNK12–29 and does not send newer commands to older firmware. Use Mac 0.6.1+ with NAMLNK29; lane-specific controls are currently phone-only.
 
-NAMLNK29 adds the seven-slot preset write/readback fix and up to three reusable overdub lanes with one-edit undo/redo. The fixed recording pool is shared: a full 30/60-second base leaves no space for independent overdubs. Three editable lanes plus undo require a base slightly under 6/12 seconds. NAMLNK28 retains its older merged-overdub behavior, and NAMLNK23 r2 has no looper. See [implementation and gates](../tools/looper-prototype/takes/README.md). Exact public NAMLNK29 hardware validation remains pending; nothing is flashed by the builder.
+NAMLNK29 revision 2 refreshes both the FlexSPI read buffers and CPU cache lines after preset writes. It adds the seven-slot preset write/readback fix and up to three reusable overdub lanes with one-edit undo/redo. The fixed recording pool is shared: a full 30/60-second base leaves no space for independent overdubs. Three editable lanes plus undo require a base slightly under 6/12 seconds. NAMLNK28 retains its older merged-overdub behavior, and NAMLNK23 r2 has no looper. See [implementation and gates](../tools/looper-prototype/takes/README.md). Exact public NAMLNK29 hardware validation remains pending; nothing is flashed by the builder.
 
 The [archived NAMLNK23 page](builder-v23.html) remains available. The reproduction commands below describe that baseline.
 
@@ -26,7 +26,7 @@ The builder rejects other files before applying changes. V1.5.6 Original(VT) is 
 
 ## What is distributed
 
-The recipe contains allocated code sections compiled from original project sources, generated branch/pointer replacements, erase-fill instructions, checksums, and three RiffSmith preset records. The creator explicitly licenses these captures under MIT; pinned sources and notices are in `firmware/models/riffsmith`. It contains no original stock sections, opaque stock headers, generic binary-diff literals, firmware container, private presets or TONE3000 catalog captures. The combined firmware is assembled in the user's browser from their supplied file. It remains a hybrid containing NUX code and is not wholly MIT licensed.
+The recipe contains allocated code sections compiled from original project sources, generated branch/pointer replacements, erase-fill instructions, checksums, and licensed RiffSmith preset records (seven on NAMLNK29 revision 2, three on older outputs). The creator explicitly licenses these captures under MIT; pinned sources and notices are in `firmware/models/riffsmith`. It contains no original stock sections, opaque stock headers, generic binary-diff literals, firmware container, private presets or TONE3000 catalog captures. The combined firmware is assembled in the user's browser from their supplied file. It remains a hybrid containing NUX code and is not wholly MIT licensed.
 
 The page has no upload endpoint, device API, audio API or analytics. Its CSP disallows connections and forms. Inputs are copied before asynchronous work; generation never overwrites the input file. Exact before/after hashes, allowed patch locations, overlap checks, unchanged vectors, preserved record headers, and an independently staged output hash gate the download.
 
@@ -71,7 +71,7 @@ NAMLNK23 capability allowlists and protocol fixtures are updated in both control
 
 ## Installation status
 
-Nothing is automatically installed. Flashing is a separate, explicitly chosen operation. Installation replaces all seven onboard NAM slots and global settings. Green, Orange and Red contain RiffSmith Clean, Bass Clean and Distorted; four slots remain empty. Each uses the 48 kHz A2 Lite component with its included cabinet. Save any additional captures to a color after installation. Saved playback intent and global buffer settings are retained on subsequent power cycles.
+Nothing is automatically installed. Flashing is a separate, explicitly chosen operation. Installation replaces all seven onboard NAM slots and global settings. On NAMLNK29 revision 2, all seven are populated: Green/Blue/Lilac = RiffSmith Clean, Orange/Cyan = Bass Clean, Red/Pink = Distorted. Older NAMLNK28 and NAMLNK23 r2 populate Green, Orange and Red only. Each uses the 48 kHz A2 Lite component with its included cabinet. Save any additional captures to a color after installation. Saved playback intent and global buffer settings are retained on subsequent power cycles.
 
 NAMLNK23 has been installed on the development unit with private presets and confirmed guitar output. The new public starter bank has not been physically tested. An intact reachable updater is required to restore stock; full bootloader backup and recovery from arbitrary damage are not established. Local building reduces bundled third-party material but does not establish legal clearance or grant redistribution rights. See [LEGAL.md](../LEGAL.md) and [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
 
@@ -83,7 +83,7 @@ Builder 0.3.1 uses the separately gated `--bluetooth-audio` build. `bluetooth.js
 
 Build and pass the gates in `tools/looper-prototype/takes/README.md`, using the
 frozen NAMLNK24 baseline. Validate the pinned RiffSmith bank against that exact
-ELF with `scripts/test_looper_starters.py`, then export with
+ELF with `scripts/test_looper_starters.py --seven`, then export with
 `scripts/package_looper_builder.py`. The exporter runs all staging gates and
 compares the rebuilt result byte-for-byte with the independent stager.
 `scripts/package_looper_download.py` packages all three checked recipes, their

@@ -1,0 +1,7 @@
+{
+  "status": "PASS_VM_OBSERVER_REGRESSION",
+  "read_hook_changes_IT_execution": true,
+  "write_hook_changes_IT_execution": true,
+  "unobserved_programs_pass": true,
+  "synthetic_code_only": true
+}

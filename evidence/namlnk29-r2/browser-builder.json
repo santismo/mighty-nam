@@ -1,0 +1,21 @@
+{
+  "status": "PASS_BROWSER_AND_OFFLINE_ZIP",
+  "rows": [
+    {
+      "kind": "online-source",
+      "sha256": "3448b14cb56d31c5a58ae89c7d4ea3df4ef704779efd95a2a7d858edb223d778",
+      "seven_presets": true,
+      "errors": [],
+      "external_requests": 0
+    },
+    {
+      "kind": "offline-zip",
+      "sha256": "3448b14cb56d31c5a58ae89c7d4ea3df4ef704779efd95a2a7d858edb223d778",
+      "seven_presets": true,
+      "errors": [],
+      "external_requests": 0
+    }
+  ],
+  "device_access": false,
+  "host_audio_access": false
+}

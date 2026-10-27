@@ -8,7 +8,7 @@
   const recipes = globalThis.MightyNamRecipes || {[MightyNamRecipe.identity]: MightyNamRecipe};
   let recipe = MightyNamRecipe, generation = 0, selected = null, building = false, urls = [];
   const summaries = {
-    NAMLNK29:'Reusable overdub lanes, undo/redo and the seven-slot save fix. Offline tested; hardware trial pending.',
+    NAMLNK29:'NAM-only revision 2: seven starter colors, refreshed preset readback, lanes and undo/redo. Offline tested; hardware trial pending.',
     NAMLNK28:'Earlier looper with merged overdubs and saved loop settings. No separate lanes or undo.',
     NAMLNK23:'Earlier Bluetooth playback fix, NAM and effects. No looper or Daisy-derived Auto Wah.'
   };

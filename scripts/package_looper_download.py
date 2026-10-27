@@ -13,7 +13,7 @@ recipe = json.JSONDecoder().raw_decode(source.split('globalThis.MightyNamRecipe 
 audit = json.loads((docs / 'looper-builder/provenance.json').read_text())
 assert hashlib.sha256(source.encode()).hexdigest() == audit['recipe_sha256']
 assert not audit['stock_original_bytes_exported'] and not audit['private_or_tone3000_captures_exported']
-assert recipe['identity'] == 'NAMLNK29' and recipe['presets'] == 'riffsmith-mit-3'
+assert recipe['identity'] == 'NAMLNK29' and recipe['presets'] == 'riffsmith-mit-7'
 version = recipe['builder_version']
 assert re.fullmatch(r'\d+\.\d+\.\d+', version)
 files = {name: docs / name for name in [
@@ -51,7 +51,9 @@ Guide: https://santismo.github.io/mighty-nam/guide.html
 This archive contains original compiled changes and three MIT-licensed
 RiffSmith captures, not a NUX or combined firmware image. Keep generated images
 local. Installation replaces onboard presets and global settings. Green Clean,
-Orange Bass Clean and Red Distorted are supplied; four colors remain empty.
+Orange Bass Clean and Red Distorted are supplied, repeated across all seven
+editable colors. NAMLNK29 revision 2 refreshes both CPU and FlexSPI read views
+after saves; audio processing and controller commands remain unchanged.
 
 NAMLNK29 includes Daisy-derived Auto Wah, the 30-second looper (optional
 lower-bandwidth 60 seconds), up to three independent overdub lanes, one-edit undo/redo, input meter,

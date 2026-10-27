@@ -1,0 +1,7 @@
+{
+  "status": "PASS_OFFLINE_OVERDUB_QUALITY",
+  "snr_db": 42.918792,
+  "block_start_error_rms": 27.697082,
+  "samples": 24000,
+  "host_audio_access": false
+}

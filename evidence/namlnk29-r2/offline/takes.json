@@ -1,0 +1,9 @@
+{
+  "status": "PASS_INDEPENDENT_TAKES",
+  "boundary_cases": 49,
+  "storage_bytes": 371316,
+  "multi_pass_undo": true,
+  "base_unchanged": true,
+  "cross_window": true,
+  "full_capacity_rejected": true
+}

@@ -20,10 +20,10 @@ test('release contains original code, hooks, licensed starters and global erase'
   assert.equal(recipe.operations.filter(x => x.kind === 'code').length, extended?6:4);
   assert.equal(recipe.operations.filter(x => x.kind === 'hook').length, extended?13:11);
   assert.equal(recipe.operations.filter(x => x.kind === 'fill').length, 1);
-  assert.equal(recipe.presets, 'riffsmith-mit-3'); assert.equal(recipe.captures_included, true); assert.equal(recipe.operations.filter(x => x.kind === 'preset-bank').length, 1);
+  assert.equal(recipe.presets, recipe.identity==='NAMLNK29'?'riffsmith-mit-7':'riffsmith-mit-3'); assert.equal(recipe.captures_included, true); assert.equal(recipe.operations.filter(x => x.kind === 'preset-bank').length, 1);
   assert.ok(!JSON.stringify(recipe).includes('original":'));
   assert.ok(recipe.operations.every(x => !('original' in x)));
-  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), recipe.identity==='NAMLNK29'?40352:recipe.identity==='NAMLNK28'?38012:recipe.identity==='NAMLNK27'?36128:25556);
+  assert.equal(recipe.operations.reduce((n,x) => n + (['fill','preset-bank'].includes(x.kind) ? 0 : x.length), 0), recipe.identity==='NAMLNK29'?40420:recipe.identity==='NAMLNK28'?38012:recipe.identity==='NAMLNK27'?36128:25556);
 });
 test('wrong size and renamed/corrupted stock fail before building', async () => {
   await assert.rejects(core.inspect(new Uint8Array(100)), /Unsupported file size/);
@@ -51,8 +51,8 @@ test('exact local stock produces the independently staged image, without editing
   const before = await core.sha(stock);
   const built = await core.build(stock, recipe);
   assert.equal(await core.sha(stock), before);
-  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK29'?'0c3e1143ef8015a98894f0b2abee604f8924d62faf575654faac63d3c8ffac5a':recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
-  assert.equal(built.report.presets,'riffsmith-mit-3'); assert.equal(built.report.flashed,false);
+  assert.equal(await core.sha(built.bytes), recipe.identity==='NAMLNK29'?'3448b14cb56d31c5a58ae89c7d4ea3df4ef704779efd95a2a7d858edb223d778':recipe.identity==='NAMLNK28'?'8d2e103361ace00ee12e4e32ee41427b4d06136d7214aa375d5a4a6b7c807f77':recipe.identity==='NAMLNK27'?'ccb1a2c1836ccc5045a6d53544add2ed46b4055ad4ec9df74a6feaa64368f42a':'de1da69e63cf6457f0fae7631655fe62c49d37aa7435b5326107c0a0e8521698');
+  assert.equal(built.report.presets,recipe.presets); assert.equal(built.report.flashed,false);
   assert.equal(built.report.hardware_verified,false);
   for(const license of Object.values(built.report.license_notices)) assert.match(license,/Permission is hereby granted/);
   assert.match(built.report.license_notices['RiffSmith captures'],/Matt Hartman/);
@@ -70,8 +70,10 @@ test('exact local stock produces the independently staged image, without editing
     for (let j=0;j<512;j++) if (built.bytes[at+28+j]!==stock[at+28+j])
       assert.ok(recipe.operations.some(op => i*512+j>=op.offset && i*512+j<op.offset+op.length));
   }
-  assert.ok(payload.subarray(0x344000+49152,0x360000).every(x=>x===255));
-  for(let i=0;i<3;i++) assert.equal(new DataView(payload.buffer).getUint32(0x344000+i*16384,true),0x3142504e);
+  const count=recipe.identity==='NAMLNK29'?7:3;
+  assert.ok(payload.subarray(0x344000+count*16384,0x360000).every(x=>x===255));
+  assert.equal(recipe.starter_presets.length,count);
+  for(let i=0;i<count;i++) assert.equal(new DataView(payload.buffer).getUint32(0x344000+i*16384,true),0x3142504e);
   assert.ok(payload.subarray(0x364000,0x366000).every(x=>x===255));
 });
 test('same-length corrupt stock is rejected', {skip:!stock}, async () => {
@@ -113,6 +115,13 @@ test('output matches independent staged file byte for byte',{skip:!stock||!proce
 test('licensed starter layout rejects a recomputed outer checksum', {skip:!stock}, async()=>{
  const r=copy(),op=r.operations.find(x=>x.kind==='preset-bank');
  const data=Uint8Array.from(Buffer.from(op.data,'base64'));data[32]^=1;
+ op.data=Buffer.from(data).toString('base64');op.sha256=await core.sha(data);r.starter_bank_sha256=op.sha256;
+ await assert.rejects(core.build(stock,r),/starter commit/);
+});
+
+for(const slot of [3,4,5,6])test('rejects a damaged default color '+(slot+1)+' even with a recomputed bank checksum',{skip:!stock||recipe.identity!=='NAMLNK29'},async()=>{
+ const r=copy(),op=r.operations.find(x=>x.kind==='preset-bank');
+ const data=Uint8Array.from(Buffer.from(op.data,'base64'));data[slot*16384+32]^=1;
  op.data=Buffer.from(data).toString('base64');op.sha256=await core.sha(data);r.starter_bank_sha256=op.sha256;
  await assert.rejects(core.build(stock,r),/starter commit/);
 });

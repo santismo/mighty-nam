@@ -28,7 +28,7 @@ test('in-flight builds lock version selection and retain the selected recipe unt
 test('the online version menu and both aliases load all three provenance-checked recipes',()=>{
  for(const file of ['builder.html','looper-builder.html']){
   const html=fs.readFileSync(require.resolve('../docs/'+file),'utf8');
-  for(const folder of ['builder','builder-v28','looper-builder'])assert.ok(html.includes(`${folder}/recipe.js?v=0.6.0`));
+  for(const folder of ['builder','builder-v28','looper-builder'])assert.ok(html.includes(`${folder}/recipe.js?v=0.6.2`));
   for(const id of ['NAMLNK23','NAMLNK28','NAMLNK29'])assert.ok(html.includes(`value="${id}"`));
  }
  const context={};vm.createContext(context);
