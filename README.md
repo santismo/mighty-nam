@@ -10,14 +10,14 @@ This repository contains the firmware experiments, Mac app, protocols and test e
 
 **Amp-model replacement:** The main NAM block replaces the stock NUX amp models. You use NAM captures for the amp sound; the original NUX amp models are not selectable in this firmware. The supported stock effects remain available in the signal chain.
 
-Current downloads: **NAMLNK29 revision 2 local builder**, **Mac 0.6.1**, and **phone controller 0.11.4** (restored 0.10.2 behavior). The stock-amp previews have been withdrawn; NAM remains the amp block.
+Current downloads: **NAMLNK29 revision 2 local builder**, **Mac 0.6.1**, and **phone controller 0.11.5** (restored 0.10.2 behavior). The stock-amp previews have been withdrawn; NAM remains the amp block.
 
 ## Current version
 
 | Component | Status |
 | --- | --- |
 | Mac 0.6.1 | Universal ad-hoc-signed preview. TONE3000 picker stays open while loading captures; seven colored presets; live effects; tuner; master and recording gain; NAM input/output, bass/middle/treble and mix. NAMLNK23–29 support, both wah choices on 24–29, and a Looper panel on 26–29 (live input meter on 27+, saved loop settings on 28+). Independent lane controls are phone-only. Not notarized. |
-| Phone 0.11.4 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering and Looper controls with a live threshold meter on NAMLNK27+, optional saved loop settings on NAMLNK28 and a separate TONE3000 picker that keeps the controller page open. |
+| Phone 0.11.5 | Public Bluefy/Web Bluetooth controller with live editing, capture browsing/transfers, favorites, tuner, direct preset selection, FX A/B and global buffering and Looper controls with a live threshold meter on NAMLNK27+, optional saved loop settings on NAMLNK28 and a separate TONE3000 picker that keeps the controller page open. |
 | Local builder 0.6.2 / NAMLNK29 r2 | Requires the exact public NUX `MP3_OR_V3.0.5.bin`. Includes seven editable colors using three MIT-licensed RiffSmith A2 Lite captures, Daisy-derived Auto Wah, 30/60-second looper, independent overdub lanes, undo/redo, seven-slot save fix, gestures and saved loop settings. Earlier NAMLNK28 and NAMLNK23 r2 remain selectable. Install your locally built image with the official NUX updater. |
 
 The public builder variant passes offline cold-boot, preset-button and audio accuracy checks. NAMLNK23 has limited physical validation with private presets; the new starter bank, pitch timing and Logic duplex operation still need device tests. See [status](https://santismo.github.io/mighty-nam/status.html).
@@ -50,7 +50,7 @@ The [offline builder ZIP](https://github.com/santismo/mighty-nam/releases/downlo
 
 ## Interfaces
 
-Current Mac 0.6.1 and phone 0.11.4, rendered with simulated connections and licensed example captures. Click a screenshot for full size.
+Current Mac 0.6.1 and phone 0.11.5, rendered with simulated connections and licensed example captures. Click a screenshot for full size.
 
 | NAM + reverb | Expanded chain |
 | --- | --- |
@@ -80,4 +80,4 @@ NAMLNK28 local-build preview adds saved looper settings, 100% default loop level
 
 ### Seven-preset NAM-only revision
 
-NAMLNK29 revision 2 adds CPU cache-line invalidation to the existing FlexSPI refresh after preset erase/program operations. An offline stale-read model reproduces the original slot-four save error; repeated writes, readback and restart across seven colors test the fix. This has not yet confirmed the physical cause or the result on hardware. Audio processing, NAM RAM placement, the output queue and controller commands remain on the pre-stock-amp baseline. Mac 0.6.1 and phone 0.11.4 remain compatible.
+NAMLNK29 revision 2 adds CPU cache-line invalidation to the existing FlexSPI refresh after preset erase/program operations. An offline stale-read model reproduces the original slot-four save error; repeated writes, readback and restart across seven colors test the fix. This has not yet confirmed the physical cause or the result on hardware. Audio processing, NAM RAM placement, the output queue and controller commands remain on the pre-stock-amp baseline. Mac 0.6.1 and phone 0.11.5 remain compatible.
