@@ -2,7 +2,7 @@
 
 <img src="docs/assets/brand/mighty-nam.svg" width="128" alt="M-NAM square turquoise icon">
 
-NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller. By **santismo**.
+NAM A2 Lite on the NUX Mighty Plug Pro, with a Mac editor and a phone controller. 
 
 [Local firmware builder](https://santismo.github.io/mighty-nam/looper-builder.html) · [Mac installer](https://github.com/santismo/mighty-nam/releases/tag/v0.6.1-preview.1) · [Phone controller](https://santismo.github.io/mighty-nam-controller/) · [User guide](https://santismo.github.io/mighty-nam/) · [Development](DEVELOPMENT.md) · [Roadmap](ROADMAP.md)
 
